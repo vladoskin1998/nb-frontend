@@ -1,0 +1,61 @@
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+/* Обнуляющие стили для ссылок */
+a:link,
+a:visited {
+  color: inherit; /* Наследование цвета текста */
+  text-decoration: none; /* Удаление подчеркивания */
+}
+textarea:focus {
+  outline: none;
+}
+textarea {
+  resize: none;
+}
+a:hover,
+a:focus,
+a:active {
+  cursor: pointer;
+  text-decoration: none; /* Подчеркивание при наведении, фокусе и активном состоянии */
+}
+/* Обнуляющие стили для списков */
+ul,
+ol {
+    list-style: none;
+}
+
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+}
+button {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+input {
+  all: unset; /* Сбрасываем все стили инпута */
+  text-align: start;
+}

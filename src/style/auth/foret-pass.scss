@@ -1,0 +1,117 @@
+.forget {
+    position: relative;
+    padding: 114px 40px 24px 40px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    &__back {
+        position: absolute;
+        top: 40px;
+        left: 24px;
+    }
+    &__title {
+        @include title-main;
+    }
+    &__subtitle {
+        margin-top: 20px;
+        @include sub-title-main;
+    }
+    &__body {
+        &-img {
+            position: relative;
+            min-height: 139px;
+            flex-grow: 1;
+            img{
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                z-index: -1;
+                
+            }
+            
+        }
+        &-method {
+            display: flex;
+            border-radius: 12px;
+            cursor: pointer;
+            cursor: pointer;
+            padding: 24px;
+            gap: 20px;
+            text-align: start;
+            background-color: $color__white;
+            margin-top: 15px;
+            &--active{
+                border: 2px solid $color__black1;
+            }
+            &-icon {
+                @include flex-all-center;
+                background: $color__grey3;
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+            }
+            &-title {
+                color: $color__grey1;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 140%; /* 19.6px */
+            }
+            &-subtitle {
+                color: $color__blue;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 30px; /* 187.5% */
+            }
+        }
+    }
+    &__button {
+        margin-top: 26px;
+        @include button-main;
+        width: 100%;
+    }
+    &__phone {
+        &-but {
+            margin-top: 45px;
+            @include button-main;
+            width: 100%;
+        }
+        &-resend {
+            margin: 0 auto;
+            margin-top: 24px;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 140%;
+            color: $color__grey1;
+            width: fit-content;
+            span {
+                color: $color__blue1;
+            }
+        }
+    }
+    
+    &__email {
+        display: flex;
+        flex-direction: column;
+        &-but1 {
+        //    @include button-main( $bg: $color__white, $co:  $color__black);
+        @include button-main;
+            width: 100%;
+         //   border: 1px solid $color__black;
+        }
+        &-but2 {
+            margin-top: 16px;
+            @include button-main;
+            width: 100%;
+        }
+    }
+    &__password-input{
+        margin-top: 45px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+    }
+}

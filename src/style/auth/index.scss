@@ -1,0 +1,139 @@
+@import "foret-pass.scss";
+@import "location-user.scss";
+
+.auth {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 40px 40px 24px 40px;
+    &__title {
+        @include title-main;
+        text-align: center;
+    }
+    &__subtitle {
+        @include sub-title-main;
+        margin-top: 8px;
+        text-align: center;
+    }
+    &__tab {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        position: relative;
+        margin-top: 40px;
+        height: 38px;
+        &-but {
+            color: $color__black1;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 140%;
+            height: fit-content;
+        }
+        &--pas {
+            color: $color__grey1;
+        }
+        &-border {
+            position: absolute;
+            left: 0;
+            bottom: 0px;
+            height: 4px;
+            width: 50%;
+            background-color: $color__blue;
+            transition: all 0.3s ease;
+            border-radius: 20px 20px 0 0;
+            &--l {
+                transform: translateX(0%);
+            }
+            &--r {
+                transform: translateX(100%);
+            }
+        }
+    }
+    &__messenger {
+        display: flex;
+        column-gap: 16px;
+        margin-top: 25px;
+        button {
+            @include flex-all-center;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: $color__white;
+        }
+    }
+    &__devider {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        column-gap: 16px;
+        align-items: center;
+        margin-top: 24px;
+        &-text {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            color: $color__grey1;
+        }
+        &-line {
+            height: 1px;
+            background-color: $color__grey2;
+        }
+    }
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px;
+    flex-grow: 1;
+    &__email {
+        @include input-main;
+    }
+    &__password {
+        margin-top: 16px;
+    }
+
+    &__forgot {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        column-gap: 10px;
+        margin-top: 10px;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+        color: $color__blue1;
+        &-but {
+            color: $color__blue;
+            text-align: start;
+        }
+        &-checkbox {
+            width: 15px;
+            height: 15px;
+        }
+    }
+    &__button {
+        @include button-main;
+    }
+}
+
+.registration {
+    margin-top: 25px;
+    display: flex;
+    row-gap: 16px;
+    flex-direction: column;
+    flex-grow: 1;
+    &__policy {
+        display: flex;
+        align-items: flex-start;
+        column-gap: 8px;
+        font-size: 12px;
+        font-style: normal;
+        line-height: 16px;
+        color: $color__grey1;
+        b {
+            color: $color__blue;
+            font-weight: 600;
+        }
+    }
+}

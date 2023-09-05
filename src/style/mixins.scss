@@ -1,0 +1,72 @@
+@mixin flex-all-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
+}
+
+@mixin button-main(
+    $bg: $color__black,
+    $co: $color__white,
+    $py: 14px,
+    $px: 24px
+) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: $py $px;
+    display: -webkit-flex;
+    -webkit-justify-content: center;
+    -webkit-align-items: center;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: $box-shadow1;
+    color: $co;
+    background: $bg;
+
+    &--white{
+        color: $color__black;
+        background:  $color__white;
+        border: 1px solid $color__black;
+    }
+
+    &--{}
+}
+
+@mixin title-main {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 35px;
+    color: $color__blue;
+}
+
+@mixin sub-title-main {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    color: $color__grey1;
+}
+
+@mixin input-main {
+    border-radius: 8px;
+    background: $color__white;
+    padding: 20px 25px 20px 15px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    box-shadow: $box-shadow1;
+    color: $color__black;
+    &::placeholder {
+        color: $color__grey1;
+    }
+}
