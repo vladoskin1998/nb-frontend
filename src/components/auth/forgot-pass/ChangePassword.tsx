@@ -14,7 +14,9 @@ const ChangePassword = () => {
                 <InputPassword password={password} setPassword={setPassword} />
                 <InputPassword password={passwordRepeat} setPassword={setPasswordRepeat} />
             </div>
-            <button className="forget__button">Action Button</button>
+            <button className="forget__button">
+                Action Button
+            </button>
         </>
     )
 }

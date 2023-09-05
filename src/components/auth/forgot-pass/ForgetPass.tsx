@@ -58,7 +58,6 @@ const ForgetPassBody = () => {
                 <p className="forget__body-method-subtitle">+1 111 ******99</p>
             </div>
         </div>
-
         <div className={`forget__body-method ${method === "email" ? "forget__body-method--active" : ""}`} onClick={() => { setMethod('email') }}>
             <div className="forget__body-method-icon">
                 <IconsMessage />
@@ -68,7 +67,8 @@ const ForgetPassBody = () => {
                 <p className="forget__body-method-subtitle">felix...ov@gmail.com</p>
             </div>
         </div>
-
-        <button className="forget__button" onClick={toNav}>Reset Password</button>
+        <button className="forget__button" onClick={toNav}>
+            Reset Password
+        </button>
     </>
 }

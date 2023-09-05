@@ -18,13 +18,11 @@ const RecoveryPhone = () => {
         return () => clearInterval(timer);
     }, [seconds]);
 
-    console.log(code);
-
     return (
         <div className='forget__phone'>
             <h4 className="forget__title">Verification code</h4>
             <h5 className="forget__subtitle">Please enter the confirmation code from the received message</h5>
-            <CodeInput change={setCode}/>
+            <CodeInput change={setCode} />
             <button className="forget__phone-but">Submit</button>
             <h6 className='forget__phone-resend'>Re-send code in
                 <span> 0:{seconds}</span>

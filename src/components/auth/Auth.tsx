@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { IconFacebook } from '../svg/IconFacebook'
-import { IconGoogle } from '../svg/IconGoogle'
 import Login from './Login'
 import Registration from './Registration'
 import AuthHeader from './AuthHeader'

@@ -11,8 +11,12 @@ const RecoveryEmail = () => {
             <div className="forget__body-img">
                 <img src="/Images/Megapone.png" />
             </div>
-            <button className="forget__email-but1 forget__email-but1--white">Contact Support</button>
-            <button className="forget__email-but2" onClick={() => navigate('/auth')}>Back to Login In</button>
+            <button className="forget__email-but1 forget__email-but1--white">
+                Contact Support
+            </button>
+            <button className="forget__email-but2" onClick={() => navigate('/auth')}>
+                Back to Login In
+            </button>
         </>
     )
 }

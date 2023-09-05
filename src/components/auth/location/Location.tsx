@@ -2,8 +2,6 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ButtonBackRoute } from "../../ui/ButtonBackRoute";
 import { IconLocationKey, IconLocationAim, IconLocationPoint } from "../../svg/IconsLocation";
-import { InputDiffPlaceholder } from "../../ui/InputDiffPlaceholder";
-
 
 const LocationUser = () => {
     const navigate = useNavigate()
@@ -18,11 +16,10 @@ const LocationUser = () => {
                 <ButtonBackRoute click={back} />
             </div>
             <Routes >
-                {/* <Route path='success-registration' element={<ChangePassword />} />
-                <Route path='current-location' element={<RecoveryEmail />} /> */}
+               
+                {/*<Route path='current-location' element={<RecoveryEmail />} /> */}
                 <Route path='*' element={<LocationBody />} />
             </Routes>
-
         </div >
     )
 }
