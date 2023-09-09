@@ -2,11 +2,24 @@ import { useState } from "react"
 import { InputPassword } from "../ui/InputPassword"
 import { CheckBox } from "../ui/CheckBox"
 
-const Registration = () => {
+const Registration = (
+    {
+        login,
+        setLogin,
+        password,
+        setPassword,
+    }:
+    {
+        login:string,
+        setLogin: (s:string) => void,
+        password:string,
+        setPassword: (s:string) => void,
+    }
+) => {
 
-    const [login, setLogin] = useState("")
+
     const [fullName, setFullName] = useState("")
-    const [password, setPassword] = useState("")
+
     const [checked, setChecked] = useState(true)
     return (
         <>

@@ -37,7 +37,7 @@
         border: 1px solid $color__black;
     }
 
-    &--{}
+    // &--{}
 }
 
 @mixin title-main {
@@ -69,4 +69,13 @@
     &::placeholder {
         color: $color__grey1;
     }
+}
+
+
+@mixin admin-main-title{
+    color: $color__blue;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
 }

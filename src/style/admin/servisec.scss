@@ -1,0 +1,85 @@
+.services__all {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Две колонки и автоматический перенос элементов */
+    gap: 12px;
+    &-item {
+        height: 150px;
+        border-radius: 10px;
+        background: $color__white;
+        box-shadow: $box-shadow1;
+        padding: 20px 16px 16px 20px;
+        &-name {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 140%;
+            button{
+                line-height: 0;  
+            }
+            color: $color__grey1;
+        }
+        &-title {
+            text-align: center;
+            padding: 14px 0 10px 0;
+            color: $color__blue2;
+            font-size: 24px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 35px; /* 145.833% */
+        }
+        &-buttons {
+            color: $color__blue2;
+            display: flex;
+            column-gap: 4px;
+            &-2 {
+                @include flex-all-center;
+                height: 30px;
+                padding: 5px 15px;
+                border-radius: 15px;
+                background: $color__orange;
+            }
+        }
+    }
+}
+
+.services__add {
+    min-height: 100vh;
+    &-input {
+        font-size: 24px;
+        font-style: italic;
+        font-weight: 600;
+        line-height: 35px;
+        color: $color__grey1;
+        margin-bottom: 16px;
+        margin-top: 24px;
+        &::placeholder {
+            color: $color__grey1;
+        }
+    }
+    &-button {
+        @include button-main;
+        position: fixed;
+        width: calc(100% - 48px);
+        left: 50%;
+        transform: translateX(-50%);
+        &-1 {
+            bottom: 90px;
+        }
+        &-2 {
+            bottom: 24px;
+        }
+    }
+}
+
+.services__exit{
+    display: flex;
+    gap: 8px;
+    svg{
+        path{
+            stroke: $color__blue !important;
+        }
+    }
+}

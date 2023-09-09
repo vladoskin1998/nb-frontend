@@ -1,8 +1,21 @@
+import { METHOD_AUTH } from '../../types/enum'
 import { IconFacebook } from '../svg/IconFacebook'
 import { IconGoogle } from '../svg/IconGoogle'
 
-const AuthHeader = ({ isLogin, setIsLogin }: { isLogin: boolean, setIsLogin: (b: boolean) => void }) => {
-    
+const AuthHeader = ({ isLogin, setIsLogin }
+    : { isLogin: boolean, setIsLogin: (b: boolean) => void }
+) => {
+
+    // const hendlerAuthMessenger = (method:METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE) => {
+    //     window.location.href = `http://localhost:5000/api/auth/${method}`;
+    // }
+
+
+    const hendlerAuthMessenger = (method:METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE) => {
+        window.location.href = `https://nb-nb.onrender.com/api/auth/${method}`;
+    }
+   // return res.redirect('https://nb-nb.onrender.com');
+
     return (
         <>
             <h4 className='auth__title'>
@@ -17,10 +30,10 @@ const AuthHeader = ({ isLogin, setIsLogin }: { isLogin: boolean, setIsLogin: (b:
                 <div className={`auth__tab-border ${isLogin ? "auth__tab-border--l" : "auth__tab-border--r"}`} />
             </div>
             <div className='auth__messenger'>
-                <button>
+                <button onClick={()=>hendlerAuthMessenger(METHOD_AUTH.GOOGLE)}>
                     <IconGoogle />
                 </button>
-                <button>
+                <button onClick={()=>hendlerAuthMessenger(METHOD_AUTH.FACEBOOK)}>
                     <IconFacebook />
                 </button>
             </div>

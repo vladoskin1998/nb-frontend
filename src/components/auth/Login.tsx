@@ -3,10 +3,22 @@ import { InputPassword } from '../ui/InputPassword';
 import { useNavigate } from 'react-router-dom';
 import { CheckBox } from '../ui/CheckBox';
 
-const Login = () => {
+const Login = (
+    {
+        login,
+        setLogin,
+        password,
+        setPassword,
+    }:
+    {
+        login:string,
+        setLogin: (s:string) => void,
+        password:string,
+        setPassword: (s:string) => void,
+    }
+) => {
 
-    const [login, setLogin] = useState("")
-    const [password, setPassword] = useState("")
+
     const [checked, setChecked] = useState(true)
     const navigate = useNavigate()
 

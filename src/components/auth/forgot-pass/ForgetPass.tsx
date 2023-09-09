@@ -47,7 +47,7 @@ const ForgetPassBody = () => {
         <h4 className="forget__title">Forgot Password</h4>
         <h5 className="forget__subtitle">Select which contact details should we use to reset your password</h5>
         <div className="forget__body-img">
-            <img src="/Images/YellowKey.png" />
+            <img src="/Images/YellowKey.png" alt=""/>
         </div>
         <div className={`forget__body-method ${method === "phone" ? "forget__body-method--active" : ""}`} onClick={() => { setMethod('phone') }}>
             <div className="forget__body-method-icon">
