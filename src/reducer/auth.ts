@@ -3,7 +3,7 @@ import {
     authorization,
     logout,
     authorizationMessenger,
-} from "../services/auth-service"
+} from "../services/auth"
 import { ROLES } from "../types/enum"
 
 export const authReducer: any = createSlice({

@@ -16,8 +16,8 @@
             font-style: normal;
             font-weight: 600;
             line-height: 140%;
-            button{
-                line-height: 0;  
+            button {
+                line-height: 0;
             }
             color: $color__grey1;
         }
@@ -74,12 +74,83 @@
     }
 }
 
-.services__exit{
+.services__exit {
     display: flex;
     gap: 8px;
-    svg{
-        path{
+    svg {
+        path {
             stroke: $color__blue !important;
+        }
+    }
+}
+
+.services__favor {
+    .ui-input-search{
+        margin-bottom: 4px;
+    }
+    &-item {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        padding: 20px;
+        gap: 20px;
+        border-radius: 12px;
+        border-bottom: 2px solid $color__orange;
+        background: $color__white;
+        margin-top: 16px;
+        &-row1 {
+            display: flex;
+            column-gap: 20px;
+            align-items: flex-start;
+            &-img {
+                min-width: 70px;
+                min-height: 70px;
+                border-radius: 8px;
+            }
+            &-title {
+                color: $color__blue1;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 140%; /* 19.6px */
+                text-decoration-line: underline;
+            }
+            &-footer {
+                display: flex;
+                column-gap: 6px;
+                align-items: center;
+                margin-top: 5px;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 25px; 
+                color: $color__black2;
+                span{
+                    color: $color__blue;
+                }
+            }
+            &-userimg {
+                min-width: 25px;
+                min-height: 25px;
+                border-radius: 50%;
+            }
+        }
+        &-row2-2{
+            margin-top: 15px;
+        }
+        &-row2{
+            display: grid;
+            grid-template-columns: auto 60px auto 1fr;
+            align-items: center;
+            column-gap: 8px;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 20px;
+            color: $color__blue;
+            &-svg{
+                padding: 0 7px;
+            }
         }
     }
 }

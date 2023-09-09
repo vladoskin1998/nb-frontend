@@ -73,3 +73,14 @@
     border: 2px dashed  $color__grey2;
     box-shadow: 0px 2px 5px 0px rgba(38, 51, 77, 0.03);
 }
+
+.ui-input-search{
+
+    @include input-main;
+    display: grid;
+    column-gap: 10px;
+    grid-template-columns: auto 1fr auto;
+    padding: 0 20px;
+    align-items: center;
+    height: 50px;
+}

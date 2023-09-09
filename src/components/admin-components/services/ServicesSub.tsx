@@ -52,7 +52,7 @@ const ServicesSub = () => {
                         <IconLeftChevrons />
                     </button>
                     <h6>
-                        All Services
+                    ServicesSub
                     </h6>
                 </div>
             </AdminSubHeader>

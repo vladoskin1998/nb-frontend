@@ -56,7 +56,6 @@ const ServicesAll = () => {
                     </button>
                 </div>
             </AdminSubHeader>
-
             <div className="services__all">
                 {
                     list.map((item) =>
@@ -67,8 +66,8 @@ const ServicesAll = () => {
                 }
             </div>
         </>
-
     )
 }
 
 export default ServicesAll
+

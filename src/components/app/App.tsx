@@ -6,7 +6,7 @@ import Success from "../auth/Success";
 import AdminRouter from "../route/AdminRouter";
 import { useAppDispatch } from "../../utils/hooks";
 import { useEffect } from "react";
-import { refresh } from "../../services/auth-service";
+import { refresh } from "../../services/auth";
 
 export default function App() {
 

@@ -17,7 +17,7 @@ export interface subCategoriesNames{
         name: string,
         mark: number,
         markNumber: number,
-    }
+    },
     view: number,
     like: number,
     date: Date | string,
