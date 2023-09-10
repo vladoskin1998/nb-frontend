@@ -15,7 +15,6 @@ const AdminPanel = lazy(() => import('../admin-components/admin-panel/AdminPanel
 const AdminRouter = () => {
   return (
     <div>
-      <Suspense fallback={"..loading"}>
         <AdminHeader />
         <Routes >
           <Route path="users" element={<ProtectedRoute element={<Users />} />} />
@@ -28,7 +27,7 @@ const AdminRouter = () => {
           <Route path="adminpanel" element={<ProtectedRoute element={<AdminPanel />} />} />
           <Route path="*" element={<ProtectedRoute element={<AdminPanel />} />} />
         </Routes>
-      </Suspense>
+ 
     </div>
   );
 };
