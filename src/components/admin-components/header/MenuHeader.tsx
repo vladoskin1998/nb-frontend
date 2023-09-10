@@ -43,11 +43,12 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
                             }>
                                 {r.label()}
                             </div>
-                            <div onClick={closeMenu}>
-                                <Link to={toOneKind(r.name)}>
+                            <Link to={toOneKind(r.name)}>
+                                <div onClick={closeMenu}>
+
                                     {r.name}
-                                </Link>
-                            </div>
+                                </div>
+                            </Link>
                             <div className='admin__header-menu-route-svg'>
                                 {
                                     r.subName.length ?

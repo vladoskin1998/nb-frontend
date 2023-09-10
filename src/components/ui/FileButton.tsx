@@ -1,9 +1,8 @@
 import { useState, useRef } from "react";
 import { IconArrachFile } from "../svg/IconArrachFile";
 
-export const FileButton = ({getFile}:{getFile:(f:File) => void}) => {
+export const FileButton = ({getFile,image}:{getFile:(f:File) => void,image: File}) => {
 
-    const [selectedFile, setSelectedFile] = useState('');
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleFileSelect = () => {
@@ -11,20 +10,17 @@ export const FileButton = ({getFile}:{getFile:(f:File) => void}) => {
         if (fileInput && fileInput?.files && fileInput.files[0]) {
             const file = fileInput?.files[0];
             getFile(file)
-            setSelectedFile(URL.createObjectURL(file));
         }
     };
 
     return (
             <label className="ui-file-button">
-
                 {
-                    selectedFile
-                        ? <img className="ui-file-button-image" src={selectedFile} alt="Вибране зображення" />
+                    image
+                        ? <img className="ui-file-button-image" src={URL.createObjectURL(image)} alt="Вибране зображення" />
                         : <IconArrachFile />
                 }
                 <input
-
                     type="file"
                     ref={fileInputRef}
                     style={{ display: 'none' }}

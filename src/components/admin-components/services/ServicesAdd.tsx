@@ -14,21 +14,17 @@ interface CategoryInterface {
 }
 
 const categoryBody = {
-    id:"",
+    id: "",
     name: "",
     file: null as any,
 }
 
 const ServicesAdd = () => {
-    const [category, setCategory] = useState({...categoryBody, id: uuidv4()} )
+    const [category, setCategory] = useState({ ...categoryBody, id: uuidv4() })
     const navigate = useNavigate()
     const [listSubCategory, setListSubCategory] = useState<CategoryInterface[]>(
         []
     )
-
-    console.log("category", category)
-    console.log("listSubCategory", listSubCategory)
-
     const addSubCategory = () => {
         setListSubCategory((s) => [...s, { ...categoryBody, id: uuidv4() }])
     }
@@ -78,22 +74,23 @@ const ServicesAdd = () => {
             }
 
             const payload = removeFile({
-                category: {id: category.id, name:category.name},
-                subCategory: listSubCategory.map(it => ({id: it.id, name: it.name }))
+                category: { id: category.id, name: category.name },
+                subCategory: {
+                    listSubCategory: listSubCategory.map(it => ({ id: it.id, name: it.name }))
+                }
             })
 
-            console.log("payload",payload);
-            
-
-            formData.append("payload", JSON.stringify(payload)   )
+            formData.append("payload", JSON.stringify(payload))
             await $api.post("categories/add-categories", formData, {
                 headers: { "Content-Type": "multipart/form-data" },
             })
+            setCategory({ ...categoryBody, id: uuidv4() })
+            setListSubCategory([])
         } catch (error) {
             throw error
         }
     }
-    
+
     return (
         <>
             <div className="ui-admin__subheader">
@@ -119,10 +116,9 @@ const ServicesAdd = () => {
                     />
                     <FileButton
                         getFile={(file: File) => {
-                            console.log("file--->", file)
-
                             setCategory({ ...category, file })
                         }}
+                        image={category.file}
                     />
                 </div>
                 {listSubCategory.map((item, index) => {
@@ -144,6 +140,7 @@ const ServicesAdd = () => {
                                 getFile={(file: File) =>
                                     changeItemSubFile({ index, file })
                                 }
+                                image={item.file}
                             />
                         </div>
                     )

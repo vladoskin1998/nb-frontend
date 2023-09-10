@@ -6,6 +6,8 @@ import  store  from './store/store';
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom';
 
+console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

@@ -3,45 +3,38 @@ import { ServicesInterface } from "../../../types/services"
 import { Link, useNavigate } from "react-router-dom";
 import { ServicesItem } from "./ServicesItem";
 import { AdminSubHeader } from '../../ui/AdminSubHeader'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconBottomChevrons } from "../../svg/IconChevrons"
+import $api from "../../../http";
+import { AxiosResponse } from "axios";
 
-const list: ServicesInterface[] = [
-    {
-        id: "123456789",
-        name: "Category",
-        numberView: 100,
-    },
-    {
-        id: "123456789",
-        name: "Category",
-        numberView: 100,
-    },
-    {
-        id: "123456789",
-        name: "Category",
-        numberView: 100,
-    },
-    {
-        id: "123456789",
-        name: "Category",
-        numberView: 100,
-    },
-    {
-        id: "123456789",
-        name: "Category",
-        numberView: 100,
-    },
-];
+interface CategoriesResponseInterface {
+    _id: string,
+    name: string,
+    numberView: number
+}
+
 const ServicesAll = () => {
     const [isOpenAdd, setIsOpenAdd] = useState(false)
+    const [categories, setCategories] = useState<CategoriesResponseInterface[]>([])
 
     const navigate = useNavigate()
     const changeAdd = () => {
         setIsOpenAdd(s => !s)
-        navigate('servicesadd')
+        navigate('/admin/services/servicesadd')
     }
 
+    const getAllCategories = () => {
+        $api.get('categories/all-categories')
+            .then((r: AxiosResponse<CategoriesResponseInterface[]>) => {
+                setCategories(r.data)
+            })
+            .catch(e => alert(e))
+    }
+
+    useEffect(() => {
+        getAllCategories()
+    }, [])
 
 
     return (
@@ -58,10 +51,12 @@ const ServicesAll = () => {
             </AdminSubHeader>
             <div className="services__all">
                 {
-                    list.map((item) =>
-                        <Link to={`servicessub?id=${item.id}`}>
-                            <ServicesItem name={item.name} numberView={item.numberView} />
-                        </Link>
+                    categories.map((item) =>
+                        <ServicesItem link={`/admin/services/servicessub?id=${item._id}`}
+                            _id={item._id}
+                            name={item.name}
+                            numberView={item.numberView}
+                        />
                     )
                 }
             </div>

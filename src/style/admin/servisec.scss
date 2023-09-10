@@ -1,6 +1,6 @@
 .services__all {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Две колонки и автоматический перенос элементов */
+    grid-template-columns: 1fr 1fr; 
     gap: 12px;
     &-item {
         height: 150px;
@@ -28,7 +28,7 @@
             font-size: 24px;
             font-style: normal;
             font-weight: 600;
-            line-height: 35px; /* 145.833% */
+            line-height: 35px; 
         }
         &-buttons {
             color: $color__blue2;
@@ -152,5 +152,44 @@
                 padding: 0 7px;
             }
         }
+    }
+}
+
+.services__modal{
+    z-index: 10;
+    position: fixed;
+    top:50%;
+    left: 0;
+    transform: translateY(-50%);  
+    &-body{
+        padding: 0 40px; 
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+        &-line{
+            display: flex;
+            align-items: center;
+            column-gap: 8px;
+        }
+        &-visiable{
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            column-gap: 8px;
+            align-items: center;
+            height: 30px;
+        }
+        svg{
+            path{
+                fill: black;
+            }
+        }
+    }
+    &-title{
+        color: $color__blue;
+        text-align: center;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 140%; 
     }
 }

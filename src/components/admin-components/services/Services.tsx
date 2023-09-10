@@ -14,7 +14,7 @@ const Services = () => {
          
             <Routes>
                 <Route path="servicessub" element={<ServicesSub />} />
-                <Route path="servicessub/favor" element={<ServicesFavor />}/>
+                <Route path="favor" element={<ServicesFavor />}/>
                 <Route path="servicesadd" element={<ServicesAdd />} />
                 <Route path="*" element={<ServicesAll />} />
             </Routes>

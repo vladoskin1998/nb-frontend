@@ -2,66 +2,69 @@ import { ServicesInterface } from "../../../types/services"
 import { Link, useNavigate } from "react-router-dom";
 import { ServicesItem } from "./ServicesItem";
 import { AdminSubHeader } from '../../ui/AdminSubHeader'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IconLeftChevrons } from "../../svg/IconChevrons";
+import $api from "../../../http";
+import { AxiosResponse } from "axios";
+import { useSearchParams } from 'react-router-dom';
 
-const list: ServicesInterface[] = [
-    {
-        id: "987654321",
-        name: "Sub Category",
-        numberView: 100,
-    },
-    {
-        id: "987654321",
-        name: "Sub Category",
-        numberView: 100,
-    },
-    {
-        id: "987654321",
-        name: "Sub Category",
-        numberView: 100,
-    },
-    {
-        id: "987654321",
-        name: "Sub Category",
-        numberView: 100,
-    },
-    {
-        id: "987654321",
-        name: "Sub Category",
-        numberView: 100,
-    },
-];
+interface CategoriesResponseInterface {
+    _id: string,
+    name: string,
+    numberView: number
+}
+
 
 const ServicesSub = () => {
     const [isOpenAdd, setIsOpenAdd] = useState(false)
+    const [subCategories, setSubCategories] = useState<CategoriesResponseInterface[]>([])
 
     const navigate = useNavigate()
     const changeAdd = () => {
         setIsOpenAdd(s => !s)
-        navigate('servicesadd')
+        navigate('/admin/services/servicesadd')
     }
 
+    const [searchParams] = useSearchParams();
+    const id = searchParams.get('id');
+
     const exit = () => navigate(-1)
+
+    const getSubCategories = () => {
+        $api.get(`categories/sub-categories?id=${id}`)
+            .then((r: AxiosResponse<CategoriesResponseInterface[]>) => {
+                setSubCategories(r.data)
+            })
+            .catch(e => alert(e))
+    }
+
+    useEffect(() => {
+        getSubCategories()
+    }, [])
+
+    console.log(id);
+
 
     return (
         <>
             <AdminSubHeader onClickButton={changeAdd}>
                 <div className="services__exit" onClick={exit}>
-                    <button>
+                    <button >
                         <IconLeftChevrons />
                     </button>
-                    <h6>
-                    ServicesSub
+                    <h6 >
+                        ServicesSub
                     </h6>
                 </div>
             </AdminSubHeader>
             <div className="services__all">
                 {
-                    list.map((item) =>
-                        <Link to={`favor?id=${item.id}`}>
-                            <ServicesItem name={item.name} numberView={item.numberView} />
-                        </Link>
+                    subCategories?.map((item) =>
+                        <ServicesItem link={`/admin/services/favor?id=${item._id}`}
+                            _id={item._id}
+                            name={item.name}
+                            numberView={item.numberView}
+                        />
                     )
                 }
             </div>
