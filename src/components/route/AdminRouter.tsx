@@ -1,16 +1,16 @@
-import React from 'react';
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import AdminHeader from '../admin-components/header/AdminHeader';
 
-import Users from '../admin-components/users/Users';
-import Services from '../admin-components/services/Services';
-import Posts from '../admin-components/posts/Posts';
-import Messeges from '../admin-components/messeges/Messeges';
-import HelpCenter from '../admin-components/help-center/HelpCenter';
-import Advertisement from '../admin-components/advertisement/Advertisement';
-import Activities from '../admin-components/activities/Activities';
-import AdminPanel from '../admin-components/admin-panel/AdminPanel';
+const Users = lazy(() => import('../admin-components/users/Users'));
+const Services = lazy(() => import('../admin-components/services/Services'));
+const Posts = lazy(() => import('../admin-components/posts/Posts'));
+const Messeges = lazy(() => import('../admin-components/messeges/Messeges'));
+const HelpCenter = lazy(() => import('../admin-components/help-center/HelpCenter'));
+const Advertisement = lazy(() => import('../admin-components/advertisement/Advertisement'));
+const Activities = lazy(() => import('../admin-components/activities/Activities'));
+const AdminPanel = lazy(() => import('../admin-components/admin-panel/AdminPanel'));
 
 const AdminRouter = () => {
   return (

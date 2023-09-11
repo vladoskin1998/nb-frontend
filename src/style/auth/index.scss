@@ -4,7 +4,7 @@
 .auth {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: calc(100vh - calc(100vh - 100%));
     padding: 40px 40px 24px 40px;
     &__title {
         @include title-main;

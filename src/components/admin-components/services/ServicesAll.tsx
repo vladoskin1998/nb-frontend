@@ -1,68 +1,58 @@
-import { IconServicesAllPlus, IconServicesAllPoint } from "../../svg/IconServicesAll"
-import { ServicesInterface } from "../../../types/services"
-import { Link, useNavigate } from "react-router-dom";
-import { ServicesItem } from "./ServicesItem";
-import { AdminSubHeader } from '../../ui/AdminSubHeader'
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
+import { ServicesItem } from "./ServicesItem"
+import { AdminSubHeader } from "../../ui/AdminSubHeader"
+import { useEffect, useState } from "react"
 import { IconBottomChevrons } from "../../svg/IconChevrons"
-import $api from "../../../http";
-import { AxiosResponse } from "axios";
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { allCategories } from "../../../services/categories"
 
 interface CategoriesResponseInterface {
-    _id: string,
-    name: string,
+    _id: string
+    name: string
     numberView: number
 }
 
 const ServicesAll = () => {
-    const [isOpenAdd, setIsOpenAdd] = useState(false)
-    const [categories, setCategories] = useState<CategoriesResponseInterface[]>([])
 
     const navigate = useNavigate()
-    const changeAdd = () => {
-        setIsOpenAdd(s => !s)
-        navigate('/admin/services/servicesadd')
-    }
+    const dispatch = useAppDispatch()
+    const { categories } = useAppSelector((s) => s.categoriesReducer)
 
-    const getAllCategories = () => {
-        $api.get('categories/all-categories')
-            .then((r: AxiosResponse<CategoriesResponseInterface[]>) => {
-                setCategories(r.data)
-            })
-            .catch(e => alert(e))
+    const [isOpenAdd, setIsOpenAdd] = useState(false)
+ 
+    const changeAdd = () => {
+        setIsOpenAdd((s) => !s)
+        navigate("/admin/services/servicesadd")
     }
 
     useEffect(() => {
-        getAllCategories()
+        dispatch(allCategories())
     }, [])
-
 
     return (
         <>
             <AdminSubHeader onClickButton={changeAdd}>
                 <div className="services__exit">
-                    <h5>
-                        All Services
-                    </h5>
+                    <h5>All Services</h5>
                     <button>
                         <IconBottomChevrons />
                     </button>
                 </div>
             </AdminSubHeader>
             <div className="services__all">
-                {
-                    categories.map((item) =>
-                        <ServicesItem link={`/admin/services/servicessub?id=${item._id}`}
-                            _id={item._id}
-                            name={item.name}
-                            numberView={item.numberView}
-                        />
-                    )
-                }
+                {categories.map((item) => (
+                    <ServicesItem
+                        link={`/admin/services/servicessub?id=${item._id}`}
+                        _id={item._id}
+                        name={item.name}
+                        numberView={item.numberView}
+                        isVisiable={item.isVisiable}
+                        key={item._id}
+                    />
+                ))}
             </div>
         </>
     )
 }
 
 export default ServicesAll
-

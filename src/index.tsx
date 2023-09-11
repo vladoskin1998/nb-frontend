@@ -6,14 +6,14 @@ import store from './store/store';
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom';
 import { Suspense } from 'react';
-
+import { Loader } from './components/ui/Loader';
 console.log(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <Suspense fallback={"..loading"}>
+  <Suspense fallback={<Loader />}>
     <Provider store={store}>
       <HashRouter>
         <App />

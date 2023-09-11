@@ -12,8 +12,6 @@ export default function App() {
 
     const dispatch = useAppDispatch()
 
-  
-    
     useEffect(() => {
         dispatch(
             refresh()
@@ -23,12 +21,10 @@ export default function App() {
     return (
             <Routes>
 
-                <Route path='/admin/*' element={<AdminRouter />}>
-                </Route>
-                <Route path='/user/*'>
-                </Route>
-
-
+                <Route path='/admin/*' element={<AdminRouter />} />
+      
+                <Route path='/user/*' />
+     
                 <Route path='/auth'>
                     <Route path='success' element={<Success />} />
                     <Route path='location/*' element={<LocationUser />} />

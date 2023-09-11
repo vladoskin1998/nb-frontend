@@ -35,8 +35,8 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
     return (
         <div className={`admin__header-menu ${isOpen ? "admin__header-menu--active" : ""}`} ref={munu}>
             {routes.map(
-                r => {
-                    return <>
+                (r, index) => {
+                    return <div key={index}>
                         <div className='admin__header-menu-route'>
                             <div className={`admin__header-menu-route-svg
                                 ${toOneKind(r.name) === isOpenSub ? 'admin__header-menu-route--fill' : ''}`
@@ -69,7 +69,7 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
                         <div className={`admin__header-menu-subroute ${toOneKind(r.name) === isOpenSub ? "admin__header-menu-subroute--height" : ""}`}>
                             {
                                 r.subName.map(
-                                    s => <div onClick={closeMenu}>
+                                    s => <div onClick={closeMenu} key={s + index*100}>
                                         <Link to={toOneKind(s)}>
                                             {s}
                                         </Link>
@@ -77,7 +77,7 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
                                 )
                             }
                         </div>
-                    </>
+                    </div>
                 }
             )}
         </div>

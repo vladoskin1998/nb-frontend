@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FileButton } from "../../ui/FileButton"
 import { IconLeftChevrons } from "../../svg/IconChevrons"
 import { useNavigate } from "react-router"
-import { addCategory } from "../../../services/category"
 import $api from "../../../http"
 import { v4 as uuidv4 } from "uuid"
 import { removeFile } from "../../../utils"
+import { useSearchParams } from "react-router-dom"
 
 interface CategoryInterface {
     id: string
@@ -25,6 +25,10 @@ const ServicesAdd = () => {
     const [listSubCategory, setListSubCategory] = useState<CategoryInterface[]>(
         []
     )
+    const [searchParams] = useSearchParams()
+
+    const [idCategories, setIdCategorise] = useState("")
+
     const addSubCategory = () => {
         setListSubCategory((s) => [...s, { ...categoryBody, id: uuidv4() }])
     }
@@ -57,13 +61,20 @@ const ServicesAdd = () => {
         )
     }
 
-    const exit = () => navigate(-1)
+    // Поиск айди для определения,
+    // нужно ли создать новую категорию,
+    // или добавить в уже существующую новую.
+    useEffect(() => {
+        const id = searchParams.get("id")
+        setIdCategorise(id || "")
+        if (id) {
+            addSubCategory()
+        }
+    }, [])
 
     const addNewCategory = async () => {
         try {
             const formData = new FormData()
-
-            formData.append("files", category.file, category.id)
 
             for (let i = 0; i < listSubCategory.length; i++) {
                 formData.append(
@@ -73,17 +84,33 @@ const ServicesAdd = () => {
                 )
             }
 
-            const payload = removeFile({
-                category: { id: category.id, name: category.name },
+            // Также формируется FormData
+            // для отправки на создание новой категории
+            // или добавление новой подкатегории к существующей.
+            const payload = {
+                category: !idCategories
+                    ? { id: category.id, name: category.name }
+                    : { id: idCategories },
                 subCategory: {
-                    listSubCategory: listSubCategory.map(it => ({ id: it.id, name: it.name }))
-                }
-            })
-
+                    listSubCategory: listSubCategory.map((it) => ({
+                        id: it.id,
+                        name: it.name,
+                    })),
+                },
+            }
             formData.append("payload", JSON.stringify(payload))
-            await $api.post("categories/add-categories", formData, {
-                headers: { "Content-Type": "multipart/form-data" },
-            })
+            if (idCategories) {
+                await $api.post("categories/add-sub-categories", formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
+            } else {
+                formData.append("files", category.file, category.id)
+
+                await $api.post("categories/add-categories", formData, {
+                    headers: { "Content-Type": "multipart/form-data" },
+                })
+            }
+
             setCategory({ ...categoryBody, id: uuidv4() })
             setListSubCategory([])
         } catch (error) {
@@ -95,7 +122,10 @@ const ServicesAdd = () => {
         <>
             <div className="ui-admin__subheader">
                 <div className="ui-admin__subheader-title">
-                    <div className="services__exit" onClick={exit}>
+                    <div
+                        className="services__exit"
+                        onClick={() => navigate(-1)}
+                    >
                         <button>
                             <IconLeftChevrons />
                         </button>
@@ -104,23 +134,32 @@ const ServicesAdd = () => {
                 </div>
             </div>
             <div className="services__add">
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Category Name"
-                        className="services__add-input"
-                        value={category.name}
-                        onChange={(e) =>
-                            setCategory((s) => ({ ...s, name: e.target.value }))
-                        }
-                    />
-                    <FileButton
-                        getFile={(file: File) => {
-                            setCategory({ ...category, file })
-                        }}
-                        image={category.file}
-                    />
-                </div>
+                {!idCategories ? (
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Category Name"
+                            className="services__add-input"
+                            value={category.name}
+                            onChange={(e) =>
+                                setCategory((s) => ({
+                                    ...s,
+                                    name: e.target.value,
+                                }))
+                            }
+                        />
+                        <FileButton
+                            getFile={(file: File) => {
+                                console.log("file", file)
+
+                                setCategory((s) => ({ ...s, file: file }))
+                            }}
+                            image={category.file}
+                        />
+                    </div>
+                ) : (
+                    <></>
+                )}
                 {listSubCategory.map((item, index) => {
                     return (
                         <div>

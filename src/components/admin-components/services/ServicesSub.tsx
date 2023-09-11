@@ -1,12 +1,11 @@
-import { ServicesInterface } from "../../../types/services"
-import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import {  useNavigate } from "react-router-dom";
 import { ServicesItem } from "./ServicesItem";
 import { AdminSubHeader } from '../../ui/AdminSubHeader'
 import { useEffect, useState } from "react";
 import { IconLeftChevrons } from "../../svg/IconChevrons";
-import $api from "../../../http";
-import { AxiosResponse } from "axios";
 import { useSearchParams } from 'react-router-dom';
+import { allSubCategories } from "../../../services/categories";
 
 interface CategoriesResponseInterface {
     _id: string,
@@ -16,33 +15,27 @@ interface CategoriesResponseInterface {
 
 
 const ServicesSub = () => {
-    const [isOpenAdd, setIsOpenAdd] = useState(false)
-    const [subCategories, setSubCategories] = useState<CategoriesResponseInterface[]>([])
-
     const navigate = useNavigate()
+
+    
+    const [isOpenAdd, setIsOpenAdd] = useState(false)
+    const dispatch = useAppDispatch()
+    const { subCategories } = useAppSelector((s) => s.categoriesReducer)
+       const [searchParams] = useSearchParams();
+
     const changeAdd = () => {
         setIsOpenAdd(s => !s)
         navigate('/admin/services/servicesadd')
     }
 
-    const [searchParams] = useSearchParams();
-    const id = searchParams.get('id');
-
     const exit = () => navigate(-1)
 
-    const getSubCategories = () => {
-        $api.get(`categories/sub-categories?id=${id}`)
-            .then((r: AxiosResponse<CategoriesResponseInterface[]>) => {
-                setSubCategories(r.data)
-            })
-            .catch(e => alert(e))
-    }
-
     useEffect(() => {
-        getSubCategories()
+        const id = searchParams.get('id');
+        dispatch(
+            allSubCategories({id: id as string})
+        )
     }, [])
-
-    console.log(id);
 
 
     return (
@@ -64,6 +57,8 @@ const ServicesSub = () => {
                             _id={item._id}
                             name={item.name}
                             numberView={item.numberView}
+                            isVisiable={item.isVisiable}
+                            key={item._id}
                         />
                     )
                 }

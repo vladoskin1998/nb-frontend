@@ -57,15 +57,12 @@ const IOSSwitch = styled((props: SwitchProps) => (
 
 
 
-export const IosTougle = ({setIsTougle}:{setIsTougle: () => void}) => {
+export const IosTougle = ({isTougle, setIsTougle}:{isTougle:boolean,setIsTougle: () => void}) => {
+  console.log("iosisTougle=====>",isTougle);
+  
   return (
     <FormGroup style={{height:'30px'}}>
-  
-      <FormControlLabel
-        control={<IOSSwitch sx={{ m: 1 }} defaultChecked />}
-        label=""
-    
-      />
+        <IOSSwitch sx={{ m: 1 }} defaultChecked={isTougle}  onClick={setIsTougle} />
     </FormGroup>
   );
 }

@@ -19,6 +19,9 @@
             button {
                 line-height: 0;
             }
+            h6{
+                @include text-tree-dots($wdh: 70px);
+            }
             color: $color__grey1;
         }
         &-title {

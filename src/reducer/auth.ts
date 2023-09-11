@@ -6,7 +6,7 @@ import {
 } from "../services/auth"
 import { ROLES } from "../types/enum"
 
-export const authReducer: any = createSlice({
+export const authReducer = createSlice({
     name: "auth",
     initialState: {
         isAuth: false,

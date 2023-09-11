@@ -8,15 +8,16 @@ export const ServicesItem = ({
     name,
     numberView,
     link,
+    isVisiable,
 }: {
     _id: string,
     name: string,
     numberView: number,
     link: string,
+    isVisiable: boolean,
 }) => {
 
     const [isOpen, setIsOpen] = useState(false)
-    const navigate = useNavigate()
 
     const changeOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
@@ -48,7 +49,9 @@ export const ServicesItem = ({
                 ? <ServicesModal
                     _id={_id}
                     name={name}
-                    setIsOpen={setIsOpen} />
+                    setIsOpen={setIsOpen} 
+                    isVisiable={isVisiable}
+                    />
                 : false}
         </>
 
