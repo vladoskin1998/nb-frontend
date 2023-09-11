@@ -3,7 +3,7 @@ import { FileButton } from "../../ui/FileButton"
 import { IconLeftChevrons } from "../../svg/IconChevrons"
 import { useNavigate } from "react-router"
 import $api from "../../../http"
-import { v4 as uuidv4 } from "uuid"
+import { v1 as uuidv4 } from "uuid"
 import { removeFile } from "../../../utils"
 import { useSearchParams } from "react-router-dom"
 
