@@ -25,6 +25,9 @@ const ServicesAdd = () => {
     const [listSubCategory, setListSubCategory] = useState<CategoryInterface[]>(
         []
     )
+
+    console.log(category);
+    
     const [searchParams] = useSearchParams()
 
     const [idCategories, setIdCategorise] = useState("")
@@ -76,6 +79,8 @@ const ServicesAdd = () => {
         try {
             const formData = new FormData()
 
+
+            //добавить разширения в имени файла
             for (let i = 0; i < listSubCategory.length; i++) {
                 formData.append(
                     "files",
@@ -104,7 +109,7 @@ const ServicesAdd = () => {
                     headers: { "Content-Type": "multipart/form-data" },
                 })
             } else {
-                formData.append("files", category.file, category.id)
+                formData.append("files", category.file, `${category.id}`)
 
                 await $api.post("categories/add-categories", formData, {
                     headers: { "Content-Type": "multipart/form-data" },
