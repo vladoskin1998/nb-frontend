@@ -12,9 +12,7 @@ const AdminHeader = () => {
       setTitle("Menu")
     }
     else {
-      const localRoute = window.location?.pathname?.split('/')[2]
-      console.log(localRoute);
-      
+      const localRoute = window.location?.pathname?.split('/')[2]      
       setTitle(
         headerTitle(localRoute)
       )

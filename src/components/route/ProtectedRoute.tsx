@@ -1,19 +1,18 @@
-import  { ReactElement } from "react";
-import {useNavigate } from "react-router-dom";
+import { ReactElement, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../../utils/hooks";
 
 const ProtectedRoute = ({ element }: { element: ReactElement }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const isAuthenticated = useAppSelector((s: any) => s.authReducer.isAuth);
 
-
-    const isAuthenticated = useAppSelector((s:any) => s.authReducer.isAuth); 
-
+  useEffect(() => {
     if (!isAuthenticated) {
-        navigate("/auth"); 
-        return null;
+      navigate("/auth");
     }
+  }, [isAuthenticated, navigate]);
 
-    return element;
+  return isAuthenticated ? element : null;
 };
 
 export default ProtectedRoute;

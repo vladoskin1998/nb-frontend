@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from 'react'
-import { IconAdminMenuActivities, IconAdminMenuPanel, IconAdminMenuHelpCenter, IconAdminMenuAdvertisement, IconAdminMenuPost, IconAdminMenuMesseges, IconAdminMenuServeces, IconAdminMenuUsers } from '../../svg/IconAdminMenu'
 import { Link } from 'react-router-dom';
 import { IconRightChevrons, IconBottomChevrons } from '../../svg/IconChevrons';
 import { routesMenu as routes } from '../../../utils/constant';
@@ -45,7 +44,6 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
                             </div>
                             <Link to={toOneKind(r.name)}>
                                 <div onClick={closeMenu}>
-
                                     {r.name}
                                 </div>
                             </Link>

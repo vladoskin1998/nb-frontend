@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 import { FileButton } from "../../ui/FileButton"
 import { IconLeftChevrons } from "../../svg/IconChevrons"
 import { useNavigate } from "react-router"
-import $api from "../../../http"
 import { v1 as uuidv4 } from "uuid"
-import { removeFile } from "../../../utils"
 import { useSearchParams } from "react-router-dom"
+import { useAppDispatch } from "../../../utils/hooks"
+import { addCategories } from "../../../services/categories"
 
 interface CategoryInterface {
     id: string
@@ -20,14 +20,14 @@ const categoryBody = {
 }
 
 const ServicesAdd = () => {
-    const [category, setCategory] = useState({ ...categoryBody, id: uuidv4() })
+
+    const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    const [category, setCategory] = useState({ ...categoryBody, id: uuidv4() })
     const [listSubCategory, setListSubCategory] = useState<CategoryInterface[]>(
         []
     )
 
-    console.log(category);
-    
     const [searchParams] = useSearchParams()
 
     const [idCategories, setIdCategorise] = useState("")
@@ -79,7 +79,6 @@ const ServicesAdd = () => {
         try {
             const formData = new FormData()
 
-
             //добавить разширения в имени файла
             for (let i = 0; i < listSubCategory.length; i++) {
                 formData.append(
@@ -94,26 +93,41 @@ const ServicesAdd = () => {
             // или добавление новой подкатегории к существующей.
             const payload = {
                 category: !idCategories
-                    ? { id: category.id, name: category.name }
+                    ? {
+                          fileName: `${category.id}.${
+                              category?.file?.type.split("/")[1]
+                          }`,
+                          name: category.name,
+                      }
                     : { id: idCategories },
                 subCategory: {
                     listSubCategory: listSubCategory.map((it) => ({
-                        id: it.id,
+                        fileName: `${it.id}.${it?.file?.type.split("/")[1]}`,
                         name: it.name,
                     })),
                 },
             }
+
             formData.append("payload", JSON.stringify(payload))
             if (idCategories) {
-                await $api.post("categories/add-sub-categories", formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                })
+                dispatch(
+                    addCategories(
+                        {
+                            link: "categories/add-sub-categories",
+                            formData
+                        }
+                    )
+                )
             } else {
-                formData.append("files", category.file, `${category.id}`)
-
-                await $api.post("categories/add-categories", formData, {
-                    headers: { "Content-Type": "multipart/form-data" },
-                })
+                formData.append("files", category.file, category.id)
+                dispatch(
+                    addCategories(
+                        {
+                            link: "categories/add-categories",
+                            formData
+                        }
+                    )
+                )
             }
 
             setCategory({ ...categoryBody, id: uuidv4() })
@@ -155,9 +169,7 @@ const ServicesAdd = () => {
                         />
                         <FileButton
                             getFile={(file: File) => {
-                                console.log("file", file)
-
-                                setCategory((s) => ({ ...s, file: file }))
+                                setCategory((s) => ({ ...s, file }))
                             }}
                             image={category.file}
                         />

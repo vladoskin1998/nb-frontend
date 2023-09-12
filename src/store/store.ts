@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from '../reducer/auth';
 import categoriesReducer from '../reducer/categories'
-
+import  activitiesReducer  from '../reducer/activities';
 const store = configureStore({
   reducer: {
     authReducer,
-    categoriesReducer
+    categoriesReducer,
+    activitiesReducer,
   },
 });
 

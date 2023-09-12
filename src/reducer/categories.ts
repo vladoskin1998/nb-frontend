@@ -23,16 +23,19 @@ const initialState: CategoriesInterface = {
 };
 
 export const categoriesReducer = createSlice({
-    name: "auth",
+    name: "categories",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            /////////////////////////////////GET all categories subcategories
-            .addCase(allCategories.fulfilled, (state, { payload }) => {
 
+            /////////////////////////////////GET all categories subcategories
+
+            .addCase(allCategories.fulfilled, (state, { payload }) => {
                 state.categories = payload
             })
+
+
             .addCase(allSubCategories.fulfilled, (state, { payload }) => {
 
                 state.subCategories = payload
@@ -59,6 +62,19 @@ export const categoriesReducer = createSlice({
             .addCase(editSubCategories.fulfilled, (state, { payload }) => {
                 state.subCategories = state.subCategories.map(item => item._id === payload.id ? { ...item, name: payload.name } : item)
             })
+
+            .addMatcher(
+                (action) => {
+                    return (
+                        action.type.endsWith("/pending") ||
+                        action.type.endsWith("/fulfilled") ||
+                        action.type.endsWith("/rejected")
+                    );
+                },
+                (state, action) => {
+                    state.isLoad = action.type.endsWith("/pending");
+                }
+            )
     },
 })
 

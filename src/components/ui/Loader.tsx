@@ -1,5 +1,7 @@
 import CircularProgress from '@mui/material/CircularProgress';
 
 export  const Loader = () => {
-  return <CircularProgress disableShrink />;
+  return <div className='ui-loader'>
+    <CircularProgress disableShrink />;
+  </div> 
 }

@@ -6,6 +6,7 @@ import { authorization } from "../../services/auth"
 import { METHOD_AUTH } from "../../types/enum"
 import { useAppDispatch, useAppSelector } from "../../utils/hooks"
 import { useNavigate } from "react-router-dom"
+import { Loader } from "../ui/Loader"
 
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
@@ -42,34 +43,39 @@ const Auth = () => {
     // }, [isLogin])
 
     return (
-        <div className="auth">
-            <AuthHeader isLogin={isLogin} setIsLogin={setIsLogin} />
-            {isLogin ? (
-                <Login
-                    login={login}
-                    setLogin={setLogin}
-                    password={password}
-                    setPassword={setPassword}
-                />
-            ) : (
-                <Registration
-                    login={login}
-                    setLogin={setLogin}
-                    password={password}
-                    setPassword={setPassword}
-                />
-            )}
-            <button
-                className="login__button"
-                onClick={() =>
-                    handlerAuth(
-                        isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
-                    )
-                }
-            >
-                {isLogin ? "Log In" : "Sign Up"}
-            </button>
-        </div>
+        <>
+            <div className="auth">
+                <AuthHeader isLogin={isLogin} setIsLogin={setIsLogin} />
+                {isLogin ? (
+                    <Login
+                        login={login}
+                        setLogin={setLogin}
+                        password={password}
+                        setPassword={setPassword}
+                    />
+                ) : (
+                    <Registration
+                        login={login}
+                        setLogin={setLogin}
+                        password={password}
+                        setPassword={setPassword}
+                    />
+                )}
+                <button
+                    className="login__button"
+                    onClick={() =>
+                        handlerAuth(
+                            isLogin
+                                ? METHOD_AUTH.LOGIN
+                                : METHOD_AUTH.REGISTRATION
+                        )
+                    }
+                >
+                    {isLogin ? "Log In" : "Sign Up"}
+                </button>
+            </div>
+            {/* <Loader /> */}
+        </>
     )
 }
 

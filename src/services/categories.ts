@@ -59,7 +59,7 @@ export const visiableCategories = createAsyncThunk<{id:string, isVisiable: boole
 export const visiableSubCategories = createAsyncThunk<{id:string, isVisiable: boolean},  {id:string, isVisiable: boolean}>(
   `categories/visiable-subcategory`,
   async (payload) => {
-    const response = await $api.post(`categories/delete-subcategory`, payload)
+    const response = await $api.post(`categories/visiable-subcategory`, payload)
     return response.data
   }
 )
@@ -83,3 +83,13 @@ export const editSubCategories = createAsyncThunk<{id:string,  name: string},  {
     return response.data
   }
 )
+
+export const addCategories = createAsyncThunk<void,  {link:string,  formData: FormData}>(
+  `categories/add-category-subcategory`,
+  async (payload) => {
+    await $api.post(payload.link, payload.formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+  }
+)
+

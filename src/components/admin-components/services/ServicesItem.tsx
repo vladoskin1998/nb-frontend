@@ -1,23 +1,33 @@
-import React, { useState } from 'react'
-import { IconServicesAllPlus, IconServicesAllPoint } from "../../svg/IconServicesAll"
-import ServicesModal from './ServicesModal'
-import { Link, useNavigate } from 'react-router-dom'
+import { Modal } from "../../ui/Modal"
+import { IconPicker } from "../../svg/IconFavor"
+import { IosTougle } from "../../ui/IosTougle"
+import { Link } from "react-router-dom"
+import {
+    IconServicesAllPlus,
+    IconServicesAllPoint,
+} from "../../svg/IconServicesAll"
 
-export const ServicesItem = ({
-    _id,
+const ServicesItem = ({
     name,
-    numberView,
+    isOpen,
     link,
-    isVisiable,
+    numberView,
+    isTougle,
+    addServices,
+    setIsOpen,
+    onChangeTougle,
+    handlerDeleteItem,
 }: {
-    _id: string,
-    name: string,
-    numberView: number,
-    link: string,
-    isVisiable: boolean,
+    name: string
+    isOpen: boolean
+    link: string
+    numberView: number
+    isTougle: boolean
+    addServices: () => void
+    setIsOpen: (o: boolean) => void
+    onChangeTougle: () => void
+    handlerDeleteItem: () => void
 }) => {
-
-    const [isOpen, setIsOpen] = useState(false)
 
     const changeOpen = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
@@ -35,25 +45,61 @@ export const ServicesItem = ({
                 </div>
                 <Link to={link}>
                     <h4 className="services__all-item-title">{numberView}</h4>
-                </Link >
+                </Link>
                 <Link to={link}>
                     <div className="services__all-item-buttons">
                         <button>
                             <IconServicesAllPlus />
                         </button>
-                        <button className="services__all-item-buttons-2">View All</button>
+                        <button className="services__all-item-buttons-2">
+                            View All
+                        </button>
                     </div>
-                </Link >
+                </Link>
             </div>
-            {isOpen
-                ? <ServicesModal
-                    _id={_id}
-                    name={name}
-                    setIsOpen={setIsOpen} 
-                    isVisiable={isVisiable}
-                    />
-                : false}
+            {isOpen && (
+                <div className="services__modal">
+                    <Modal setIsOpen={setIsOpen}>
+                        <div className="services__modal-body">
+                            <div className="services__modal-title">
+                                {name || "Category Name"}
+                            </div>
+                            <div
+                                className="services__modal-body-line"
+                                onClick={addServices}
+                            >
+                                <IconPicker />
+                                <span>Add Sub Categories</span>
+                            </div>
+                            <div className="services__modal-body-line">
+                                <IconPicker />
+                                <span>Edit</span>
+                            </div>
+                            <div className="services__modal-body-line">
+                                <IconPicker />
+                                <span>Move</span>
+                            </div>
+                            <div className="services__modal-body-visiable">
+                                <IconPicker />
+                                <span>Visible?</span>
+                                <IosTougle
+                                    isTougle={isTougle}
+                                    setIsTougle={onChangeTougle}
+                                />
+                            </div>
+                            <div
+                                className="services__modal-body-line"
+                                onClick={handlerDeleteItem}
+                            >
+                                <IconPicker />
+                                <span>Delete</span>
+                            </div>
+                        </div>
+                    </Modal>
+                </div>
+            )}
         </>
-
     )
 }
+
+export default ServicesItem

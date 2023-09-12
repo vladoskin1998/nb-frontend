@@ -1,5 +1,6 @@
 import React from "react";
 import { IconInputSearch, IconInputFilter } from "../svg/IconInputSearch";
+
 export const InputSearch = ({
   placeholder,
   onClickFilter,
