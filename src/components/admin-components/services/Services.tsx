@@ -7,10 +7,16 @@ import ServicesSub from "./ServicesSub"
 import ServicesFavor from "./ServicesFavor"
 import { Loader } from "../../ui/Loader"
 import { useAppSelector } from "../../../utils/hooks"
+import { useEffect } from "react"
+import { useAppDispatch } from "../../../utils/hooks"
+import { allCategories } from "../../../services/categories"
 
 const Services = () => {
     const { isLoad } = useAppSelector((s) => s.categoriesReducer)
-
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(allCategories())
+    }, [])
     return (
         <>
             <div className="admin">

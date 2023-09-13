@@ -23,7 +23,7 @@ const AdminRouter = () => {
         <Route path="messeges" element={<ProtectedRoute element={<Messeges />} />} />
         <Route path="helpcenter" element={<ProtectedRoute element={<HelpCenter />} />} />
         <Route path="advertisement" element={<ProtectedRoute element={<Advertisement />} />} />
-        <Route path="activities" element={<ProtectedRoute element={<Activities />} />} />
+        <Route path="activities/*" element={<ProtectedRoute element={<Activities />} />} />
         <Route path="adminpanel" element={<ProtectedRoute element={<AdminPanel />} />} />
         <Route path="*" element={<ProtectedRoute element={<AdminPanel />} />} />
       </Routes>

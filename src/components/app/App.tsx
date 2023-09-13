@@ -12,11 +12,11 @@ export default function App() {
 
     const dispatch = useAppDispatch()
 
-    // useEffect(() => {
-    //     dispatch(
-    //         refresh()
-    //     )
-    // }, [])
+    useEffect(() => {
+        dispatch(
+            refresh()
+        )
+    }, [])
 
     return (
             <Routes>

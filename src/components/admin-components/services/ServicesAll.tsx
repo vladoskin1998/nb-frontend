@@ -1,24 +1,18 @@
 import { useNavigate } from "react-router-dom"
-import { ServicesItemHoc } from "./ServicesItemHoc"
+import { ServicesItemModule } from "./ServicesItemModule"
 import { AdminSubHeader } from "../../ui/AdminSubHeader"
-import { useEffect } from "react"
-import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
-import { allCategories } from "../../../services/categories"
+import {useAppSelector } from "../../../utils/hooks"
 
 const ServicesAll = () => {
     const navigate = useNavigate()
-    const dispatch = useAppDispatch()
+
     const { categories } = useAppSelector((s) => s.categoriesReducer)
 
     const changeAdd = () => {
         navigate("/admin/services/servicesadd")
     }
 
-    useEffect(() => {
-        dispatch(allCategories())
-    }, [])
-
-    const addServices = (_id:string) => {
+    const addServices = (_id: string) => {
         navigate(`/admin/services/servicesadd?id=${_id}`)
     }
 
@@ -31,7 +25,7 @@ const ServicesAll = () => {
             </AdminSubHeader>
             <div className="services__all">
                 {categories.map((item) => (
-                    <ServicesItemHoc
+                    <ServicesItemModule
                         link={`/admin/services/servicessub?id=${item._id}`}
                         _id={item._id}
                         name={item.name}
