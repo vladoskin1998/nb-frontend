@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { AdminSubHeader } from '../../ui/AdminSubHeader'
 
-const Advertisement = () => {
+export const Advertisement = () => {
   const [isOpenAdd, setIsOpenAdd] = useState(false)
   const [isOpenChevron, setIsOpenChevron] = useState(false)
 
@@ -19,5 +19,3 @@ const Advertisement = () => {
     </div>
   )
 }
-
-export default Advertisement

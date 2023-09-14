@@ -5,7 +5,7 @@ import { useAppSelector } from "../../../utils/hooks"
 import ActivitiesAll from "./ActivitiesAll"
 import { AdminSubHeader } from "../../ui/AdminSubHeader"
 
-const Activities = () => {
+export const Activities = () => {
     const { isLoad } = useAppSelector((s) => s.activitiesReducer)
     const navigate = useNavigate()
 
@@ -32,4 +32,4 @@ const Activities = () => {
     )
 }
 
-export default Activities
+ 

@@ -8,7 +8,7 @@ import ServicesFavor from "./ServicesFavor"
 import { Loader } from "../../ui/Loader"
 import { useAppSelector } from "../../../utils/hooks"
 
-const Services = () => {
+export const Services = () => {
     const { isLoad } = useAppSelector((s) => s.categoriesReducer)
 
     return (
@@ -25,5 +25,3 @@ const Services = () => {
         </>
     )
 }
-
-export default Services

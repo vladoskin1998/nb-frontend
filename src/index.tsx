@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Suspense fallback={<Loader />}>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <App />
       </BrowserRouter>
     </Provider>

@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import { AdminSubHeader } from '../../ui/AdminSubHeader'
  
-const HelpCenter = () => {
+export const HelpCenter = () => {
   const [isOpenAdd, setIsOpenAdd] = useState(false)
   const [isOpenChevron, setIsOpenChevron] = useState(false)
 
@@ -19,5 +19,3 @@ const HelpCenter = () => {
     </div>
   )
 }
-
-export default HelpCenter

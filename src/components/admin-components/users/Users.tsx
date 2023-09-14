@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import { AdminSubHeader } from '../../ui/AdminSubHeader'
-const Users = () => {
+
+export const Users = () => {
   const [isOpenAdd, setIsOpenAdd] = useState(false)
   const [isOpenChevron, setIsOpenChevron] = useState(false)
 
@@ -19,4 +20,3 @@ const Users = () => {
   )
 }
 
-export default Users

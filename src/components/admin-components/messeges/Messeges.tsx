@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import { AdminSubHeader } from '../../ui/AdminSubHeader'
-const Messeges = () => {
+export const Messeges = () => {
   const [isOpenAdd, setIsOpenAdd] = useState(false) 
  
   const changeAdd = () => {
@@ -13,5 +13,3 @@ const Messeges = () => {
     </div>
   )
 }
-
-export default Messeges

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AdminSubHeader } from "../../ui/AdminSubHeader"
 
-const Posts = () => {
+export const Posts = () => {
 
     const [isOpenAdd, setIsOpenAdd] = useState(false)
     const [isOpenChevron, setIsOpenChevron] = useState(false)
@@ -21,4 +21,3 @@ const Posts = () => {
     )
 }
 
-export default Posts
