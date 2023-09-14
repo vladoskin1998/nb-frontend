@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { IconRightChevrons, IconBottomChevrons } from '../../svg/IconChevrons';
 import { routesMenu as routes } from '../../../utils/constant';
+import { Logout } from '../../../services/auth';
 
 const toOneKind = (s: string) => s.replace(/ /g, '').toLocaleLowerCase()
 
@@ -78,7 +79,11 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
                     </div>
                 }
             )}
+            <button
+                onClick={Logout}
+            > Logout</button>
         </div>
+       
     )
 }
 

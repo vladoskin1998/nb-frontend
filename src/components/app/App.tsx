@@ -13,9 +13,13 @@ export default function App() {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(
-            refresh()
-        )
+        const accessToken = localStorage.getItem('accessToken')
+        if(accessToken){
+            dispatch(
+                refresh()
+            )
+        }
+     
     }, [])
 
     return (

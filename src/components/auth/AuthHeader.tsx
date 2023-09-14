@@ -12,9 +12,8 @@ const AuthHeader = ({ isLogin, setIsLogin }
 
 
     const hendlerAuthMessenger = (method:METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE) => {
-        window.location.href = `https://nb-nb.onrender.com/api/auth/${method}`;
+        window.location.href = `http://5.180.180.221:5000/api/auth/${method}`;
     }
-   // return res.redirect('https://nb-nb.onrender.com');
 
     return (
         <>

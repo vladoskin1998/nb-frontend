@@ -47,3 +47,10 @@ export const authorizationMessenger = createAsyncThunk<AuthResponseInterface, Au
         return response.data
     }
 )
+
+
+export const Logout = async () => {
+    await $api.post(`auth/logout`)
+    localStorage.removeItem("accessToken")
+    return window.location.href = '/auth'; 
+} 
