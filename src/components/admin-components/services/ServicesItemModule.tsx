@@ -65,7 +65,7 @@ export const ServicesItemModule = ({
                 <ServicesItemModal
                     isTougle={isTougle}
                     name={name}
-                    addServices={addServices}
+                    addItems={addServices}
                     handlerDeleteItem={handlerDeleteItem}
                     onChangeTougle={onChangeTougle}
                     setIsOpen={(b: boolean) => setIsOpen(b)}

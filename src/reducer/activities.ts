@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { allActivities } from "../services/activities"
+import { addActivities, allActivities, deleteActivities } from "../services/activities"
 
 interface Activities {
     _id: string
@@ -26,6 +26,14 @@ export const activitiesReducer = createSlice({
         builder
             .addCase(allActivities.fulfilled, (state, { payload }) => {
                 state.activities = payload
+            })
+            .addCase(addActivities.fulfilled, (state, { payload }) => {
+                state.activities = [...state.activities, payload]
+            })
+            .addCase(deleteActivities.fulfilled, (state, { payload }) => {
+                state.activities = state.activities.filter(
+                    (item) => item._id !== payload
+                )
             })
             .addMatcher(
                 (action) => {

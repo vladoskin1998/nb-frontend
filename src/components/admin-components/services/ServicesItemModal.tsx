@@ -6,7 +6,7 @@ import { useEffect } from "react"
 const ServicesItemModal = ({
     name,
     isTougle,
-    addServices,
+    addItems,
     setIsOpen,
     onChangeTougle,
     handlerDeleteItem,
@@ -14,7 +14,7 @@ const ServicesItemModal = ({
 }: {
     name: string
     isTougle: boolean
-    addServices: () => void
+    addItems: () => void
     setIsOpen: (o: boolean) => void
     onChangeTougle: () => void
     handlerDeleteItem: () => void
@@ -35,10 +35,10 @@ const ServicesItemModal = ({
                     </div>
                     <div
                         className="services__modal-body-line"
-                        onClick={addServices}
+                        onClick={addItems}
                     >
                         <IconPicker />
-                        <span>Add Sub Categories</span>
+                        <span>Add</span>
                     </div>
                     <div className="services__modal-body-line">
                         <IconPicker />

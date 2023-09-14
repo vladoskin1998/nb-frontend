@@ -1,0 +1,29 @@
+.activities {
+    &__filter {
+        margin-top: 16px;
+        .slick-track{
+            margin: 0;
+        }
+        .slick-slide{
+            width: fit-content !important;
+        }
+        &-item {
+            border-radius: 8px;
+            padding: 0 15px;
+            box-shadow: $box-shadow1;
+            width: fit-content !important;
+            height: 40px;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 140%;
+            color: $color__blue;
+            display: flex !important;
+            @include flex-all-center;
+            &--active {
+                background: $color__black1;
+                color: $color__white;
+            }
+        }
+    }
+}

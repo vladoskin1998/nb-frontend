@@ -1,21 +1,23 @@
 export const headerTitle = (locationRoute: string | undefined) => {
     const key = String(locationRoute)
     switch (key) {
-        case "users":
+        case "/admin/users":
             return "Users"
-        case "services":
+        case "/admin/services":
             return "Services"
-        case "posts":
+        case "/admin/posts":
             return "Publications"
-        case "messeges":
+        case "/admin/messeges":
             return "Messenger"
-        case "helpcenter":
+        case "/admin/helpcenter":
             return "Help Center"
-        case "advertisement":
+        case "/admin/advertisement":
             return "Advertisement"
-        case "activities":
+        case "/admin/activities":
             return "Activities"
-        case "adminpanel":
+        case "/admin/activities/eventactivities":
+            return "Event"
+        case "/admin/adminpanel":
             return "Admin Panel"
         default:
             return "Admin Panel"

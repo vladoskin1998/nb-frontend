@@ -11,6 +11,7 @@ import {
     IconLike,
     IconPicker,
 } from "../../svg/IconFavor"
+import ServicesFavorList from "./ServicesFavorList"
 
 const data = [
     {
@@ -93,51 +94,7 @@ const ServicesFavor = () => {
                 changeValue={(s: string) => setSearch(s)}
             />
             <div>
-                {data.map((item) => {
-                    return (
-                        <div className="services__favor-item">
-                            <div className="services__favor-item-row1">
-                                <img
-                                    src={item.image || "/Images/favor.png"}
-                                    alt=""
-                                    className="services__favor-item-row1-img"
-                                />
-                                <div>
-                                    <h5 className="services__favor-item-row1-title">
-                                        {item.name}
-                                    </h5>
-                                    <div className="services__favor-item-row1-footer">
-                                        <img src={item.user.image || "/Images/favor-avatar-image.png"} alt="" className="services__favor-item-row1-userimg"/>
-                                        <h5>{item.user.name}</h5>
-                                        <IconStars />
-                                        <span>{item.user.mark}</span>
-                                        <span>{"("+item.user.markNumber+")"}</span>
-                                    </div>
-                                </div>
-                                <button>
-                                    <IconServicesAllPoint />
-                                </button>
-                            </div>
-                            <div>
-                                <div className="services__favor-item-row2">
-                                    <IconComment />
-                                    <span>{item.comment}</span>
-                                    <IconPicker />
-                                    <span>{item.date.toLocaleString()}</span>
-                                </div>
-                                <div className="services__favor-item-row2 services__favor-item-row2-2">
-                                    <IconLike />
-                                    <span>{item.like}</span>
-                                    <div className="services__favor-item-row2-svg">
-                                         <IconLocationPoint />
-                                    </div>
-                                   
-                                    <span>{item.location}</span>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                })}
+                <ServicesFavorList />
             </div>
         </>
     )

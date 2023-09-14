@@ -2,22 +2,25 @@ import React, { useEffect, useState } from 'react'
 import { IconAdminClose, IconAdminBurger, IconAdminImage } from '../../svg/IconAdminHeader'
 import MenuHeader from './MenuHeader'
 import { headerTitle } from '../../../utils/menu-title'
+import { useLocation } from 'react-router-dom'
 const AdminHeader = () => {
 
   const [isOpen, setIsOpen] = useState(false)
   const [title, setTitle] = useState(headerTitle(""))
-
+  const location = useLocation();
   useEffect(() => {
     if (isOpen) {
       setTitle("Menu")
     }
     else {
-      const localRoute = window.location?.pathname?.split('/')[2]      
+      const localRoute = location.pathname
+      console.log(localRoute);
+        
       setTitle(
         headerTitle(localRoute)
       )
     }
-  }, [isOpen])
+  }, [isOpen, location])
 
 
   

@@ -38,7 +38,7 @@ const ActivitiesAdd = () => {
             }
 
             formData.append("payload", JSON.stringify(payload))
-
+            formData.append("files", activities.file, activities.id)
             dispatch(
                 addActivities(
                     formData
@@ -70,7 +70,7 @@ const ActivitiesAdd = () => {
                 <div>
                     <input
                         type="text"
-                        placeholder="Category Name"
+                        placeholder="Activities Name"
                         className="services__add-input"
                         value={activities.name}
                         onChange={(e) =>

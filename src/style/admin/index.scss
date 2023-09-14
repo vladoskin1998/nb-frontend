@@ -1,8 +1,9 @@
 @import "servisec.scss";
+@import "activities.scss";
 
 .admin {
     padding: 100px 24px 24px 24px;
-    min-height: 100vh;
+    min-height: 100%;
 }
 
 .admin__header {
