@@ -84,12 +84,13 @@ export const editSubCategories = createAsyncThunk<{id:string,  name: string},  {
   }
 )
 
-export const addCategories = createAsyncThunk<void,  {link:string,  formData: FormData}>(
+export const addCategories = createAsyncThunk<Categories,  {link:string,  formData: FormData}>(
   `categories/add-category-subcategory`,
   async (payload) => {
-    await $api.post(payload.link, payload.formData, {
+    const response = await $api.post(payload.link, payload.formData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
+    return response.data
   }
 )
 

@@ -1,17 +1,27 @@
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { Loader } from "../../ui/Loader"
 import ActivitiesEvent from "./ActivitiesEvent"
-import { useAppSelector } from "../../../utils/hooks"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import ActivitiesAll from "./ActivitiesAll"
 import { AdminSubHeader } from "../../ui/AdminSubHeader"
+import { useEffect } from "react"
+import { allActivities } from "../../../services/activities"
+import ActivitiesAdd from "./ActivitiesAdd"
 
 export const Activities = () => {
     const { isLoad } = useAppSelector((s) => s.activitiesReducer)
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     const changeAdd = () => {
         navigate("/admin/activities/addactivities")
     }
+
+    useEffect(() => {
+        dispatch(
+            allActivities()
+        )
+    }, [])
 
     return (
         <>
@@ -22,9 +32,9 @@ export const Activities = () => {
                     </div>
                 </AdminSubHeader>
                 <Routes>
-                    <Route path="addactivities" element={<ActivitiesAll />} />
-                    <Route path="allactivities" element={<ActivitiesAll />} />
-                    <Route path="*" element={<ActivitiesEvent />} />
+                    <Route path="addactivities" element={<ActivitiesAdd />} />
+                    <Route path="eventactivities" element={<ActivitiesEvent />} />
+                    <Route path="*" element={<ActivitiesAll />} />
                 </Routes>
             </div>
             {isLoad && <Loader />}

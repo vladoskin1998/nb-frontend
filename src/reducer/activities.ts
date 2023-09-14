@@ -1,23 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { allCategories, allSubCategories, deleteCategories, deleteSubCategories, editCategories, editSubCategories, visiableCategories, visiableSubCategories } from "../services/categories"
+import { allActivities } from "../services/activities"
 
-
-// interface Categories {
-//     _id: string
-//     name: string
-//     numberView: number
-//     isVisiable: boolean
-// }
-// interface SubCategories extends Categories { }
+interface Activities {
+    _id: string
+    name: string
+    numberView: number
+    isVisiable: boolean
+}
 
 interface ActivitiesInterface {
-    isLoad: boolean;
-
+    isLoad: boolean
+    activities: Activities[]
 }
 
 const initialState: ActivitiesInterface = {
     isLoad: false,
-};
+    activities: [],
+}
 
 export const activitiesReducer = createSlice({
     name: "activities",
@@ -25,16 +24,19 @@ export const activitiesReducer = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
+            .addCase(allActivities.fulfilled, (state, { payload }) => {
+                state.activities = payload
+            })
             .addMatcher(
                 (action) => {
                     return (
                         action.type.endsWith("/pending") ||
                         action.type.endsWith("/fulfilled") ||
                         action.type.endsWith("/rejected")
-                    );
+                    )
                 },
                 (state, action) => {
-                    state.isLoad = action.type.endsWith("/pending");
+                    state.isLoad = action.type.endsWith("/pending")
                 }
             )
     },

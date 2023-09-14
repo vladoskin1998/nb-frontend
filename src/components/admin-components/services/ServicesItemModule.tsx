@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ServicesItem from "./ServicesItem"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { useAppDispatch } from "../../../utils/hooks"
 import {
     deleteCategories,
@@ -8,8 +8,9 @@ import {
     visiableCategories,
     visiableSubCategories,
 } from "../../../services/categories"
+import ServicesItemModal from "./ServicesItemModal"
 
-export const ServicesItemHoc = ({
+export const ServicesItemModule = ({
     _id,
     name,
     numberView,
@@ -24,21 +25,15 @@ export const ServicesItemHoc = ({
     isVisiable: boolean
     addServices: () => void
 }) => {
-    const [isOpen, setIsOpen] = useState(false)
-
-    const dispatch = useAppDispatch()
-    const [isTougle, setIsTougle] = useState(isVisiable)
     const location = useLocation()
+    const dispatch = useAppDispatch()
+
+    const [isOpen, setIsOpen] = useState(false)
+    const [isTougle, setIsTougle] = useState(isVisiable)
 
     const onChangeTougle = () => {
         setIsTougle((s) => !s)
     }
-
-    useEffect(() => {
-        handlerVisiable()
-    }, [isTougle])
-
-
 
     const handlerVisiable = () => {
         dispatch(
@@ -58,16 +53,25 @@ export const ServicesItemHoc = ({
     }
 
     return (
-        <ServicesItem
-            numberView={numberView}
-            isTougle={isTougle}
-            name={name}
-            link={link}
-            isOpen={isOpen}
-            addServices={addServices}
-            handlerDeleteItem={handlerDeleteItem}
-            onChangeTougle={onChangeTougle}
-            setIsOpen={(b: boolean) => setIsOpen(b)}
-        />
+        <>
+            <ServicesItem
+                numberView={numberView}
+                name={name}
+                link={link}
+                setIsOpen={(b: boolean) => setIsOpen(b)}
+            />
+            {
+                isOpen &&
+                <ServicesItemModal
+                    isTougle={isTougle}
+                    name={name}
+                    addServices={addServices}
+                    handlerDeleteItem={handlerDeleteItem}
+                    onChangeTougle={onChangeTougle}
+                    setIsOpen={(b: boolean) => setIsOpen(b)}
+                    handlerVisiable={handlerVisiable}
+                />
+            }
+        </>
     )
 }

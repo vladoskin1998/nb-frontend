@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import {  useNavigate } from "react-router-dom";
-import { ServicesItemHoc } from "./ServicesItemHoc";
+import { ServicesItemModule } from "./ServicesItemModule";
 import { AdminSubHeader } from '../../ui/AdminSubHeader'
 import { useEffect } from "react";
 import { IconLeftChevrons } from "../../svg/IconChevrons";
@@ -44,7 +44,7 @@ const ServicesSub = () => {
             <div className="services__all">
                 {
                     subCategories?.map((item) =>
-                        <ServicesItemHoc
+                        <ServicesItemModule
                              link={`/admin/services/favor?id=${item._id}`}
                             _id={item._id}
                             name={item.name}

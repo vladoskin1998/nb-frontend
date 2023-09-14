@@ -14,6 +14,6 @@ export const routesMenu: MenuItem[] = [
   { name: "Advertisement", label: IconAdminMenuAdvertisement , subName: ["Advertisement", "Request", "Past"] },
   { name: "Messeges", label: IconAdminMenuMesseges , subName: [] },
   { name: "Help Center", label: IconAdminMenuHelpCenter , subName: [] },
-  { name: "Services", label: IconAdminMenuServeces , subName: ["All Services", "Comments", "Reports"] },
+  { name: "Services", label: IconAdminMenuServeces , subName: [] },
   { name: "Activities", label: IconAdminMenuActivities , subName: ["Activities", "Comments", "Reports"] },
 ];
