@@ -1,10 +1,10 @@
 .activities {
     &__filter {
         margin-top: 16px;
-        .slick-track{
+        .slick-track {
             margin: 0;
         }
-        .slick-slide{
+        .slick-slide {
             width: fit-content !important;
         }
         &-item {
@@ -26,4 +26,62 @@
             }
         }
     }
+    &__favor {
+        &-modal {
+            position: fixed;
+            top: 100%;
+            width: 100%;
+            left: 0;
+            transform: translateY(5%);
+            transition: all 0.5s ease;
+            &--open{
+                transform: translateY( -100%);
+            }
+            &-body{
+                padding: 0 44px;
+                display: flex;
+                flex-direction: column;
+            }
+            &-linebody{
+                display: flex;
+            }
+            &-line{
+                width: 30px;
+                height: 5px;
+                border-radius: 3px;
+                background: $color__grey4;
+                margin: 0 auto 16px auto;
+            }
+            &-row2{
+                margin-top: 24px;
+                display: flex;
+                align-items: center;
+                column-gap: 8px;
+                color:$color__blue;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%; 
+                svg{
+                    padding-top: 3px;
+                    path{
+                        fill: $color__black;
+                    }
+                }
+                b{
+                    font-weight: 700;
+                }
+                
+            }
+            &-row2:first-child{
+                margin-top: 20px;
+            }
+            &-row3{
+                column-gap: 22px;
+            }
+        }
+        
+    }
 }
+
+

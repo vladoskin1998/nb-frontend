@@ -118,6 +118,7 @@ const ServicesAdd = () => {
                         }
                     )
                 )
+                navigate(`/admin/services/servicessub?id=${idCategories}`)
             } else {
                 formData.append("files", category.file, category.id)
                 dispatch(
@@ -128,10 +129,11 @@ const ServicesAdd = () => {
                         }
                     )
                 )
+                navigate('/admin/services')
             }
-
-            setCategory({ ...categoryBody, id: uuidv4() })
-            setListSubCategory([])
+            
+            // setCategory({ ...categoryBody, id: uuidv4() })
+            // setListSubCategory([])
         } catch (error) {
             throw error
         }

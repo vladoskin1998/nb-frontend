@@ -2,6 +2,7 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ButtonBackRoute } from "../../ui/ButtonBackRoute";
 import { IconLocationKey, IconLocationAim, IconLocationPoint } from "../../svg/IconsLocation";
+import MapWithSearch from "../../map";
 
 const LocationUser = () => {
     const navigate = useNavigate()
@@ -16,7 +17,7 @@ const LocationUser = () => {
                 <ButtonBackRoute click={back} />
             </div>
             <Routes >
-               
+                {/* <Route path="map" element={<MapWithSearch />} /> */}
                 {/*<Route path='current-location' element={<RecoveryEmail />} /> */}
                 <Route path='*' element={<LocationBody />} />
             </Routes>
