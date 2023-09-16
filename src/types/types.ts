@@ -7,6 +7,7 @@ export interface AuthResponseInterface{
         email: string;
         role: ROLES;
         id: string;
+        coordinars: {lat: number | null, lng: number | null };
     };
     accessToken: string;
     refreshToken: string;

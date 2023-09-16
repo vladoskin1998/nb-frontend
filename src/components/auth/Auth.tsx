@@ -8,39 +8,51 @@ import { useAppDispatch, useAppSelector } from "../../utils/hooks"
 import { useNavigate } from "react-router-dom"
 import { Loader } from "../ui/Loader"
 
+interface PayloadInterface {
+    method: METHOD_AUTH
+    email: string
+    password: string
+    fullName?: string
+}
+
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
+
     const [login, setLogin] = useState("test@test.test")
     const [password, setPassword] = useState("test")
+    const [fullName, setFullName] = useState("")
+
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const { isAuth, payloadUser } = useAppSelector((s: any) => s.authReducer)
 
-    const handlerAuth = (method: METHOD_AUTH) => {
-        dispatch(
-            authorization({
-                method,
-                email: login,
-                password,
-            })
-        )
+    const { isAuth, payloadUser } = useAppSelector((s) => s.authReducer)
+
+    const handlerAuth = () => {
+        const method = isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
+        const payload: PayloadInterface = {
+            method,
+            email: login,
+            password,
+        }
+        if (method === METHOD_AUTH.REGISTRATION) {
+            payload.fullName = fullName
+        }
+        dispatch(authorization(payload))
     }
 
     useEffect(() => {
-        if (isAuth) {
-            console.log("isAuth", isAuth)
-
-            //     navigate(`/${payloadUser.role}`)
+        if (
+            (payloadUser.coordinars.lat === null ||
+            payloadUser.coordinars.lng === null) && isAuth
+        ) {
+            navigate(`/auth/location`)
+        }
+        else if (isAuth){
             navigate(`/admin`)
         } else {
             navigate(`/auth`)
         }
     }, [isAuth])
-
-    // useEffect(() => {
-    //     setLogin('')
-    //     setPassword('')
-    // }, [isLogin])
 
     return (
         <>
@@ -59,18 +71,11 @@ const Auth = () => {
                         setLogin={setLogin}
                         password={password}
                         setPassword={setPassword}
+                        fullName={fullName}
+                        setFullName={setFullName}
                     />
                 )}
-                <button
-                    className="login__button"
-                    onClick={() =>
-                        handlerAuth(
-                            isLogin
-                                ? METHOD_AUTH.LOGIN
-                                : METHOD_AUTH.REGISTRATION
-                        )
-                    }
-                >
+                <button className="login__button" onClick={handlerAuth}>
                     {isLogin ? "Log In" : "Sign Up"}
                 </button>
             </div>
@@ -80,7 +85,3 @@ const Auth = () => {
 }
 
 export default Auth
-
-function dispatch(arg0: any) {
-    throw new Error("Function not implemented.")
-}

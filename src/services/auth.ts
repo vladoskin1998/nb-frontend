@@ -1,19 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
-import $api  from "../http";
+import $api from "../http";
 import { AuthResponseInterface } from "../types/types";
 import { METHOD_AUTH } from "../types/enum";
 
 interface AuthorizationPayload {
-    method:  METHOD_AUTH;
+    method: METHOD_AUTH;
     email: string;
     password: string;
-  }
+    fullName?: string;
+}
 
-  interface AuthorizationPayloadMessanger {
-    method:  METHOD_AUTH.GOOGLE | METHOD_AUTH.FACEBOOK;
-  }
+interface AuthorizationPayloadMessanger {
+    method: METHOD_AUTH.GOOGLE | METHOD_AUTH.FACEBOOK;
+}
 
-export const refresh = createAsyncThunk<AuthResponseInterface,void>(
+export const refresh = createAsyncThunk<AuthResponseInterface, void>(
     'auth/authorization',
     async () => {
         const response = await $api.post('auth/refresh', {})
@@ -24,12 +25,12 @@ export const refresh = createAsyncThunk<AuthResponseInterface,void>(
 export const authorization = createAsyncThunk<AuthResponseInterface, AuthorizationPayload>(
     'auth/authorization',
     async (payload) => {
-
         const { method, email, password } = payload
         const response = await $api.post(`auth/${method}`, { email, password })
         return response.data
     }
 )
+
 
 export const logout = createAsyncThunk(
     'auth/logout',
@@ -52,5 +53,5 @@ export const authorizationMessenger = createAsyncThunk<AuthResponseInterface, Au
 export const Logout = async () => {
     await $api.post(`auth/logout`)
     localStorage.removeItem("accessToken")
-    return window.location.href = '/auth'; 
+    return window.location.href = '/auth';
 } 

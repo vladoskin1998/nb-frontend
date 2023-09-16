@@ -6,17 +6,31 @@ import {
 } from "../services/auth"
 import { ROLES } from "../types/enum"
 
+interface InitialStateInterface {
+    isAuth: boolean,
+    isLoad: boolean,
+    payloadUser: {
+        email: string,
+        role: ROLES,
+        id: string,
+        coordinars: { lat: number | null, lng: number | null }
+    },
+}
+
+const initialState: InitialStateInterface = {
+    isAuth: false,
+    isLoad: false,
+    payloadUser: {
+        email: "",
+        role: ROLES.ADMIN,
+        id: "",
+        coordinars: { lat: null, lng: null }
+    },
+}
+
 export const authReducer = createSlice({
     name: "auth",
-    initialState: {
-        isAuth: false,
-        isLoad: false,
-        payloadUser: {
-            email: "",
-            role: ROLES.ADMIN,
-            id: "",
-        },
-    },
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder

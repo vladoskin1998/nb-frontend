@@ -8,19 +8,21 @@ const Registration = (
         setLogin,
         password,
         setPassword,
+        fullName,
+        setFullName,
     }:
     {
         login:string,
         setLogin: (s:string) => void,
         password:string,
         setPassword: (s:string) => void,
+        fullName:string,
+        setFullName: (s:string) => void,
     }
 ) => {
 
-
-    const [fullName, setFullName] = useState("")
-
     const [checked, setChecked] = useState(true)
+    
     return (
         <>
             <div className="registration">

@@ -13,14 +13,18 @@
     }
     &__fields{
         margin-top: 12px;
-        display: grid;
-        grid-template-columns: 1fr 62px;
-        column-gap: 12px;
     }
     &__field{
         display: flex;
         position: relative;
-        
+        height: 50px;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+        .login__email{
+            padding-top: 15px;
+        }
         input{
             padding-left: 40px;
             width: 100%;
@@ -29,7 +33,7 @@
             position: absolute;
             left: 10px;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-42%);
         }
     }
     &__par{

@@ -28,10 +28,11 @@ export default function App() {
                 <Route path='/admin/*' element={<AdminRouter />} />
       
                 {/* <Route path='/user/*' /> */}
-     
+
+                <Route path='/location/*' element={<LocationUser />} />
+                {/* <Route path='success' element={<Success />} /> */}
+                
                 <Route path='/auth'>
-                    <Route path='success' element={<Success />} />
-                    <Route path='location/*' element={<LocationUser />} />
                     <Route path='forget-pass/*' element={<ForgetPass />} />
                     <Route path='' element={<Auth />} />
                 </Route>

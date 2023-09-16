@@ -4,15 +4,19 @@ import { useAppSelector } from "../../utils/hooks";
 
 const ProtectedRoute = ({ element }: { element: ReactElement }) => {
   const navigate = useNavigate();
-  const isAuthenticated = useAppSelector((s: any) => s.authReducer.isAuth);
+  const {isAuth, payloadUser } = useAppSelector((s) => s.authReducer);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (payloadUser.coordinars.lat === null || payloadUser.coordinars.lng === null ){
+      navigate("/auth/location");
+    }
+    else if (!isAuth) {
       navigate("/auth");
     }
-  }, [isAuthenticated, navigate]);
+  
+  }, [isAuth, navigate]);
 
-  return isAuthenticated ? element : null;
+  return isAuth ? element : null;
 };
 
 export default ProtectedRoute;
