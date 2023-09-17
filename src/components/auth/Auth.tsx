@@ -25,7 +25,7 @@ const Auth = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-    const { isAuth, payloadUser } = useAppSelector((s) => s.authReducer)
+    const { isAuth, payloadUser, isLoad } = useAppSelector((s) => s.authReducer)
 
     const handlerAuth = () => {
         const method = isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
@@ -41,45 +41,55 @@ const Auth = () => {
     }
 
     useEffect(() => {
-        if (
-            (payloadUser.coordinars.lat === null ||
-            payloadUser.coordinars.lng === null) && isAuth
-        ) {
-            navigate(`/auth/location`)
-        }
-        else if (isAuth){
+        // if (
+        //     (payloadUser.coordinars.lat === null ||
+        //         payloadUser.coordinars.lng === null) &&
+        //     isAuth
+        // ) {
+        //     navigate(`/location`)
+        // } else if (isAuth) {
+        //     navigate(`/admin`)
+        // } else {
+        //     navigate(`/auth`)
+        // }
+
+        if (isAuth) {
             navigate(`/admin`)
         } else {
             navigate(`/auth`)
         }
+        
     }, [isAuth])
 
     return (
         <>
-            <div className="auth">
-                <AuthHeader isLogin={isLogin} setIsLogin={setIsLogin} />
-                {isLogin ? (
-                    <Login
-                        login={login}
-                        setLogin={setLogin}
-                        password={password}
-                        setPassword={setPassword}
-                    />
-                ) : (
-                    <Registration
-                        login={login}
-                        setLogin={setLogin}
-                        password={password}
-                        setPassword={setPassword}
-                        fullName={fullName}
-                        setFullName={setFullName}
-                    />
-                )}
-                <button className="login__button" onClick={handlerAuth}>
-                    {isLogin ? "Log In" : "Sign Up"}
-                </button>
-            </div>
-            {/* <Loader /> */}
+            {!isLoad ? (
+                <div className="auth">
+                    <AuthHeader isLogin={isLogin} setIsLogin={setIsLogin} />
+                    {isLogin ? (
+                        <Login
+                            login={login}
+                            setLogin={setLogin}
+                            password={password}
+                            setPassword={setPassword}
+                        />
+                    ) : (
+                        <Registration
+                            login={login}
+                            setLogin={setLogin}
+                            password={password}
+                            setPassword={setPassword}
+                            fullName={fullName}
+                            setFullName={setFullName}
+                        />
+                    )}
+                    <button className="login__button" onClick={handlerAuth}>
+                        {isLogin ? "Log In" : "Sign Up"}
+                    </button>
+                </div>
+            ) : (
+                <Loader />
+            )}
         </>
     )
 }

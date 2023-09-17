@@ -1,5 +1,5 @@
 import { useState } from "react"
-import ServicesItem from "./ServicesItem"
+import ServicesItemView from "./ServicesItemView"
 import { useLocation } from "react-router-dom"
 import { useAppDispatch } from "../../../utils/hooks"
 import {
@@ -8,7 +8,7 @@ import {
     visiableCategories,
     visiableSubCategories,
 } from "../../../services/categories"
-import ServicesItemModal from "./ServicesItemModal"
+import ServicesItemViewModal from "./ServicesItemViewModal"
 
 export const ServicesItemModule = ({
     _id,
@@ -54,7 +54,7 @@ export const ServicesItemModule = ({
 
     return (
         <>
-            <ServicesItem
+            <ServicesItemView
                 numberView={numberView}
                 name={name}
                 link={link}
@@ -62,7 +62,7 @@ export const ServicesItemModule = ({
             />
             {
                 isOpen &&
-                <ServicesItemModal
+                <ServicesItemViewModal
                     isTougle={isTougle}
                     name={name}
                     addItems={addServices}

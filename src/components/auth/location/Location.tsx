@@ -1,12 +1,8 @@
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { ButtonBackRoute } from "../../ui/ButtonBackRoute"
-import {
-    IconLocationKey,
-    IconLocationAim,
-    IconLocationPoint,
-} from "../../svg/IconsLocation"
-import { useState } from "react"
-import GetLocation from "./GetLocation"
+import GeoLocationModule from "./GeoLocationModule"
+import CurrentLocation from "./CurrentLocation"
+import LocationSuccess from "./LocationSuccess"
 
 const LocationUser = () => {
     const navigate = useNavigate()
@@ -21,8 +17,11 @@ const LocationUser = () => {
                 <ButtonBackRoute click={exit} />
             </div>
             <Routes>
-                {/*<Route path='current-location' element={<RecoveryEmail />} /> */}
-                <Route path="*" element={<GetLocation />} />
+
+
+                <Route path='current-location/location-success' element={<LocationSuccess />} />
+                <Route path='current-location' element={<CurrentLocation />} />
+                <Route path="*" element={<GeoLocationModule />} />
             </Routes>
         </div>
     )

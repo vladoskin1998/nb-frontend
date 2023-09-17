@@ -1,14 +1,8 @@
 import { useState } from "react"
-import ServicesItem from "../services/ServicesItem"
-import { useLocation, useNavigate } from "react-router-dom"
+import ServicesItemView from "../services/ServicesItemView"
+import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../../utils/hooks"
-import {
-    deleteCategories,
-    deleteSubCategories,
-    visiableCategories,
-    visiableSubCategories,
-} from "../../../services/categories"
-import ServicesItemModal from "../services/ServicesItemModal"
+import ServicesItemViewModal from "../services/ServicesItemViewModal"
 import {
     deleteActivities,
     visiableActivities,
@@ -50,7 +44,7 @@ export const ActivitiesItemModule = ({
 
     return (
         <>
-            <ServicesItem
+            <ServicesItemView
                 numberView={numberView}
                 name={name}
                 link={`/admin/activities/eventactivities?id=${_id}`}
@@ -58,7 +52,7 @@ export const ActivitiesItemModule = ({
             />
             {
                 isOpen &&
-                <ServicesItemModal
+                <ServicesItemViewModal
                     isTougle={isTougle}
                     name={name}
                     addItems={addActivities}

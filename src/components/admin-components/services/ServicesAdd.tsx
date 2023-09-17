@@ -131,9 +131,6 @@ const ServicesAdd = () => {
                 )
                 navigate('/admin/services')
             }
-            
-            // setCategory({ ...categoryBody, id: uuidv4() })
-            // setListSubCategory([])
         } catch (error) {
             throw error
         }

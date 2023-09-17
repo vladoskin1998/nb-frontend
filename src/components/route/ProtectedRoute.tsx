@@ -1,22 +1,26 @@
-import { ReactElement, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../../utils/hooks";
+import { ReactElement, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+import { useAppSelector } from "../../utils/hooks"
 
 const ProtectedRoute = ({ element }: { element: ReactElement }) => {
-  const navigate = useNavigate();
-  const {isAuth, payloadUser } = useAppSelector((s) => s.authReducer);
+    const navigate = useNavigate()
+    const { isAuth, payloadUser } = useAppSelector((s) => s.authReducer)
 
-  useEffect(() => {
-    if (payloadUser.coordinars.lat === null || payloadUser.coordinars.lng === null ){
-      navigate("/auth/location");
-    }
-    else if (!isAuth) {
-      navigate("/auth");
-    }
-  
-  }, [isAuth, navigate]);
+    useEffect(() => {
+        // if (payloadUser.coordinars.lat === null || payloadUser.coordinars.lng === null ){
+        //   navigate("/auth/location");
+        // }
+        // else if (!isAuth) {
+        //   navigate("/auth");
+        // }
 
-  return isAuth ? element : null;
-};
+        if (!isAuth) {
+            navigate("/auth")
+        }
+        
+    }, [isAuth, navigate])
 
-export default ProtectedRoute;
+    return isAuth ? element : null
+}
+
+export default ProtectedRoute

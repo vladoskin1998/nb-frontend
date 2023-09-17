@@ -6,9 +6,9 @@ import {
     IconServicesAllPlus,
     IconServicesAllPoint,
 } from "../../svg/IconServicesAll"
-import { useEffect } from "react"
 
-const ServicesItem = ({
+
+const ServicesItemView = ({
     name,
     link,
     numberView,
@@ -51,4 +51,4 @@ const ServicesItem = ({
     )
 }
 
-export default ServicesItem
+export default ServicesItemView

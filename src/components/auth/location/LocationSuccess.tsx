@@ -1,4 +1,8 @@
-const Success = () => {
+import { useAppSelector } from "../../../utils/hooks"
+
+const LocationSuccess = () => {
+
+    const {} = useAppSelector(s => s.authReducer.payloadUser)
     return (
         <div className="authsuccess auth">
             <div className="authsuccess__body">
@@ -19,4 +23,4 @@ const Success = () => {
     )
 }
 
-export default Success
+export default LocationSuccess

@@ -8,6 +8,7 @@
         position: absolute;
         top: 40px;
         left: 24px;
+        z-index: 5;
     }
     &__title {
         @include title-main;

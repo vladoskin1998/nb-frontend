@@ -1,4 +1,7 @@
 .location{
+    &__body{
+        flex-grow: 1;
+    }
     &__subtitle{
         display: flex;
         align-items: center;
@@ -13,6 +16,7 @@
     }
     &__fields{
         margin-top: 12px;
+        
     }
     &__field{
         display: flex;
@@ -43,5 +47,44 @@
         font-style: normal;
         font-weight: 400;
         line-height: 16px;
+    }
+    &__bt-continue{
+        @include button-main;
+    }
+}
+
+.location__current{
+    flex-grow: 1;
+    &-map{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 500px;
+        &--target{
+            position: fixed;
+            top: 125px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+    &-title{
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 35px; 
+        color: $color__blue;
+    }
+    &-subtitle{
+        margin-top: 12px;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;  
+        color: $color__grey1;
+    }
+    &-button{
+        margin-top: 20px;
+        display: grid;
     }
 }

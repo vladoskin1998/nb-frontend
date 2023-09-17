@@ -3,7 +3,7 @@ import { IconPicker } from "../../svg/IconFavor"
 import { IosTougle } from "../../ui/IosTougle"
 import { useEffect } from "react"
 
-const ServicesItemModal = ({
+const ServicesItemViewModal = ({
     name,
     isTougle,
     addItems,
@@ -69,4 +69,4 @@ const ServicesItemModal = ({
     )
 }
 
-export default ServicesItemModal
+export default ServicesItemViewModal
