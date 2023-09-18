@@ -1,7 +1,7 @@
 import { Route, Routes, useNavigate } from "react-router-dom"
 import { ButtonBackRoute } from "../../ui/ButtonBackRoute"
 import GeoLocationModule from "./GeoLocationModule"
-import CurrentLocation from "./CurrentLocation"
+import CurrentLocationModule from "./CurrentLocationModule"
 import LocationSuccess from "./LocationSuccess"
 
 const LocationUser = () => {
@@ -17,10 +17,8 @@ const LocationUser = () => {
                 <ButtonBackRoute click={exit} />
             </div>
             <Routes>
-
-
                 <Route path='current-location/location-success' element={<LocationSuccess />} />
-                <Route path='current-location' element={<CurrentLocation />} />
+                <Route path='current-location' element={<CurrentLocationModule />} />
                 <Route path="*" element={<GeoLocationModule />} />
             </Routes>
         </div>

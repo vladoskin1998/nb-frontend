@@ -2,7 +2,7 @@ import { useAppSelector } from "../../../utils/hooks"
 
 const LocationSuccess = () => {
 
-    const {} = useAppSelector(s => s.authReducer.payloadUser)
+    const {fullName} = useAppSelector(s => s.userReducer)
     return (
         <div className="authsuccess auth">
             <div className="authsuccess__body">
@@ -10,7 +10,7 @@ const LocationSuccess = () => {
                 <h4 className="authsuccess__body-title">Neighbor Harbor</h4>
                 <img src="/Images/GirlsSuccess.png" alt="" className="authsuccess__body-img-2" />
                 <h4 className="authsuccess__body-title authsuccess__body-subtitle">Welcome,
-                    <b>Feliks !</b>
+                    <b>fullName !</b>
                 </h4>
                 <button className="authsuccess__body-setup">Let’s setup your account</button>
             </div>

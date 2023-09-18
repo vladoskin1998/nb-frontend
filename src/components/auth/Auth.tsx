@@ -25,8 +25,8 @@ const Auth = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-    const { isAuth, payloadUser, isLoad } = useAppSelector((s) => s.authReducer)
-
+    const { isAuth, isLoad } = useAppSelector((s) => s.authReducer)
+    const {isLocationVerify } = useAppSelector((s) => s.userReducer)
     const handlerAuth = () => {
         const method = isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
         const payload: PayloadInterface = {
@@ -42,8 +42,7 @@ const Auth = () => {
 
     useEffect(() => {
         // if (
-        //     (payloadUser.coordinars.lat === null ||
-        //         payloadUser.coordinars.lng === null) &&
+        //     !isLocationVerify &&
         //     isAuth
         // ) {
         //     navigate(`/location`)

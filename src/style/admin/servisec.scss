@@ -153,6 +153,7 @@
             color: $color__blue;
             &-svg{
                 padding: 0 7px;
+                @include flex-all-center;
             }
         }
     }

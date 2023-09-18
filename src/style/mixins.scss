@@ -37,7 +37,10 @@
         border: 1px solid $color__black;
     }
 
-    // &--{}
+    &--disabled{
+        background-color: $color__grey5;
+        color: $color__grey6;
+    }
 }
 
 @mixin title-main {
@@ -66,8 +69,16 @@
     line-height: 140%;
     box-shadow: $box-shadow1;
     color: $color__black;
+    position: relative;
     &::placeholder {
         color: $color__grey1;
+    }
+    &--disabled{
+        position: absolute;
+        bottom: -5px;
+        left: 10px;
+        color: red;
+        font-size: 10px;
     }
 }
 

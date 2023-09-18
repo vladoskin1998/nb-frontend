@@ -32,13 +32,6 @@ export const authorization = createAsyncThunk<AuthResponseInterface, Authorizati
 )
 
 
-export const logout = createAsyncThunk(
-    'auth/logout',
-    async () => {
-        await $api.delete('auth/logout')
-    }
-)
-
 
 export const authorizationMessenger = createAsyncThunk<AuthResponseInterface, AuthorizationPayloadMessanger>(
     'auth/messenger',
@@ -50,8 +43,11 @@ export const authorizationMessenger = createAsyncThunk<AuthResponseInterface, Au
 )
 
 
-export const Logout = async () => {
-    await $api.post(`auth/logout`)
-    localStorage.removeItem("accessToken")
-    return window.location.href = '/auth';
-} 
+export const logout = createAsyncThunk(
+    `auth/logout`,
+    async () => {
+            await $api.post(`auth/logout`)
+            localStorage.removeItem("accessToken")
+            window.location.href = '/auth'
+    }
+)

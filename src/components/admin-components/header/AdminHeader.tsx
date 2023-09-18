@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { IconAdminClose, IconAdminBurger, IconAdminImage } from '../../svg/IconAdminHeader'
 import MenuHeader from './MenuHeader'
-import { headerTitle } from '../../../utils/menu-title'
+import { headerTitle } from '../../../utils/titles'
 import { useLocation } from 'react-router-dom'
 const AdminHeader = () => {
 

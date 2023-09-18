@@ -2,9 +2,9 @@ import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { IconRightChevrons, IconBottomChevrons } from '../../svg/IconChevrons';
 import { routesMenu as routes } from '../../../utils/constant';
-import { Logout } from '../../../services/auth';
-
-const toOneKind = (s: string) => s.replace(/ /g, '').toLocaleLowerCase()
+import { logout } from '../../../services/auth';
+import { useAppDispatch } from '../../../utils/hooks';
+import { toOneKind } from '../../../utils/titles';
 
 const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boolean) => void }) => {
 
@@ -13,6 +13,7 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
     const changeOpenSub = (key: string) => {
         setSsOpenSub(key)
     }
+    const dispatch = useAppDispatch()
 
     const closeMenu = () => {
         setIsOpen(false)
@@ -30,6 +31,12 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
+
+    const handlerLogout = () => {
+        dispatch(
+            logout()
+        )
+    }
 
 
     return (
@@ -69,7 +76,7 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
                             {
                                 r.subName.map(
                                     s => <div onClick={closeMenu} key={s + index*100}>
-                                        <Link to={toOneKind(s)}>
+                                        <Link to={`${toOneKind(r.name)}/${toOneKind(s)}`}>
                                             {s}
                                         </Link>
                                     </div>
@@ -80,7 +87,7 @@ const MenuHeader = ({ isOpen, setIsOpen }: { isOpen: boolean, setIsOpen: (o: boo
                 }
             )}
             <button
-                onClick={Logout}
+                onClick={handlerLogout}
             > Logout</button>
         </div>
        

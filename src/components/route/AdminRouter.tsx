@@ -25,7 +25,7 @@ const AdminRouter = () => {
     <div>
       <AdminHeader />
       <Routes>
-        <Route path="users" element={<ProtectedRoute element={<Users />} />} />
+        <Route path="users/*" element={<ProtectedRoute element={<Users />} />} />
         <Route path="services/*" element={<ProtectedRoute element={<Services />} />} />
         <Route path="posts" element={<ProtectedRoute element={<Posts />} />} />
         <Route path="messeges" element={<ProtectedRoute element={<Messeges />} />} />

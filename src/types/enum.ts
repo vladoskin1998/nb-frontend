@@ -1,6 +1,9 @@
 export enum ROLES {
+    ALLUSERS='all users',
     ADMIN = "admin",
+    COORDINATORS = 'coordinators',
     USER = "user",
+    BLOCKED = "blocked",
 }
 
 export enum METHOD_AUTH {
@@ -9,3 +12,6 @@ export enum METHOD_AUTH {
     GOOGLE = "google",
     FACEBOOK = "facebook",
 }
+
+
+

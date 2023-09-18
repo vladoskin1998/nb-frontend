@@ -1,0 +1,155 @@
+.user__routemodal {
+    position: fixed;
+    top: 170px;
+    z-index: 5;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 366px;
+    width: 100%;
+    &-body {
+        color: $color__blue3;
+        font-family: Inter;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22.5px;
+        display: flex;
+        flex-direction: column;
+        padding: 0 16px;
+        row-gap: 16px;
+    }
+    &-link {
+        text-transform: capitalize;
+    }
+}
+
+.user {
+    &__list {
+        padding: 20px 0px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+    }
+    &__item {
+        border-radius: 12px;
+        background: #fff;
+        display: flex;
+        padding: 20px 20px 12px 20px;
+        flex-direction: column;
+        gap: 12px;
+        &-row1 {
+            display: grid;
+            grid-template-columns: 68px 1fr 30px;
+            height: 68px;
+            column-gap: 20px;
+            &-img {
+                width: 68px;
+                height: 68px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+            &-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                font-size: 12px;
+                font-style: normal;
+                line-height: 16px;
+            }
+            &-user {
+                display: flex;
+                column-gap: 8px;
+                align-items: center;
+                b {
+                    color: $color__blue4;
+                    font-weight: 600;
+                }
+            }
+            &-email {
+                color: $color__blue5;
+                font-weight: 600;
+            }
+            &-phone {
+                color: $color__blue2;
+                font-weight: 600;
+            }
+            &-button {
+                height: 30px;
+            }
+        }
+        &-row2 {
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 20px;
+            .services__favor-item-row2 {
+                grid-template-columns: auto 40px auto 1fr;
+                color: $color__grey7;
+            }
+            .services__favor-item-row2-svg {
+                padding: 0 4.5px;
+            }
+        }
+    }
+}
+
+.user__modal {
+    &-avatar {
+        padding: 8px 0px;
+        @include flex-all-center;
+        flex-direction: column;
+        gap: 12px;
+        border-radius: 12px;
+        background: $color__grey3;
+        &-img{
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+        &-title{
+            color: $color__blue;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            b{
+                font-weight: 600;
+            }
+        }
+    }
+    &-body{
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        row-gap: 24px;
+        font-size: 16px;
+        svg{
+            path{
+                fill: black;
+            }
+        }
+        &-row1{
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            text-align: start;
+            column-gap: 8px;
+            &-edit{
+                font-size: 14px;
+                color: $color__blue1;
+            }
+            &-coord{
+                font-size: 14px;
+                color: $color__grey1;
+            }
+        }
+        &-row2{
+            display: grid;
+            grid-template-columns: auto 1fr;
+            align-items: center;
+            text-align: start;
+            column-gap: 8px;
+        }
+    }
+}

@@ -7,12 +7,13 @@ export interface AuthResponseInterface{
         email: string;
         role: ROLES;
         _id: string;
-        coordinars: {lat: number | null, lng: number | null };
+        coordinates: {lat: number | null, lng: number | null };
         city: string  | null;
         country: string  | null;
         houseNumber: string  | null;
         street: string  | null;
         fullName: string;
+        isLocationVerify: boolean;
 
     };
     accessToken: string;

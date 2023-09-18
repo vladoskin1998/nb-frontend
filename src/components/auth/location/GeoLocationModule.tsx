@@ -1,5 +1,5 @@
-import  { useEffect } from "react"
-import { setCoordinatesAndAddress } from "../../../reducer/auth"
+import { useEffect } from "react"
+import { setCoordAndAddr } from "../../../reducer/user"
 import { useAppDispatch } from "../../../utils/hooks"
 import { createAddressString } from "../../../utils/createAddressString"
 import GeoLocationView from "./GeoLocationView"
@@ -22,13 +22,15 @@ const GeoLocationModule = () => {
                     geocoder.geocode(
                         { location: latLng },
                         async (results, status) => {
+                            console.log(results)
+
                             if (status === "OK" && results && results[0]) {
                                 const address = createAddressString(
                                     results[0].address_components
                                 )
 
                                 dispatch(
-                                    setCoordinatesAndAddress({
+                                    setCoordAndAddr({
                                         coordinates: {
                                             lat: latitude,
                                             lng: longitude,
@@ -74,7 +76,7 @@ const GeoLocationModule = () => {
                 const address = createAddressString(place?.address_components)
 
                 dispatch(
-                    setCoordinatesAndAddress({
+                    setCoordAndAddr({
                         coordinates: { lat: lat(), lng: lng() },
                         ...address,
                     })
@@ -83,9 +85,14 @@ const GeoLocationModule = () => {
         })
     }, [])
 
-    const navigateToCurrentRoute = () => navigation('current-location')
+    const navigateToCurrentRoute = () => navigation("current-location")
 
-    return <GeoLocationView geoLocation={geoLocation} navigateToCurrentRoute={navigateToCurrentRoute}/>
+    return (
+        <GeoLocationView
+            geoLocation={geoLocation}
+            navigateToCurrentRoute={navigateToCurrentRoute}
+        />
+    )
 }
 
 export default GeoLocationModule
