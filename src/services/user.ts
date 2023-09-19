@@ -2,11 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import $api from "../http"
 
 interface LocationPayload {
-    coordinates: { lat: number | null, lng: number | null };
+    coordinates: { lat: number, lng: number};
     city: string | null;
     country: string | null;
     houseNumber: string | null;
     street: string | null;
+    _id: string;
 }
 
 interface LocationPayloadResponse {

@@ -6,9 +6,13 @@ import { IconBoxComment, IconMicrophone } from "../../svg/IconActivitiesModal"
 export const UserItemModal = ({
     isOpen,
     setIsOpen,
+    handlerBlockUser,
+    handlerDeleteUser,
 }: {
     isOpen: boolean
     setIsOpen: (o: boolean) => void
+    handlerBlockUser: () => void
+    handlerDeleteUser: () => void
 }) => {
     return (
         <div
@@ -78,14 +82,14 @@ export const UserItemModal = ({
                             </div>
                         </div>
 
-                        <div className="user__modal-body-row2">
+                        <div className="user__modal-body-row2" onClick={handlerBlockUser}>
                             <IconPicker />
                             <div>
                                 <button>Block</button>
                             </div>
                         </div>
 
-                        <div className="user__modal-body-row2">
+                        <div className="user__modal-body-row2" onClick={handlerDeleteUser}>
                             <IconPicker />
                             <div>
                                 <button>Delete <b>Username</b></button>

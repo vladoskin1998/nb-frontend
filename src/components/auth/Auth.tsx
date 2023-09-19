@@ -41,22 +41,23 @@ const Auth = () => {
     }
 
     useEffect(() => {
-        // if (
-        //     !isLocationVerify &&
-        //     isAuth
-        // ) {
-        //     navigate(`/location`)
-        // } else if (isAuth) {
-        //     navigate(`/admin`)
-        // } else {
-        //     navigate(`/auth`)
-        // }
-
-        if (isAuth) {
+        if (
+            !isLocationVerify &&
+            isAuth
+        ) {
+            navigate(`/location`)
+        } else if (isAuth) {
             navigate(`/admin`)
         } else {
             navigate(`/auth`)
         }
+
+        
+        // if (isAuth) {
+        //     navigate(`/admin`)
+        // } else {
+        //     navigate(`/auth`)
+        // }
         
     }, [isAuth])
 

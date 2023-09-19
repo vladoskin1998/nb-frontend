@@ -4,9 +4,10 @@ import { IconBottomChevrons } from "../../svg/IconChevrons"
 import { InputSearch } from "../../ui/InputSearch"
 import { Route, Routes, useLocation } from "react-router-dom"
 import { ROLES } from "../../../types/enum"
-import { UserList } from "./UserList"
+import { UserListModule } from "./UserListModule"
 import { UserRouterModal } from "./UserRouterModal"
 import { userSubTitle } from "../../../utils/titles"
+import { UserGroups } from "./UserGroups"
 
 export const Users = () => {
     const [currentRoles, setCurrentRoles] = useState<ROLES>(ROLES.ALLUSERS)
@@ -49,12 +50,11 @@ export const Users = () => {
                 changeValue={setSearch}
             />
             <Routes>
-                {/* 
-                 <Route ath="groups" element={<ActivitiesAdd />}p />
-                 */}
-                <Route path="blocked" element={<UserList role={ROLES.BLOCKED}/>} />
-                <Route path="coordinators" element={<UserList role={ROLES.BLOCKED} />} />
-                <Route path="*" element={<UserList role={ROLES.BLOCKED}/>} />
+                
+                <Route path="groups" element={<UserGroups />} />
+                <Route path="blocked" element={<UserListModule role={ROLES.BLOCKED}/>} />
+                <Route path="coordinators" element={<UserListModule role={ROLES.COORDINATORS} />} />
+                <Route path="*" element={<UserListModule role={ROLES.ALLUSERS}/>} />
             </Routes>
         </div>
     )

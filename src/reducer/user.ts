@@ -1,39 +1,46 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
     authorization,
-    logout,
-    authorizationMessenger,
 } from "../services/auth"
 import { ROLES } from "../types/enum"
 import { userChangeLocation } from "../services/user";
 
-interface InitialStateInterface {
+export interface InitialStateUserInterface {
     isLoad: boolean
     email: string;
     role: ROLES;
     _id: string;
-    coordinates: { lat: number | null, lng: number | null };
+    coordinates: { lat: number , lng: number };
     city: string | null;
     country: string | null;
     houseNumber: string | null;
     street: string | null;
     fullName: string;
     isLocationVerify: boolean;
+    createdUserDate: Date;
+    blockedUserDate: Date;
 }
 
 
-const initialState: InitialStateInterface = {
+const initCoordinates = {     
+    lat:50.440569860389814,
+    lng:30.540884262459286
+}
+
+const initialState: InitialStateUserInterface = {
     isLoad: false,
     email: "",
     role: ROLES.ADMIN,
     _id: "",
-    coordinates: { lat: null, lng: null },
+    coordinates: initCoordinates,
     city: null,
     country: null,
     houseNumber: null,
     street: null,
     fullName: "",
     isLocationVerify: false,
+    createdUserDate: new Date(),
+    blockedUserDate:  new Date(),
 }
 
 export const userReducer = createSlice({
@@ -42,7 +49,7 @@ export const userReducer = createSlice({
     reducers: {
         setCoordAndAddr: (state, { payload }: {
             payload: {
-                coordinates: { lat: number | null; lng: number | null };
+                coordinates: { lat: number ; lng: number };
                 city: string | null;
                 country: string | null;
                 houseNumber: string | null;
@@ -60,17 +67,9 @@ export const userReducer = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(authorization.fulfilled, (state, { payload }) => {
-                console.log("payload user------->", payload);
-                const { coordinates, city, country, houseNumber, street, isLocationVerify } = payload.user;
-
-                // Object.assign(state, payload.user);
-
-                state.coordinates = coordinates
-                state.city = city
-                state.country = country
-                state.houseNumber = houseNumber
-                state.street = street
-                state.isLocationVerify = isLocationVerify
+                console.log("payload user------->", payload.user);
+                Object.assign(state, payload.user);
+               
             })
             .addCase(userChangeLocation.fulfilled, (state, { payload }) => {
                 console.log("payload userChangeLocation------->", payload);
@@ -87,6 +86,8 @@ export const userReducer = createSlice({
                 },
                 (state, action) => {
                     state.isLoad = action.type.endsWith("/pending")
+                    state.coordinates = state.coordinates.lat === null || state.coordinates.lng === null 
+                        ? initCoordinates : state.coordinates
                 }
             )
     },

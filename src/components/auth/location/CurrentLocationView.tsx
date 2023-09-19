@@ -1,5 +1,7 @@
-import { useAppSelector } from "../../../utils/hooks"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { IconLocationAim } from "../../svg/IconsLocation"
+import { userChangeLocation } from "../../../services/user"
+import { useEffect } from "react"
 
 const mapContainerStyle = {
     width: "100%",
@@ -8,24 +10,53 @@ const mapContainerStyle = {
 
 const CurrentLocationView = ({
     validateGeoData,
-    navigateToSuccess
-}:{
-    validateGeoData: boolean,
+    navigateToSuccess,
+    containerMapRef
+}: {
+    validateGeoData: boolean
     navigateToSuccess: () => void
+    containerMapRef: React.MutableRefObject<HTMLDivElement | null>
 }) => {
+    const dispatch = useAppDispatch()
+    const {
+        city,
+        country,
+        houseNumber,
+        street,
+        coordinates,
+        _id,
+        isLocationVerify,
+    } = useAppSelector((s) => s.userReducer)
 
+    console.log(coordinates)
 
+    const userLocation = async () => {
+        if (coordinates && typeof coordinates.lat === 'number' && typeof coordinates.lng === 'number')  {
+            dispatch(
+                userChangeLocation({
+                    coordinates,
+                    city,
+                    country,
+                    houseNumber,
+                    street,
+                    _id,
+                })
+            )
+        }
+    }
 
-    const { city, country, houseNumber, street } = useAppSelector(
-        (s) => s.userReducer
-    )
+    useEffect(() => {
+        if (isLocationVerify) {
+            navigateToSuccess()
+        }
+    }, [isLocationVerify])
 
     return (
         <>
             <div className="location__current">
                 <div className="location__current-map">
                     <div
-                        id="map--google--current"
+                        ref={containerMapRef}
                         style={mapContainerStyle}
                     ></div>
                     <img
@@ -43,8 +74,12 @@ const CurrentLocationView = ({
             </p>
             <div className="location__current-button">
                 <button
-                    className={`location__bt-continue ${ !validateGeoData ? "location__bt-continue--disabled" : ""}`}
-                    onClick={navigateToSuccess}
+                    className={`location__bt-continue ${
+                        !validateGeoData
+                            ? "location__bt-continue--disabled"
+                            : ""
+                    }`}
+                    onClick={userLocation}
                 >
                     Confirm Location
                 </button>
