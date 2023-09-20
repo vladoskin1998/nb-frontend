@@ -62,7 +62,9 @@
 @mixin input-main {
     border-radius: 8px;
     background: $color__white;
-    padding: 20px 25px 20px 15px;
+    padding: 0 25px 0 15px;
+    display: flex;
+    align-items: center;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -70,12 +72,13 @@
     box-shadow: $box-shadow1;
     color: $color__black;
     position: relative;
+    height: 50px;
     &::placeholder {
         color: $color__grey1;
     }
-    &--disabled{
+    &--invalid{
         position: absolute;
-        bottom: -5px;
+        top: -10px;
         left: 10px;
         color: red;
         font-size: 10px;

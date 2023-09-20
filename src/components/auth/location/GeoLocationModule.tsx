@@ -43,6 +43,7 @@ const GeoLocationModule = () => {
                             }
                         }
                     )
+                    navigateToCurrentRoute()
                 },
                 (error) => {
                     alert("Ошибка при получении местоположения:" + error)

@@ -4,13 +4,21 @@ import { UserItemModule } from "./UserItemModule"
 import $api from "../../../http"
 import { InitialStateUserInterface } from "../../../reducer/user"
 import { AxiosResponse } from "axios"
+import { InputSearch } from "../../ui/InputSearch"
 
 export const UserListModule = ({ role }: { role: ROLES }) => {
+
     const [users, setUsers] = useState<InitialStateUserInterface[]>([])
+    const [searchName, setSearchName] = useState("")
+
+    useEffect(() => {
+        const timeOutId = setTimeout(() => getUsers(), 1000)
+        return () => clearTimeout(timeOutId)
+    }, [searchName, role])
 
     const getUsers = async () => {
         await $api
-            .post("user/get-users", { role })
+            .post("user/get-users", { role, searchName })
             .then((res: AxiosResponse<InitialStateUserInterface[]>) =>
                 setUsers(res.data)
             )
@@ -28,19 +36,23 @@ export const UserListModule = ({ role }: { role: ROLES }) => {
             .then(() => setUsers((s) => s.filter((item) => item._id !== _id)))
     }
 
-    useEffect(() => {
-        getUsers()
-    }, [role])
-
     return (
-        <div className="user__list">
-            {users.map((item: InitialStateUserInterface) => (
-                <UserItemModule
-                    {...item}
-                    blockUser={blockUser}
-                    deleteUser={deleteUser}
-                />
-            ))}
-        </div>
+        <>
+            <InputSearch
+                placeholder={"Search User"}
+                value={searchName}
+                changeValue={setSearchName}
+            />
+            <div className="user__list">
+                {users.map((item: InitialStateUserInterface) => (
+                    <UserItemModule
+                        key={item._id}
+                        {...item}
+                        blockUser={blockUser}
+                        deleteUser={deleteUser}
+                    />
+                ))}
+            </div>
+        </>
     )
 }

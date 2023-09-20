@@ -1,47 +1,97 @@
 import { useState } from "react"
 import { InputPassword } from "../ui/InputPassword"
 import { CheckBox } from "../ui/CheckBox"
+import { InputMain } from "../ui/InputMain"
+import {
+    inNotEmpty,
+    isEmailOrPhonePattern,
+    isPasswordPattern,
+} from "../../utils/patterns"
 
-const Registration = (
-    {
-        login,
-        setLogin,
-        password,
-        setPassword,
-        fullName,
-        setFullName,
-    }:
-    {
-        login:string,
-        setLogin: (s:string) => void,
-        password:string,
-        setPassword: (s:string) => void,
-        fullName:string,
-        setFullName: (s:string) => void,
-    }
-) => {
-
+const Registration = ({
+    login,
+    setLogin,
+    password,
+    setPassword,
+    fullName,
+    setFullName,
+    handlerAuth,
+}: {
+    login: string
+    setLogin: (s: string) => void
+    password: string
+    setPassword: (s: string) => void
+    fullName: string
+    setFullName: (s: string) => void
+    handlerAuth: () => void
+}) => {
     const [checked, setChecked] = useState(true)
-    
+    const [validation, setValidation] = useState({
+        login: false,
+        password: false,
+        fullName: false,
+    })
+
     return (
         <>
             <div className="registration">
-                <input type="text" className="login__email" placeholder='Email' value={login} onChange={e => setLogin(e.target.value)} />
-                <input type="text" className="login__email" placeholder='Full Name' value={fullName} onChange={e => setFullName(e.target.value)} />
-                <InputPassword password={password} setPassword={setPassword} />
+                <InputMain
+                    value={login}
+                    setValue={setLogin}
+                    placeholder={"Email or Phone"}
+                    errorMessage={
+                        "Invalid login, +380000000000, example@example.example"
+                    }
+                    pattern={isEmailOrPhonePattern}
+                    isValidated={validation.login}
+                    setIsValidated={(s: boolean) =>
+                        setValidation({ ...validation, login: s })
+                    }
+                />
+                <InputMain
+                    value={fullName}
+                    setValue={setFullName}
+                    placeholder={"Full Name"}
+                    errorMessage={"Еhe name must be"}
+                    pattern={inNotEmpty}
+                    isValidated={validation.fullName}
+                    setIsValidated={(s: boolean) =>
+                        setValidation({ ...validation, fullName: s })
+                    }
+                />
+                <InputPassword
+                    password={password}
+                    setPassword={setPassword}
+                    errorMessage={
+                        "Invalid password, min 8, numbers and letters"
+                    }
+                    pattern={isPasswordPattern}
+                    isValidated={validation.password}
+                    setIsValidated={(s: boolean) =>
+                        setValidation({ ...validation, password: s })
+                    }
+                />
                 <div className="registration__policy">
-                    <CheckBox click={() => setChecked(s => !s)} />
+                    <CheckBox click={() => setChecked((s) => !s)} />
                     <div>
-                        <p>
-                            By Signing up, you agree to the
-                        </p>
+                        <p>By Signing up, you agree to the</p>
                         <p>
                             <b> Terms of Service</b> and <b>Privacy Policy</b>
                         </p>
                     </div>
                 </div>
             </div>
-     
+            <button
+                className={`login__button
+                ${ 
+                    (validation.login && validation.password && validation.fullName) || "login__button--disabled"
+                }
+            `}
+                onClick={handlerAuth}
+                disabled={!(validation.login && validation.password  && validation.fullName)}
+            >
+                Log In
+            </button>
         </>
     )
 }

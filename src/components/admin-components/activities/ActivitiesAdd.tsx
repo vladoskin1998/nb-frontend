@@ -5,12 +5,8 @@ import { useNavigate } from "react-router"
 import { v1 as uuidv4 } from "uuid"
 import { useAppDispatch } from "../../../utils/hooks"
 import { addActivities } from "../../../services/activities"
+import { isEmptyFiledsObject } from "../../../utils/patterns"
 
-interface CategoryInterface {
-    id: string
-    name: string
-    file: File
-}
 
 const activitiesBody = {
     id: "",
@@ -24,7 +20,7 @@ const ActivitiesAdd = () => {
     const navigate = useNavigate()
     const [activities, setActivities] = useState({ ...activitiesBody, id: uuidv4() })
 
-
+    const validation = isEmptyFiledsObject(activities)
 
     const addNewCategory = async () => {
         try {
@@ -45,7 +41,7 @@ const ActivitiesAdd = () => {
                 )
             )
 
-            setActivities({ ...activitiesBody, id: uuidv4() })
+            navigate("/admin/activities")
         } catch (error) {
             throw error
         }
@@ -88,8 +84,8 @@ const ActivitiesAdd = () => {
                     />
                 </div>
                 <button
-                    className="services__add-button services__add-button-2"
-                    onClick={addNewCategory}
+                    className={`services__add-button services__add-button-2 ${!validation ? "services__add-button--disabled": ""}`}
+                    onClick={validation ? addNewCategory : () => alert('Fill in all fields, add image and name')}
                 >
                     Publish
                 </button>

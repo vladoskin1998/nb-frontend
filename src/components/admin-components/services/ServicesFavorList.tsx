@@ -1,8 +1,3 @@
-import { useState } from "react"
-import { IconLeftChevrons } from "../../svg/IconChevrons"
-import { AdminSubHeader } from "../../ui/AdminSubHeader"
-import { useNavigate } from "react-router-dom"
-import { InputSearch } from "../../ui/InputSearch"
 import { IconLocationPoint } from "../../svg/IconsLocation"
 import { IconServicesAllPoint } from "../../svg/IconServicesAll"
 import {

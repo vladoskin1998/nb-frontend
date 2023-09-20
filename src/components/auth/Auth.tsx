@@ -18,8 +18,8 @@ interface PayloadInterface {
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
 
-    const [login, setLogin] = useState("test@test.test")
-    const [password, setPassword] = useState("test")
+    const [login, setLogin] = useState("")
+    const [password, setPassword] = useState("")
     const [fullName, setFullName] = useState("")
 
     const navigate = useNavigate()
@@ -27,6 +27,7 @@ const Auth = () => {
 
     const { isAuth, isLoad } = useAppSelector((s) => s.authReducer)
     const {isLocationVerify } = useAppSelector((s) => s.userReducer)
+
     const handlerAuth = () => {
         const method = isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
         const payload: PayloadInterface = {
@@ -50,15 +51,7 @@ const Auth = () => {
             navigate(`/admin`)
         } else {
             navigate(`/auth`)
-        }
-
-        
-        // if (isAuth) {
-        //     navigate(`/admin`)
-        // } else {
-        //     navigate(`/auth`)
-        // }
-        
+        }        
     }, [isAuth])
 
     return (
@@ -72,6 +65,7 @@ const Auth = () => {
                             setLogin={setLogin}
                             password={password}
                             setPassword={setPassword}
+                            handlerAuth={handlerAuth}
                         />
                     ) : (
                         <Registration
@@ -81,11 +75,9 @@ const Auth = () => {
                             setPassword={setPassword}
                             fullName={fullName}
                             setFullName={setFullName}
+                            handlerAuth={handlerAuth}
                         />
                     )}
-                    <button className="login__button" onClick={handlerAuth}>
-                        {isLogin ? "Log In" : "Sign Up"}
-                    </button>
                 </div>
             ) : (
                 <Loader />

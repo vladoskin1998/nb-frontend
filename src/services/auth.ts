@@ -25,8 +25,12 @@ export const refresh = createAsyncThunk<AuthResponseInterface, void>(
 export const authorization = createAsyncThunk<AuthResponseInterface, AuthorizationPayload>(
     'auth/authorization',
     async (payload) => {
-        const { method, email, password } = payload
-        const response = await $api.post(`auth/${method}`, { email, password })
+        const { method } = payload
+        let requestData: { email: string, password: string, fullName?: string } = { email: payload.email, password: payload.password }
+        if (payload?.fullName) {
+            requestData.fullName = payload.fullName
+        }
+        const response = await $api.post(`auth/${method}`, requestData)
         return response.data
     }
 )
@@ -46,8 +50,8 @@ export const authorizationMessenger = createAsyncThunk<AuthResponseInterface, Au
 export const logout = createAsyncThunk(
     `auth/logout`,
     async () => {
-            await $api.post(`auth/logout`)
-            localStorage.removeItem("accessToken")
-            window.location.href = '/auth'
+        await $api.post(`auth/logout`)
+        localStorage.removeItem("accessToken")
+        window.location.href = '/auth'
     }
 )

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { IconServicesAllPoint } from "../../svg/IconServicesAll"
 import { IconStars } from "../../svg/IconFavor"
 import {
@@ -11,7 +11,7 @@ import {
 import { InitialStateUserInterface } from "../../../reducer/user"
 import { ROLES } from "../../../types/enum"
 import { IconRightChevrons } from "../../svg/IconChevrons"
-import moment from 'moment';
+import moment from "moment"
 
 interface UserItemViewProps extends InitialStateUserInterface {
     setIsOpen: () => void
@@ -20,6 +20,7 @@ interface UserItemViewProps extends InitialStateUserInterface {
 export const UserItemView = (props: UserItemViewProps) => {
     const mapRef = useRef<google.maps.Map | null>(null)
     const containerMap = useRef<HTMLDivElement | null>(null)
+    const [downloadMap, setDownloadMap] = useState(false)
 
     const {
         setIsOpen,
@@ -30,7 +31,7 @@ export const UserItemView = (props: UserItemViewProps) => {
         street,
         houseNumber,
         createdUserDate,
-        blockedUserDate
+        blockedUserDate,
     } = props
 
     const mapContainerStyle = {
@@ -59,7 +60,7 @@ export const UserItemView = (props: UserItemViewProps) => {
                 mapOptions
             )
         }
-    }, [])
+    }, [downloadMap])
 
     return (
         <div className="user__item">
@@ -85,29 +86,42 @@ export const UserItemView = (props: UserItemViewProps) => {
             </div>
             {role === ROLES.BLOCKED ? (
                 <>
-                  <div className="user__item-blocked">
-                    <div>
-                        <div className="user__item-blocked-title">START DATE</div>
-                        <div  className="user__item-blocked-date">{moment(createdUserDate).format('MMM D, h:mm a')}</div>
+                    <div className="user__item-blocked">
+                        <div>
+                            <div className="user__item-blocked-title">
+                                START DATE
+                            </div>
+                            <div className="user__item-blocked-date">
+                                {moment(createdUserDate).format(
+                                    "MMM D, h:mm a"
+                                )}
+                            </div>
+                        </div>
+                        <div>
+                            <IconRightChevrons />
+                        </div>
+                        <div>
+                            <div className="user__item-blocked-title">
+                                DUE DATE
+                            </div>
+                            <div className="user__item-blocked-date">
+                                {moment(blockedUserDate).format(
+                                    "MMM D, h:mm a"
+                                )}
+                            </div>
+                        </div>
                     </div>
-                    <div><IconRightChevrons/></div>
-                    <div>
-                        <div className="user__item-blocked-title">DUE DATE</div>
-                        <div className="user__item-blocked-date">{moment(blockedUserDate).format('MMM D, h:mm a')}</div>
+                    <div className="user__item-blocked-line">
+                        <div className="user__item-blocked-row1">
+                            <img src="/Images/avatar-user.png" alt="" />
+                            <div>Coordinator Name</div>
+                        </div>
+                        <div className="user__item-blocked-row1">
+                            <IconsUserBlock />
+                            <div>Block type</div>
+                        </div>
                     </div>
-                </div>
-                <div className="user__item-blocked-line">
-                    <div className="user__item-blocked-row1">
-                        <img src="/Images/avatar-user.png" alt="" />
-                        <div>Coordinator Name</div>
-                    </div>
-                    <div className="user__item-blocked-row1">
-                        <IconsUserBlock />
-                        <div>Block type</div>
-                    </div>
-                </div>
                 </>
-              
             ) : (
                 <>
                     <div className="user__item-row2">
@@ -126,9 +140,15 @@ export const UserItemView = (props: UserItemViewProps) => {
                             <span>{`${street} ${houseNumber}`}</span>
                         </div>
                     </div>
-                    <div style={mapContainerStyle}
-                        ref={containerMap}
-                    />
+                    {downloadMap ? (
+                        <div style={mapContainerStyle} ref={containerMap} />
+                    ) : (
+                        
+                            <div style={mapContainerStyle} className="user__item-tapmap" onClick={() => setDownloadMap(true)}>
+                                <div className="user__item-tapmapbody" />
+                                Tap to see location 
+                            </div>
+                    )}
                 </>
             )}
         </div>

@@ -10,10 +10,18 @@
       content="Web site created using create-react-app"
     />
     <title>Neighbor Harbor</title>
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=%REACT_APP_GOOGLE_APi_KEY%"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script>
+      function loadGoogleMapsScript() {
+        const script = document.createElement('script');
+        script.src = 'https://maps.googleapis.com/maps/api/js?libraries=places&key=%REACT_APP_GOOGLE_APi_KEY%';
+        script.async = true;
+        document.body.appendChild(script);
+      }
+       loadGoogleMapsScript();
+    </script>
   </body>
 </html>

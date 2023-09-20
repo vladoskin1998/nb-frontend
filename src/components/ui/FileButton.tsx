@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 import { IconArrachFile } from "../svg/IconArrachFile";
 
 export const FileButton = ({getFile,image}:{getFile:(f:File) => void,image: File}) => {

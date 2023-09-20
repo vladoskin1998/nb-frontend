@@ -1,6 +1,3 @@
-import { Modal } from "../../ui/Modal"
-import { IconPicker } from "../../svg/IconFavor"
-import { IosTougle } from "../../ui/IosTougle"
 import { Link } from "react-router-dom"
 import {
     IconServicesAllPlus,
