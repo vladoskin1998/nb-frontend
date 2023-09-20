@@ -26,8 +26,10 @@ const Login = ({
     }
 
     const [validation, setValidation] = useState({
-        login: false,
-        password: false,
+        // login: false,
+        // password: false,
+        login:new RegExp(isEmailOrPhonePattern).test(login),
+        password: new RegExp(isPasswordPattern).test(password)
     })
 
     console.log(validation);
@@ -72,7 +74,7 @@ const Login = ({
             <button
                 className={`login__button
                 ${ 
-                    (validation.login && validation.password) || "login__button--disabled"
+                    (validation.login && validation.password) ? "" :"login__button--disabled"
                 }
             `}
                 onClick={handlerAuth}

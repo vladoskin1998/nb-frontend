@@ -1,44 +1,46 @@
-import { useState } from 'react';
+import { useState } from "react"
 
 export const InputMain = ({
-  value,
-  setValue,
-  placeholder,
-  errorMessage,
-  pattern,
-  isValidated, 
-  setIsValidated,
+    value,
+    setValue,
+    placeholder,
+    errorMessage,
+    pattern,
+    isValidated,
+    setIsValidated,
 }: {
-  value: string;
-  setValue: (s: string) => void;
-  placeholder: string;
-  errorMessage: string;
-  pattern: string | undefined | RegExp;
-  isValidated: boolean, 
-  setIsValidated: (s:boolean) => void
+    value: string
+    setValue: (s: string) => void
+    placeholder: string
+    errorMessage: string
+    pattern: string | RegExp
+    isValidated: boolean
+    setIsValidated: (s: boolean) => void
 }) => {
+    const [isValid, setIsValid] = useState(true)
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = event.target.value;
-    setValue(newValue);
-  };
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = event.target.value
+        setIsValidated(new RegExp(pattern).test(newValue))
+        setValue(newValue)
+    }
 
-  const isValid = pattern ? new RegExp(pattern).test(value) : true;
+    const handleBlur = () => {
+        setIsValid(new RegExp(pattern).test(value))
+    }
 
-  const handleBlur = () => {
-    setIsValidated(true); 
-  };
-
-  return (
-    <div className={'ui-input__main'}>
-      <input
-        type="text"
-        value={value}
-        onChange={handleChange}
-        placeholder={placeholder}
-        onBlur={handleBlur} 
-      />
-      {(!isValid && isValidated) && <span className='ui-input__main--invalid'>{errorMessage}</span>}
-    </div>
-  );
-};
+    return (
+        <div className={"ui-input__main"}>
+            <input
+                type="text"
+                value={value}
+                onChange={handleChange}
+                placeholder={placeholder}
+                onBlur={handleBlur}
+            />
+            {!isValid && (
+                <span className="ui-input__main--invalid">{errorMessage}</span>
+            )}
+        </div>
+    )
+}

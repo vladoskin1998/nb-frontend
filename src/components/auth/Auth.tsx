@@ -18,9 +18,9 @@ interface PayloadInterface {
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
 
-    const [login, setLogin] = useState("")
-    const [password, setPassword] = useState("")
-    const [fullName, setFullName] = useState("")
+    const [login, setLogin] = useState("test2000@test.test")
+    const [password, setPassword] = useState("test2000")
+    const [fullName, setFullName] = useState("test2000")
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()

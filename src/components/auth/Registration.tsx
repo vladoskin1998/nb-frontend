@@ -27,10 +27,16 @@ const Registration = ({
 }) => {
     const [checked, setChecked] = useState(true)
     const [validation, setValidation] = useState({
-        login: false,
-        password: false,
-        fullName: false,
+        // login: false,
+        // password: false,
+        // fullName: false,
+        login:new RegExp(isEmailOrPhonePattern).test(login),
+        password: new RegExp(isPasswordPattern).test(password),
+        fullName: new RegExp(inNotEmpty).test(fullName)
     })
+
+    console.log(validation);
+    
 
     return (
         <>

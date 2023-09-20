@@ -12,7 +12,7 @@ export const InputPassword = ({
     password: string, 
     setPassword: (s: string) => void,
     errorMessage: string;
-    pattern: string | undefined | RegExp;
+    pattern: string | RegExp;
     isValidated: boolean, 
     setIsValidated: (s:boolean) => void
 }) => {
@@ -23,16 +23,17 @@ export const InputPassword = ({
         setShowPassword(s => !s);
     };
 
-    
+    const [isValid, setIsValid] = useState(true);
+
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
+    setIsValidated(new RegExp(pattern).test(newValue))
     setPassword(newValue);
   };
 
-  const isValid = pattern ? new RegExp(pattern).test(password) : true;
-
   const handleBlur = () => {
-    setIsValidated(true); 
+    setIsValid(new RegExp(pattern).test(password)); 
   };
 
     return (
@@ -48,7 +49,7 @@ export const InputPassword = ({
             <button onClick={togglePasswordVisibility} className='ui-password__button'>
                 {showPassword ? <IconOpenEye /> : <IconClosedEye />}
             </button>
-            {(!isValid && isValidated) && <span className='ui-input__main--invalid'>{errorMessage}</span>}
+            {!isValid && <span className='ui-input__main--invalid'>{errorMessage}</span>}
         </div>
     )
 }
