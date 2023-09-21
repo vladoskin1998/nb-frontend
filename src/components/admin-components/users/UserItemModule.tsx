@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { UserItemView } from "./UserItemView"
 import { UserItemModal } from "./UserItemModal"
-import { InitialStateUserInterface } from "../../../reducer/user"
+import { InitialStateUserInterface } from "../../../reducer/profile"
 
 
 

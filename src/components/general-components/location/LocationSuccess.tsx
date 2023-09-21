@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 
 const LocationSuccess = () => {
     const { fullName, coordinates, city, country, houseNumber, street, _id } =
-        useAppSelector((s) => s.userReducer)
+        useAppSelector((s) => s.profileReducer)
 
     return (
         <div className="authsuccess auth">

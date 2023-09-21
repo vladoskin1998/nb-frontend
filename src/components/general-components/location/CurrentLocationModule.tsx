@@ -2,14 +2,14 @@ import React, { useEffect, useRef } from "react"
 import { CoordinatsInterface } from "../../../types/types"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { createAddressString } from "../../../utils/createAddressString"
-import { setCoordAndAddr } from "../../../reducer/user"
+import { setCoordAndAddr } from "../../../reducer/profile"
 import { IconLocationAim } from "../../svg/IconsLocation"
 import { useNavigate } from "react-router-dom"
 import CurrentLocationView from "./CurrentLocationView"
 
 const CurrentLocationModule = () => {
     const { city, country, houseNumber, street, coordinates } = useAppSelector(
-        (s) => s.userReducer
+        (s) => s.profileReducer
     )
     const mapRef = useRef<google.maps.Map | null>(null)
     const geocoderRef = useRef<google.maps.Geocoder | null>(null)

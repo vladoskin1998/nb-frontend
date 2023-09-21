@@ -5,21 +5,15 @@ import { useAppSelector } from "../../utils/hooks"
 const ProtectedRoute = ({ element }: { element: ReactElement }) => {
     const navigate = useNavigate()
     const { isAuth } = useAppSelector((s) => s.authReducer)
-    const { isLocationVerify } = useAppSelector((s) => s.userReducer)
+    const { isLocationVerify } = useAppSelector((s) => s.profileReducer)
 
     useEffect(() => {
-        // if (!isLocationVerify ){
-        //   navigate("/auth/location");
-        // }
-        // else if (!isAuth) {
-        //   navigate("/auth");
-        // }
-
-        if (!isAuth) {
-            navigate("/auth")
-        }
-        
-    }, [isAuth, navigate])
+        if (!isLocationVerify && isAuth) {
+            navigate(`/location`)
+        } else if (!isAuth) {
+            navigate(`/auth`)
+        } 
+    }, [isAuth])
 
     return isAuth ? element : null
 }

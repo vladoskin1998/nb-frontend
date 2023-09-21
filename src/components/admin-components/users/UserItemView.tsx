@@ -8,7 +8,7 @@ import {
     IconUserRole,
     IconsUserBlock,
 } from "../../svg/IconsUserItem"
-import { InitialStateUserInterface } from "../../../reducer/user"
+import { InitialStateUserInterface } from "../../../reducer/profile"
 import { ROLES } from "../../../types/enum"
 import { IconRightChevrons } from "../../svg/IconChevrons"
 import moment from "moment"
@@ -16,6 +16,12 @@ import moment from "moment"
 interface UserItemViewProps extends InitialStateUserInterface {
     setIsOpen: () => void
 }
+const mapContainerStyle = {
+    width: "100%",
+    height: "171px",
+    borderRadius: "12px",
+}
+
 
 export const UserItemView = (props: UserItemViewProps) => {
     const mapRef = useRef<google.maps.Map | null>(null)
@@ -33,12 +39,6 @@ export const UserItemView = (props: UserItemViewProps) => {
         createdUserDate,
         blockedUserDate,
     } = props
-
-    const mapContainerStyle = {
-        width: "100%",
-        height: "171px",
-        borderRadius: "12px",
-    }
 
     useEffect(() => {
         if (window.google && containerMap.current) {

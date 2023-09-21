@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { InputPassword } from "../../ui/InputPassword"
-import { isPasswordPattern } from "../../../utils/patterns"
+import { InputPassword } from "../../../ui/InputPassword"
+import { isPasswordPattern } from "../../../../utils/patterns"
 
 const ChangePassword = () => {
     const [password, setPassword] = useState("")

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { ROLES } from "../../../types/enum"
 import { UserItemModule } from "./UserItemModule"
 import $api from "../../../http"
-import { InitialStateUserInterface } from "../../../reducer/user"
+import { InitialStateUserInterface } from "../../../reducer/profile"
 import { AxiosResponse } from "axios"
 import { InputSearch } from "../../ui/InputSearch"
 

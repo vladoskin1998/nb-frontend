@@ -2,11 +2,11 @@ import { useEffect, useState } from "react"
 import Login from "./Login"
 import Registration from "./Registration"
 import AuthHeader from "./AuthHeader"
-import { authorization } from "../../services/auth"
-import { METHOD_AUTH } from "../../types/enum"
-import { useAppDispatch, useAppSelector } from "../../utils/hooks"
+import { authorization } from "../../../services/auth"
+import { METHOD_AUTH } from "../../../types/enum"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { useNavigate } from "react-router-dom"
-import { Loader } from "../ui/Loader"
+import { Loader } from "../../ui/Loader"
 
 interface PayloadInterface {
     method: METHOD_AUTH
@@ -26,7 +26,7 @@ const Auth = () => {
     const dispatch = useAppDispatch()
 
     const { isAuth, isLoad } = useAppSelector((s) => s.authReducer)
-    const {isLocationVerify } = useAppSelector((s) => s.userReducer)
+    const {isLocationVerify } = useAppSelector((s) => s.profileReducer)
 
     const handlerAuth = () => {
         const method = isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
@@ -41,18 +41,24 @@ const Auth = () => {
         dispatch(authorization(payload))
     }
 
-    useEffect(() => {
-        if (
-            !isLocationVerify &&
-            isAuth
-        ) {
-            navigate(`/location`)
-        } else if (isAuth) {
-            navigate(`/admin`)
-        } else {
-            navigate(`/auth`)
-        }        
-    }, [isAuth])
+    // useEffect(() => {
+    //     if (
+    //         !isLocationVerify &&
+    //         isAuth
+    //     ) {
+    //         navigate(`/location`)
+    //     } else if (isAuth) {
+    //         navigate(`/admin`)
+    //     } else {
+    //         navigate(`/auth`)
+    //     }        
+    // }, [isAuth])
+
+    // useEffect(() => {
+    //     if (isAuth) {
+    //         navigate(`/admin`)
+    //     }       
+    // }, [isAuth])
 
     return (
         <>

@@ -1,6 +1,6 @@
-import { METHOD_AUTH } from "../../types/enum"
-import { IconFacebook } from "../svg/IconFacebook"
-import { IconGoogle } from "../svg/IconGoogle"
+import { METHOD_AUTH } from "../../../types/enum"
+import { IconFacebook } from "../../svg/IconFacebook"
+import { IconGoogle } from "../../svg/IconGoogle"
 
 const AuthHeader = ({
     isLogin,

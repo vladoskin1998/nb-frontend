@@ -3,7 +3,7 @@ import {
     authorization,
 } from "../services/auth"
 import { ROLES } from "../types/enum"
-import { userChangeLocation } from "../services/user";
+import { profileChangeLocation } from "../services/profile";
 
 export interface InitialStateUserInterface {
     isLoad: boolean
@@ -19,6 +19,8 @@ export interface InitialStateUserInterface {
     isLocationVerify: boolean;
     createdUserDate: Date;
     blockedUserDate: Date;
+
+    avatar: string;
 }
 
 
@@ -41,9 +43,11 @@ const initialState: InitialStateUserInterface = {
     isLocationVerify: false,
     createdUserDate: new Date(),
     blockedUserDate:  new Date(),
+
+    avatar: '',
 }
 
-export const userReducer = createSlice({
+export const profileReducer = createSlice({
     name: "user",
     initialState,
     reducers: {
@@ -71,7 +75,7 @@ export const userReducer = createSlice({
                 Object.assign(state, payload.user);
                
             })
-            .addCase(userChangeLocation.fulfilled, (state, { payload }) => {
+            .addCase(profileChangeLocation.fulfilled, (state, { payload }) => {
                 console.log("payload userChangeLocation------->", payload);
                 const { isLocationVerify } = payload;
                 state.isLocationVerify = isLocationVerify
@@ -93,5 +97,5 @@ export const userReducer = createSlice({
     },
 })
 
-export const { setCoordAndAddr } = userReducer.actions;
-export default userReducer.reducer
+export const { setCoordAndAddr } = profileReducer.actions;
+export default profileReducer.reducer

@@ -37,6 +37,18 @@
         border: 1px solid $color__black;
     }
 
+    &--inherit{
+        color: $color__grey1;
+        background:  inherit;
+        border: 1px solid inherit;
+    }
+
+    &--nobodrer{
+        color: $color__black;
+        background:  $color__white;
+        border: 1px solid $color__white;
+    }
+
     &--disabled{
         background-color: $color__grey5;
         color: $color__grey6;

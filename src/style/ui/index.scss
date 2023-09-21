@@ -117,3 +117,13 @@
 .ui-input__main{
     @include input-main;
 }
+
+.ui-standart__header{
+    &-title{
+        @include title-main;
+    }
+    &-subtitle{
+        padding-top: 20px;
+        @include sub-title-main;
+    }
+}

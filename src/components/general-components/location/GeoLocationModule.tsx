@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { setCoordAndAddr } from "../../../reducer/user"
+import { setCoordAndAddr } from "../../../reducer/profile"
 import { useAppDispatch } from "../../../utils/hooks"
 import { createAddressString } from "../../../utils/createAddressString"
 import GeoLocationView from "./GeoLocationView"

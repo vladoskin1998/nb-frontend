@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react'
-import { CodeInput } from '../../ui/CodeInput';
+import { CodeInput } from '../../../ui/CodeInput';
 
 const RecoveryPhone = () => {
 

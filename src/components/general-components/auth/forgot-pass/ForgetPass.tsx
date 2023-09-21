@@ -1,6 +1,6 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { ButtonBackRoute } from "../../ui/ButtonBackRoute";
-import { IconsChat, IconsMessage } from '../../svg/IconsResetPass'
+import { ButtonBackRoute } from "../../../ui/ButtonBackRoute";
+import { IconsChat, IconsMessage } from '../../../svg/IconsResetPass'
 import RecoveryPhone from "./RecoveryPhone";
 import RecoveryEmail from "./RecoveryEmail";
 import { useState } from "react";

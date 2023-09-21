@@ -1,9 +1,9 @@
 import { useState } from "react"
-import { InputPassword } from "../ui/InputPassword"
+import { InputPassword } from "../../ui/InputPassword"
 import { useNavigate } from "react-router-dom"
-import { CheckBox } from "../ui/CheckBox"
-import { InputMain } from "../ui/InputMain"
-import { isEmailOrPhonePattern, isPasswordPattern } from "../../utils/patterns"
+import { CheckBox } from "../../ui/CheckBox"
+import { InputMain } from "../../ui/InputMain"
+import { isEmailOrPhonePattern, isPasswordPattern } from "../../../utils/patterns"
 
 const Login = ({
     login,

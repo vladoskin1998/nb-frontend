@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { IconLocationAim } from "../../svg/IconsLocation"
-import { userChangeLocation } from "../../../services/user"
+import { profileChangeLocation } from "../../../services/profile"
 import { useEffect } from "react"
 
 const mapContainerStyle = {
@@ -26,14 +26,14 @@ const CurrentLocationView = ({
         coordinates,
         _id,
         isLocationVerify,
-    } = useAppSelector((s) => s.userReducer)
+    } = useAppSelector((s) => s.profileReducer)
 
     console.log(coordinates)
 
     const userLocation = async () => {
         if (coordinates && typeof coordinates.lat === 'number' && typeof coordinates.lng === 'number')  {
             dispatch(
-                userChangeLocation({
+                profileChangeLocation({
                     coordinates,
                     city,
                     country,
@@ -79,6 +79,7 @@ const CurrentLocationView = ({
                             ? "location__bt-continue--disabled"
                             : ""
                     }`}
+                    disabled={!validateGeoData}
                     onClick={userLocation}
                 >
                     Confirm Location

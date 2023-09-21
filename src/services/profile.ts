@@ -14,10 +14,10 @@ interface LocationPayloadResponse {
     isLocationVerify:boolean
 }
 
-export const userChangeLocation = createAsyncThunk<LocationPayloadResponse, LocationPayload>(
-    'user/location',
+export const profileChangeLocation = createAsyncThunk<LocationPayloadResponse, LocationPayload>(
+    'user/profile-location',
     async (payload) => {
-        const response = await $api.post('user/location', payload)
+        const response = await $api.post('user/profile-location', payload)
         return response.data
     }
 )

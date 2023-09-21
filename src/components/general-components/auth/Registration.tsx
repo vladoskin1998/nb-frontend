@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { InputPassword } from "../ui/InputPassword"
-import { CheckBox } from "../ui/CheckBox"
-import { InputMain } from "../ui/InputMain"
+import { InputPassword } from "../../ui/InputPassword"
+import { CheckBox } from "../../ui/CheckBox"
+import { InputMain } from "../../ui/InputMain"
 import {
     inNotEmpty,
     isEmailOrPhonePattern,
     isPasswordPattern,
-} from "../../utils/patterns"
+} from "../../../utils/patterns"
 
 const Registration = ({
     login,
@@ -30,13 +30,12 @@ const Registration = ({
         // login: false,
         // password: false,
         // fullName: false,
-        login:new RegExp(isEmailOrPhonePattern).test(login),
+        login: new RegExp(isEmailOrPhonePattern).test(login),
         password: new RegExp(isPasswordPattern).test(password),
-        fullName: new RegExp(inNotEmpty).test(fullName)
+        fullName: new RegExp(inNotEmpty).test(fullName),
     })
 
-    console.log(validation);
-    
+    console.log(validation)
 
     return (
         <>
@@ -89,14 +88,23 @@ const Registration = ({
             </div>
             <button
                 className={`login__button
-                ${ 
-                    (validation.login && validation.password && validation.fullName) || "login__button--disabled"
+                ${
+                    (validation.login &&
+                        validation.password &&
+                        validation.fullName) ||
+                    "login__button--disabled"
                 }
             `}
                 onClick={handlerAuth}
-                disabled={!(validation.login && validation.password  && validation.fullName)}
+                disabled={
+                    !(
+                        validation.login &&
+                        validation.password &&
+                        validation.fullName
+                    )
+                }
             >
-                Log In
+                Sing Up
             </button>
         </>
     )
