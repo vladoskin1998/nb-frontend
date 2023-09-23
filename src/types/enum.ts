@@ -13,5 +13,8 @@ export enum METHOD_AUTH {
     FACEBOOK = "facebook",
 }
 
-
-
+export enum PRIVACY{
+    EVERYONE = "Everyone",
+    ONLYME = "Only me",
+    NEIBS = "Neibs",
+}

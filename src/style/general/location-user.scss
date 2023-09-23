@@ -67,19 +67,11 @@
         }
     }
     &-title{
-        font-size: 24px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 35px; 
-        color: $color__blue;
+        @include title-main;    
     }
     &-subtitle{
         margin-top: 12px;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 140%;  
-        color: $color__grey1;
+        @include sub-title-main 
     }
     &-button{
         margin-top: 20px;

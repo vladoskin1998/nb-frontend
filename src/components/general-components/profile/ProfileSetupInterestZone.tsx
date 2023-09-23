@@ -44,8 +44,8 @@ export const ProfileSetupInterestZone = () => {
     }
     return (
         <>
-            <div className="pofile__method-body">
-                <div className="pofile__zone-map">
+            <div className="profile__method-body">
+                <div className="profile__zone-map">
                     <div style={mapContainerStyle} ref={containerMap} />
                     <img
                         style={{
@@ -53,15 +53,15 @@ export const ProfileSetupInterestZone = () => {
                             height: `${12.5 * step}px`,
                         }}
                         src="/Images/MapCircle.png"
-                        className="pofile__zone-circle"
+                        className="profile__zone-circle"
                     />
                 </div>
             </div>
-            <p className="pofile__zone-parag">Set local radius</p>
-            <p className="pofile__zone-subparag">
+            <p className="profile__zone-parag">Set local radius</p>
+            <p className="profile__zone-subparag">
                 Show data only within the specified radius
             </p>
-            <div className="pofile__zone-slider">
+            <div className="profile__zone-slider">
                 <Slider
                     max={20}
                     min={1}
@@ -71,11 +71,11 @@ export const ProfileSetupInterestZone = () => {
                     onChange={handleSliderChange}
                     valueLabelDisplay="off"
                 />
-                <div className="pofile__zone-slider-tooltip">{step} km</div>
+                <div className="profile__zone-slider-tooltip">{step} km</div>
             </div>
 
-            <button className={`pofile__method-btlater`}>
-                <Link to={"/profile/interest-zone"}>Apply</Link>
+            <button className={`profile__method-btlater`}>
+                <Link to={"/profile/privacy"}>Apply</Link>
             </button>
         </>
     )

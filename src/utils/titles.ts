@@ -1,3 +1,5 @@
+import { QualityType } from "../components/general-components/profile/ProfoleIdentity"
+
 export const toOneKind = (s: string) => s.replace(/ /g, '').toLocaleLowerCase()
 
 export const headerTitle = (locationRoute: string | undefined) => {
@@ -50,7 +52,74 @@ export const userSubTitle = (locationRoute: string | undefined) => {
             return "Blocked"
         case "/admin/users/groups":
             return "Groups"
+        default:
+            return "All Users"
     }
 }
 
 
+export const profileTitle = (locationRoute: string): { tt: string, sbtt: string } => {
+    const key = String(locationRoute)
+    switch (key) {
+        case "/profile":
+            return {
+                tt: "Profile Picture",
+                sbtt: "Please upload a profile picture that allows other users to recognize you",
+            }
+        case "/profile/interest-zone":
+            return {
+                tt: "Interest Zone",
+                sbtt: "Express and explore the things that truly captivate you",
+            }
+        case "/profile/privacy":
+            return {
+                tt: "Privacy",
+                sbtt: "Please setup your privacy settings so we can personalize your experience",
+            }
+        case "/profile/about":
+            return {
+                tt: "About me",
+                sbtt: "This is your opportunity to create a compelling introduction ",
+            }
+        case "/profile/profession":
+            return {
+                tt: "Profession",
+                sbtt: "Let others learn more about your professional journey",
+            }
+        case "/profile/skills":
+            return {
+                tt: "Skills",
+                sbtt: "Highlight your expertise: Choose & showcase your skills.",
+            }
+        case "/profile/interests":
+            return {
+                tt: "Interests",
+                sbtt: "Discover like-minded individuals who share similar interests",
+            }
+        case "/profile/certificates":
+            return {
+                tt: "Certificates",
+                sbtt: "You can prove your expertise by uploading certificates or documents",
+            }
+        case "/profile/birth":
+            return {
+                tt: "Date of birth",
+                sbtt: "Enter your date of birth for a personalized experience",
+            }
+        case "/profile/nationality":
+            return {
+                tt: "Nationality",
+                sbtt: "Embrace diversity and connect with people from all over the world",
+            }
+        case "":
+            return {
+                tt: "",
+                sbtt: "",
+            }
+        default:
+            return {
+                tt: "",
+                sbtt: "",
+            }
+    }
+}

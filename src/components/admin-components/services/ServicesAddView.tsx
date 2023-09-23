@@ -57,7 +57,7 @@ const ServicesAddView = ({
                 )}
                 {listSubCategory.map((item, index) => {
                     return (
-                        <div>
+                        <div key={item.id}>
                             <input
                                 type="text"
                                 placeholder="Sub Category Name"

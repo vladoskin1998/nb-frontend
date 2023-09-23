@@ -58,24 +58,18 @@ export const ProfilePicture = () => {
 
     return (
         <>
-            <StandartTitleSubtitle
-                title={"Profile Picture"}
-                subTitle={
-                    "Please upload a profile picture that allows other users to recognize you"
-                }
-            />
-            <div className="pofile__method-body">
+            <div className="profile__method-body">
                 {photo === null ? (
                     <>
                         <button
-                            className="pofile__method-button pofile__method-button--nobodrer"
+                            className="profile__method-button profile__method-button--nobodrer"
                             onClick={takePhoto}
                         >
                             Camera Roll
                         </button>
                         <label
                             htmlFor="file-avatar-profile"
-                            className="pofile__method-button pofile__method-button--nobodrer pofile__method-button-2"
+                            className="profile__method-button profile__method-button--nobodrer profile__method-button-2"
                         >
                             Take now
                         </label>
@@ -86,15 +80,15 @@ export const ProfilePicture = () => {
                             style={{ display: "none" }}
                             onChange={handleFileSelect}
                         />
-                        <span className="pofile__method-parag">
+                        <span className="profile__method-parag">
                             Your profile picture will be public
                         </span>
                     </>
                 ) : (
-                    <div className="pofile__method-avatar">
+                    <div className="profile__method-avatar">
                         <img src={photoUrl} alt="" />
                         <button
-                            className="pofile__method-avatar-close"
+                            className="profile__method-avatar-close"
                             onClick={handlerRemoveImage}
                         >
                             <IconAdminClose />
@@ -103,11 +97,11 @@ export const ProfilePicture = () => {
                 )}
             </div>
 
-            <button className="pofile__method-btlater pofile__method-btlater--inherit">
+            <button className="profile__method-btlater profile__method-btlater--inherit">
                 Setup later
             </button>
-            <button className={`pofile__method-btlater
-                ${!photoUrl && "pofile__method-btlater--disabled" }
+            <button className={`profile__method-btlater
+                ${!photoUrl && "profile__method-btlater--disabled" }
             `} disabled={!photoUrl}>
                 <Link to={'/profile/interest-zone'}>
                     Continue

@@ -1,13 +1,16 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { IconArrachFile } from "../svg/IconArrachFile";
 
 export const FileButton = ({getFile,image}:{getFile:(f:File) => void,image: File}) => {
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
- //   console.log(fileInputRef);
+    useEffect(() => {
+        if(!image){
+            fileInputRef.current = null
+        }
+    }, [image])
     
-
     const handleFileSelect = () => {
         const fileInput = fileInputRef?.current;
         if (fileInput && fileInput?.files && fileInput.files[0]) {
@@ -15,8 +18,6 @@ export const FileButton = ({getFile,image}:{getFile:(f:File) => void,image: File
             getFile(file)
         }
     };
-
-  
 
     return (
             <label className="ui-file-button">

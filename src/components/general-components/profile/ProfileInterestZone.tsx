@@ -39,27 +39,21 @@ export const ProfileInterestZone = () => {
 
     return (
         <>
-            <StandartTitleSubtitle
-                title={"Interest Zone"}
-                subTitle={
-                    "Express and explore the things that truly captivate you"
-                }
-            />
-            <div className="pofile__method-body">
+            <div className="profile__method-body">
                 <div style={mapContainerStyle} ref={containerMap} />
-                <button className="pofile__zone-button">
+                <button className="profile__zone-button">
                     <Link to="/profile/setup-interest-zone">
                         Setup Interest Zone
                     </Link>
                 </button>
             </div>
-            <button className="pofile__method-btlater pofile__method-btlater--inherit">
+            <button className="profile__method-btlater profile__method-btlater--inherit">
                 {/* <Link to={"/admin"}> */}
                     Setup later
                 {/* </Link> */}
             </button>
-            <button className={`pofile__method-btlater`}>
-                <Link to={"/profile/interest-zone"}>Continue</Link>
+            <button className={`profile__method-btlater`}>
+                <Link to={"/profile/privacy"}>Continue</Link>
             </button>
         </>
     )

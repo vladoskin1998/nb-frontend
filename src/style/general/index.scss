@@ -25,7 +25,7 @@
         grid-template-columns: 1fr 1fr;
         position: relative;
         margin-top: 40px;
-        height: 38px;
+        min-height: 38px;
         &-but {
             color: $color__black1;
             font-size: 14px;
