@@ -1,0 +1,20 @@
+@media screen and (max-height: 700px) {
+    .forget__back {
+        top: 20px;
+    }
+    .forget {
+        padding: 79px 40px 24px 40px;
+    }
+    .profile__method-body {
+        margin-top: 25px;
+    }
+    .ui-standart__header-subtitle{
+        padding-top: 14px;
+    }
+    .profile__zone-body{
+        max-height: 300px;
+    }
+    .profile__zone-map-google{
+        height: 450px !important;
+    }
+}

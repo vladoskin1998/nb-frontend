@@ -111,10 +111,10 @@ export const profileTitle = (locationRoute: string): { tt: string, sbtt: string 
                 tt: "Nationality",
                 sbtt: "Embrace diversity and connect with people from all over the world",
             }
-        case "":
+        case "/profile/sex":
             return {
-                tt: "",
-                sbtt: "",
+                tt: "I am...",
+                sbtt: "You are valued and respected for who you are",
             }
         default:
             return {

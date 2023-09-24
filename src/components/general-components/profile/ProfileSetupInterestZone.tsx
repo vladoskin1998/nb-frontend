@@ -46,7 +46,7 @@ export const ProfileSetupInterestZone = () => {
         <>
             <div className="profile__method-body">
                 <div className="profile__zone-map">
-                    <div style={mapContainerStyle} ref={containerMap} />
+                    <div style={mapContainerStyle} ref={containerMap} className="profile__zone-map-google" />
                     <img
                         style={{
                             width: `${12.5 * step}px`,

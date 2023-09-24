@@ -11,6 +11,7 @@ import { ProfoleIdentity } from "./ProfoleIdentity"
 import { ProfileTitle } from "./ProfileTitle"
 import { ProfileCertificates } from "./ProfileCertificates"
 import { ProfileBirth } from "./ProfileBirth"
+import { ProfileSex } from "./ProfileSex"
 
 
 export const Profile = () => {
@@ -27,7 +28,8 @@ export const Profile = () => {
             </div>
             <ProfileTitle />
             <Routes>
-                <Route path="nationality" element={<ProfoleIdentity quality={"Nationality"} nextRoute={"Nationality"} isMultiple={false}/>}/>
+                <Route path="sex" element={<ProfileSex/>}/>
+                <Route path="nationality" element={<ProfoleIdentity quality={"Nationality"} nextRoute={"sex"} isMultiple={false}/>}/>
                 <Route path="birth" element={<ProfileBirth/>}/>
                 <Route path="certificates" element={<ProfileCertificates/>}/>
                 <Route path="interests" element={<ProfoleIdentity quality={"Interests"} nextRoute={"certificates"}/>}/>

@@ -5,7 +5,8 @@ import { Link } from "react-router-dom"
 
 const mapContainerStyle = {
     width: "100%",
-    height: "334px",
+    maxHeight: "334px",
+    height: "100%",
     borderRadius: "12px",
 }
 
@@ -40,16 +41,18 @@ export const ProfileInterestZone = () => {
     return (
         <>
             <div className="profile__method-body">
-                <div style={mapContainerStyle} ref={containerMap} />
-                <button className="profile__zone-button">
-                    <Link to="/profile/setup-interest-zone">
-                        Setup Interest Zone
-                    </Link>
-                </button>
+                <div className="profile__zone-body">
+                    <div style={mapContainerStyle} ref={containerMap} />
+                    <button className="profile__zone-button">
+                        <Link to="/profile/setup-interest-zone">
+                            Setup Interest Zone
+                        </Link>
+                    </button>
+                </div>
             </div>
             <button className="profile__method-btlater profile__method-btlater--inherit">
                 {/* <Link to={"/admin"}> */}
-                    Setup later
+                Setup later
                 {/* </Link> */}
             </button>
             <button className={`profile__method-btlater`}>
