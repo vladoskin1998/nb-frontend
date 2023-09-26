@@ -37,6 +37,7 @@ export const ProfileCertificates = () => {
                 <div className="profile__certificates-body">
                     {certificates.map((item, index) => (
                         <FileButton
+                            key={item.id}
                             getFile={(file: File) =>
                                 changeItemCertificates({ index, file })
                             }

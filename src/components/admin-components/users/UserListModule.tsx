@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react"
 import { ROLES } from "../../../types/enum"
 import { UserItemModule } from "./UserItemModule"
 import $api from "../../../http"
-import { InitialStateUserInterface } from "../../../reducer/profile"
+import { InitialStateUserWithIdInterface } from "../../../reducer/profile"
 import { AxiosResponse } from "axios"
 import { InputSearch } from "../../ui/InputSearch"
 
 export const UserListModule = ({ role }: { role: ROLES }) => {
 
-    const [users, setUsers] = useState<InitialStateUserInterface[]>([])
+    const [users, setUsers] = useState<InitialStateUserWithIdInterface[]>([])
     const [searchName, setSearchName] = useState("")
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export const UserListModule = ({ role }: { role: ROLES }) => {
     const getUsers = async () => {
         await $api
             .post("user/get-users", { role, searchName })
-            .then((res: AxiosResponse<InitialStateUserInterface[]>) =>
+            .then((res: AxiosResponse<InitialStateUserWithIdInterface[]>) =>
                 setUsers(res.data)
             )
     }
@@ -44,7 +44,7 @@ export const UserListModule = ({ role }: { role: ROLES }) => {
                 changeValue={setSearchName}
             />
             <div className="user__list">
-                {users.map((item: InitialStateUserInterface) => (
+                {users.map((item: InitialStateUserWithIdInterface) => (
                     <UserItemModule
                         key={item._id}
                         {...item}

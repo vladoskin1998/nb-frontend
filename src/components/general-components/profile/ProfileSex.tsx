@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import { useState } from "react"
 import { Link } from "react-router-dom"
 import { ORIENTATION, SEX } from "../../../types/enum"
 
@@ -44,8 +44,9 @@ export const ProfileSex = () => {
                 </div>
             </div>
             <div className="profile__sex-orintation-list">
-                {list.map((item) => (
+                {list.map((item,index) => (
                     <div
+                        key={index}
                         className={`profile__sex-orintation-list-item ${
                             item === orientation
                                 ? "profile__sex-orintation-list-item--active"
@@ -63,7 +64,7 @@ export const ProfileSex = () => {
                 {/* </Link> */}
             </button>
             <button className={`profile__method-btlater`}>
-                <Link to={"/profile/study"}>Continue</Link>
+                <Link to={"/profile/education"}>Continue</Link>
             </button>
         </>
     )

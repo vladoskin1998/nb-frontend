@@ -1,5 +1,4 @@
-import React, { useState } from "react"
-import { StandartTitleSubtitle } from "../../ui/StandartTitleSubtitle"
+import { useState } from "react"
 import { PRIVACY } from "../../../types/enum"
 import { IconOpenEye, IconClosedEye, IconNeibs } from "../../svg/IconPassEye"
 import { Link } from "react-router-dom"
@@ -29,8 +28,9 @@ export const ProfilePrivacy = () => {
             <div className="profile__method-body">
                 <h6 className="profile__privacy-title">Category Name</h6>
                 <div className="profile__privacy-list">
-                    {PRIVACY_LIST.map((item) => (
+                    {PRIVACY_LIST.map((item, index) => (
                         <div
+                            key={index}
                             className="profile__privacy-item"
                             onClick={() => setPrivacy(item)}
                         >

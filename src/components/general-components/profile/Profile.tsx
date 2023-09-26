@@ -1,7 +1,4 @@
-import React from "react"
-import { ButtonBackRoute } from "../../ui/ButtonBackRoute"
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
-import { ProfileInfo } from "../profile-info/ProfileInfo"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { ProfilePicture } from "./ProfilePicture"
 import { ProfileInterestZone } from "./ProfileInterestZone"
 import { ProfileSetupInterestZone } from "./ProfileSetupInterestZone"
@@ -12,22 +9,24 @@ import { ProfileTitle } from "./ProfileTitle"
 import { ProfileCertificates } from "./ProfileCertificates"
 import { ProfileBirth } from "./ProfileBirth"
 import { ProfileSex } from "./ProfileSex"
+import { ProfileEducation } from "./ProfileEducation"
+import { ProfileFamilyStatus } from "./ProfileFamilyStatus"
+import { ProfileStayTouch } from "./ProfileStayTouch"
+import { ProfileButtonBack } from "./ProfileButtonBack"
+import { ProfileWelcomeNeibs } from "./ProfileWelcomeNeibs"
 
 
 export const Profile = () => {
-    const navigate = useNavigate()
-
-    const exit = () => {
-        navigate(-1)
-    }
 
     return (
         <div className="forget">
-            <div className="forget__back">
-                <ButtonBackRoute click={exit} />
-            </div>
+            <ProfileButtonBack/>
             <ProfileTitle />
             <Routes>
+                <Route path="welcome-neibs" element={<ProfileWelcomeNeibs/>}/>
+                <Route path="stay-touch" element={<ProfileStayTouch/>}/>
+                <Route path="family-status" element={<ProfileFamilyStatus/>}/>
+                <Route path="education" element={<ProfileEducation/>}/>
                 <Route path="sex" element={<ProfileSex/>}/>
                 <Route path="nationality" element={<ProfoleIdentity quality={"Nationality"} nextRoute={"sex"} isMultiple={false}/>}/>
                 <Route path="birth" element={<ProfileBirth/>}/>

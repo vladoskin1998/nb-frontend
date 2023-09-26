@@ -25,6 +25,8 @@ export interface CoordinatsInterface{
     lat: number , lng: number  
 }
 
-
+export type Nullable<T> = {
+    [K in keyof T]?: T[K] | null;
+  };
 
 

@@ -1,22 +1,29 @@
 import { useEffect, useRef, useState } from "react"
-import { useAppSelector } from "../../../utils/hooks"
-import { Link } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { Link, useNavigate } from "react-router-dom"
 import Slider from "@mui/material/Slider"
+import { useDispatch } from "react-redux"
+import { profileTextInfo } from "../../../services/profile"
+import { setValueProfileReducer } from "../../../reducer/profile"
 
 const mapContainerStyle = {
     width: "100%",
     height: "500px",
 }
 
-const initStep = 5
-
 export const ProfileSetupInterestZone = () => {
+
+    const initStep = useAppSelector(s => s.profileReducer.step)
     const mapRef = useRef<google.maps.Map | null>(null)
     const containerMap = useRef<HTMLDivElement | null>(null)
 
     const { coordinates } = useAppSelector((s) => s.profileReducer)
-    const [step, setStep] = useState(initStep)
+    const [step, setStep] = useState<number>(initStep)
 
+    const dispatch = useAppDispatch()
+    const { _id } = useAppSelector((s) => s.profileReducer)
+
+    const navigate = useNavigate()
     useEffect(() => {
         if (window.google && containerMap.current) {
             const mapOptions: google.maps.MapOptions = {
@@ -42,11 +49,24 @@ export const ProfileSetupInterestZone = () => {
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
         setStep(newValue as number)
     }
+
+    const handlerChangeStep = async () => {
+        const res = await profileTextInfo({
+            step,
+            _id,
+        })
+        dispatch(setValueProfileReducer(res))
+        navigate("/profile/about")
+    }
     return (
         <>
             <div className="profile__method-body">
                 <div className="profile__zone-map">
-                    <div style={mapContainerStyle} ref={containerMap} className="profile__zone-map-google" />
+                    <div
+                        style={mapContainerStyle}
+                        ref={containerMap}
+                        className="profile__zone-map-google"
+                    />
                     <img
                         style={{
                             width: `${12.5 * step}px`,
@@ -73,9 +93,11 @@ export const ProfileSetupInterestZone = () => {
                 />
                 <div className="profile__zone-slider-tooltip">{step} km</div>
             </div>
-
-            <button className={`profile__method-btlater`}>
-                <Link to={"/profile/privacy"}>Apply</Link>
+            <button
+                className={`profile__method-btlater`}
+                onClick={handlerChangeStep}
+            >
+                Apply
             </button>
         </>
     )

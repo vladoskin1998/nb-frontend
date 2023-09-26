@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { setCoordAndAddr } from "../../../reducer/profile"
+import { setValueProfileReducer } from "../../../reducer/profile"
 import { useAppDispatch } from "../../../utils/hooks"
 import { createAddressString } from "../../../utils/createAddressString"
 import GeoLocationView from "./GeoLocationView"
@@ -30,7 +30,7 @@ const GeoLocationModule = () => {
                                 )
 
                                 dispatch(
-                                    setCoordAndAddr({
+                                    setValueProfileReducer({
                                         coordinates: {
                                             lat: latitude,
                                             lng: longitude,
@@ -77,7 +77,7 @@ const GeoLocationModule = () => {
                 const address = createAddressString(place?.address_components)
 
                 dispatch(
-                    setCoordAndAddr({
+                    setValueProfileReducer({
                         coordinates: { lat: lat(), lng: lng() },
                         ...address,
                     })

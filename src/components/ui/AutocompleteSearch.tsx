@@ -99,6 +99,7 @@ export const AutocompleteSearch = ({
                 paper: {
                     sx: {
                         marginTop: "14px",
+                        marginBottom: "8px",
                         borderRadius: "8px",
                         width: "calc(100% + 40px) !important",
                         transform: "translateX(-40px)",

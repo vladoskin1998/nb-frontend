@@ -1,5 +1,3 @@
-import { QualityType } from "../components/general-components/profile/ProfoleIdentity"
-
 export const toOneKind = (s: string) => s.replace(/ /g, '').toLocaleLowerCase()
 
 export const headerTitle = (locationRoute: string | undefined) => {
@@ -115,6 +113,28 @@ export const profileTitle = (locationRoute: string): { tt: string, sbtt: string 
             return {
                 tt: "I am...",
                 sbtt: "You are valued and respected for who you are",
+            }
+
+        case "/profile/education":
+            return {
+                tt: "Education",
+                sbtt: "By showcasing your educational journey, you provide others with valuable insights",
+            }
+
+        case "/profile/family-status":
+            return {
+                tt: "Family Status",
+                sbtt: "We appreciate the diverse forms of family and relationships",
+            }
+        case "/profile/stay-touch":
+            return {
+                tt: "I want to stay in touch",
+                sbtt: "Stay connected with the community and never miss a beat",
+            }
+        case "/profile/welcome-neibs":
+            return {
+                tt: "Welcome to the Neibs",
+                sbtt: "If the platform rules are violated, your participation may be subject to termination",
             }
         default:
             return {

@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { StandartTitleSubtitle } from "../../ui/StandartTitleSubtitle"
 import { AutocompleteSearch } from "../../ui/AutocompleteSearch"
 import { Link } from "react-router-dom"
 import { toOneKind } from "../../../utils/titles"
@@ -48,8 +47,8 @@ export const ProfoleIdentity = ({
                 />
             </div>
             <div className="profile__identity-list">
-                {top100Films.map((item) => (
-                    <div className="profile__identity-list-item">
+                {top100Films.map((item, index) => (
+                    <div className="profile__identity-list-item" key={index}>
                         <IconProfileCircle />
                         <div className="profile__identity-list-item-text">
                             {item.title}

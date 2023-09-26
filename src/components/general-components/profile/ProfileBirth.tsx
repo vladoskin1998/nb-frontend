@@ -1,13 +1,41 @@
 import { useEffect, useRef, useState } from "react"
 import { DateInput } from "../../ui/CodeInput"
 import { IconLocationPoint } from "../../svg/IconsLocation"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { profileTextInfo } from "../../../services/profile"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { setValueProfileReducer } from "../../../reducer/profile"
+import moment from "moment"
 
 export const ProfileBirth = () => {
-    const [value, setValue] = useState("")
+    const { _id, dateBirth, cityBirth } = useAppSelector(
+        (s) => s.profileReducer
+    )
+    const dispatch = useAppDispatch()
+    const [value, setValue] = useState(
+        dateBirth ? moment(dateBirth).format("DDMMYYYY") : ""
+    )
     const containerInputRef = useRef<HTMLInputElement | null>(null)
-    const [city, setCity] = useState("")
-    
+    const [city, setCity] = useState(cityBirth)
+    const navigate = useNavigate()
+
+    //
+    //
+
+    const handlerChangeBirth = async () => {
+        if (value.length === 8 && city) {
+            const res = await profileTextInfo({
+                dateBirth: moment(value, "DDMMYYYY").toDate(),
+                cityBirth: city,
+                _id,
+            })
+            dispatch(setValueProfileReducer(res))
+            navigate("/profile/nationality")
+            return
+        }
+        alert("укажите город и дату")
+    }
+
     useEffect(() => {
         const input = containerInputRef.current as HTMLInputElement
 
@@ -35,6 +63,8 @@ export const ProfileBirth = () => {
         })
     }, [])
 
+    console.log(value.length, city)
+
     return (
         <>
             <div className="profile__method-body">
@@ -57,11 +87,19 @@ export const ProfileBirth = () => {
             </div>
             <button className="profile__method-btlater profile__method-btlater--inherit">
                 {/* <Link to={"/admin"}> */}
-                    Setup later
+                Setup later
                 {/* </Link> */}
             </button>
-            <button className={`profile__method-btlater`}>
-                <Link to={"/profile/nationality"}>Continue</Link>
+            <button
+                disabled={!(value.length === 8 && city)}
+                className={`profile__method-btlater
+            ${
+                !(value.length === 8 && city) &&
+                "profile__method-btlater--disabled"
+            }`}
+                onClick={handlerChangeBirth}
+            >
+                Continue
             </button>
         </>
     )

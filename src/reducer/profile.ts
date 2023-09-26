@@ -3,13 +3,17 @@ import {
     authorization,
 } from "../services/auth"
 import { ROLES } from "../types/enum"
+import { Nullable } from "../types/types"
 import { profileChangeLocation } from "../services/profile";
+
+export interface _IdInterface {
+    _id: string;
+}
 
 export interface InitialStateUserInterface {
     isLoad: boolean
     email: string;
     role: ROLES;
-    _id: string;
     coordinates: { lat: number , lng: number };
     city: string | null;
     country: string | null;
@@ -20,7 +24,11 @@ export interface InitialStateUserInterface {
     createdUserDate: Date;
     blockedUserDate: Date;
 
-    avatar: string;
+    avatarFileName: string | null;
+    step: number;
+    aboutMe: string;
+    dateBirth: null | Date;
+    cityBirth: null | string;
 }
 
 
@@ -29,7 +37,9 @@ const initCoordinates = {
     lng:30.540884262459286
 }
 
-const initialState: InitialStateUserInterface = {
+export type InitialStateUserWithIdInterface = InitialStateUserInterface & _IdInterface
+
+const initialState: InitialStateUserWithIdInterface = {
     isLoad: false,
     email: "",
     role: ROLES.ADMIN,
@@ -44,28 +54,20 @@ const initialState: InitialStateUserInterface = {
     createdUserDate: new Date(),
     blockedUserDate:  new Date(),
 
-    avatar: '',
+    avatarFileName: null,
+    step:5,
+    aboutMe: "",
+    dateBirth: null,
+    cityBirth: null
 }
 
 export const profileReducer = createSlice({
     name: "user",
     initialState,
     reducers: {
-        setCoordAndAddr: (state, { payload }: {
-            payload: {
-                coordinates: { lat: number ; lng: number };
-                city: string | null;
-                country: string | null;
-                houseNumber: string | null;
-                street: string | null;
-            }
-        }) => {
-            const { coordinates, city, country, houseNumber, street } = payload;
-            state.coordinates = coordinates
-            state.city = city
-            state.country = country
-            state.houseNumber = houseNumber
-            state.street = street
+        setValueProfileReducer: (state, { payload }: {
+            payload: Nullable<InitialStateUserInterface>}) => {
+            Object.assign(state, payload);
         }
     },
     extraReducers: (builder) => {
@@ -97,5 +99,5 @@ export const profileReducer = createSlice({
     },
 })
 
-export const { setCoordAndAddr } = profileReducer.actions;
+export const { setValueProfileReducer } = profileReducer.actions;
 export default profileReducer.reducer

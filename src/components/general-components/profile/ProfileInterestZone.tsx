@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react"
-import { StandartTitleSubtitle } from "../../ui/StandartTitleSubtitle"
 import { useAppSelector } from "../../../utils/hooks"
 import { Link } from "react-router-dom"
 
@@ -56,7 +55,7 @@ export const ProfileInterestZone = () => {
                 {/* </Link> */}
             </button>
             <button className={`profile__method-btlater`}>
-                <Link to={"/profile/privacy"}>Continue</Link>
+                <Link to={"/profile/about"}>Continue</Link>
             </button>
         </>
     )

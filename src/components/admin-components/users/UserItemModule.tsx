@@ -1,11 +1,11 @@
 import React, { useState } from "react"
 import { UserItemView } from "./UserItemView"
 import { UserItemModal } from "./UserItemModal"
-import { InitialStateUserInterface } from "../../../reducer/profile"
+import { InitialStateUserWithIdInterface } from "../../../reducer/profile"
 
 
 
-interface UserItemModuleProps extends InitialStateUserInterface{
+interface UserItemModuleProps extends InitialStateUserWithIdInterface{
     blockUser: (id:string) => void
     deleteUser: (id:string) => void
 }

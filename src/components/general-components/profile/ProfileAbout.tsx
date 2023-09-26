@@ -1,45 +1,59 @@
 import React, { useState } from "react"
-import { StandartTitleSubtitle } from "../../ui/StandartTitleSubtitle"
 import { TextareaAutosize } from "@mui/base/TextareaAutosize"
-import { IconProfileTextareaCorner } from "../../svg/IconProfile"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { profileTextInfo } from "../../../services/profile"
+import { setValueProfileReducer } from "../../../reducer/profile"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 
 const maxLength = 250
 export const ProfileAbout = () => {
-    const [text, setText] = useState("")
+    const initAboutMe = useAppSelector( s => s.profileReducer).aboutMe
+    const [aboutMe, setAboutMe] = useState(initAboutMe)
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const {_id} = useAppSelector( s => s.profileReducer)
 
-    const handleChange = (event:React.ChangeEvent<HTMLTextAreaElement>) => {
-        const newText = event.target.value;
-    
-        // Проверяем, не превышает ли текст максимальное количество символов
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const newText = event.target.value
         if (newText.length <= maxLength) {
-          setText(newText);
+            setAboutMe(newText)
         }
-      };
+    }
+
+    const handlerChangeAboutMe = async () => {
+        const res = await profileTextInfo({
+            aboutMe,
+            _id,
+        })
+        dispatch(setValueProfileReducer(res))
+        navigate("/profile/profession")
+    }
     return (
         <>
             <div className="profile__method-body">
                 <div className="profile__about-body">
                     <TextareaAutosize
-                        value={text}
+                        value={aboutMe}
                         onChange={handleChange}
                         className="profile__about-autoresize"
                         minRows={3}
                         placeholder="Be concise, authentic, and feel free to let your personality shine through"
                     />
                     <button className="profile__about-resize">
-                        <span>{text.length+1}/{maxLength}</span>
+                        <span>
+                            {aboutMe.length}/{maxLength}
+                        </span>
                         {/* <IconProfileTextareaCorner/> */}
                     </button>
                 </div>
             </div>
             <button className="profile__method-btlater profile__method-btlater--inherit">
                 {/* <Link to={"/admin"}> */}
-                    Setup later
+                Setup later
                 {/* </Link> */}
             </button>
-            <button className={`profile__method-btlater`}>
-                <Link to={"/profile/profession"}>Continue</Link>
+            <button className={`profile__method-btlater`} onClick={handlerChangeAboutMe}>
+                Continue
             </button>
         </>
     )

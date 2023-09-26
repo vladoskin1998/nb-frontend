@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react"
 import { CoordinatsInterface } from "../../../types/types"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { createAddressString } from "../../../utils/createAddressString"
-import { setCoordAndAddr } from "../../../reducer/profile"
+import { setValueProfileReducer } from "../../../reducer/profile"
 import { IconLocationAim } from "../../svg/IconsLocation"
 import { useNavigate } from "react-router-dom"
 import CurrentLocationView from "./CurrentLocationView"
@@ -74,7 +74,7 @@ const CurrentLocationModule = () => {
                                 )
 
                                 dispatch(
-                                    setCoordAndAddr({
+                                    setValueProfileReducer({
                                         coordinates: {
                                             lat: newLat,
                                             lng: newLng,
