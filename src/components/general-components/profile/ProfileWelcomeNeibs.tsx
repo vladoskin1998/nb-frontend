@@ -1,6 +1,31 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { profileTextInfo } from "../../../services/profile"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 
 export const ProfileWelcomeNeibs = () => {
+    const { _id } = useAppSelector((s) => s.userReducer)
+    const { isGotAllProfileInfo } = useAppSelector((s) => s.profileReducer)
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const handlerChangeWellcome = async () => {
+        try {
+            dispatch(setLoader(true))
+            
+            const res = await profileTextInfo({
+                isGotAllProfileInfo,
+                _id,
+            })
+
+            dispatch(setValueProfileReducer(res))
+            dispatch(setLoader(false))
+            navigate("/admin")
+        } catch (error) {
+            dispatch(setLoader(false))
+            alert(error + "isGotAllProfileInfo text error")
+        }
+    }
+
     return (
         <>
             <div className="profile__method-body">
@@ -35,8 +60,10 @@ export const ProfileWelcomeNeibs = () => {
                     </div>
                 </div>
             </div>
-            <button className={`profile__method-btlater`}>
-                <Link to={"/admin"}>Apply</Link>
+            <button className={`profile__method-btlater`}
+                onClick={handlerChangeWellcome}
+            >
+                Apply
             </button>
         </>
     )

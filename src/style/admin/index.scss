@@ -32,6 +32,12 @@
         height: 50px;
         border-radius: 50%;
         background-color: $color__white;
+        overflow: hidden;
+        img{
+            object-fit: cover;
+            width: 100%;
+            height: auto;
+        }
     }
     &-menu {
         z-index: 4;

@@ -12,8 +12,8 @@ const mapContainerStyle = {
 }
 
 export const ProfileSetupInterestZone = () => {
-
-    const initStep = useAppSelector(s => s.profileReducer.step)
+    const { _id } = useAppSelector((s) => s.userReducer)
+    const initStep = useAppSelector((s) => s.profileReducer.step)
     const mapRef = useRef<google.maps.Map | null>(null)
     const containerMap = useRef<HTMLDivElement | null>(null)
 
@@ -21,7 +21,6 @@ export const ProfileSetupInterestZone = () => {
     const [step, setStep] = useState<number>(initStep)
 
     const dispatch = useAppDispatch()
-    const { _id } = useAppSelector((s) => s.profileReducer)
 
     const navigate = useNavigate()
     useEffect(() => {
@@ -51,12 +50,16 @@ export const ProfileSetupInterestZone = () => {
     }
 
     const handlerChangeStep = async () => {
-        const res = await profileTextInfo({
-            step,
-            _id,
-        })
-        dispatch(setValueProfileReducer(res))
-        navigate("/profile/about")
+        try {
+            const res = await profileTextInfo({
+                step,
+                _id,
+            })
+            dispatch(setValueProfileReducer(res))
+            navigate("/profile/about")
+        } catch (error) {
+            alert("step zone" + error)
+        }
     }
     return (
         <>

@@ -4,7 +4,6 @@ import { ProfileInterestZone } from "./ProfileInterestZone"
 import { ProfileSetupInterestZone } from "./ProfileSetupInterestZone"
 import { ProfilePrivacy } from "./ProfilePrivacy"
 import { ProfileAbout } from "./ProfileAbout"
-import { ProfoleIdentity } from "./ProfoleIdentity"
 import { ProfileTitle } from "./ProfileTitle"
 import { ProfileCertificates } from "./ProfileCertificates"
 import { ProfileBirth } from "./ProfileBirth"
@@ -14,9 +13,15 @@ import { ProfileFamilyStatus } from "./ProfileFamilyStatus"
 import { ProfileStayTouch } from "./ProfileStayTouch"
 import { ProfileButtonBack } from "./ProfileButtonBack"
 import { ProfileWelcomeNeibs } from "./ProfileWelcomeNeibs"
+import { Loader } from "../../ui/Loader"
+import { useAppSelector } from "../../../utils/hooks"
+import { ProfoleIdentityModule } from "./ProfoleIdentityModule"
+import { QUALITYENUM } from "../../../types/enum"
 
 
 export const Profile = () => {
+
+    const {isLoad} = useAppSelector(s => s.profileReducer)
 
     return (
         <div className="forget">
@@ -28,12 +33,12 @@ export const Profile = () => {
                 <Route path="family-status" element={<ProfileFamilyStatus/>}/>
                 <Route path="education" element={<ProfileEducation/>}/>
                 <Route path="sex" element={<ProfileSex/>}/>
-                <Route path="nationality" element={<ProfoleIdentity quality={"Nationality"} nextRoute={"sex"} isMultiple={false}/>}/>
+                <Route path="nationality" element={<ProfoleIdentityModule quality={QUALITYENUM.NATIONALITY} isLimit={-3} nextRoute={"sex"}/> }/>
                 <Route path="birth" element={<ProfileBirth/>}/>
                 <Route path="certificates" element={<ProfileCertificates/>}/>
-                <Route path="interests" element={<ProfoleIdentity quality={"Interests"} nextRoute={"certificates"}/>}/>
-                <Route path="skills" element={<ProfoleIdentity quality={"Skills"} nextRoute={"Interests"}/>}/>
-                <Route path="profession" element={<ProfoleIdentity quality={"Profession"} nextRoute={"Skills"}/>}/>
+                <Route path="interests" element={<ProfoleIdentityModule quality={QUALITYENUM.INTERESTS} nextRoute={"certificates"}/>}/>
+                <Route path="skills" element={<ProfoleIdentityModule quality={QUALITYENUM.SKILLS} nextRoute={"Interests"}/>}/>
+                <Route path="profession" element={<ProfoleIdentityModule quality={QUALITYENUM.PROFESSION} nextRoute={"Skills"} />}/>
                 <Route path="about" element={<ProfileAbout/>}/>
                 <Route path="privacy" element={<ProfilePrivacy/>}/>
                 <Route path="setup-interest-zone" element={<ProfileSetupInterestZone/>}/>
@@ -50,6 +55,7 @@ export const Profile = () => {
                     }
                 />
             </Routes>
+            {isLoad && <Loader />}
         </div>
     )
 }

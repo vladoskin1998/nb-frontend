@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react"
 import { ROLES } from "../../../types/enum"
 import { UserItemModule } from "./UserItemModule"
 import $api from "../../../http"
-import { InitialStateUserWithIdInterface } from "../../../reducer/profile"
+
 import { AxiosResponse } from "axios"
 import { InputSearch } from "../../ui/InputSearch"
+import { UserInitialStateInterface } from "../../../reducer/users"
 
 export const UserListModule = ({ role }: { role: ROLES }) => {
 
-    const [users, setUsers] = useState<InitialStateUserWithIdInterface[]>([])
+    const [users, setUsers] = useState<UserInitialStateInterface[]>([])
     const [searchName, setSearchName] = useState("")
 
     useEffect(() => {
@@ -17,11 +18,14 @@ export const UserListModule = ({ role }: { role: ROLES }) => {
     }, [searchName, role])
 
     const getUsers = async () => {
-        await $api
+        const user = await $api
             .post("user/get-users", { role, searchName })
-            .then((res: AxiosResponse<InitialStateUserWithIdInterface[]>) =>
+            .then((res: AxiosResponse<UserInitialStateInterface[]>) =>
                 setUsers(res.data)
             )
+
+        const userIdentity = await $api.post('identity/get-user-identity', payload)   
+         
     }
 
     const deleteUser = async (_id: string) => {
@@ -44,7 +48,7 @@ export const UserListModule = ({ role }: { role: ROLES }) => {
                 changeValue={setSearchName}
             />
             <div className="user__list">
-                {users.map((item: InitialStateUserWithIdInterface) => (
+                {users.map((item: UserInitialStateInterface) => (
                     <UserItemModule
                         key={item._id}
                         {...item}

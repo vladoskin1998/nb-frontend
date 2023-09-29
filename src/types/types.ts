@@ -30,3 +30,8 @@ export type Nullable<T> = {
   };
 
 
+  export interface OptionsItemType {
+    _id: string | number
+    title: string
+}
+export type OptionsType = Array<OptionsItemType>

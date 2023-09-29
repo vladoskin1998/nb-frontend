@@ -2,25 +2,27 @@ import { createSlice } from "@reduxjs/toolkit"
 import {
     authorization,
 } from "../services/auth"
-import { ROLES } from "../types/enum"
+import { EDUCATION, FAMILYSTATUS, ORIENTATION, ROLES, SEX } from "../types/enum"
 import { Nullable } from "../types/types"
-import { profileChangeLocation } from "../services/profile";
+import { getIdentityInforamation, profileChangeLocation } from "../services/profile";
 
 export interface _IdInterface {
     _id: string;
 }
 
-export interface InitialStateUserInterface {
+
+export interface ProfileInitialStateInterface {
     isLoad: boolean
-    email: string;
-    role: ROLES;
-    coordinates: { lat: number , lng: number };
+ 
+    isLocationVerify: boolean;
+    isGotAllProfileInfo: boolean;
+
+    coordinates: { lat: number, lng: number };
     city: string | null;
     country: string | null;
     houseNumber: string | null;
     street: string | null;
-    fullName: string;
-    isLocationVerify: boolean;
+
     createdUserDate: Date;
     blockedUserDate: Date;
 
@@ -29,36 +31,63 @@ export interface InitialStateUserInterface {
     aboutMe: string;
     dateBirth: null | Date;
     cityBirth: null | string;
+    sex: null | SEX,
+    orientation: ORIENTATION,
+    familyStatus: null | FAMILYSTATUS
+
+    nationality: { _id: string | number, title: string }[] 
+    profession: { _id: string | number, title: string }[]
+    interests:  { _id: string | number, title: string }[]
+    skills:  { _id: string | number, title: string }[]
+
+    certificatesFileName: string[] | []
+
+    studySchool:string,
+    education: EDUCATION | null,
+
 }
 
-
-const initCoordinates = {     
-    lat:50.440569860389814,
-    lng:30.540884262459286
+const initCoordinates = {
+    lat: 50.440569860389814,
+    lng: 30.540884262459286
 }
 
-export type InitialStateUserWithIdInterface = InitialStateUserInterface & _IdInterface
+export type ProfileInitialStateWithIdInterface = ProfileInitialStateInterface & _IdInterface 
 
-const initialState: InitialStateUserWithIdInterface = {
+const initialState: ProfileInitialStateWithIdInterface = {
     isLoad: false,
-    email: "",
-    role: ROLES.ADMIN,
     _id: "",
+
+    isLocationVerify: false,
+    isGotAllProfileInfo: false,
+
     coordinates: initCoordinates,
     city: null,
     country: null,
     houseNumber: null,
     street: null,
-    fullName: "",
-    isLocationVerify: false,
+
     createdUserDate: new Date(),
-    blockedUserDate:  new Date(),
+    blockedUserDate: new Date(),
 
     avatarFileName: null,
-    step:5,
+    step: 5,
     aboutMe: "",
     dateBirth: null,
-    cityBirth: null
+    cityBirth: null,
+    sex: null,
+    orientation: ORIENTATION.HETERO,
+    familyStatus: null,
+    nationality:  [],
+
+    profession: [],
+    interests: [],
+    skills: [],
+
+    certificatesFileName: [],
+
+    studySchool:"",
+    education: null,
 }
 
 export const profileReducer = createSlice({
@@ -66,19 +95,22 @@ export const profileReducer = createSlice({
     initialState,
     reducers: {
         setValueProfileReducer: (state, { payload }: {
-            payload: Nullable<InitialStateUserInterface>}) => {
+            payload: Nullable<ProfileInitialStateInterface>
+        }) => {
             Object.assign(state, payload);
+        },
+        setLoader: (state, { payload }: {
+            payload: boolean
+        }) => {
+            state.isLoad = payload
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(authorization.fulfilled, (state, { payload }) => {
-                console.log("payload user------->", payload.user);
-                Object.assign(state, payload.user);
-               
+            .addCase(getIdentityInforamation.fulfilled, (state, {payload}) => {
+                Object.assign(state, payload);
             })
             .addCase(profileChangeLocation.fulfilled, (state, { payload }) => {
-                console.log("payload userChangeLocation------->", payload);
                 const { isLocationVerify } = payload;
                 state.isLocationVerify = isLocationVerify
             })
@@ -92,12 +124,12 @@ export const profileReducer = createSlice({
                 },
                 (state, action) => {
                     state.isLoad = action.type.endsWith("/pending")
-                    state.coordinates = state.coordinates.lat === null || state.coordinates.lng === null 
+                    state.coordinates = state.coordinates.lat === null || state.coordinates.lng === null
                         ? initCoordinates : state.coordinates
                 }
             )
     },
 })
 
-export const { setValueProfileReducer } = profileReducer.actions;
+export const { setValueProfileReducer, setLoader } = profileReducer.actions;
 export default profileReducer.reducer

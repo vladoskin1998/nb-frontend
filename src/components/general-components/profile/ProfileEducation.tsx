@@ -1,32 +1,42 @@
 import { useState } from "react"
 import { EDUCATION } from "../../../types/enum"
-import { Link } from "react-router-dom"
-import { AutocompleteSearch } from "../../ui/AutocompleteSearch"
-
-const top100Films = [
-    { title: "The Shawshank Redemption", _id: 1994 },
-    { title: "The Godfather", _id: 1972 },
-    { title: "The Godfather: Part II", _id: 1974 },
-    { title: "The Dark Knight", _id: 2008 },
-    { title: "12 Angry Men", _id: 1957 },
-    { title: "Schindler's List", _id: 1993 },
-    { title: "Pulp Fiction", _id: 1994 },
-    {
-        title: "The Lord of the Rings: The Return of the King",
-        _id: 2003,
-    },
-    { title: "The Good, the Bad and the Ugly", _id: 1966 },
-    { title: "Fight Club", _id: 1999 },
-]
+import { useNavigate } from "react-router-dom"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
+import { profileTextInfo } from "../../../services/profile"
 
 const list = Object.values(EDUCATION)
 
 export const ProfileEducation = () => {
-    const [education, setEducation] = useState<EDUCATION | null>(null)
-    const [value, setValue] = useState<
-        { _id: string | number; title: string }[]
-    >([])
-    
+    const { _id } = useAppSelector((s) => s.userReducer)
+    const initEducation = useAppSelector((s) => s.profileReducer.education)
+    const initStudySchool = useAppSelector((s) => s.profileReducer.studySchool)
+    const [education, setEducation] = useState<EDUCATION | null>(
+        initEducation || null
+    )
+    const [studySchool, setStudySchool] = useState(initStudySchool || "")
+
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
+    const handlerChangeEducation = async () => {
+        try {
+            dispatch(setLoader(true))
+            const res = await profileTextInfo({
+                education,
+                studySchool,
+                _id,
+            })
+
+            dispatch(setValueProfileReducer(res))
+            dispatch(setLoader(false))
+            navigate("/profile/family-status")
+        } catch (error) {
+            dispatch(setLoader(false))
+            alert(error + "education error")
+        }
+    }
+
     return (
         <>
             <div className="profile__method-body">
@@ -53,12 +63,10 @@ export const ProfileEducation = () => {
                         Where did you study?
                     </h5>
                     <div className="profile__sex-orintation-list">
-                        <AutocompleteSearch
-                            options={top100Films}
-                            value={value}
-                            setValue={setValue}
-                            placeholder={`Add school or univercity`}
-                            isMultiple={false}
+                        <input
+                            type="text"
+                            value={studySchool}
+                            onChange={(e) => setStudySchool(e.target.value)}
                         />
                     </div>
                 </div>
@@ -66,8 +74,16 @@ export const ProfileEducation = () => {
             <button className="profile__method-btlater profile__method-btlater--inherit">
                 Setup later
             </button>
-            <button className={`profile__method-btlater`}>
-                <Link to={"/profile/family-status"}>Continue</Link>
+            <button
+                disabled={!(education && studySchool)}
+                className={`profile__method-btlater
+            ${
+                !(education && studySchool) &&
+                "profile__method-btlater--disabled"
+            }`}
+                onClick={handlerChangeEducation}
+            >
+                Continue
             </button>
         </>
     )

@@ -186,14 +186,19 @@
     }
     &__identity {
         padding-top: 25px;
+  
         &-list {
+            &-body{
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+            }
             margin: 15px 0;
-            display: flex;
-            flex-wrap: wrap;
+
             flex-grow: 1;
             overflow-y: scroll;
-            gap: 12px;
             &-item {
+                height: 40px;
                 background: $color__white;
                 padding: 12px;
                 display: flex;

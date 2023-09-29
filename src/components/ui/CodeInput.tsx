@@ -32,7 +32,7 @@ export const CodeInput = ({ change }: { change: (s: string) => void }) => {
     )
 }
 
-export const DateInput = ({ change }: { change: (s: string) => void }) => {
+export const DateInput = ({ change,value }: { value?:string, change: (s: string) => void }) => {
     return (
         <div className="ui-date-input">
             <ReactCodeInput
@@ -42,6 +42,7 @@ export const DateInput = ({ change }: { change: (s: string) => void }) => {
                 name="codeInput"
                 inputMode="numeric"
                 placeholder={"0"}
+                value={value}
             />
         </div>
     )

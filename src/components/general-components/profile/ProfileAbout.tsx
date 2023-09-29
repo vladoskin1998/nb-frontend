@@ -2,16 +2,16 @@ import React, { useState } from "react"
 import { TextareaAutosize } from "@mui/base/TextareaAutosize"
 import { Link, useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
-import { setValueProfileReducer } from "../../../reducer/profile"
+import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 
 const maxLength = 250
 export const ProfileAbout = () => {
-    const initAboutMe = useAppSelector( s => s.profileReducer).aboutMe
+    const initAboutMe = useAppSelector((s) => s.profileReducer).aboutMe
     const [aboutMe, setAboutMe] = useState(initAboutMe)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const {_id} = useAppSelector( s => s.profileReducer)
+    const { _id } = useAppSelector((s) => s.userReducer)
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newText = event.target.value
@@ -21,13 +21,22 @@ export const ProfileAbout = () => {
     }
 
     const handlerChangeAboutMe = async () => {
-        const res = await profileTextInfo({
-            aboutMe,
-            _id,
-        })
-        dispatch(setValueProfileReducer(res))
-        navigate("/profile/profession")
+        try {
+            dispatch(setLoader(true))
+            const res = await profileTextInfo({
+                aboutMe,
+                _id,
+            })
+          
+            dispatch(setValueProfileReducer(res))
+            dispatch(setLoader(false))
+            navigate("/profile/profession")
+        } catch (error) {
+            dispatch(setLoader(false))
+            alert(error + "about text error")
+        }
     }
+    
     return (
         <>
             <div className="profile__method-body">
@@ -52,7 +61,10 @@ export const ProfileAbout = () => {
                 Setup later
                 {/* </Link> */}
             </button>
-            <button className={`profile__method-btlater`} onClick={handlerChangeAboutMe}>
+            <button
+                className={`profile__method-btlater`}
+                onClick={handlerChangeAboutMe}
+            >
                 Continue
             </button>
         </>

@@ -1,14 +1,40 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ORIENTATION, SEX } from "../../../types/enum"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
+import { profileTextInfo } from "../../../services/profile"
 
 const list = Object.values(ORIENTATION)
 
 export const ProfileSex = () => {
-    const [sex, setSex] = useState<SEX | null>(null)
+    const { _id } = useAppSelector((s) => s.userReducer)
+    const initSex = useAppSelector((s) => s.profileReducer.sex)
+    const initOrientation = useAppSelector((s) => s.profileReducer.orientation)
+    const [sex, setSex] = useState<SEX | null>(initSex)
     const [orientation, setOrientation] = useState<ORIENTATION>(
-        ORIENTATION.HETERO
+        initOrientation
     )
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
+    const handlerChangeSexOrientation = async () => {
+        try {
+            dispatch(setLoader(true))
+            const res = await profileTextInfo({
+                orientation,
+                sex,
+                _id,
+            })
+
+            dispatch(setValueProfileReducer(res))
+            dispatch(setLoader(false))
+            navigate("/profile/education")
+        } catch (error) {
+            dispatch(setLoader(false))
+            alert(error + "sex error")
+        }
+    }
 
     return (
         <>
@@ -44,7 +70,7 @@ export const ProfileSex = () => {
                 </div>
             </div>
             <div className="profile__sex-orintation-list">
-                {list.map((item,index) => (
+                {list.map((item, index) => (
                     <div
                         key={index}
                         className={`profile__sex-orintation-list-item ${
@@ -63,8 +89,14 @@ export const ProfileSex = () => {
                 Setup later
                 {/* </Link> */}
             </button>
-            <button className={`profile__method-btlater`}>
-                <Link to={"/profile/education"}>Continue</Link>
+            <button
+                className={`profile__method-btlater
+                ${!(sex && orientation) && "profile__method-btlater--disabled"}
+            `}
+                disabled={!(sex && orientation)}
+                onClick={handlerChangeSexOrientation}
+            >
+                Continue
             </button>
         </>
     )

@@ -1,17 +1,19 @@
 import React, { useRef, useState } from "react"
 import { IconAdminClose } from "../../svg/IconAdminHeader"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
-import $api from "../../../http"
 import { profileUploadAvatar } from "../../../services/profile"
-import { setValueProfileReducer } from "../../../reducer/profile"
+import { setValueProfileReducer, setLoader } from "../../../reducer/profile"
+import { baseURL } from "../../../utils/config"
 
 export const ProfilePicture = () => {
+    const { _id } = useAppSelector((s) => s.userReducer)
+    const {avatarFileName} = useAppSelector(s => s.profileReducer)
+    const initAvatar = avatarFileName ? `${baseURL}/uploads/avatar/${avatarFileName}` : ""
     const [avatar, setAvatar] = useState<File | null>(null)
-    const [photoUrl, setPhotoUrl] = useState<string>("")
+    const [photoUrl, setPhotoUrl] = useState<string>(initAvatar)
     const dispatch = useAppDispatch()
     const fileInputRef = useRef<HTMLInputElement | null>(null)
-    const { _id } = useAppSelector((s) => s.profileReducer)
     const navigate = useNavigate()
 
     const takePhoto = async () => {
@@ -42,7 +44,7 @@ export const ProfilePicture = () => {
 
             stream.getTracks().forEach((track) => track.stop())
         } catch (error: any) {
-            alert("Ошибка при съемке фотографии" + error)
+            alert("Camera Roll photo" + error)
         }
     }
 
@@ -71,16 +73,16 @@ export const ProfilePicture = () => {
                 formData.append("file", avatar)
             }
 
+            dispatch(setLoader(true))
+
             const res = await profileUploadAvatar(formData)
-            console.log(res);
             
-            dispatch(
-                  setValueProfileReducer(res)
-            )
-          
-            
+            dispatch(setValueProfileReducer(res))
+            dispatch(setLoader(false))
+
             navigate("/profile/interest-zone")
         } catch (error) {
+            dispatch(setLoader(false))
             alert("upload file is faild" + error)
         }
     }
@@ -88,7 +90,7 @@ export const ProfilePicture = () => {
     return (
         <>
             <div className="profile__method-body">
-                {avatar === null ? (
+                {!photoUrl ? (
                     <>
                         <button
                             className="profile__method-button profile__method-button--nobodrer"
@@ -115,7 +117,7 @@ export const ProfilePicture = () => {
                     </>
                 ) : (
                     <div className="profile__method-avatar">
-                        <img src={photoUrl} alt="" />
+                        <img src={`${photoUrl}`} alt="" />
                         <button
                             className="profile__method-avatar-close"
                             onClick={handlerRemoveImage}
@@ -131,9 +133,9 @@ export const ProfilePicture = () => {
             </button>
             <button
                 className={`profile__method-btlater
-                ${!photoUrl && "profile__method-btlater--disabled"}
+                ${!avatar && "profile__method-btlater--disabled"}
             `}
-                disabled={!photoUrl}
+                disabled={!avatar}
                 onClick={uploadToServerAvatar}
             >
                 Continue

@@ -1,7 +1,10 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { v1 as uuidv4 } from "uuid"
 import { FileButton } from "../../ui/FileButton"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
+import { profileUploadCertificates } from "../../../services/profile"
 
 interface CertificatesInterface {
     id: string
@@ -9,6 +12,9 @@ interface CertificatesInterface {
 }
 
 export const ProfileCertificates = () => {
+    const navigate = useNavigate()
+    const { _id } = useAppSelector((s) => s.userReducer)
+    const dispatch = useAppDispatch()
     const [certificates, setCertificates] = useState<CertificatesInterface[]>([
         { file: null, id: uuidv4() },
     ])
@@ -17,12 +23,16 @@ export const ProfileCertificates = () => {
         index,
         file,
     }: {
-        index: number
+        index: string
         file: File
     }) => {
+        console.log("filehandleFileSelect");
+        console.log(index,
+            file,);
+        
         setCertificates(
             certificates.map((item, id) =>
-                id === index ? { ...item, file } : item
+                item.id === index ? { ...item, file } : item
             )
         )
     }
@@ -31,6 +41,46 @@ export const ProfileCertificates = () => {
         setCertificates((s) => [...s, { file: null, id: uuidv4() }])
     }
 
+    // upload-certificates
+
+    const uploadToServerCertificates = async () => {
+        try {
+            let isAllFiles = true
+            const formData = new FormData()
+            const payload = { _id }
+
+            formData.append("payload", JSON.stringify(payload))
+            if (certificates) {
+                for (let i = 0; i < certificates.length; i++) {
+                    if (!certificates[i].file) {
+                        isAllFiles = false
+                        break
+                    }
+                    formData.append("files", certificates[i].file as Blob)
+                }
+            }
+
+            if (!isAllFiles) {
+                alert("some files fileds is empty")
+            }
+
+            dispatch(setLoader(true))
+
+            const res = await profileUploadCertificates(formData)
+
+            dispatch(setValueProfileReducer(res))
+            dispatch(setLoader(false))
+
+            navigate("/profile/birth")
+        } catch (error) {
+            dispatch(setLoader(false))
+            alert("upload file is faild" + error)
+        }
+    }
+
+    console.log(certificates);
+    
+
     return (
         <>
             <div className="profile__certificates">
@@ -38,8 +88,9 @@ export const ProfileCertificates = () => {
                     {certificates.map((item, index) => (
                         <FileButton
                             key={item.id}
-                            getFile={(file: File) =>
-                                changeItemCertificates({ index, file })
+                            getFile={(file: File) =>{                                
+                               changeItemCertificates({ index: item.id, file })
+                                }
                             }
                             image={item.file as File}
                         />
@@ -55,8 +106,11 @@ export const ProfileCertificates = () => {
             <button className="profile__method-btlater profile__method-btlater--inherit">
                 Setup later
             </button>
-            <button className={`profile__method-btlater`}>
-                <Link to={"/profile/birth"}>Continue</Link>
+            <button
+                className={`profile__method-btlater`}
+                onClick={uploadToServerCertificates}
+            >
+                Continue
             </button>
         </>
     )

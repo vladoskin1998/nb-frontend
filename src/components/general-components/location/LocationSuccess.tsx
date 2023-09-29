@@ -2,8 +2,8 @@ import { Link } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 
 const LocationSuccess = () => {
-    const { fullName, coordinates, city, country, houseNumber, street, _id } =
-        useAppSelector((s) => s.profileReducer)
+    const { fullName } =
+        useAppSelector((s) => s.userReducer)
 
     return (
         <div className="authsuccess auth">

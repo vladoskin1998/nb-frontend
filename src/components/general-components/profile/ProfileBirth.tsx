@@ -4,11 +4,12 @@ import { IconLocationPoint } from "../../svg/IconsLocation"
 import { Link, useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
-import { setValueProfileReducer } from "../../../reducer/profile"
+import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import moment from "moment"
 
 export const ProfileBirth = () => {
-    const { _id, dateBirth, cityBirth } = useAppSelector(
+    const { _id } = useAppSelector((s) => s.userReducer)
+    const { dateBirth, cityBirth } = useAppSelector(
         (s) => s.profileReducer
     )
     const dispatch = useAppDispatch()
@@ -19,21 +20,25 @@ export const ProfileBirth = () => {
     const [city, setCity] = useState(cityBirth)
     const navigate = useNavigate()
 
-    //
-    //
-
     const handlerChangeBirth = async () => {
-        if (value.length === 8 && city) {
-            const res = await profileTextInfo({
-                dateBirth: moment(value, "DDMMYYYY").toDate(),
-                cityBirth: city,
-                _id,
-            })
-            dispatch(setValueProfileReducer(res))
-            navigate("/profile/nationality")
-            return
+        try {
+            if (value.length === 8 && city) {
+                dispatch(setLoader(true))
+                const res = await profileTextInfo({
+                    dateBirth: moment(value, "DDMMYYYY").toDate(),
+                    cityBirth: city,
+                    _id,
+                })
+                dispatch(setValueProfileReducer(res))
+                dispatch(setLoader(false))
+                navigate("/profile/nationality")
+                return
+            }
+            alert("укажите город и дату")
+        } catch (error) {
+            dispatch(setLoader(false))
+            alert(error + "date or city" )
         }
-        alert("укажите город и дату")
     }
 
     useEffect(() => {
@@ -63,12 +68,12 @@ export const ProfileBirth = () => {
         })
     }, [])
 
-    console.log(value.length, city)
+    console.log(value, city)
 
     return (
         <>
             <div className="profile__method-body">
-                <DateInput change={setValue} />
+                <DateInput change={setValue} value={value} />
                 <h6 className="profile__birth-title"></h6>
                 <div className="location__fields">
                     <div className="location__field">
@@ -81,6 +86,7 @@ export const ProfileBirth = () => {
                             id="autocomplete--google"
                             className="login__email"
                             placeholder="Вінниця"
+                            defaultValue={city || ""}
                         />
                     </div>
                 </div>

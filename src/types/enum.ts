@@ -56,3 +56,11 @@ export enum FAMILYSTATUS{
     COMPLICATED="It’s Complicated",
     SEPARATETHREADING="Separate threading"
 }
+
+
+export enum QUALITYENUM {
+    INTERESTS = "Interests",
+    SKILLS = "Skills",
+    PROFESSION = "Profession",
+    NATIONALITY = "Nationality"
+  } 

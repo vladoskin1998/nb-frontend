@@ -18,13 +18,13 @@ const CurrentLocationView = ({
     containerMapRef: React.MutableRefObject<HTMLDivElement | null>
 }) => {
     const dispatch = useAppDispatch()
+    const {_id} = useAppSelector(s => s.userReducer)
     const {
         city,
         country,
         houseNumber,
         street,
         coordinates,
-        _id,
         isLocationVerify,
     } = useAppSelector((s) => s.profileReducer)
 

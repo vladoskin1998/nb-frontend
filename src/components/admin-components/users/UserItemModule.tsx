@@ -1,9 +1,8 @@
-import React, { useState } from "react"
+
 import { UserItemView } from "./UserItemView"
 import { UserItemModal } from "./UserItemModal"
 import { InitialStateUserWithIdInterface } from "../../../reducer/profile"
-
-
+import { useState } from "react"
 
 interface UserItemModuleProps extends InitialStateUserWithIdInterface{
     blockUser: (id:string) => void
