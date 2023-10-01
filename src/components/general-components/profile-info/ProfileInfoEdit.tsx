@@ -80,7 +80,12 @@ export const ProfileInfoEdit = () => {
 
             dispatch(setLoader(true))
 
-            const resAvatat = await profileUploadAvatar(formData)
+            if(avatar){
+                 const resAvatat = await profileUploadAvatar(formData)
+                dispatch(setValueProfileReducer(resAvatat))
+            }
+           
+
             const resTextInfo = await profileTextInfo({
                 aboutMe: aboutMeLocal || aboutMe,
                 dateBirth: dateBirthLocal?.toDate() || dateBirth,
@@ -97,10 +102,12 @@ export const ProfileInfoEdit = () => {
                 _id,
             })
 
-            dispatch(setValueProfileReducer(resAvatat))
+           
             dispatch(setValueProfileReducer(resTextInfo))
             dispatch(setValueUserReducer(resFullName))
             dispatch(setLoader(false))
+
+            alert("SuccessFul Update")
         } catch (error) {
             dispatch(setLoader(false))
             alert("upload file is faild" + error)
