@@ -8,7 +8,6 @@ import { InputSearch } from "../../ui/InputSearch"
 import { UserInitialStateInterface } from "../../../reducer/users"
 
 export const UserListModule = ({ role }: { role: ROLES }) => {
-
     const [users, setUsers] = useState<UserInitialStateInterface[]>([])
     const [searchName, setSearchName] = useState("")
 
@@ -18,14 +17,10 @@ export const UserListModule = ({ role }: { role: ROLES }) => {
     }, [searchName, role])
 
     const getUsers = async () => {
-        const user = await $api
-            .post("user/get-users", { role, searchName })
-            .then((res: AxiosResponse<UserInitialStateInterface[]>) =>
+        $api.post("user/get-users", { role, searchName }).then(
+            (res: AxiosResponse<UserInitialStateInterface[]>) =>
                 setUsers(res.data)
-            )
-
-        const userIdentity = await $api.post('identity/get-user-identity', payload)   
-         
+        )
     }
 
     const deleteUser = async (_id: string) => {

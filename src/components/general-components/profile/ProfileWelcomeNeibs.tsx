@@ -1,11 +1,10 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 
 export const ProfileWelcomeNeibs = () => {
     const { _id } = useAppSelector((s) => s.userReducer)
-    const { isGotAllProfileInfo } = useAppSelector((s) => s.profileReducer)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const handlerChangeWellcome = async () => {
@@ -13,7 +12,7 @@ export const ProfileWelcomeNeibs = () => {
             dispatch(setLoader(true))
             
             const res = await profileTextInfo({
-                isGotAllProfileInfo,
+                isGotAllProfileInfo: true,
                 _id,
             })
 

@@ -17,12 +17,13 @@ import { Loader } from "../../ui/Loader"
 import { useAppSelector } from "../../../utils/hooks"
 import { ProfoleIdentityModule } from "./ProfoleIdentityModule"
 import { QUALITYENUM } from "../../../types/enum"
+import { toOneKind } from "../../../utils/titles"
 
 
 export const Profile = () => {
 
     const {isLoad} = useAppSelector(s => s.profileReducer)
-
+    const { isGotAllProfileInfo } = useAppSelector((s) => s.profileReducer)
     return (
         <div className="forget">
             <ProfileButtonBack/>
@@ -33,12 +34,12 @@ export const Profile = () => {
                 <Route path="family-status" element={<ProfileFamilyStatus/>}/>
                 <Route path="education" element={<ProfileEducation/>}/>
                 <Route path="sex" element={<ProfileSex/>}/>
-                <Route path="nationality" element={<ProfoleIdentityModule quality={QUALITYENUM.NATIONALITY} isLimit={-3} nextRoute={"sex"}/> }/>
+                <Route path="nationality" element={<ProfoleIdentityModule quality={QUALITYENUM.NATIONALITY} isLimit={-3} nextRoute={`/profile/${toOneKind("sex")}` }/> }/>
                 <Route path="birth" element={<ProfileBirth/>}/>
                 <Route path="certificates" element={<ProfileCertificates/>}/>
-                <Route path="interests" element={<ProfoleIdentityModule quality={QUALITYENUM.INTERESTS} nextRoute={"certificates"}/>}/>
-                <Route path="skills" element={<ProfoleIdentityModule quality={QUALITYENUM.SKILLS} nextRoute={"Interests"}/>}/>
-                <Route path="profession" element={<ProfoleIdentityModule quality={QUALITYENUM.PROFESSION} nextRoute={"Skills"} />}/>
+                <Route path="interests" element={<ProfoleIdentityModule quality={QUALITYENUM.INTERESTS} nextRoute={`/profile/${toOneKind("certificates")}` }/>}/>
+                <Route path="skills" element={<ProfoleIdentityModule quality={QUALITYENUM.SKILLS} nextRoute={ `/profile/${toOneKind("Interests")}`}/>}/>
+                <Route path="profession" element={<ProfoleIdentityModule quality={QUALITYENUM.PROFESSION} nextRoute={`/profile/${toOneKind("Skills")}`} />}/>
                 <Route path="about" element={<ProfileAbout/>}/>
                 <Route path="privacy" element={<ProfilePrivacy/>}/>
                 <Route path="setup-interest-zone" element={<ProfileSetupInterestZone/>}/>
@@ -47,8 +48,8 @@ export const Profile = () => {
                 <Route
                     path="*"
                     element={
-                        false ? (
-                            <Navigate to="/admin/profileinfo" />
+                        isGotAllProfileInfo  ? (
+                            <Navigate to="/profileinfo" />
                         ) : (
                             <ProfilePicture />
                         )

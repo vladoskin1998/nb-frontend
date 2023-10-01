@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import { profileTextInfo } from "../../../services/profile"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
+import { ProfileEducationList } from "./ProfileEducationList"
 
 const list = Object.values(EDUCATION)
 
@@ -40,30 +42,17 @@ export const ProfileEducation = () => {
     return (
         <>
             <div className="profile__method-body">
-                <div
-                    className="profile__sex-orintation-list"
-                    style={{ flexGrow: 0 }}
-                >
-                    {list.map((item, index) => (
-                        <div
-                            key={index}
-                            className={`profile__sex-orintation-list-item ${
-                                item === education
-                                    ? "profile__sex-orintation-list-item--active"
-                                    : ""
-                            }`}
-                            onClick={() => setEducation(item)}
-                        >
-                            {item}
-                        </div>
-                    ))}
-                </div>
+                <ProfileEducationList
+                    education={education}
+                    setEducation={setEducation}
+                />
                 <div className="profile__sex-orintation">
                     <h5 className="profile__sex-orintation-title">
                         Where did you study?
                     </h5>
                     <div className="profile__sex-orintation-list">
                         <input
+                            className="profile__education-input"
                             type="text"
                             value={studySchool}
                             onChange={(e) => setStudySchool(e.target.value)}
@@ -71,9 +60,7 @@ export const ProfileEducation = () => {
                     </div>
                 </div>
             </div>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                Setup later
-            </button>
+            <ProfileButtonSetupLater />
             <button
                 disabled={!(education && studySchool)}
                 className={`profile__method-btlater

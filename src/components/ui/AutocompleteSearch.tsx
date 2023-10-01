@@ -14,8 +14,8 @@ export const AutocompleteSearch = ({
     placeholder,
     itemPaperIcon,
     isLimit = -10,
-    inputValue,
-    setInputValue,
+    inputValue = "",
+    setInputValue = () => {}
 }: {
     options: OptionsType
     value: OptionsType
@@ -23,8 +23,8 @@ export const AutocompleteSearch = ({
     placeholder?: string
     itemPaperIcon?: string | ReactElement
     isLimit?: number
-    inputValue: string
-    setInputValue: (s: string) => void
+    inputValue?: string 
+    setInputValue?: (s: string) => void,
 }) => {
     console.log("value--->", value)
 
@@ -40,7 +40,7 @@ export const AutocompleteSearch = ({
                 option.title === value.title
             }
             id="fixed-tags-demo"
-            limitTags={5}
+            limitTags={10}
             disableClearable={false}
             value={value}
             onChange={(event, newValue) => {

@@ -64,3 +64,10 @@ export enum QUALITYENUM {
     PROFESSION = "Profession",
     NATIONALITY = "Nationality"
   } 
+
+  export enum ACTIVITIE{
+    ALL="All",
+    SERVICES="Services",
+    EVENTS="Events",
+    POSTS="Posts"
+  }

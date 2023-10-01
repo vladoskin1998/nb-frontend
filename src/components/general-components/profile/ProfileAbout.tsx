@@ -1,9 +1,10 @@
 import React, { useState } from "react"
 import { TextareaAutosize } from "@mui/base/TextareaAutosize"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 const maxLength = 250
 export const ProfileAbout = () => {
@@ -11,7 +12,7 @@ export const ProfileAbout = () => {
     const [aboutMe, setAboutMe] = useState(initAboutMe)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const { _id } = useAppSelector((s) => s.userReducer)
+    const { _id, role } = useAppSelector((s) => s.userReducer)
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newText = event.target.value
@@ -52,15 +53,10 @@ export const ProfileAbout = () => {
                         <span>
                             {aboutMe.length}/{maxLength}
                         </span>
-                        {/* <IconProfileTextareaCorner/> */}
                     </button>
                 </div>
             </div>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                {/* <Link to={"/admin"}> */}
-                Setup later
-                {/* </Link> */}
-            </button>
+            <ProfileButtonSetupLater />
             <button
                 className={`profile__method-btlater`}
                 onClick={handlerChangeAboutMe}

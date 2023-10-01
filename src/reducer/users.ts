@@ -3,6 +3,7 @@ import {
     authorization,
 } from "../services/auth"
 import { ROLES } from "../types/enum"
+import { Nullable } from "../types/types";
 
 export interface UserInitialStateInterface {
     _id: string;
@@ -10,6 +11,7 @@ export interface UserInitialStateInterface {
     email: string;
     role: ROLES;
     fullName: string;
+    phone?: string
 }
 
 const initialState: UserInitialStateInterface = {
@@ -18,6 +20,7 @@ const initialState: UserInitialStateInterface = {
     email: "",
     role: ROLES.ADMIN,
     fullName: "",
+    phone: ""
 
 }
 
@@ -25,6 +28,14 @@ export const userReducer = createSlice({
     name: "user",
     initialState,
     reducers: {
+        setValueUserReducer: (state, { payload }: {
+            payload: Nullable<UserInitialStateInterface>
+        }) => {
+            if(payload?._id){
+                delete payload._id
+            }
+            Object.assign(state, payload);
+        },
         setLoader: (state, { payload }: {
             payload: boolean
         }) => {
@@ -53,5 +64,5 @@ export const userReducer = createSlice({
     },
 })
 
-export const { setLoader } = userReducer.actions;
+export const { setLoader,setValueUserReducer } = userReducer.actions;
 export default userReducer.reducer

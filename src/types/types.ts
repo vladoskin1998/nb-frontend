@@ -7,14 +7,7 @@ export interface AuthResponseInterface{
         email: string;
         role: ROLES;
         _id: string;
-        coordinates: {lat: number | null, lng: number | null };
-        city: string  | null;
-        country: string  | null;
-        houseNumber: string  | null;
-        street: string  | null;
         fullName: string;
-        isLocationVerify: boolean;
-
     };
     accessToken: string;
     refreshToken: string;
@@ -30,8 +23,8 @@ export type Nullable<T> = {
   };
 
 
-  export interface OptionsItemType {
+  export interface OptionsItemType{
     _id: string | number
-    title: string
+    title: any
 }
 export type OptionsType = Array<OptionsItemType>

@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Slider from "@mui/material/Slider"
-import { useDispatch } from "react-redux"
 import { profileTextInfo } from "../../../services/profile"
 import { setValueProfileReducer } from "../../../reducer/profile"
 

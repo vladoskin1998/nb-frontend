@@ -1,10 +1,8 @@
-import { useState } from "react"
 import { AutocompleteSearch } from "../../ui/AutocompleteSearch"
-import { Link } from "react-router-dom"
-import { toOneKind } from "../../../utils/titles"
 import { IconProfileCircle } from "../../svg/IconProfile"
 import { OptionsItemType, OptionsType } from "../../../types/types"
 import { QUALITYENUM } from "../../../types/enum"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 export const ProfoleIdentityView = ({
     quality,
@@ -58,19 +56,17 @@ export const ProfoleIdentityView = ({
                     ))}
                 </div>
             </div>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                Setup later
-            </button>
+            <ProfileButtonSetupLater />
             <button
                 disabled={!value?.length}
                 className={`profile__method-btlater
-                   ${!(value?.length && value?.length < 11) && "profile__method-btlater--disabled"}`}
+                   ${
+                       !(value?.length && value?.length < 11) &&
+                       "profile__method-btlater--disabled"
+                   }`}
                 onClick={handlerContinue}
             >
-                {
-                    value?.length < 11 ? "Continue" : "Max 10 items"
-                }
-                
+                {value?.length < 11 ? "Continue" : "Max 10 items"}
             </button>
         </>
     )

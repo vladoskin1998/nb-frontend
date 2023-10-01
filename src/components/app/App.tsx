@@ -3,40 +3,35 @@ import Auth from "../general-components/auth/Auth"
 import ForgetPass from "../general-components/auth/forgot-pass/ForgetPass"
 import LocationUser from "../general-components/location/Location"
 import AdminRouter from "../route/AdminRouter"
-import { useAppDispatch, useAppSelector } from "../../utils/hooks"
-import { useEffect } from "react"
-import { refresh } from "../../services/auth"
-import {Profile} from "../general-components/profile/Profile"
+
+import { Profile } from "../general-components/profile/Profile"
 import { AppContextProvider } from "../../context/AppContext"
+import { ProfileInfo } from "../general-components/profile-info/ProfileInfo"
+import ProtectedRoute from "../route/ProtectedRoute"
+import { Main } from "../user-components/main/Main"
 
 export default function App() {
-    // const dispatch = useAppDispatch()
-    // const { isAuth } = useAppSelector((s) => s.authReducer)
-    // const navigate = useNavigate()
-
-    // useEffect(() => {
-    //     const accessToken = localStorage.getItem("accessToken")
-    //     if (accessToken) {
-    //         dispatch(refresh())
-    //     }
-    // }, [])
-
-    // useEffect(() => {
-    //     if (isAuth) {
-    //         navigate(`/admin`)
-    //     }
-    // }, [isAuth])
-
     return (
         <AppContextProvider>
             <Routes>
                 <Route path="/admin/*" element={<AdminRouter />} />
 
-                {/* <Route path='/user/*' /> */}
+                <Route path="/user/*" element={<Main />}/>
 
-                <Route path="/profile/*" element={<Profile />} />
+                <Route
+                    path="/profileinfo/*"
+                    element={<ProtectedRoute element={<ProfileInfo />} />}
+                />
 
-                <Route path="/location/*" element={<LocationUser />} />
+                <Route
+                    path="/profile/*"
+                    element={<ProtectedRoute element={<Profile />} />}
+                />
+
+                <Route 
+                    path="/location/*" 
+                    element={<ProtectedRoute element={<LocationUser />} />}
+                />
 
                 <Route path="/auth">
                     <Route path="forget-pass/*" element={<ForgetPass />} />

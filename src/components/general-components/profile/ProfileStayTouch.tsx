@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 export const ProfileStayTouch = () => {
     return (
@@ -8,11 +9,7 @@ export const ProfileStayTouch = () => {
                     <img src="/Images/setUpNOtification.png" alt="" />
                 </div>
             </div>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                {/* <Link to={"/admin"}> */}
-                Setup later
-                {/* </Link> */}
-            </button>
+                <ProfileButtonSetupLater />
             <button className={`profile__method-btlater`}>
                 <Link to={"/profile/welcome-neibs"}>Continue</Link>
             </button>

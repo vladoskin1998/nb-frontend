@@ -2,6 +2,7 @@ import { useState } from "react"
 import { PRIVACY } from "../../../types/enum"
 import { IconOpenEye, IconClosedEye, IconNeibs } from "../../svg/IconPassEye"
 import { Link } from "react-router-dom"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 const PRIVACY_LIST = [
     {
@@ -54,9 +55,7 @@ export const ProfilePrivacy = () => {
                 </div>
             </div>
 
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                Setup later
-            </button>
+            <ProfileButtonSetupLater />
             <button className={`profile__method-btlater`}>
                 <Link to={"/profile/about"}>Continue</Link>
             </button>

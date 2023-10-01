@@ -1,0 +1,334 @@
+.profileinfo {
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+    &__header {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        width: 100%;
+        height: 100px;
+        background-color: $color__black1;
+        padding: 41px 24px 0 24px;
+        color: $color__white;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+        &-chevron {
+            svg {
+                width: 30px;
+                height: 30px;
+                path {
+                    stroke: $color__white;
+                }
+            }
+        }
+        &-text {
+            display: flex;
+            align-items: center;
+            padding-left: 5px;
+            padding-bottom: 6px;
+        }
+        &-points {
+            svg {
+                path {
+                    fill: $color__white;
+                }
+            }
+        }
+    }
+    &__avatar {
+        &-block {
+            height: 180px;
+            @include flex-all-center;
+            position: relative;
+            img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 50%;
+                object-position: top;
+            }
+            &-mark {
+                position: absolute;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 5px 10px;
+                min-width: 100px;
+                min-height: 30px;
+                background-color: $color__white;
+                border-radius: 20px;
+                bottom: 15px;
+                column-gap: 4px;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+                b {
+                    font-weight: 600;
+                }
+            }
+        }
+        &-title {
+            @include title-main;
+            text-align: center;
+        }
+        &-buttons {
+            margin: 24px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 14px;
+            &-button {
+                @include button-main;
+                column-gap: 10px;
+                border: 0 !important;
+            }
+        }
+        &-information {
+            @include title-main;
+            font-size: 20px;
+            line-height: 140%;
+        }
+        &-item {
+            margin-top: 12px;
+            display: flex;
+            column-gap: 4px;
+            svg {
+                width: 24px;
+                margin-right: 8px;
+                path {
+                    fill: $color__blue;
+                }
+            }
+            b {
+                font-weight: 600;
+            }
+        }
+    }
+    &__perprof {
+        padding-top:47px;
+        &-about {
+            &-title {
+                margin-top: 31px;
+            }
+            &-text {
+                margin-top: 16px;
+                color: $color__grey1;
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+        }
+        &-skills {
+            &-title {
+                margin-top: 45px;
+            }
+            &-list {
+                margin-top: 16px;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                &-item {
+                    display: flex;
+                    column-gap: 10px;
+                    border-radius: 8px;
+                    background: $color__white;
+                    box-shadow: 0px 2px 5px 0px rgba(38, 51, 77, 0.03);
+                }
+            }
+        }
+        &-categories {
+            &-item {
+                height: 40px;
+                padding: 0 10px;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 140%;
+                border-radius: 8px;
+                &--active {
+                    color: $color__white;
+                    background-color: $color__black3;
+                }
+            }
+        }
+        &-certificates {
+            margin-top: 16px;
+        }
+        &-certeficate {
+            width: 200px;
+            height: 182px;
+            padding-right: 12px;
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 12px;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+
+.profileinfo__settings{
+    &-main{
+        &-edit{
+            padding: 20px 14px;
+            display: grid;
+            column-gap: 12px;
+            grid-template-columns: auto 1fr auto;
+            background-color: $color__white;
+            border-radius: 12px;
+            img{
+                border-radius: 50%;
+                width: 48px;
+                height: 48px;
+                object-fit: cover;
+                object-position: top;
+            }
+            &-title{
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 30px;
+            }
+            
+            &-subtitle{
+                color: $color__grey9;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+        }
+        &-setting{
+            padding: 24px;
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            row-gap: 16px;
+            &-item{
+                display: grid;
+                column-gap: 22px;
+                align-items: center;
+                grid-template-columns: auto 1fr auto;
+                &-svgfill{
+                    svg{
+                        path{
+                            fill: $color__grey2;
+                        }
+                    }
+                }
+                &-svgstroke{
+                    svg{
+                        path{
+                            stroke: $color__grey2;
+                        }
+                    }
+                }
+                &-title{
+                    font-weight: 400;
+                }
+            }
+        }
+        &-help{
+            row-gap: 27px;
+        }
+    }
+}
+
+.profileinfo__edit {
+    padding: 24px 40px;
+    &-pen {
+        position: absolute;
+        border-radius: 50%;
+        background-color: $color__white;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(calc(50%));
+        width: 40px;
+        height: 40px;
+        @include flex-all-center;
+        svg {
+            path {
+                fill: $color__black5;
+            }
+        }
+    }
+    &-subtitle{
+        text-align: center;
+        @include sub-title-main;
+    }
+    &-title{
+        margin-top: 45px;
+        @include title-main; 
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    &-input{
+        width: 100%;
+        @include input-main;
+    }
+    &-body-items{
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+    }
+    &-picker{
+        width: 100% !important; 
+        border: 0 !important; 
+        border-radius: 8px !important;
+        background-color: $color__white !important;
+        input{
+            font-size: 14px !important;
+        }
+        fieldset{
+            display: none !important;
+        }
+    }
+    .profile__method-btlater{
+        margin-top: 34px;
+        width: 100%;
+    }
+}
+
+
+.profileinfo__security-remember{
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+}
+
+.profileinfo__skillsinterets{
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    padding: 24px 40px;
+    margin-top: 25px;
+    min-height: calc(100% - 124px);
+    &-list{
+        margin-top: 25px;
+    }
+    display: flex;
+    flex-direction: column;
+    .profileinfo__skillsinterets-list{
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    .profile__identity-list{
+        flex-grow: 1;
+
+    }
+    .profile__method-btlater--inherit{
+         display: none;
+    }
+}

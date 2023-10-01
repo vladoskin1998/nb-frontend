@@ -4,7 +4,7 @@ import { CheckBox } from "../../ui/CheckBox"
 import { InputMain } from "../../ui/InputMain"
 import {
     inNotEmpty,
-    isEmailOrPhonePattern,
+    emailPattern,
     isPasswordPattern,
 } from "../../../utils/patterns"
 
@@ -27,10 +27,7 @@ const Registration = ({
 }) => {
     const [checked, setChecked] = useState(true)
     const [validation, setValidation] = useState({
-        // login: false,
-        // password: false,
-        // fullName: false,
-        login: new RegExp(isEmailOrPhonePattern).test(login),
+        login: new RegExp(emailPattern).test(login),
         password: new RegExp(isPasswordPattern).test(password),
         fullName: new RegExp(inNotEmpty).test(fullName),
     })
@@ -43,11 +40,11 @@ const Registration = ({
                 <InputMain
                     value={login}
                     setValue={setLogin}
-                    placeholder={"Email or Phone"}
+                    placeholder={"Email"}
                     errorMessage={
-                        "Invalid login, +380000000000, example@example.example"
+                        "Invalid login, example@example.example"
                     }
-                    pattern={isEmailOrPhonePattern}
+                    pattern={emailPattern}
                     isValidated={validation.login}
                     setIsValidated={(s: boolean) =>
                         setValidation({ ...validation, login: s })

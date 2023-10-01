@@ -183,3 +183,36 @@
     }
 }
 
+.slider__button {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    min-height: 38px;
+    &-but {
+        color: $color__black1;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 140%;
+        height: fit-content;
+    }
+    &--pas {
+        color: $color__grey1;
+    }
+    &-border {
+        position: absolute;
+        left: 0;
+        bottom: 0px;
+        height: 4px;
+        width: 50%;
+        background-color: $color__blue;
+        transition: all 0.3s ease;
+        border-radius: 20px 20px 0 0;
+        &--l {
+            transform: translateX(0%);
+        }
+        &--r {
+            transform: translateX(100%);
+        }
+    }
+}

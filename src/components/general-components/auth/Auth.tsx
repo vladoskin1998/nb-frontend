@@ -41,25 +41,6 @@ const Auth = () => {
         dispatch(authorization(payload))
     }
 
-    // useEffect(() => {
-    //     if (
-    //         !isLocationVerify &&
-    //         isAuth
-    //     ) {
-    //         navigate(`/location`)
-    //     } else if (isAuth) {
-    //         navigate(`/admin`)
-    //     } else {
-    //         navigate(`/auth`)
-    //     }        
-    // }, [isAuth])
-
-    // useEffect(() => {
-    //     if (isAuth) {
-    //         navigate(`/admin`)
-    //     }       
-    // }, [isAuth])
-
     return (
         <>
             {!isLoad ? (

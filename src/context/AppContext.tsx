@@ -1,46 +1,50 @@
 import {
     createContext,
-    useState,
     useEffect,
     type ReactNode,
-    useContext,
 } from "react"
 import { useAppDispatch, useAppSelector } from "../utils/hooks"
 import { useNavigate } from "react-router-dom"
 import { refresh } from "../services/auth"
-import { UserIdentityInterface, getIdentityInforamation } from "../services/profile"
-import { PayloadAction } from "@reduxjs/toolkit"
+import {
+    getIdentityInforamation,
+} from "../services/profile"
+import { AuthResponseInterface } from "../types/types"
+import { roleUrl } from "../utils/config"
 
 const AppContext = createContext<{}>({})
 
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const dispatch = useAppDispatch()
     const { isAuth } = useAppSelector((s) => s.authReducer)
-    const { _id } = useAppSelector((s) => s.profileReducer)
+    const { _id, role } = useAppSelector((s) => s.userReducer)
     const navigate = useNavigate()
 
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken")
         if (accessToken) {
             dispatch(refresh())
+                .unwrap()
+                .then((res: AuthResponseInterface) => {})
         }
     }, [])
 
     useEffect(() => {
-        if (isAuth) {
+        if (isAuth && _id) {
             dispatch(getIdentityInforamation({ _id }))
                 .unwrap()
                 .then((res) => {
-                    console.log(res);
-                    
-                    if(!res.isLocationVerify ){
-                       return navigate(`/location`)
+                    console.log(res)
+
+                    if (!res.isLocationVerify) {
+                        return navigate(`/location`)
                     }
-                    return navigate(`/admin`)
+                    console.log("roleUrl(role)",roleUrl(role))
+                    
+                    return navigate(roleUrl(role))
                 })
         }
-    }, [isAuth])
-
+    }, [isAuth, _id])
 
     return <AppContext.Provider value={{}}>{children}</AppContext.Provider>
 }

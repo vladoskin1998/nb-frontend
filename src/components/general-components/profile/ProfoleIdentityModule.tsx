@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { ProfoleIdentityView } from "./ProfoleIdentityView"
 import $api from "../../../http"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { useNavigate } from "react-router-dom"
 import {
-    InitialStateUserWithIdInterface,
     setLoader,
     setValueProfileReducer,
 } from "../../../reducer/profile"
@@ -19,7 +18,7 @@ export const ProfoleIdentityModule = ({
     isLimit = -10,
 }: {
     quality: QUALITYENUM
-    nextRoute: QUALITYENUM | string
+    nextRoute?: QUALITYENUM | string
     isLimit?: number
 }) => {
     const { skills, nationality, profession, interests } = useAppSelector(
@@ -32,11 +31,7 @@ export const ProfoleIdentityModule = ({
     const [popularOptions, setPopularOptions] = useState<OptionsType>([])
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    const { _id } = useAppSelector((s) => s.profileReducer)
-
-    // useEffect(() => {
-    //     setValue(s => s.slice(-5))
-    // }, [value])
+    const { _id } = useAppSelector((s) => s.userReducer)
 
     useEffect(() => {
         const timeOutId = setTimeout(() => {
@@ -83,10 +78,10 @@ export const ProfoleIdentityModule = ({
             })
 
             dispatch(setValueProfileReducer(res))
-            setValue([])
-            setPopularOptions([])
             dispatch(setLoader(false))
-            navigate(`/profile/${toOneKind(nextRoute)}`)
+            if(nextRoute){
+                    navigate(nextRoute)
+            }
         } catch (error) {
             dispatch(setLoader(false))
             alert(error + "about text error")

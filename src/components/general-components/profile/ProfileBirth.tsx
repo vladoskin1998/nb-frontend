@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react"
 import { DateInput } from "../../ui/CodeInput"
 import { IconLocationPoint } from "../../svg/IconsLocation"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import moment from "moment"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
+import { ProfileCityBirthInput } from "./ProfileBirthCityInput"
 
 export const ProfileBirth = () => {
     const { _id } = useAppSelector((s) => s.userReducer)
-    const { dateBirth, cityBirth } = useAppSelector(
-        (s) => s.profileReducer
-    )
+    const { dateBirth, cityBirth } = useAppSelector((s) => s.profileReducer)
     const dispatch = useAppDispatch()
     const [value, setValue] = useState(
         dateBirth ? moment(dateBirth).format("DDMMYYYY") : ""
@@ -37,7 +37,7 @@ export const ProfileBirth = () => {
             alert("укажите город и дату")
         } catch (error) {
             dispatch(setLoader(false))
-            alert(error + "date or city" )
+            alert(error + "date or city")
         }
     }
 
@@ -76,26 +76,10 @@ export const ProfileBirth = () => {
                 <DateInput change={setValue} value={value} />
                 <h6 className="profile__birth-title"></h6>
                 <div className="location__fields">
-                    <div className="location__field">
-                        <div className="location__field-icon">
-                            <IconLocationPoint />
-                        </div>
-                        <input
-                            ref={containerInputRef}
-                            type="text"
-                            id="autocomplete--google"
-                            className="login__email"
-                            placeholder="Вінниця"
-                            defaultValue={city || ""}
-                        />
-                    </div>
+                    <ProfileCityBirthInput city={city} setCity={setCity} />
                 </div>
             </div>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                {/* <Link to={"/admin"}> */}
-                Setup later
-                {/* </Link> */}
-            </button>
+            <ProfileButtonSetupLater />
             <button
                 disabled={!(value.length === 8 && city)}
                 className={`profile__method-btlater

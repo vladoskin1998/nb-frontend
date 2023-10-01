@@ -1,10 +1,11 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { v1 as uuidv4 } from "uuid"
 import { FileButton } from "../../ui/FileButton"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import { profileUploadCertificates } from "../../../services/profile"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 interface CertificatesInterface {
     id: string
@@ -13,7 +14,7 @@ interface CertificatesInterface {
 
 export const ProfileCertificates = () => {
     const navigate = useNavigate()
-    const { _id } = useAppSelector((s) => s.userReducer)
+    const { _id, role } = useAppSelector((s) => s.userReducer)
     const dispatch = useAppDispatch()
     const [certificates, setCertificates] = useState<CertificatesInterface[]>([
         { file: null, id: uuidv4() },
@@ -40,8 +41,6 @@ export const ProfileCertificates = () => {
     const addItemCertificates = () => {
         setCertificates((s) => [...s, { file: null, id: uuidv4() }])
     }
-
-    // upload-certificates
 
     const uploadToServerCertificates = async () => {
         try {
@@ -103,9 +102,7 @@ export const ProfileCertificates = () => {
             >
                 Add SubCategory
             </button>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                Setup later
-            </button>
+            <ProfileButtonSetupLater />
             <button
                 className={`profile__method-btlater`}
                 onClick={uploadToServerCertificates}

@@ -3,7 +3,7 @@ import { InputPassword } from "../../ui/InputPassword"
 import { useNavigate } from "react-router-dom"
 import { CheckBox } from "../../ui/CheckBox"
 import { InputMain } from "../../ui/InputMain"
-import { isEmailOrPhonePattern, isPasswordPattern } from "../../../utils/patterns"
+import { emailPattern, isPasswordPattern } from "../../../utils/patterns"
 
 const Login = ({
     login,
@@ -28,7 +28,7 @@ const Login = ({
     const [validation, setValidation] = useState({
         // login: false,
         // password: false,
-        login:new RegExp(isEmailOrPhonePattern).test(login),
+        login:new RegExp(emailPattern).test(login),
         password: new RegExp(isPasswordPattern).test(password)
     })
 
@@ -41,11 +41,11 @@ const Login = ({
                 <InputMain
                     value={login}
                     setValue={setLogin}
-                    placeholder={"Email or Phone"}
+                    placeholder={"Email"}
                     errorMessage={
-                        "Invalid login, +380000000000, example@example.example"
+                        "Invalid login example@example.example"
                     }
-                    pattern={isEmailOrPhonePattern}
+                    pattern={emailPattern}
                     isValidated={validation.login}
                     setIsValidated={(s: boolean) =>
                         setValidation({ ...validation, login: s })

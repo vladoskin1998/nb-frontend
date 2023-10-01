@@ -7,7 +7,8 @@ export const InputPassword = ({
     errorMessage,
     pattern,
     isValidated,
-    setIsValidated
+    setIsValidated,
+    placeholder="Password",
 }: { 
     password: string, 
     setPassword: (s: string) => void,
@@ -15,6 +16,7 @@ export const InputPassword = ({
     pattern: string | RegExp;
     isValidated: boolean, 
     setIsValidated: (s:boolean) => void
+    placeholder? :string
 }) => {
 
     const [showPassword, setShowPassword] = useState(false);
@@ -40,7 +42,7 @@ export const InputPassword = ({
         <div className="ui-password">
             <input
                 type={showPassword ? 'text' : 'password'}
-                placeholder="Password"
+                placeholder={placeholder}
                 value={password}
                 onChange={handleChange}
                 className="ui-password__input"

@@ -1,4 +1,4 @@
-export const toOneKind = (s: string) => s.replace(/ /g, '').toLocaleLowerCase()
+export const toOneKind = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
 
 export const headerTitle = (locationRoute: string | undefined) => {
     const key = String(locationRoute)
@@ -141,5 +141,35 @@ export const profileTitle = (locationRoute: string): { tt: string, sbtt: string 
                 tt: "",
                 sbtt: "",
             }
+    }
+}
+
+
+export const getProfileInfoHederTitile = (locationRoute: string) => {
+    switch (locationRoute) {
+        case "/profileinfo/logout":
+            return 'Log out'
+        case "/profileinfo/aboutneightborharbor":
+            return 'About NeightborHarbor'
+        case "/profileinfo/helpsupport":
+            return 'Help & Support'
+        case "/profileinfo/privacy":
+            return 'Privacy'
+        case "/profileinfo/notifications":
+            return 'Notifications'
+        case "/profileinfo/interestsskills":
+            return 'Interests & Skills'
+        case "/profileinfo/bookmark":
+            return 'Bookmark'
+        case "/profileinfo/security":
+            return 'Security'
+        case "/profileinfo/":
+            return 'Edit Profile'
+        case "/profileinfo/edit":
+            return 'Edit Profile'
+        case "/profileinfo/settings":
+            return 'Settings'
+        default:
+            return ""
     }
 }

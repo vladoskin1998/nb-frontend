@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { profileUploadAvatar } from "../../../services/profile"
 import { setValueProfileReducer, setLoader } from "../../../reducer/profile"
 import { baseURL } from "../../../utils/config"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 export const ProfilePicture = () => {
     const { _id } = useAppSelector((s) => s.userReducer)
@@ -128,9 +129,7 @@ export const ProfilePicture = () => {
                 )}
             </div>
 
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                Setup later
-            </button>
+            <ProfileButtonSetupLater />
             <button
                 className={`profile__method-btlater
                 ${!avatar && "profile__method-btlater--disabled"}

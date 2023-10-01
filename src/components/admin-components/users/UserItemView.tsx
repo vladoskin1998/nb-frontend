@@ -8,13 +8,15 @@ import {
     IconUserRole,
     IconsUserBlock,
 } from "../../svg/IconsUserItem"
-import { InitialStateUserInterface } from "../../../reducer/profile"
 import { ROLES } from "../../../types/enum"
 import { IconRightChevrons } from "../../svg/IconChevrons"
 import moment from "moment"
+import { UserInitialStateInterface } from "../../../reducer/users"
+import { UserIdentityInterface } from "../../../services/profile"
 
-interface UserItemViewProps extends InitialStateUserInterface {
+interface UserItemViewProps extends UserInitialStateInterface {
     setIsOpen: () => void
+    userIdentity: UserIdentityInterface | null
 }
 const mapContainerStyle = {
     width: "100%",
@@ -22,6 +24,10 @@ const mapContainerStyle = {
     borderRadius: "12px",
 }
 
+const initCoordinates = {
+    lat: 50.440569860389814,
+    lng: 30.540884262459286
+}
 
 export const UserItemView = (props: UserItemViewProps) => {
     const mapRef = useRef<google.maps.Map | null>(null)
@@ -30,14 +36,10 @@ export const UserItemView = (props: UserItemViewProps) => {
 
     const {
         setIsOpen,
-        coordinates,
         fullName,
         email,
         role,
-        street,
-        houseNumber,
-        createdUserDate,
-        blockedUserDate,
+        userIdentity
     } = props
 
     useEffect(() => {
@@ -51,8 +53,8 @@ export const UserItemView = (props: UserItemViewProps) => {
                 scrollwheel: false,
                 gestureHandling: "none",
                 center: new google.maps.LatLng(
-                    coordinates.lat,
-                    coordinates.lng
+                    userIdentity?.coordinates?.lat || initCoordinates.lat,
+                    userIdentity?.coordinates?.lng ||  initCoordinates.lng,
                 ),
             }
             mapRef.current = new google.maps.Map(
@@ -92,7 +94,7 @@ export const UserItemView = (props: UserItemViewProps) => {
                                 START DATE
                             </div>
                             <div className="user__item-blocked-date">
-                                {moment(createdUserDate).format(
+                                {moment(userIdentity?.createdUserDate || '').format(
                                     "MMM D, h:mm a"
                                 )}
                             </div>
@@ -105,7 +107,7 @@ export const UserItemView = (props: UserItemViewProps) => {
                                 DUE DATE
                             </div>
                             <div className="user__item-blocked-date">
-                                {moment(blockedUserDate).format(
+                                {moment(userIdentity?.blockedUserDate || '').format(
                                     "MMM D, h:mm a"
                                 )}
                             </div>
@@ -137,7 +139,7 @@ export const UserItemView = (props: UserItemViewProps) => {
                             <IconUserRole />
                             <span>{role}</span>
                             <IconUserHome />
-                            <span>{`${street} ${houseNumber}`}</span>
+                            <span>{`${userIdentity?.street || ''} ${userIdentity?.houseNumber || ''}`}</span>
                         </div>
                     </div>
                     {downloadMap ? (

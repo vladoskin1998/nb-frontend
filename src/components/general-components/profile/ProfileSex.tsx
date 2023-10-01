@@ -1,9 +1,12 @@
 import { useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { ORIENTATION, SEX } from "../../../types/enum"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import { profileTextInfo } from "../../../services/profile"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
+import { ProfileSexList } from "./ProfileSexList"
+import { ProfileSexOrintationList } from "./ProfileSexOrintationList"
 
 const list = Object.values(ORIENTATION)
 
@@ -12,9 +15,7 @@ export const ProfileSex = () => {
     const initSex = useAppSelector((s) => s.profileReducer.sex)
     const initOrientation = useAppSelector((s) => s.profileReducer.orientation)
     const [sex, setSex] = useState<SEX | null>(initSex)
-    const [orientation, setOrientation] = useState<ORIENTATION>(
-        initOrientation
-    )
+    const [orientation, setOrientation] = useState<ORIENTATION>(initOrientation)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
@@ -39,56 +40,18 @@ export const ProfileSex = () => {
     return (
         <>
             <div className="profile__sex">
-                <div className="profile__sex-radio">
-                    <div
-                        className={`profile__sex-radio-item ${
-                            sex === SEX.MALE
-                                ? "profile__sex-radio-item--active"
-                                : ""
-                        }`}
-                        onClick={() => setSex(SEX.MALE)}
-                    >
-                        <img src="/Images/male.png" alt="" />
-                        <p>{SEX.MALE}</p>
-                    </div>
-                    <div
-                        className={`profile__sex-radio-item ${
-                            sex === SEX.FEMALE
-                                ? "profile__sex-radio-item--active"
-                                : ""
-                        }`}
-                        onClick={() => setSex(SEX.FEMALE)}
-                    >
-                        <img src="/Images/female.png" alt="" />
-                        <p>{SEX.FEMALE}</p>
-                    </div>
-                </div>
+                <ProfileSexList setSex={setSex} sex={sex} />
                 <div className="profile__sex-orintation">
                     <h5 className="profile__sex-orintation-title">
                         Sexual Orientation
                     </h5>
                 </div>
             </div>
-            <div className="profile__sex-orintation-list">
-                {list.map((item, index) => (
-                    <div
-                        key={index}
-                        className={`profile__sex-orintation-list-item ${
-                            item === orientation
-                                ? "profile__sex-orintation-list-item--active"
-                                : ""
-                        }`}
-                        onClick={() => setOrientation(item)}
-                    >
-                        {item}
-                    </div>
-                ))}
-            </div>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                {/* <Link to={"/admin"}> */}
-                Setup later
-                {/* </Link> */}
-            </button>
+            <ProfileSexOrintationList
+                orientation={orientation}
+                setOrientation={setOrientation}
+            />
+            <ProfileButtonSetupLater />
             <button
                 className={`profile__method-btlater
                 ${!(sex && orientation) && "profile__method-btlater--disabled"}

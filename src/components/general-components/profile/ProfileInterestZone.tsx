@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import { useAppSelector } from "../../../utils/hooks"
 import { Link } from "react-router-dom"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 const mapContainerStyle = {
     width: "100%",
@@ -49,11 +50,7 @@ export const ProfileInterestZone = () => {
                     </button>
                 </div>
             </div>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                {/* <Link to={"/admin"}> */}
-                Setup later
-                {/* </Link> */}
-            </button>
+            <ProfileButtonSetupLater />
             <button className={`profile__method-btlater`}>
                 <Link to={"/profile/about"}>Continue</Link>
             </button>

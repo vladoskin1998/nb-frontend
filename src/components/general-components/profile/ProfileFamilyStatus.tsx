@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { FAMILYSTATUS } from "../../../types/enum"
 import { IconProfileCircle } from "../../svg/IconProfile"
-import { Link, useNavigate } from "react-router-dom"
+import {  useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import { profileTextInfo } from "../../../services/profile"
+import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 const list = Object.values(FAMILYSTATUS)
 
@@ -52,9 +53,7 @@ export const ProfileFamilyStatus = () => {
                     ))}
                 </div>
             </div>
-            <button className="profile__method-btlater profile__method-btlater--inherit">
-                Setup later
-            </button>
+            <ProfileButtonSetupLater />
             <button
                 className={`profile__method-btlater`}
                 onClick={handlerChangeFamilyStatus}

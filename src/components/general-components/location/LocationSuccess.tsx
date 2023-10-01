@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { roleUrl } from "../../../utils/config"
 
 const LocationSuccess = () => {
-    const { fullName } =
+    const { fullName, role } =
         useAppSelector((s) => s.userReducer)
 
     return (
@@ -29,10 +30,10 @@ const LocationSuccess = () => {
             </div>
 
             <button className="authsuccess__body-setup">
-                <Link to="/admin">Setup later</Link>
+                <Link to={roleUrl(role)}>Setup later</Link>
             </button>
             <button className="login__button">
-                <Link to="/admin">Setup Account</Link>
+                <Link to={roleUrl(role)}>Setup Account</Link>
             </button>
         </div>
     )
