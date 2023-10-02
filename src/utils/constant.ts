@@ -34,5 +34,4 @@ export const profileInfoSettings: ProfileInfoSettings[] = [
 export const profileInfoHelp: ProfileInfoHelp[] = [
   { name: "Help & Support", label: IconBoxComment },
   { name: "About NeightborHarbor", label: IconProfileInfoComments },
-  { name: "Log out", label: IconProfileInfoFlag },
 ]

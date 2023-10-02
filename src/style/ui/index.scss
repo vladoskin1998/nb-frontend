@@ -135,17 +135,17 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
-    line-height: 140%; 
+    line-height: 140%;
     fieldset {
         display: none;
     }
 }
 
-.ui-date-input{
-    .react-code-input{
+.ui-date-input {
+    .react-code-input {
         display: flex !important;
         flex-wrap: nowrap;
-        input{
+        input {
             background: $color__white;
             border: 0 !important;
             box-shadow: none !important;
@@ -153,32 +153,39 @@
             width: 100% !important;
             text-align: center !important;
         }
-        input:nth-child(1){
+        input:nth-child(1) {
             border-radius: 8px 0 0 8px !important ;
         }
-        input:nth-child(2){
+        input:nth-child(2) {
             border-radius: 0px 8px 8px 0px !important ;
             margin-right: 12px !important;
         }
-        input:nth-child(3){
+        input:nth-child(3) {
             border-radius: 8px 0 0 8px !important ;
         }
-        input:nth-child(4){
+        input:nth-child(4) {
             border-radius: 0px 8px 8px 0px !important ;
             margin-right: 12px !important;
         }
 
-        input:nth-child(5){
+        input:nth-child(5) {
             border-radius: 8px 0 0 8px !important ;
         }
-        input:nth-child(6){
-            border-radius: 0px  !important ;
-        }
-        input:nth-child(7){
+        input:nth-child(6) {
             border-radius: 0px !important ;
         }
-        input:nth-child(8){
+        input:nth-child(7) {
+            border-radius: 0px !important ;
+        }
+        input:nth-child(8) {
             border-radius: 0px 8px 8px 0px !important ;
+        }
+    }
+    &--disabled {
+        .react-code-input {
+            input {
+                color: red !important;
+            }
         }
     }
 }

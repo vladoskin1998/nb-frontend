@@ -9,8 +9,10 @@ import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 export const ProfilePicture = () => {
     const { _id } = useAppSelector((s) => s.userReducer)
-    const {avatarFileName} = useAppSelector(s => s.profileReducer)
-    const initAvatar = avatarFileName ? `${baseURL}/uploads/avatar/${avatarFileName}` : ""
+    const { avatarFileName } = useAppSelector((s) => s.profileReducer)
+    const initAvatar = avatarFileName
+        ? `${baseURL}/uploads/avatar/${avatarFileName}`
+        : ""
     const [avatar, setAvatar] = useState<File | null>(null)
     const [photoUrl, setPhotoUrl] = useState<string>(initAvatar)
     const dispatch = useAppDispatch()
@@ -66,20 +68,22 @@ export const ProfilePicture = () => {
 
     const uploadToServerAvatar = async () => {
         try {
-            const formData = new FormData()
-            const payload = { _id }
-
-            formData.append("payload", JSON.stringify(payload))
             if (avatar) {
-                formData.append("file", avatar)
+                const formData = new FormData()
+                const payload = { _id }
+
+                formData.append("payload", JSON.stringify(payload))
+                if (avatar) {
+                    formData.append("file", avatar)
+                }
+
+                dispatch(setLoader(true))
+
+                const res = await profileUploadAvatar(formData)
+
+                dispatch(setValueProfileReducer(res))
+                dispatch(setLoader(false))
             }
-
-            dispatch(setLoader(true))
-
-            const res = await profileUploadAvatar(formData)
-            
-            dispatch(setValueProfileReducer(res))
-            dispatch(setLoader(false))
 
             navigate("/profile/interest-zone")
         } catch (error) {
@@ -132,9 +136,9 @@ export const ProfilePicture = () => {
             <ProfileButtonSetupLater />
             <button
                 className={`profile__method-btlater
-                ${!avatar && "profile__method-btlater--disabled"}
+                ${!(avatar || photoUrl) && "profile__method-btlater--disabled"}
             `}
-                disabled={!avatar}
+                disabled={!(avatar || photoUrl)}
                 onClick={uploadToServerAvatar}
             >
                 Continue

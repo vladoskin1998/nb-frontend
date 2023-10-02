@@ -68,6 +68,9 @@ export const ProfileInfoEdit = () => {
         },
     ])
 
+    console.log();
+    
+
     const uploadToServer = async () => {
         try {
             const formData = new FormData()
@@ -76,6 +79,10 @@ export const ProfileInfoEdit = () => {
             formData.append("payload", JSON.stringify(payload))
             if (avatar) {
                 formData.append("file", avatar)
+            }
+
+            if(dateBirthLocal && dateBirthLocal?.year() < 1900){
+                alert("Date must have value more 1900")
             }
 
             dispatch(setLoader(true))

@@ -1,3 +1,5 @@
+import moment from "moment"
+import { useEffect, useState } from "react"
 import ReactCodeInput, { ReactCodeInputProps } from "react-code-input"
 
 const props: ReactCodeInputProps = {
@@ -32,9 +34,28 @@ export const CodeInput = ({ change }: { change: (s: string) => void }) => {
     )
 }
 
-export const DateInput = ({ change,value }: { value?:string, change: (s: string) => void }) => {
+export const DateInput = ({
+    change,
+    value,
+}: {
+    value?: string
+    change: (s: string) => void
+}) => {
+   
+    const [isValid, setIsValid] = useState(true)
+
+    useEffect(() => {
+        const formattedDate = moment(value, "DDMMYYYY", true)
+        if (formattedDate.isValid()) {
+            setIsValid(true)
+        } else {
+            setIsValid(false)
+            console.error("Invalid Date")
+        }
+    }, [value])
+
     return (
-        <div className="ui-date-input">
+        <div className={`ui-date-input ${!isValid? "ui-date-input--disabled" : "" }`}>
             <ReactCodeInput
                 onChange={change}
                 type="number"

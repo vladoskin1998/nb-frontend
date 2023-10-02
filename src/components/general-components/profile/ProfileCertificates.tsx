@@ -45,6 +45,7 @@ export const ProfileCertificates = () => {
     const uploadToServerCertificates = async () => {
         try {
             let isAllFiles = true
+
             const formData = new FormData()
             const payload = { _id }
 
@@ -52,15 +53,10 @@ export const ProfileCertificates = () => {
             if (certificates) {
                 for (let i = 0; i < certificates.length; i++) {
                     if (!certificates[i].file) {
-                        isAllFiles = false
-                        break
+                        continue
                     }
                     formData.append("files", certificates[i].file as Blob)
                 }
-            }
-
-            if (!isAllFiles) {
-                alert("some files fileds is empty")
             }
 
             dispatch(setLoader(true))

@@ -1,23 +1,26 @@
-import React from "react"
 import { baseURL } from "../../../utils/config"
-import { useAppSelector } from "../../../utils/hooks"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import {
     IconProfileInfoPen,
-    IconProfileInfoComments,
     IconProfileInfoFlag,
-    IconProfileInfoNotification,
-    IconProfileInfoBookmark,
-    IconProfileInfoKey,
 } from "../../svg/IconProfileInfo"
-import { IconLocationKey } from "../../svg/IconsLocation"
-import { IconLeftChevrons, IconRightChevrons } from "../../svg/IconChevrons"
-import { IconBoxComment } from "../../svg/IconActivitiesModal"
+import { IconRightChevrons } from "../../svg/IconChevrons"
 import { profileInfoSettings, profileInfoHelp } from "../../../utils/constant"
 import { toOneKind } from "../../../utils/titles"
 import { Link } from "react-router-dom"
+import { logout } from "../../../services/auth"
+
 export const ProfileSettings = () => {
     const { avatarFileName } = useAppSelector((s) => s.profileReducer)
     const { email, fullName } = useAppSelector((s) => s.userReducer)
+    const dispatch = useAppDispatch()
+
+    const handlerLogout = () => {
+        dispatch(
+            logout()
+        )
+    }
+
     return (
         <div className="profileinfo__settings">
             <div className="profileinfo__settings-main-edit">
@@ -34,10 +37,9 @@ export const ProfileSettings = () => {
                     </p>
                 </div>
                 <button>
-                    <Link to={'/profileinfo/edit'}>
+                    <Link to={"/profileinfo/edit"}>
                         <IconProfileInfoPen />
                     </Link>
-                 
                 </button>
             </div>
 
@@ -83,6 +85,17 @@ export const ProfileSettings = () => {
                         </div>
                     </Link>
                 ))}
+                <div className="profileinfo__settings-main-setting-item" onClick={handlerLogout}>
+                    <IconProfileInfoFlag />
+                    <div>
+                        <h6 className="profileinfo__settings-main-edit-title profileinfo__settings-main-setting-item-title">
+                            Log out
+                        </h6>
+                    </div>
+                    <button className="profileinfo__settings-main-setting-item-svgstroke">
+                        <IconRightChevrons />
+                    </button>
+                </div>
             </div>
             <div className="profileinfo__settings-main-setting"></div>
         </div>

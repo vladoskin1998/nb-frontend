@@ -33,7 +33,7 @@ const LocationSuccess = () => {
                 <Link to={roleUrl(role)}>Setup later</Link>
             </button>
             <button className="login__button">
-                <Link to={roleUrl(role)}>Setup Account</Link>
+                <Link to={"/profile"}>Setup Account</Link>
             </button>
         </div>
     )

@@ -332,3 +332,41 @@
          display: none;
     }
 }
+
+.profileinfo__aboutnb{
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    &-item{
+        height: 67px;
+        display: grid;
+        align-items: center;
+        grid-template-columns: 1fr auto;
+        border-radius: 8px;
+        background: $color__white;
+        box-shadow: $box-shadow1;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 30px; 
+        padding: 0 10px;
+        p{
+            display: flex;
+            column-gap: 12px;
+            align-items: center;
+            svg{
+                path{
+                    fill: $color__black5;
+                }
+            }
+        }
+    }
+}
+
+.profileinfo__help{
+    padding-top: 25px;
+    &-slider{
+        padding-top: 17px;
+    }
+}

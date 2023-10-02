@@ -20,8 +20,17 @@ export const ProfileBirth = () => {
     const [city, setCity] = useState(cityBirth)
     const navigate = useNavigate()
 
+    console.log(value, "--------->",moment(value, "DDMMYYYY").toDate().getFullYear());
+    
     const handlerChangeBirth = async () => {
         try {
+            console.log(moment(value, "DDMMYYYY").toDate().getFullYear(), moment(value, "DDMMYYYY").isValid());
+            
+            if(!moment(value, "DDMMYYYY").isValid() || moment(value, "DDMMYYYY").toDate().getFullYear() < 1900){
+                alert("Invalid date or value less 1900")
+                return
+            }
+
             if (value.length === 8 && city) {
                 dispatch(setLoader(true))
                 const res = await profileTextInfo({

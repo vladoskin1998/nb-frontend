@@ -60,6 +60,8 @@ export const ProfileInfoSecurity = () => {
             dispatch(setValueUserReducer(res))
 
             dispatch(setLoader(false))
+            alert("SuccessFul Update")
+
         } catch (error: any & { message?: string }) {
             dispatch(setLoader(false))
             alert("upload file is faild" + error?.message)

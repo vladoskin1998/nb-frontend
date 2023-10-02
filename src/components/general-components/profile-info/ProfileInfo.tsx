@@ -5,6 +5,10 @@ import { ProfileSettings } from "./ProfileSettings"
 import { ProfileInfoEdit } from "./ProfileInfoEdit"
 import { ProfileInfoSecurity } from "./ProfileInfoSecurity"
 import { ProfileInfoSkillsInterests } from "./ProfileInfoSkillsInterests"
+import { ProfileInfoPrivacyPolicy } from "./ProfileInfoPrivacyPolicy"
+import { ProfileInfoTermsOfService } from "./ProfileInfoTermsOfService"
+import { ProfileInfoAboutNH } from "./ProfileInfoAboutNH"
+import { ProfileInfoHelpCenter } from "./ProfileInfoHelpCenter"
 
 export const ProfileInfo = () => {
     return (
@@ -13,8 +17,12 @@ export const ProfileInfo = () => {
             <div className="profileinfo__edit">
                 <Routes>
                     <Route path="logout" element={<ProfileSettings />} />
-                    <Route path="aboutneightborharbor" element={<ProfileSettings />} />
-                    <Route path="helpsupport" element={<ProfileSettings />} />
+                    
+                    <Route path="privacypolicy" element={<ProfileInfoPrivacyPolicy />} />
+                    <Route path="termsofservice" element={<ProfileInfoTermsOfService />} />
+                    <Route path="aboutneightborharbor" element={<ProfileInfoAboutNH />} />
+
+                    <Route path="helpsupport" element={<ProfileInfoHelpCenter />} />
                     <Route path="privacy" element={<ProfileSettings />} />
                     <Route path="notifications" element={<ProfileSettings />} />
                     <Route path="interestsskills" element={<ProfileInfoSkillsInterests />} />

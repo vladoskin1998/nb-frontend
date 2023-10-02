@@ -145,10 +145,15 @@ export const profileTitle = (locationRoute: string): { tt: string, sbtt: string 
 }
 
 
+
 export const getProfileInfoHederTitile = (locationRoute: string) => {
     switch (locationRoute) {
         case "/profileinfo/logout":
             return 'Log out'
+        case "/profileinfo/privacypolicy":
+            return 'Privacy Policy'
+        case "/profileinfo/termsofservice":
+            return 'Terms of Service'
         case "/profileinfo/aboutneightborharbor":
             return 'About NeightborHarbor'
         case "/profileinfo/helpsupport":
