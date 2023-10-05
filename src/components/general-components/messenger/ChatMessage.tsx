@@ -1,5 +1,5 @@
 import TextareaAutosize from "@mui/material/TextareaAutosize"
-import { useState, useContext, useEffect } from "react"
+import { useState, useContext, useEffect, useRef } from "react"
 import { useLocation } from "react-router-dom"
 import { IconArrachFile } from "../../svg/IconArrachFile"
 import { useAppSelector } from "../../../utils/hooks"
@@ -17,7 +17,8 @@ export const ChatMessage = () => {
     const [messageList, setMessageList] = useState<MessageType[]>([])
     const [message, setMessage] = useState("")
     const [chatId, setChatId] = useState("")
-
+    const messagesContainerRef = useRef<HTMLDivElement | null>(null);
+    
     const location = useLocation()
 
     const props: {
@@ -104,18 +105,26 @@ export const ChatMessage = () => {
         }
     }
 
+    useEffect(() => {
+        if (messagesContainerRef.current && messageList.length > 0) {
+            console.log( messagesContainerRef);
+            
+            window.scrollTo(0, messagesContainerRef.current.scrollHeight + 45);
+        }
+      }, [messageList]);
+
     return (
         <>
-            <div className="messenger__chat-messages">
+            <div className="messenger__chat-messages" ref={messagesContainerRef}>
                 {messageList.map((item) => (
                     <div
                         className={`messenger__chat-messages-message messenger__chat-messages-message-${
-                            item.senderId === _id ? "r" : "l"
+                            item?.senderId === _id ? "r" : "l"
                         }`}
                     >
-                        <div>{item.content}</div>
+                        <div>{item?.content}</div>
                         <div className="messenger__chat-messages-message-time">
-                            {moment(item.timestamp).format("h:mm A")}
+                            {moment(item?.timestamp).format("h:mm A")}
                         </div>
                     </div>
                 ))}

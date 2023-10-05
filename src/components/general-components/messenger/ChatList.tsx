@@ -80,12 +80,12 @@ export const ChatList = () => {
                                 {item?.participants[0]?.fullName}
                             </h5>
                             <p className="messenger__list-item-message">
-                                {item.lastMessage.content}
+                                {item.lastMessage?.content}
                             </p>
                         </div>
                         <div>
                             <div className="messenger__list-item-time">
-                                {moment(item.lastMessage.timestamp).format(
+                                {moment(item.lastMessage?.timestamp).format(
                                     "MMM D, h:mm A"
                                 )}
                             </div>
