@@ -45,7 +45,6 @@ export const userReducer = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(authorization.fulfilled, (state, { payload }) => {
-                console.log("payload user------->", payload.user);
                 Object.assign(state, payload.user);
 
             })

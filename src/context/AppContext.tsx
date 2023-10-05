@@ -2,6 +2,7 @@ import {
     createContext,
     useEffect,
     type ReactNode,
+    useRef,
 } from "react"
 import { useAppDispatch, useAppSelector } from "../utils/hooks"
 import { useNavigate } from "react-router-dom"
@@ -12,9 +13,12 @@ import {
 import { AuthResponseInterface } from "../types/types"
 import { roleUrl } from "../utils/config"
 
+
 const AppContext = createContext<{}>({})
 
 const AppContextProvider = ({ children }: { children: ReactNode }) => {
+
+
     const dispatch = useAppDispatch()
     const { isAuth } = useAppSelector((s) => s.authReducer)
     const { _id, role } = useAppSelector((s) => s.userReducer)
@@ -34,8 +38,6 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
             dispatch(getIdentityInforamation({ _id }))
                 .unwrap()
                 .then((res) => {
-                    console.log(res)
-
                     if (!res.isLocationVerify) {
                         return navigate(`/location`)
                     }

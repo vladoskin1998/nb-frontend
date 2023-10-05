@@ -4,12 +4,14 @@ import { Modal } from "../../ui/Modal"
 import { IconBoxComment, IconMicrophone } from "../../svg/IconActivitiesModal"
 
 export const UserItemModal = ({
+    openChat,
     isOpen,
     setIsOpen,
     handlerBlockUser,
     handlerDeleteUser,
 }: {
     isOpen: boolean
+    openChat:  () => void,
     setIsOpen: (o: boolean) => void
     handlerBlockUser: () => void
     handlerDeleteUser: () => void
@@ -68,7 +70,7 @@ export const UserItemModal = ({
                             <button className="user__modal-body-row1-coord">Coordinator Name</button>
                         </div>
 
-                        <div className="user__modal-body-row2">
+                        <div className="user__modal-body-row2" onClick={openChat}>
                             <IconPicker />
                             <div>
                                 <button>Write messege</button>

@@ -1,0 +1,152 @@
+.messenger {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+}
+
+.messenger__list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    &-item {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        column-gap: 11px;
+        max-height: 67px;
+        img {
+            width: 67px;
+            height: 67px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        &-name {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 30px;
+        }
+        &-message {
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 140%;
+            max-width: 230px;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 40px;
+            height: 100%;
+            &--notread {
+                color: $color__grey10;
+            }
+        }
+        &-time {
+            white-space: nowrap;
+            color: $color__black;
+            text-align: right;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 16px;
+        }
+        &-nummes {
+            background-color: $color__blue1;
+            @include flex-all-center;
+            color: $color__white;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 16px;
+            border-radius: 30px;
+            height: 30px;
+            padding: 0 15px;
+            margin-top: 8px;
+            max-width: 45px;
+        }
+    }
+}
+
+.messenger__chat {
+    &-messages {
+        display: flex;
+        flex-direction: column;
+        row-gap: 12px;
+        padding-bottom: 50px;
+        &-message {
+            display: flex;
+            flex-direction: column;
+            max-width: 70vw;
+            width: fit-content;
+            padding: 10px;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            font-size: 14px;
+            &-time {
+                padding-top: 4px;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 16px;
+            }
+            &-l {
+                border-radius: 16px 16px 16px 0px;
+                background-color: $color__white;
+                .messenger__chat-messages-message-time {
+                    color: $color__grey1;
+                }
+            }
+            &-r {
+                margin-left: auto;
+                background-color: $color__blue1;
+                border-radius: 16px 16px 0px 16px;
+                color: $color__white;
+            }
+        }
+    }
+    &-sender-body{
+          position: fixed;
+          bottom: 0px;
+          left: 0;
+          padding: 0 24px 12px 24px;
+          width: 100%;
+          background-color: $color__grey3;
+          z-index: 3;
+    }
+    &-sender {
+        background-color: $color__white;
+        border-radius: 8px;
+        box-shadow: $box-shadow1;
+        padding: 7px;
+        display: grid;
+        grid-template-columns: auto 1fr 60px;
+        column-gap: 11px;
+        &-attach {
+            max-height: 36px;
+            @include flex-all-center;
+            svg {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        &-autoresize {
+            padding-top: 10px;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            border: 0;
+            font-family: "Roboto", sans-serif !important;
+            ::placeholder {
+                font-family: "Roboto", sans-serif !important; 
+            }
+        }
+        &-send {
+            @include button-main;
+            max-height: 36px;
+        }
+    }
+}

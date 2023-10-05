@@ -8,6 +8,7 @@ import { SlickCategories } from "../../ui/SlickCategories"
 import Slider from "react-slick"
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
+import { UserItem } from "./ProfileInfo"
 
 const list = Object.values(ACTIVITIE)
 
@@ -18,7 +19,7 @@ var settings = {
     slidesToScroll: 1,
 }
 
-export const ProfileInfoPerProf = () => {
+export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
     const [category, setCategory] = useState(ACTIVITIE.ALL)
     const [isPersonal, setIsPersonal] = useState(true)
     const { aboutMe, skills, interests, certificatesFileName } = useAppSelector(
@@ -37,12 +38,23 @@ export const ProfileInfoPerProf = () => {
                     <h5 className="profileinfo__avatar-information profileinfo__perprof-about-title">
                         About me
                     </h5>
-                    <p className="profileinfo__perprof-about-text">{aboutMe}</p>
+                    <p className="profileinfo__perprof-about-text">
+                        {props?.userIdentity.aboutMe
+                            ? props?.userIdentity.aboutMe
+                            : aboutMe}
+                    </p>
                     <h5 className="profileinfo__avatar-information profileinfo__perprof-skills-title">
-                        Skills ({skills.length})
+                        Skills (
+                        {props?.userIdentity.skills
+                            ? props?.userIdentity.skills.length
+                            : skills.length}
+                        )
                     </h5>
                     <div className="profileinfo__perprof-skills-list">
-                        {skills.map((item) => (
+                        {(props?.userIdentity.skills
+                            ? props?.userIdentity.skills
+                            : skills
+                        ).map((item) => (
                             <div className="profileinfo__perprof-skills-list-item">
                                 <IconProfileCircle />
                                 {item.title}
@@ -50,10 +62,17 @@ export const ProfileInfoPerProf = () => {
                         ))}
                     </div>
                     <h5 className="profileinfo__avatar-information profileinfo__perprof-skills-title">
-                        Interests ({interests.length})
+                        Interests (
+                        {props?.userIdentity.interests.length
+                            ? props?.userIdentity.interests.length
+                            : interests.length}
+                        )
                     </h5>
                     <div className="profileinfo__perprof-skills-list">
-                        {interests.map((item) => (
+                        {(props?.userIdentity.interests
+                            ? props?.userIdentity.interests
+                            : interests
+                        ).map((item) => (
                             <div className="profileinfo__perprof-skills-list-item">
                                 <IconProfileCircle />
                                 {item.title}
@@ -67,11 +86,18 @@ export const ProfileInfoPerProf = () => {
             ) : (
                 <>
                     <h5 className="profileinfo__avatar-information profileinfo__perprof-skills-title">
-                        Certificates ({certificatesFileName.length})
+                        Certificates (
+                        {props?.userIdentity.certificatesFileName
+                            ? props?.userIdentity.certificatesFileName.length
+                            : certificatesFileName.length}
+                        )
                     </h5>
                     <div className="profileinfo__perprof-certificates">
                         <Slider {...settings}>
-                            {certificatesFileName.map((item) => (
+                            {(props?.userIdentity.certificatesFileName
+                                ? props?.userIdentity.certificatesFileName
+                                : certificatesFileName
+                            ).map((item) => (
                                 <div className="profileinfo__perprof-certeficate">
                                     <img
                                         src={`${baseURL}/uploads/certificates/${item}`}

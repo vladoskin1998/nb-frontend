@@ -5,11 +5,16 @@ import { IconServicesAllPoint } from "../../svg/IconServicesAll"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { getProfileInfoHederTitile } from "../../../utils/titles"
 import { roleUrl } from "../../../utils/config"
+import { UserItemViewProps } from "../../admin-components/users/UserItemView"
+import { UserItem } from "./ProfileInfo"
 
-export const ProfileInfoHeader = () => {
+export const ProfileInfoHeader = ({fullNameUser}:{fullNameUser?: string}) => {
+
     const { fullName, role } = useAppSelector((s) => s.userReducer)
+
+
     const location = useLocation()
-    const isProfileInfo = location.pathname === "/profileinfo"
+    const isProfileInfo = location.pathname === "/profileinfo" 
     const navigate = useNavigate()
 
     const exit = () => {
@@ -25,10 +30,10 @@ export const ProfileInfoHeader = () => {
             </button>
             <h6 className="profileinfo__header-text" onClick={exit}>
                 {isProfileInfo
-                    ? fullName
+                    ? fullNameUser ? fullNameUser : fullName
                     : getProfileInfoHederTitile(location.pathname)}
             </h6>
-            {isProfileInfo && (
+            {(isProfileInfo && !fullNameUser )&& (
                 <button className="profileinfo__header-points">
                     <Link to={"/profileinfo/settings"}>
                         <IconServicesAllPoint />

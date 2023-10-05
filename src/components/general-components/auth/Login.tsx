@@ -26,14 +26,9 @@ const Login = ({
     }
 
     const [validation, setValidation] = useState({
-        // login: false,
-        // password: false,
         login:new RegExp(emailPattern).test(login),
         password: new RegExp(isPasswordPattern).test(password)
     })
-
-    console.log(validation);
-    
 
     return (
         <>

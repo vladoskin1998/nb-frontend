@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import $api from "../http"
 import { Nullable } from "../types/types";
 import { ProfileInitialStateInterface, _IdInterface} from "../reducer/profile";
-import { FAMILYSTATUS, ORIENTATION, QUALITYENUM, SEX } from "../types/enum";
+import { EDUCATION, FAMILYSTATUS, ORIENTATION, QUALITYENUM, SEX } from "../types/enum";
 
 interface LocationPayload {
     coordinates: { lat: number, lng: number };
@@ -18,13 +18,15 @@ interface LocationPayloadResponse {
 }
 
 export interface UserIdentityInterface{
-    isLocationVerify: boolean
+  
+    isLocationVerify: boolean;
+    isGotAllProfileInfo: boolean;
+
     coordinates: { lat: number, lng: number };
     city: string | null;
     country: string | null;
     houseNumber: string | null;
     street: string | null;
-    fullName: string;
 
     createdUserDate: Date;
     blockedUserDate: Date;
@@ -44,6 +46,9 @@ export interface UserIdentityInterface{
     skills:  { _id: string | number, title: string }[]
 
     certificatesFileName: string[] | []
+
+    studySchool:string,
+    education: EDUCATION | null,
 }
 
 export const getIdentityInforamation = createAsyncThunk<UserIdentityInterface, {_id:string}>(

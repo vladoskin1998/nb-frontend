@@ -13,8 +13,10 @@ import { IconRightChevrons } from "../../svg/IconChevrons"
 import moment from "moment"
 import { UserInitialStateInterface } from "../../../reducer/users"
 import { UserIdentityInterface } from "../../../services/profile"
+import { Link, useNavigate } from "react-router-dom"
+import { baseURL } from "../../../utils/config"
 
-interface UserItemViewProps extends UserInitialStateInterface {
+export interface UserItemViewProps extends UserInitialStateInterface {
     setIsOpen: () => void
     userIdentity: UserIdentityInterface | null
 }
@@ -26,7 +28,7 @@ const mapContainerStyle = {
 
 const initCoordinates = {
     lat: 50.440569860389814,
-    lng: 30.540884262459286
+    lng: 30.540884262459286,
 }
 
 export const UserItemView = (props: UserItemViewProps) => {
@@ -34,13 +36,9 @@ export const UserItemView = (props: UserItemViewProps) => {
     const containerMap = useRef<HTMLDivElement | null>(null)
     const [downloadMap, setDownloadMap] = useState(false)
 
-    const {
-        setIsOpen,
-        fullName,
-        email,
-        role,
-        userIdentity
-    } = props
+    const { setIsOpen, fullName, email, role, userIdentity, _id } = props
+
+    // console.log(props);
 
     useEffect(() => {
         if (window.google && containerMap.current) {
@@ -54,7 +52,7 @@ export const UserItemView = (props: UserItemViewProps) => {
                 gestureHandling: "none",
                 center: new google.maps.LatLng(
                     userIdentity?.coordinates?.lat || initCoordinates.lat,
-                    userIdentity?.coordinates?.lng ||  initCoordinates.lng,
+                    userIdentity?.coordinates?.lng || initCoordinates.lng
                 ),
             }
             mapRef.current = new google.maps.Map(
@@ -64,16 +62,29 @@ export const UserItemView = (props: UserItemViewProps) => {
         }
     }, [downloadMap])
 
+    const navigate = useNavigate()
+
+    const toProfileInfo = () => {
+        navigate("/profileinfo", {
+            state: {
+                _id,
+                email,
+                role,
+                fullName,
+                userIdentity,
+            },
+        })
+    }
     return (
-        <div className="user__item">
+        <div className="user__item" >
             <div className="user__item-row1">
-                <img
-                    src="/Images/avatar-user.png"
+                <img onClick={toProfileInfo}
+                    src={`${baseURL}/uploads/avatar/${userIdentity?.avatarFileName}`}
                     alt=""
                     className="user__item-row1-img"
                 />
-                <div className="user__item-row1-info">
-                    <p className="user__item-row1-user">
+                <div className="user__item-row1-info" >
+                    <p className="user__item-row1-user" onClick={toProfileInfo}>
                         <b>{fullName}</b>
                         <IconStars />
                         <b>4.5</b>
@@ -94,9 +105,9 @@ export const UserItemView = (props: UserItemViewProps) => {
                                 START DATE
                             </div>
                             <div className="user__item-blocked-date">
-                                {moment(userIdentity?.createdUserDate || '').format(
-                                    "MMM D, h:mm a"
-                                )}
+                                {moment(
+                                    userIdentity?.createdUserDate || ""
+                                ).format("MMM D, h:mm a")}
                             </div>
                         </div>
                         <div>
@@ -107,9 +118,9 @@ export const UserItemView = (props: UserItemViewProps) => {
                                 DUE DATE
                             </div>
                             <div className="user__item-blocked-date">
-                                {moment(userIdentity?.blockedUserDate || '').format(
-                                    "MMM D, h:mm a"
-                                )}
+                                {moment(
+                                    userIdentity?.blockedUserDate || ""
+                                ).format("MMM D, h:mm a")}
                             </div>
                         </div>
                     </div>
@@ -139,17 +150,22 @@ export const UserItemView = (props: UserItemViewProps) => {
                             <IconUserRole />
                             <span>{role}</span>
                             <IconUserHome />
-                            <span>{`${userIdentity?.street || ''} ${userIdentity?.houseNumber || ''}`}</span>
+                            <span>{`${userIdentity?.street || ""} ${
+                                userIdentity?.houseNumber || ""
+                            }`}</span>
                         </div>
                     </div>
                     {downloadMap ? (
                         <div style={mapContainerStyle} ref={containerMap} />
                     ) : (
-                        
-                            <div style={mapContainerStyle} className="user__item-tapmap" onClick={() => setDownloadMap(true)}>
-                                <div className="user__item-tapmapbody" />
-                                Tap to see location 
-                            </div>
+                        <div
+                            style={mapContainerStyle}
+                            className="user__item-tapmap"
+                            onClick={() => setDownloadMap(true)}
+                        >
+                            <div className="user__item-tapmapbody" />
+                            Tap to see location
+                        </div>
                     )}
                 </>
             )}
