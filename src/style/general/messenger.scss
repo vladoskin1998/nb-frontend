@@ -192,3 +192,13 @@
         }
     }
 }
+
+.messenger__chat-modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    .ui-modal{
+        width: fit-content;
+    }
+}

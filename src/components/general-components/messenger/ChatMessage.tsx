@@ -125,14 +125,25 @@ export const ChatMessage = () => {
                 },
             ])
             setMessage("")
+            removeFile()
         }
     }
 
+    const removeFile = () => {
+        if (fileInputRef.current) {
+            fileInputRef.current.value = ''; 
+          }
+        setImage(null)
+        setImageUrl('')
+    }
+
+    console.log(image, imageUrl, fileInputRef);
+    
     useEffect(() => {
         if (messagesContainerRef.current && messageList.length > 0) {
             console.log(messagesContainerRef)
             window.scrollTo({
-                top: messagesContainerRef.current.scrollHeight + 45,
+                top: messagesContainerRef.current.scrollHeight + 100,
                 behavior: "smooth",
             })
         }
@@ -175,7 +186,7 @@ export const ChatMessage = () => {
                     <div className="messenger__chat-sender-file">
                         <img src={`${imageUrl}`} alt="" />
                         <div>{image?.name}</div>
-                        <button>
+                        <button onClick={removeFile}>
                             <IconAdminClose />
                         </button>
                     </div>

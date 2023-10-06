@@ -15,33 +15,32 @@ export const AdminPanelShortcuts = () => {
     }, [])
     return (
         <div className="admin__panel-short">
-            <div className="admin__panel-title">
-                <div className="services__all">
-                    <ServicesItemView
-                        name={"Users"}
-                        link={"/admin/users"}
-                        numberView={count.countUsers}
-                        setIsOpen={() => {}}
-                    />
-                    <ServicesItemView
-                        name={"Services"}
-                        link={"/admin/services"}
-                        numberView={count.countServices}
-                        setIsOpen={() => {}}
-                    />
-                    <ServicesItemView
-                        name={"Events"}
-                        link={"/admin/activities"}
-                        numberView={count.countActivities}
-                        setIsOpen={() => {}}
-                    />
-                    <ServicesItemView
-                        name={"Messeges"}
-                        link={"/admin/messeges"}
-                        numberView={count.countMessages}
-                        setIsOpen={() => {}}
-                    />
-                </div>
+            <div className="admin__panel-title"> Shortcuts </div>
+            <div className="services__all">
+                <ServicesItemView
+                    name={"Users"}
+                    link={"/admin/users"}
+                    numberView={count.countUsers}
+                    setIsOpen={() => {}}
+                />
+                <ServicesItemView
+                    name={"Services"}
+                    link={"/admin/services"}
+                    numberView={count.countServices}
+                    setIsOpen={() => {}}
+                />
+                <ServicesItemView
+                    name={"Events"}
+                    link={"/admin/activities"}
+                    numberView={count.countActivities}
+                    setIsOpen={() => {}}
+                />
+                <ServicesItemView
+                    name={"Messeges"}
+                    link={"/admin/messeges"}
+                    numberView={count.countMessages}
+                    setIsOpen={() => {}}
+                />
             </div>
         </div>
     )
