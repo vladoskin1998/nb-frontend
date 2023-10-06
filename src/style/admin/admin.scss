@@ -1,0 +1,31 @@
+.admin__panel{
+    padding-top: 45px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 45px;
+    &-title{
+        @include title-main;
+        padding-bottom: 16px;
+    }
+    &-short{
+        
+        .services__all-item:nth-child(1){
+            background-color: #29CC39;
+        }
+        .services__all-item:nth-child(2){
+            background-color: #83F;
+        }
+        .services__all-item:nth-child(3){
+            background-color: #F63;
+        }
+        .services__all-item:nth-child(4){
+            background-color: #33BFFF;
+        }
+        .services__all-item-name{
+            color: $color__white;
+        }
+        .services__all-item-title{
+            color: $color__white;
+        }
+    }
+}

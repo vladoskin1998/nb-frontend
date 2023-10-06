@@ -10,6 +10,11 @@ import $api from "../../../http"
 import { AxiosResponse } from "axios"
 import { MessageType, OpenChatData } from "../../../types/types"
 
+import { IconSmile } from "../../svg/IconSmile"
+import { ModalSmile } from "./ModalSmile"
+import { IconAdminClose } from "../../svg/IconAdminHeader"
+import { baseURL } from "../../../utils/config"
+
 export const ChatMessage = () => {
     const { _id, fullName } = useAppSelector((s) => s.userReducer)
     const { avatarFileName } = useAppSelector((s) => s.profileReducer)
@@ -17,8 +22,13 @@ export const ChatMessage = () => {
     const [messageList, setMessageList] = useState<MessageType[]>([])
     const [message, setMessage] = useState("")
     const [chatId, setChatId] = useState("")
-    const messagesContainerRef = useRef<HTMLDivElement | null>(null);
-    
+    const messagesContainerRef = useRef<HTMLDivElement | null>(null)
+    const [isOpenSmile, setIsOpenSmile] = useState(false)
+
+    const [image, setImage] = useState<File | null>(null)
+    const [imageUrl, setImageUrl] = useState<string>("")
+    const fileInputRef = useRef<HTMLInputElement | null>(null)
+
     const location = useLocation()
 
     const props: {
@@ -68,11 +78,12 @@ export const ChatMessage = () => {
                         senderId: string,
                         content: string,
                         timestamp: Date,
-                        isRead: boolean
+                        isRead: boolean,
+                        file: string | null
                     ) => {
                         setMessageList((s) => [
                             ...s,
-                            { chatId, senderId, content, timestamp, isRead },
+                            { chatId, senderId, content, timestamp, isRead, file },
                         ])
                     }
                 )
@@ -82,7 +93,17 @@ export const ChatMessage = () => {
         effectBody()
     }, [])
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
+        let fileName: null | string = null
+        if (image) {
+            const formData = new FormData()
+
+            formData.append("file", image)
+
+            const res:AxiosResponse<string> = await $api.post('messenger/file-message',formData)
+            fileName = res.data
+        }
+     
         if (socket) {
             socket.current?.emit(SOCKET_MESSENDER_EVENT.SEND_PRIVATE_MESSAGE, {
                 chatId,
@@ -90,6 +111,7 @@ export const ChatMessage = () => {
                 content: message,
                 timestamp: new Date(),
                 isRead: true,
+                file: fileName,
             })
             setMessageList((s) => [
                 ...s,
@@ -99,6 +121,7 @@ export const ChatMessage = () => {
                     content: message,
                     timestamp: new Date(),
                     isRead: true,
+                    file: fileName
                 },
             ])
             setMessage("")
@@ -107,21 +130,39 @@ export const ChatMessage = () => {
 
     useEffect(() => {
         if (messagesContainerRef.current && messageList.length > 0) {
-            console.log( messagesContainerRef);
-            
-            window.scrollTo(0, messagesContainerRef.current.scrollHeight + 45);
+            console.log(messagesContainerRef)
+            window.scrollTo({
+                top: messagesContainerRef.current.scrollHeight + 45,
+                behavior: "smooth",
+            })
         }
-      }, [messageList]);
+    }, [messageList])
+
+    const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0] || null
+        setImage(file)
+        if (file) {
+            const url = URL.createObjectURL(file)
+            setImageUrl(url)
+        }
+    }
 
     return (
         <>
-            <div className="messenger__chat-messages" ref={messagesContainerRef}>
+            <div
+                className="messenger__chat-messages"
+                ref={messagesContainerRef}
+            >
                 {messageList.map((item) => (
                     <div
                         className={`messenger__chat-messages-message messenger__chat-messages-message-${
                             item?.senderId === _id ? "r" : "l"
                         }`}
                     >
+                        {
+                            item.file && <img src={`${baseURL}/uploads/messenger/${item.file}`} alt="" />
+                        }
+                        
                         <div>{item?.content}</div>
                         <div className="messenger__chat-messages-message-time">
                             {moment(item?.timestamp).format("h:mm A")}
@@ -130,11 +171,36 @@ export const ChatMessage = () => {
                 ))}
             </div>
             <div className="messenger__chat-sender-body">
+                {imageUrl && (
+                    <div className="messenger__chat-sender-file">
+                        <img src={`${imageUrl}`} alt="" />
+                        <div>{image?.name}</div>
+                        <button>
+                            <IconAdminClose />
+                        </button>
+                    </div>
+                )}
                 <div className="messenger__chat-sender">
-                    <button className="messenger__chat-sender-attach">
+                    <label
+                        htmlFor="file-avatar-profile"
+                        className="messenger__chat-sender-attach"
+                    >
                         <IconArrachFile />
+                    </label>
+                    <input
+                        multiple={false}
+                        id="file-avatar-profile"
+                        type="file"
+                        ref={fileInputRef}
+                        style={{ display: "none" }}
+                        onChange={handleFileSelect}
+                    />
+                    <button
+                        className="messenger__chat-sender-smile"
+                        onClick={() => setIsOpenSmile(true)}
+                    >
+                        <IconSmile />
                     </button>
-
                     <TextareaAutosize
                         value={message}
                         onChange={handleChange}
@@ -142,7 +208,6 @@ export const ChatMessage = () => {
                         minRows={1}
                         placeholder="Enter message"
                     />
-
                     <button
                         className={`messenger__chat-sender-send ${
                             !message && "messenger__chat-sender-send--disabled"
@@ -154,6 +219,13 @@ export const ChatMessage = () => {
                     </button>
                 </div>
             </div>
+            {isOpenSmile && (
+                <ModalSmile
+                    setIsOpenSmile={setIsOpenSmile}
+                    setMessage={setMessage}
+                    message={message}
+                />
+            )}
         </>
     )
 }

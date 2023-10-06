@@ -1,9 +1,15 @@
 @import "servisec.scss";
 @import "activities.scss";
 @import "user.scss";
+@import "admin.scss";
+
 .admin {
     padding: 100px 24px 24px 24px;
     min-height: 100%;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden; 
+    box-sizing: border-box;
 }
 
 .admin__header {
@@ -12,7 +18,9 @@
     top: 0;
     left: 0;
     height: 100px;
+    max-width: 100%;
     width: 100%;
+    overflow-x: hidden; 
     background-color: $color__black1;
     padding: 0 25px;
     grid-template-columns: auto 1fr auto;

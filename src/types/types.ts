@@ -29,7 +29,7 @@ export type Nullable<T> = {
 }
 export type OptionsType = Array<OptionsItemType>
 
-export type MessageType =  { chatId:string, senderId:string, content:string, timestamp:Date, isRead:boolean }
+export type MessageType =  { chatId:string, senderId:string, content:string, timestamp:Date, isRead:boolean, file:string | null }
 export type ParticipantType = {
         userId: string,
         avatarFileName: string,

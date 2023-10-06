@@ -12,7 +12,6 @@ export const ProfileInfoHeader = ({fullNameUser}:{fullNameUser?: string}) => {
 
     const { fullName, role } = useAppSelector((s) => s.userReducer)
 
-
     const location = useLocation()
     const isProfileInfo = location.pathname === "/profileinfo" 
     const navigate = useNavigate()

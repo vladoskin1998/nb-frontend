@@ -3,6 +3,9 @@
     display: flex;
     flex-direction: column;
     row-gap: 16px;
+    max-width: 100%;
+    overflow-x: hidden;
+    width: 100%;
 }
 
 .messenger__list {
@@ -37,6 +40,7 @@
             text-overflow: ellipsis;
             max-height: 40px;
             height: 100%;
+          
             &--notread {
                 color: $color__grey10;
             }
@@ -68,7 +72,14 @@
 }
 
 .messenger__chat {
+    max-width: 100%;
+    overflow-x: hidden;
+    width: 100%;
     &-messages {
+        padding-top: 12px;
+        max-width: 100%;
+        overflow-x: hidden;
+        width: 100%;
         display: flex;
         flex-direction: column;
         row-gap: 12px;
@@ -84,6 +95,13 @@
             font-weight: 400;
             line-height: 140%;
             font-size: 14px;
+            img{
+                width: 230px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 4px;
+                margin-bottom: 7px;
+            }
             &-time {
                 padding-top: 4px;
                 font-size: 12px;
@@ -121,8 +139,20 @@
         box-shadow: $box-shadow1;
         padding: 7px;
         display: grid;
-        grid-template-columns: auto 1fr 60px;
-        column-gap: 11px;
+        grid-template-columns: auto auto 1fr 60px;
+        column-gap: 10px;
+        &-file{
+            display: grid;
+            grid-template-columns: 40px auto 20px;
+            height: 40px;
+            align-items: center;
+            column-gap: 10px;
+            img{
+                width: 40px;
+                height: 40px;
+                object-fit: cover;
+            }
+        }
         &-attach {
             max-height: 36px;
             @include flex-all-center;
@@ -131,6 +161,18 @@
                 height: 30px;
             }
         }
+        &-smile {
+            max-height: 36px;
+            @include flex-all-center;
+            svg {
+                width: 20px;
+                height: 20px;
+                path{
+                    fill: $color__grey2;
+                }
+            }
+        }
+
 
         &-autoresize {
             padding-top: 10px;

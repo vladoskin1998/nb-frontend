@@ -23,7 +23,6 @@ const CurrentLocationModule = () => {
 
     useEffect(() => {
         const initMap = () => {
-            console.log("initMap------>",coordinates);
             
             if (window.google && containerMapRef.current && coordinates) {
                 const mapOptions: google.maps.MapOptions = {
@@ -46,7 +45,7 @@ const CurrentLocationModule = () => {
                 geocoderRef.current = new google.maps.Geocoder()
 
                 mapRef.current.addListener("dragend", () => {
-                    const newCenter = mapRef.current?.getCenter() // Получение новых координат центра карты
+                    const newCenter = mapRef.current?.getCenter() 
 
                     const newLat = newCenter?.lat()
                     const newLng = newCenter?.lng()

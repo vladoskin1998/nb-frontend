@@ -59,3 +59,8 @@ input {
   all: unset; /* Сбрасываем все стили инпута */
   text-align: start;
 }
+
+
+*{
+  box-sizing: border-box;
+}

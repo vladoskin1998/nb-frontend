@@ -18,6 +18,8 @@ export const headerTitle = (locationRoute: string | undefined) => {
             return "Services"
         case "/admin/posts":
             return "Publications"
+            case "/admin/messeges/chat":
+                return "Messenger"
         case "/admin/messeges":
             return "Messenger"
         case "/admin/helpcenter":
