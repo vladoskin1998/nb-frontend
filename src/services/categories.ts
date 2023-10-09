@@ -2,11 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import $api from "../http";
 
 
-interface Categories {
+export interface Categories {
   _id: string
   name: string
   numberView: number
   isVisiable:boolean
+  fileName: string
 }
 
 //<respons axios, payload >
@@ -65,32 +66,4 @@ export const visiableSubCategories = createAsyncThunk<{id:string, isVisiable: bo
 )
 
 
-////////////////////////////// edit
-
-
-export const editCategories = createAsyncThunk<{id:string, name: string}, {id:string,  name: string}>(
-  `categories/edit-category`,
-  async (payload) => {
-    const response = await $api.post(`categories/edit-category`, payload)
-    return response.data
-  }
-)
-
-export const editSubCategories = createAsyncThunk<{id:string,  name: string},  {id:string,  name: string}>(
-  `categories/edit-subcategory`,
-  async (payload) => {
-    const response = await $api.post(`categories/edit-subcategory`, payload)
-    return response.data
-  }
-)
-
-export const addCategories = createAsyncThunk<Categories,  {link:string,  formData: FormData}>(
-  `categories/add-category-subcategory`,
-  async (payload) => {
-    const response = await $api.post(payload.link, payload.formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    })
-    return response.data
-  }
-)
 

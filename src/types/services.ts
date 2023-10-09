@@ -32,6 +32,7 @@ export interface CategoryInterface {
     id: string
     name: string
     file: File
+    fileName?: string | null
 }
 
 

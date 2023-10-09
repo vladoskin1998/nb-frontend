@@ -25,17 +25,20 @@ export const refresh = createAsyncThunk<AuthResponseInterface, void>(
 export const authorization = createAsyncThunk<AuthResponseInterface, AuthorizationPayload>(
     'auth/authorization',
     async (payload) => {
-        const { method } = payload
-        let requestData: { email: string, password: string, fullName?: string } = { email: payload.email, password: payload.password }
-        if (payload?.fullName) {
-            requestData.fullName = payload.fullName
+        try {
+            const { method } = payload
+            let requestData: { email: string, password: string, fullName?: string } = { email: payload.email, password: payload.password }
+            if (payload?.fullName) {
+                requestData.fullName = payload.fullName
+            }
+            const response = await $api.post(`auth/${method}`, requestData)
+            return response.data
+
+        } catch (error: any) {
+            throw error.response.data.message;
         }
-        const response = await $api.post(`auth/${method}`, requestData)
-        return response.data
     }
 )
-
-
 
 export const authorizationMessenger = createAsyncThunk<AuthResponseInterface, AuthorizationPayloadMessanger>(
     'auth/messenger',

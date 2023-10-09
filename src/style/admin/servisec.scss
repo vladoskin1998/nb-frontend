@@ -51,6 +51,9 @@
 
 .services__add {
     min-height: 100vh;
+    &-item{
+        position: relative;
+    }
     &-input {
         font-size: 24px;
         font-style: italic;
@@ -62,6 +65,22 @@
         &::placeholder {
             color: $color__grey1;
         }
+    }
+    &-linkimage{
+        width: 161px;
+        height: 108px;
+        border-radius: 8px;
+        object-fit: cover;
+    }
+    &-remove{
+        position: absolute;
+        top: 60px;
+        left: 130px;
+        width: 50px;
+        height: 50px;
+        @include flex-all-center;
+        background-color: $color__white;
+        border-radius: 50%;
     }
     &-button {
         @include button-main;

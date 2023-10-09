@@ -87,3 +87,13 @@ export enum QUALITYENUM {
   
     AUTH_SOCKET='auth_socket',
   }
+
+  export enum SERVICES_EVENT{
+    LIST="list",
+    SUB_LIST="sub_list",
+    FAVOR_LIST="favor_list",
+    
+    ADD_SERVICES = 'add',
+    EDIT_SERVICES = 'edit',
+    EDIT_SUB_SERVICES = 'sub_edit',
+  }

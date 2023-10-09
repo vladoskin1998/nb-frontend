@@ -2,6 +2,9 @@ export const toOneKind = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCa
 
 export const headerTitle = (locationRoute: string | undefined) => {
     const key = String(locationRoute)
+
+    console.log(key);
+    
     switch (key) {
         case "/admin/users":
             return "Users"
@@ -16,6 +19,9 @@ export const headerTitle = (locationRoute: string | undefined) => {
 
         case "/admin/services":
             return "Services"
+        case "/admin/services/services-list-sub":
+            return "Sub Services"
+            
         case "/admin/posts":
             return "Publications"
             case "/admin/messeges/chat":

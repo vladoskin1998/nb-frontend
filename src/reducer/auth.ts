@@ -29,11 +29,15 @@ export const authReducer = createSlice({
                 state.accessToken = payload.accessToken
                 state.isAuth = true
             })
+            .addCase(authorization.rejected, (state, action) => {
+                alert('Auth Error: '+ action.error?.message)
+            })
             .addCase(logout.fulfilled, (state) => {
                 localStorage.removeItem("accessToken")
                 state.accessToken = null
                 state.isAuth = false
             })
+           
             .addMatcher(
                 (action) => {
                     return (

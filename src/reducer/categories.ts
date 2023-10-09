@@ -1,12 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
-    addCategories,
     allCategories,
     allSubCategories,
     deleteCategories,
     deleteSubCategories,
-    editCategories,
-    editSubCategories,
     visiableCategories,
     visiableSubCategories,
 } from "../services/categories"
@@ -16,6 +13,7 @@ interface Categories {
     name: string
     numberView: number
     isVisiable: boolean
+    fileName: string
 }
 interface SubCategories extends Categories {}
 
@@ -34,13 +32,15 @@ const initialState: CategoriesInterface = {
 export const categoriesReducer = createSlice({
     name: "categories",
     initialState,
-    reducers: {},
+    reducers: {
+        addCategorie: (state, { payload }: {
+            payload: Categories
+        }) => {
+            state.categories = [...state.categories, payload]
+        },
+    },
     extraReducers: (builder) => {
         builder
-           /////////////////////////////////ADD Categories 
-            .addCase(addCategories.fulfilled, (state, { payload }) => {
-                state.categories = [...state.categories, payload]
-            })
             /////////////////////////////////GET all categories subcategories
             .addCase(allCategories.fulfilled, (state, { payload }) => {
                 state.categories = payload
@@ -74,22 +74,6 @@ export const categoriesReducer = createSlice({
                         : item
                 )
             })
-            /////////////////////////////////// edit
-            .addCase(editCategories.fulfilled, (state, { payload }) => {
-                state.categories = state.categories.map((item) =>
-                    item._id === payload.id
-                        ? { ...item, name: payload.name }
-                        : item
-                )
-            })
-            .addCase(editSubCategories.fulfilled, (state, { payload }) => {
-                state.subCategories = state.subCategories.map((item) =>
-                    item._id === payload.id
-                        ? { ...item, name: payload.name }
-                        : item
-                )
-            })
-
             .addMatcher(
                 (action) => {
                     return (
@@ -105,4 +89,5 @@ export const categoriesReducer = createSlice({
     },
 })
 
+export const { addCategorie } = categoriesReducer.actions;
 export default categoriesReducer.reducer

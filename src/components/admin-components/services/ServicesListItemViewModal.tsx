@@ -5,50 +5,39 @@ import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import { SERVICES_EVENT } from "../../../types/enum"
 
-const ServicesItemViewModal = ({
+export const ServicesListItemViewModal = ({
     name,
     isTougle,
-    addItems,
+
     setIsOpen,
     onChangeTougle,
+
+
+    handlerAddServices,
+    handlerEditServices,
+    handlerMoveServices,
     handlerDeleteItem,
     handlerVisiable,
 }: {
     name: string
     isTougle: boolean
-    addItems: () => void
+
     setIsOpen: (o: boolean) => void
     onChangeTougle: () => void
+
+    handlerAddServices: () => void
+    handlerEditServices: () => void
+    handlerMoveServices: () => void
     handlerDeleteItem: () => void
     handlerVisiable: () => void
 }) => {
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         return () => handlerVisiable()
     }, [])
 
-    const addServices = () => {
-        navigate("/admin/services/services-add")
-    }
-
-    const editServices = () => {
-        navigate("/admin/services/services-add", {
-            state: {
-                event: SERVICES_EVENT.EDIT_SERVICES,
-                categorieId: "",
-            },
-        })
-    }
-
-    const moveServices = () => {
-        navigate("/admin/services/services-add", {
-            state: {
-                event: SERVICES_EVENT.EDIT_SUB_SERVICES,
-                categorieId: "",
-            },
-        })
-    }
 
     return (
         <div className="services__modal">
@@ -58,7 +47,7 @@ const ServicesItemViewModal = ({
                         {name || "Category Name"}
                     </div>
                     <div
-                        onClick={addServices}
+                        onClick={handlerAddServices}
                         className="services__modal-body-line"
                     >
                         <IconPicker />
@@ -66,14 +55,14 @@ const ServicesItemViewModal = ({
                     </div>
                     <div
                         className="services__modal-body-line"
-                        onClick={editServices}
+                        onClick={handlerEditServices}
                     >
                         <IconPicker />
                         <span>Edit</span>
                     </div>
                     <div
                         className="services__modal-body-line"
-                        onClick={addItems}
+                        onClick={handlerMoveServices}
                     >
                         <IconPicker />
                         <span>Move</span>
@@ -99,4 +88,4 @@ const ServicesItemViewModal = ({
     )
 }
 
-export default ServicesItemViewModal
+
