@@ -1,0 +1,61 @@
+.user__footer {
+    position: fixed;
+    height: 60px;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    align-items: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 13px;
+    row-gap: 4px;
+    &-profile {
+        @include flex-all-center;
+        margin: 6px auto;
+        width: 27px;
+        height: 27px;
+        border-radius: 50%;
+        svg {
+            path {
+                fill: $color__grey2;
+            }
+        }
+    }
+    &--active {
+        color: $color__black1;
+        font-weight: 600;
+        svg {
+            path {
+                fill: $color__black1;
+            }
+        }
+    }
+    &--border{
+        position: absolute;
+        top: -4px;
+        left: 0;
+        width: 20%;
+        height: 4px;
+        border-radius: 0 0 20px 20px ;
+        transition: all 0.3s ease;
+        background: $color__black1;
+        &-l {
+            transform: translateX(0%);
+        }
+        &-2 {
+            transform: translateX(100%);
+        }
+        &-3 {
+            transform: translateX(200%);
+        }
+        &-4 {
+            transform: translateX(300%);
+        }
+        &-5 {
+            transform: translateX(400%);
+        }
+    }
+}

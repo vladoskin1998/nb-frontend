@@ -179,7 +179,11 @@ export const ServicesAdd = () => {
                         <button>
                             <IconLeftChevrons />
                         </button>
-                        <h6>Add Service Category</h6>
+                        <h6>
+                            {event !== SERVICES_EVENT.EDIT_SUB_SERVICES
+                                ? "Add Service Category"
+                                : "Add Sub Service Category"}
+                        </h6>
                     </div>
                 </div>
             </div>

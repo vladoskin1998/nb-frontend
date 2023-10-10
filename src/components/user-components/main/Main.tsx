@@ -1,7 +1,9 @@
-import React from 'react'
+import { FooterNav } from "../footer-navigate/FooterNav"
 
 export const Main = () => {
-  return (
-    <div>Main users</div>
-  )
+    return (
+        <div>
+            <FooterNav />
+        </div>
+    )
 }
