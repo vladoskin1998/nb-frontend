@@ -44,7 +44,15 @@ export const ProfoleIdentityView = ({
                 <div className="profile__identity-list-body">
                     {popularOptions.map((item, index) => (
                         <div
-                            className="profile__identity-list-item"
+                            className={`profile__identity-list-item 
+                              ${
+                                    value.find(
+                                      (it) => it.title === item.title
+                                  ) 
+                                      ? "profile__identity-list-item-active"
+                                      : ""
+                              }  
+                            `}
                             key={index}
                             onClick={() => clickPopularList(item)}
                         >

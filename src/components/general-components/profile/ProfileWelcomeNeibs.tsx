@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
+import { roleUrl } from "../../../utils/config"
 
 export const ProfileWelcomeNeibs = () => {
-    const { _id } = useAppSelector((s) => s.userReducer)
+    const { _id,role } = useAppSelector((s) => s.userReducer)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const handlerChangeWellcome = async () => {
@@ -18,7 +19,9 @@ export const ProfileWelcomeNeibs = () => {
 
             dispatch(setValueProfileReducer(res))
             dispatch(setLoader(false))
-            navigate("/admin")
+            navigate(
+                roleUrl(role)
+            )
         } catch (error) {
             dispatch(setLoader(false))
             alert(error + "isGotAllProfileInfo text error")
@@ -62,7 +65,7 @@ export const ProfileWelcomeNeibs = () => {
             <button className={`profile__method-btlater`}
                 onClick={handlerChangeWellcome}
             >
-                Apply
+                Accept
             </button>
         </>
     )

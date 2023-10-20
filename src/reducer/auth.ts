@@ -3,6 +3,7 @@ import {
     authorization,
     logout,
     authorizationMessenger,
+    refresh,
 } from "../services/auth"
 import { ROLES } from "../types/enum"
 
@@ -10,34 +11,47 @@ interface InitialStateInterface {
     isAuth: boolean,
     isLoad: boolean,
     accessToken: string | null | undefined
+    authError: string
 }
 
 const initialState: InitialStateInterface = {
     isAuth: false,
     isLoad: false,
-    accessToken: null
+    accessToken: null,
+    authError: "",
 }
 
 export const authReducer = createSlice({
     name: "auth",
     initialState,
-    reducers:{},
+    reducers: {
+        changeAuthError: (state, { payload }: {
+            payload: string
+        }) => {
+            state.authError = payload
+        },
+    },
     extraReducers: (builder) => {
         builder
+            .addCase(refresh.fulfilled, (state, { payload }) => {
+                localStorage.setItem("accessToken", payload.accessToken)
+                state.accessToken = payload.accessToken
+                state.isAuth = true
+            })
             .addCase(authorization.fulfilled, (state, { payload }) => {
                 localStorage.setItem("accessToken", payload.accessToken)
                 state.accessToken = payload.accessToken
                 state.isAuth = true
             })
             .addCase(authorization.rejected, (state, action) => {
-                alert('Auth Error: '+ action.error?.message)
+                state.authError = action.error?.message || ''
             })
             .addCase(logout.fulfilled, (state) => {
                 localStorage.removeItem("accessToken")
                 state.accessToken = null
                 state.isAuth = false
             })
-           
+
             .addMatcher(
                 (action) => {
                     return (
@@ -53,5 +67,5 @@ export const authReducer = createSlice({
     },
 })
 
-export const { } = authReducer.actions;
+export const { changeAuthError } = authReducer.actions;
 export default authReducer.reducer

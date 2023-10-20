@@ -11,6 +11,8 @@ import { ProfileInfoAboutNH } from "./ProfileInfoAboutNH"
 import { ProfileInfoHelpCenter } from "./ProfileInfoHelpCenter"
 import { UserInitialStateInterface } from "../../../reducer/users"
 import { UserIdentityInterface } from "../../../services/profile"
+import { ProfileInfoNotification } from "./ProfileInfoNotification"
+import { ProfileInfoPrivacy } from "./ProfileInfoPrivacy"
 
 export interface UserItem extends UserInitialStateInterface {
     userIdentity: UserIdentityInterface
@@ -31,8 +33,8 @@ export const ProfileInfo = () => {
                     <Route path="termsofservice" element={<ProfileInfoTermsOfService />} />
                     <Route path="aboutneightborharbor" element={<ProfileInfoAboutNH />} />
                     <Route path="helpsupport" element={<ProfileInfoHelpCenter />} />
-                    <Route path="privacy" element={<ProfileSettings />} />
-                    <Route path="notifications" element={<ProfileSettings />} />
+                    <Route path="privacy" element={<ProfileInfoPrivacy />} />
+                    <Route path="notifications" element={<ProfileInfoNotification />} />
                     <Route path="interestsskills" element={<ProfileInfoSkillsInterests />} />
                     <Route path="bookmark" element={<ProfileSettings />} />
                     <Route path="security" element={<ProfileInfoSecurity />} />

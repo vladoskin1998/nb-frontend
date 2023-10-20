@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ServicesItemView from "../services/ServicesItemView"
 import $api from "../../../http"
+import { StatisticHttp } from "../../../http/statistic-http"
 
 export const AdminPanelShortcuts = () => {
     const [count, setCount] = useState({
@@ -11,8 +12,14 @@ export const AdminPanelShortcuts = () => {
     })
 
     useEffect(() => {
-        $api.get("statistics/shortcuts").then((r) => setCount(r.data))
+        const effectBody = async () => {
+            const res = await StatisticHttp.getShortcuts()
+            setCount(res)
+        }
+
+        effectBody()
     }, [])
+
     return (
         <div className="admin__panel-short">
             <div className="admin__panel-title"> Shortcuts </div>

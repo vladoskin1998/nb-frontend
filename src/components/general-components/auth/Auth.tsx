@@ -18,15 +18,14 @@ interface PayloadInterface {
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
 
-    const [login, setLogin] = useState("test2000@test.test")
+    const [login, setLogin] = useState("admin@test.test")
     const [password, setPassword] = useState("test2000")
     const [fullName, setFullName] = useState("test2000")
 
-    const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
-    const { isAuth, isLoad } = useAppSelector((s) => s.authReducer)
-    const {isLocationVerify } = useAppSelector((s) => s.profileReducer)
+    const { isLoad } = useAppSelector((s) => s.authReducer)
+
 
     const handlerAuth = () => {
         const method = isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
@@ -39,6 +38,7 @@ const Auth = () => {
             payload.fullName = fullName
         }
         dispatch(authorization(payload))
+            
     }
 
     return (

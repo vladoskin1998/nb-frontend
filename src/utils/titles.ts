@@ -3,8 +3,6 @@ export const toOneKind = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCa
 export const headerTitle = (locationRoute: string | undefined) => {
     const key = String(locationRoute)
 
-    console.log(key);
-    
     switch (key) {
         case "/admin/users":
             return "Users"
@@ -21,11 +19,11 @@ export const headerTitle = (locationRoute: string | undefined) => {
             return "Services"
         case "/admin/services/services-list-sub":
             return "Sub Services"
-            
+
         case "/admin/posts":
             return "Publications"
-            case "/admin/messeges/chat":
-                return "Messenger"
+        case "/admin/messeges/chat":
+            return "Messenger"
         case "/admin/messeges":
             return "Messenger"
         case "/admin/helpcenter":
@@ -47,19 +45,27 @@ export const headerTitle = (locationRoute: string | undefined) => {
 
 export const userSubTitle = (locationRoute: string | undefined) => {
     const key = String(locationRoute)
+   
+
     switch (key) {
-        case "/admin/users":
-            return "All Users"
+        case "/admin/users/user":
+            return "Users"
+        case "/admin/users/admin":
+            return "Admin"
+        case "/admin/users/regionaladmin":
+            return "Regional Admin"
+        case "/admin/users/coordinators":
+            return "Coordinators"
         case "/admin/users/allusers":
             return "All Users"
         case "/admin/users/coordinators":
             return "Coordinators"
         case "/admin/users/blocked":
             return "Blocked"
-        case "/admin/users/groups":
-            return "Groups"
+        case "/admin/users/techsupport":
+            return "Tech Support"
         default:
-            return "All Users"
+            return "Groups"
     }
 }
 
@@ -182,6 +188,20 @@ export const getProfileInfoHederTitile = (locationRoute: string) => {
             return 'Edit Profile'
         case "/profileinfo/settings":
             return 'Settings'
+        default:
+            return ""
+    }
+}
+
+
+export const getPublishTitle = (locationRoute: string) => {
+    switch (locationRoute) {
+        case "/publish/post":
+            return 'Create Publication'
+        case "/publish/service":
+            return 'Provide Service'
+        case "/publish/event":
+            return 'Organise Event'
         default:
             return ""
     }

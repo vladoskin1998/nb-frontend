@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactElement } from "react"
 import { IconInputSearch, IconInputFilter } from "../svg/IconInputSearch"
 
 export const InputSearch = ({
@@ -7,7 +7,7 @@ export const InputSearch = ({
     value,
     changeValue,
 }: {
-    placeholder: string
+    placeholder: string | ReactElement
     onClickFilter?: () => void | undefined
     value: string
     changeValue: (s: string) => void
@@ -15,12 +15,17 @@ export const InputSearch = ({
     return (
         <div className="ui-input-search">
             <IconInputSearch />
-            <input
-                type="text"
-                placeholder={placeholder}
-                value={value}
-                onChange={(e) => changeValue(e.target.value)}
-            />
+            <div className="ui-input-search-container">
+                <input
+                    type="text"
+                    value={value}
+                    onChange={(e) => changeValue(e.target.value)}
+                />
+                {
+                    !value && <span className="ui-input-search-placeholder">{placeholder}</span>
+                }
+            </div>
+
             {onClickFilter ? (
                 <button onClick={onClickFilter}>
                     <IconInputFilter />

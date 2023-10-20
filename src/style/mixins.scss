@@ -40,7 +40,7 @@
     &--inherit{
         color: $color__grey1;
         background:  inherit;
-        border: 1px solid inherit;
+        border: 0px;
     }
 
     &--nobodrer{
@@ -90,10 +90,14 @@
     }
     &--invalid{
         position: absolute;
-        top: -10px;
-        left: 10px;
+        bottom: -11px;
+        left: 15px;
         color: red;
         font-size: 10px;
+        width: 250px;
+        overflow: hidden;
+        text-wrap: nowrap;
+        text-overflow: ellipsis;
     }
 }
 

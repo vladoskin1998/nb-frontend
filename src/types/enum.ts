@@ -1,7 +1,9 @@
 export enum ROLES {
     ALLUSERS = 'all users',
     ADMIN = "admin",
+    REGIONAL_ADMIN = "regional admin",
     COORDINATORS = 'coordinators',
+    TECH_SUPPORT = 'tech support',
     USER = "user",
     BLOCKED = "blocked",
 }
@@ -15,8 +17,8 @@ export enum METHOD_AUTH {
 
 export enum PRIVACY {
     EVERYONE = "Everyone",
-    ONLYME = "Only me",
     NEIBS = "Neibs",
+    ONLYME = "Only me",
 }
 
 export enum ORIENTATION {
@@ -97,3 +99,10 @@ export enum QUALITYENUM {
     EDIT_SERVICES = 'edit',
     EDIT_SUB_SERVICES = 'sub_edit',
   }
+
+  export enum PHOTO_ADD_METHOD{
+    CAMERA_ROLL="CAMERA_ROLL",
+    TAKE_NOW="TAKE_NOW",
+  }
+
+ 

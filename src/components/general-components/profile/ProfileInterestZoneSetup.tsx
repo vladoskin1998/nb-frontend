@@ -10,7 +10,7 @@ const mapContainerStyle = {
     height: "500px",
 }
 
-export const ProfileSetupInterestZone = () => {
+export const ProfileInterestZoneSetup = () => {
     const { _id } = useAppSelector((s) => s.userReducer)
     const initStep = useAppSelector((s) => s.profileReducer.step)
     const mapRef = useRef<google.maps.Map | null>(null)

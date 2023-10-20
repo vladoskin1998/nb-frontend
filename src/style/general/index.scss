@@ -3,16 +3,14 @@
 @import "profile.scss";
 @import "profile-info.scss";
 @import "messenger.scss";
+@import "publish.scss";
 
 .auth {
-    position: fixed;
-    top: 0;
-    left: 0;
     display: flex;
     flex-direction: column;
     height: 100%;
     width: 100%;
-    padding: 40px 40px 24px 40px;
+    padding: 40px 40px 100px 40px;
     &__title {
         @include title-main;
         text-align: center;
@@ -28,6 +26,7 @@
         position: relative;
         margin-top: 40px;
         min-height: 38px;
+        border-bottom: 1px solid $color__grey12;
         &-but {
             color: $color__black1;
             font-size: 14px;
@@ -42,7 +41,7 @@
         &-border {
             position: absolute;
             left: 0;
-            bottom: 0px;
+            bottom: 1px;
             height: 4px;
             width: 50%;
             background-color: $color__blue;
@@ -66,6 +65,7 @@
             height: 56px;
             border-radius: 50%;
             background-color: $color__white;
+            border: 1px solid $color__grey12;
         }
     }
     &__devider {
@@ -122,6 +122,11 @@
     }
     &__button {
         @include button-main;
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 80px);
     }
 }
 

@@ -20,19 +20,22 @@ export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
         cityBirth,
         familyStatus,
         createdUserDate,
+        profession,
     } = useAppSelector((s) => s.profileReducer)
 
     const openChat = () => {
         navigate(`${roleUrl(role)}/messeges/chat`, {
-            state: [
-                {
-                    avatarFileName: props?.userIdentity.avatarFileName
-                        ? props?.userIdentity.avatarFileName
-                        : avatarFileName,
-                    fullName: props?.fullName ? props?.fullName : fullName,
-                    userId: props?._id ? props?._id : _id,
-                },
-            ],
+            state: {
+                participants: [
+                    {
+                        avatarFileName: props?.userIdentity.avatarFileName
+                            ? props?.userIdentity.avatarFileName
+                            : avatarFileName,
+                        fullName: props?.fullName ? props?.fullName : fullName,
+                        userId: props?._id ? props?._id : _id,
+                    },
+                ],
+            },
         })
     }
 
@@ -56,6 +59,9 @@ export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
             <h5 className="profileinfo__avatar-title">
                 {props?.fullName ? props?.fullName : fullName}
             </h5>
+            <h6 className="profileinfo__avatar-subtitle">
+                {profession[0]?.title}
+            </h6>
             <div className="profileinfo__avatar-buttons">
                 <button className="profileinfo__avatar-buttons-button">
                     <IconNeibs />
@@ -71,65 +77,79 @@ export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
             <h5 className="profileinfo__avatar-information">Information</h5>
             <div className="profileinfo__avatar-item">
                 <IconPickerSmoll />
-                Date of Birth:{" "}
-                <b>
-                    {moment(
-                        props?.userIdentity.dateBirth
-                            ? props?.userIdentity.dateBirth
-                            : dateBirth
-                    ).format("DD/MM/YYYY")}
-                </b>
+                <span>
+                    Date of Birth:{" "}
+                    <b>
+                        {moment(
+                            props?.userIdentity.dateBirth
+                                ? props?.userIdentity.dateBirth
+                                : dateBirth
+                        ).format("DD/MM/YYYY")}
+                    </b>
+                </span>
             </div>
             <div className="profileinfo__avatar-item">
                 <IconLocationPoint />
-                <b>Ph.D </b>in
-                <b>
-                    {props?.userIdentity.studySchool
-                        ? props?.userIdentity.studySchool
-                        : studySchool}
-                </b>
+                <span>
+                    <b>Ph.D </b>in
+                    <b>
+                        {props?.userIdentity.studySchool
+                            ? props?.userIdentity.studySchool
+                            : studySchool}
+                    </b>
+                </span>
             </div>
             <div className="profileinfo__avatar-item">
                 <IconLocationPoint />
-                <b>
-                    {props?.userIdentity.nationality[0]?.title
-                        ? props?.userIdentity.nationality[0]?.title
-                        : nationality[0]?.title || ""}
-                </b>
-                born in{" "}
-                <b>
-                    {props?.userIdentity.cityBirth
-                        ? props?.userIdentity.cityBirth
-                        : cityBirth}
-                </b>
+
+                <span>
+                    <b>
+                        {props?.userIdentity.nationality[0]?.title
+                            ? props?.userIdentity.nationality[0]?.title
+                            : nationality[0]?.title || ""}
+                    </b>
+                    born in{" "}
+                    <b>
+                        {props?.userIdentity.cityBirth
+                            ? props?.userIdentity.cityBirth
+                            : cityBirth}
+                    </b>
+                </span>
             </div>
             <div className="profileinfo__avatar-item">
-                <IconLocationPoint />I am: <b>{sex}</b>, my orientation:{" "}
-                <b>
-                    {props?.userIdentity.cityBirth
-                        ? props?.userIdentity.orientation
-                        : orientation}
-                </b>
-            </div>
-            <div className="profileinfo__avatar-item">
-                <IconLocationPoint />
-                Family status:{" "}
-                <b>
-                    {props?.userIdentity.familyStatus
-                        ? props?.userIdentity.familyStatus
-                        : familyStatus}
-                </b>
+                <IconLocationPoint /> <span>I am: <b>{sex}</b>, my orientation:{" "}
+               
+                    {" "}
+                    <b>
+                        {props?.userIdentity.cityBirth
+                            ? props?.userIdentity.orientation
+                            : orientation}
+                    </b>
+                </span>
             </div>
             <div className="profileinfo__avatar-item">
                 <IconLocationPoint />
-                On NeighborHarbor:{" "}
-                <b>
-                    {moment(
-                        props?.userIdentity.createdUserDate
-                            ? props?.userIdentity.createdUserDate
-                            : createdUserDate
-                    ).format("MMM D, YYYY")}
-                </b>
+                <span>
+                    Family status:{" "}
+                    <b>
+                        {props?.userIdentity.familyStatus
+                            ? props?.userIdentity.familyStatus
+                            : familyStatus}
+                    </b>
+                </span>
+            </div>
+            <div className="profileinfo__avatar-item">
+                <IconLocationPoint />
+                <span>
+                    On NeighborHarbor:{" "}
+                    <b>
+                        {moment(
+                            props?.userIdentity.createdUserDate
+                                ? props?.userIdentity.createdUserDate
+                                : createdUserDate
+                        ).format("MMM D, YYYY")}
+                    </b>
+                </span>
             </div>
         </div>
     )

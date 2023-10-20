@@ -3,8 +3,9 @@ import $api from "../http"
 import { Nullable } from "../types/types";
 import { ProfileInitialStateInterface, _IdInterface} from "../reducer/profile";
 import { EDUCATION, FAMILYSTATUS, ORIENTATION, QUALITYENUM, SEX } from "../types/enum";
+import { UserHttp } from "../http/user-http";
 
-interface LocationPayload {
+export interface LocationPayload {
     coordinates: { lat: number, lng: number };
     city: string | null;
     country: string | null;
@@ -63,10 +64,11 @@ export const getIdentityInforamation = createAsyncThunk<UserIdentityInterface, {
 export const profileChangeLocation = createAsyncThunk<LocationPayloadResponse, LocationPayload>(
     'identity/profile-location',
     async (payload) => {
-        const response = await $api.post('identity/profile-location', payload)
+        const response = await UserHttp.changeLocation(payload)
         return response.data
     }
 )
+
 
 
 export const profileUploadAvatar = async (formData: FormData): Promise<{ avatarFileName: string }> => {

@@ -1,9 +1,9 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { baseURL } from "../../../utils/config"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { IconProfileInfoPen } from "../../svg/IconProfileInfo"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
-import { profileTextInfo, profileUploadAvatar } from "../../../services/profile"
+import { profilePutIdentity, profileTextInfo, profileUploadAvatar } from "../../../services/profile"
 import { TextareaAutosize } from "@mui/material"
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
@@ -13,10 +13,12 @@ import { ProfileEducationList } from "../profile/ProfileEducationList"
 import { ProfileSexOrintationList } from "../profile/ProfileSexOrintationList"
 import { ProfileSexList } from "../profile/ProfileSexList"
 import { AutocompleteSearch } from "../../ui/AutocompleteSearch"
-import { FAMILYSTATUS } from "../../../types/enum"
+import { FAMILYSTATUS, QUALITYENUM } from "../../../types/enum"
 import { OptionsType } from "../../../types/types"
 import { userTextInfo } from "../../../services/user"
 import { setValueUserReducer } from "../../../reducer/users"
+import $api from "../../../http"
+import { toOneKind } from "../../../utils/titles"
 
 const maxLength = 250
 const listFamilyStatus = Object.values(FAMILYSTATUS).map((item, index) => ({
@@ -36,6 +38,7 @@ export const ProfileInfoEdit = () => {
         sex,
         orientation,
         familyStatus,
+        nationality
     } = useAppSelector((s) => s.profileReducer)
     const { email, fullName, _id } = useAppSelector((s) => s.userReducer)
     const [avatar, setAvatar] = useState<File | null>(null)
@@ -66,8 +69,21 @@ export const ProfileInfoEdit = () => {
         },
     ])
 
-    console.log();
+    const [nationalityLocal, setNationalityLocal] = useState(nationality)
+    const [nationalityOption,setNationalityOption] = useState<OptionsType>([])
+    const [nationalityInput, setNationalityInput] = useState('')
     
+    useEffect(() => {
+        const timeOutId = setTimeout(() => {
+            $api.post(`identity/${toOneKind(QUALITYENUM.NATIONALITY)}`, {
+                searchValue: nationalityInput,
+            })
+                .then((res) => setNationalityOption(res.data))
+                .catch((e) => alert(e + "error nationality country"))
+        }, 1000)
+        return () => clearTimeout(timeOutId)
+    }, [nationalityInput])
+
 
     const uploadToServer = async () => {
         try {
@@ -90,7 +106,6 @@ export const ProfileInfoEdit = () => {
                 dispatch(setValueProfileReducer(resAvatat))
             }
            
-
             const resTextInfo = await profileTextInfo({
                 aboutMe: aboutMeLocal || aboutMe,
                 dateBirth: dateBirthLocal?.toDate() || dateBirth,
@@ -105,6 +120,12 @@ export const ProfileInfoEdit = () => {
             const resFullName = await userTextInfo({
                 fullName: fullNameLocal,
                 _id,
+            })
+
+            const res = await profilePutIdentity({
+                value: nationalityLocal,
+                _id,
+                quality: QUALITYENUM.NATIONALITY,
             })
 
            
@@ -224,6 +245,15 @@ export const ProfileInfoEdit = () => {
                 isLimit={-1}
                 value={familyStatusLocal}
                 setValue={handlerFamilyStatusLocal}
+            />
+            <h5 className="profileinfo__edit-title ">Nationality</h5>
+            <AutocompleteSearch
+                options={nationalityOption}
+                isLimit={-1}
+                value={nationalityLocal}
+                setValue={setNationalityLocal}
+                inputValue={nationalityInput}
+                setInputValue={setNationalityInput}
             />
             <button
                 className={`profile__method-btlater `}

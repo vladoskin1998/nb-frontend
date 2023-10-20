@@ -55,7 +55,16 @@ export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
                             ? props?.userIdentity.skills
                             : skills
                         ).map((item) => (
-                            <div className="profileinfo__perprof-skills-list-item">
+                            <div
+                                className={`profileinfo__perprof-skills-list-item
+                                ${
+                                    props?.userIdentity.skills &&
+                                    skills.find((it) => it.title === item.title)
+                                        ? "profileinfo__perprof-skills-list-active"
+                                        : ""
+                                }
+                            `}
+                            >
                                 <IconProfileCircle />
                                 {item.title}
                             </div>
@@ -73,7 +82,16 @@ export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
                             ? props?.userIdentity.interests
                             : interests
                         ).map((item) => (
-                            <div className="profileinfo__perprof-skills-list-item">
+                            <div
+                            className={`profileinfo__perprof-skills-list-item
+                            ${
+                                props?.userIdentity.interests &&
+                                interests.find((it) => it.title === item.title)
+                                    ? "profileinfo__perprof-skills-list-active"
+                                    : ""
+                            }
+                        `}
+                        >
                                 <IconProfileCircle />
                                 {item.title}
                             </div>

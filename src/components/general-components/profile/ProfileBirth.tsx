@@ -1,40 +1,36 @@
 import { useEffect, useRef, useState } from "react"
-import { DateInput } from "../../ui/CodeInput"
-import { IconLocationPoint } from "../../svg/IconsLocation"
 import { useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
-import moment from "moment"
 import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 import { ProfileCityBirthInput } from "./ProfileBirthCityInput"
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers"
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
+import dayjs, { Dayjs } from "dayjs"
 
 export const ProfileBirth = () => {
     const { _id } = useAppSelector((s) => s.userReducer)
     const { dateBirth, cityBirth } = useAppSelector((s) => s.profileReducer)
     const dispatch = useAppDispatch()
-    const [value, setValue] = useState(
-        dateBirth ? moment(dateBirth).format("DDMMYYYY") : ""
+
+    const [pickerValue, setPickerValue] = useState<Dayjs | null>(
+        dayjs(dateBirth)
     )
+
     const containerInputRef = useRef<HTMLInputElement | null>(null)
     const [city, setCity] = useState(cityBirth)
     const navigate = useNavigate()
 
-    console.log(value, "--------->",moment(value, "DDMMYYYY").toDate().getFullYear());
-    
+    console.log("pickerValue------>")
+
     const handlerChangeBirth = async () => {
         try {
-            console.log(moment(value, "DDMMYYYY").toDate().getFullYear(), moment(value, "DDMMYYYY").isValid());
-            
-            if(!moment(value, "DDMMYYYY").isValid() || moment(value, "DDMMYYYY").toDate().getFullYear() < 1900){
-                alert("Invalid date or value less 1900")
-                return
-            }
-
-            if (value.length === 8 && city) {
+            if (pickerValue && city) {
                 dispatch(setLoader(true))
+
                 const res = await profileTextInfo({
-                    dateBirth: moment(value, "DDMMYYYY").toDate(),
+                    dateBirth: new Date(pickerValue?.toDate() || ""),
                     cityBirth: city,
                     _id,
                 })
@@ -77,23 +73,30 @@ export const ProfileBirth = () => {
         })
     }, [])
 
-    console.log(value, city)
 
     return (
         <>
             <div className="profile__method-body">
-                <DateInput change={setValue} value={value} />
-                <h6 className="profile__birth-title"></h6>
+                <div className="profileinfo__edit-body-items">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            className="profileinfo__edit-picker"
+                            value={pickerValue}
+                            onChange={(newValue) => setPickerValue(newValue)}
+                        />
+                    </LocalizationProvider>
+                </div>
+                <h6 className="profile__birth-title" style={{paddingTop:'45px'}}>Place of birth</h6>
                 <div className="location__fields">
                     <ProfileCityBirthInput city={city} setCity={setCity} />
                 </div>
             </div>
             <ProfileButtonSetupLater />
             <button
-                disabled={!(value.length === 8 && city)}
+                disabled={!(pickerValue && city)}
                 className={`profile__method-btlater
             ${
-                !(value.length === 8 && city) &&
+                !(pickerValue && city) &&
                 "profile__method-btlater--disabled"
             }`}
                 onClick={handlerChangeBirth}

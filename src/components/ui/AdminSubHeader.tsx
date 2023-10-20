@@ -4,11 +4,11 @@ import { IconSubHeaderAdd } from "../svg/IconSubHeader"
 export const AdminSubHeader = (
     {
         children,
-        onClickButton
+        onClickButton 
     }:
         {
             children?: ReactNode,
-            onClickButton: () => void,
+            onClickButton?: () => void,
         }
 ) => {
     return (
@@ -16,12 +16,14 @@ export const AdminSubHeader = (
             <div className='ui-admin__subheader-title'>
                 {children}
             </div>
-            <div>
+            {
+                onClickButton &&  <div>
                 <button className='ui-admin__subheader-button' onClick={onClickButton}>
                     Add <IconSubHeaderAdd />
                 </button>
             </div>
-
+            }
+           
         </div>
     )
 }

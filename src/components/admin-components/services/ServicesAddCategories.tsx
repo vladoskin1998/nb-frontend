@@ -12,7 +12,6 @@ export const ServicesAddCategories = ({
     categorie: CategoryInterface
     setCategorie: (s: CategoryInterface) => void
 }) => {
-
     const handlerChangeNameCategory = (name: string) => {
         setCategorie({
             ...categorie,
@@ -21,7 +20,7 @@ export const ServicesAddCategories = ({
     }
 
     const handlerChangeFileCategory = (file: File) => {
-        setCategorie({ ...categorie, file, fileName:"" })
+        setCategorie({ ...categorie, file, fileName: "" })
     }
 
     return (
@@ -33,11 +32,21 @@ export const ServicesAddCategories = ({
                 value={categorie.name}
                 onChange={(e) => handlerChangeNameCategory(e.target.value)}
             />
-            <button className="services__add-remove"
-                onClick={() => handlerChangeFileCategory(null as any)}
-            ><IconAdminClose /></button>
+
             {categorie.fileName ? (
-                <img src={`${baseURL}/uploads/categories/${categorie.fileName}`} alt="" className="services__add-linkimage" />
+                <>
+                    <button
+                        className="services__add-remove"
+                        onClick={() => handlerChangeFileCategory(null as any)}
+                    >
+                        <IconAdminClose />
+                    </button>
+                    <img
+                        src={`${baseURL}/uploads/categories/${categorie.fileName}`}
+                        alt=""
+                        className="services__add-linkimage"
+                    />
+                </>
             ) : (
                 <FileButton
                     getFile={(file: File) => handlerChangeFileCategory(file)}

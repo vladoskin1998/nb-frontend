@@ -9,10 +9,11 @@ import { profileInfoSettings, profileInfoHelp } from "../../../utils/constant"
 import { toOneKind } from "../../../utils/titles"
 import { Link } from "react-router-dom"
 import { logout } from "../../../services/auth"
+import { ROLES } from "../../../types/enum"
 
 export const ProfileSettings = () => {
     const { avatarFileName } = useAppSelector((s) => s.profileReducer)
-    const { email, fullName } = useAppSelector((s) => s.userReducer)
+    const { email, fullName, role } = useAppSelector((s) => s.userReducer)
     const dispatch = useAppDispatch()
 
     const handlerLogout = () => {
@@ -67,7 +68,8 @@ export const ProfileSettings = () => {
                 ))}
             </div>
             <div className="profileinfo__settings-main-setting profileinfo__settings-main-help">
-                {profileInfoHelp.map((item) => (
+                
+                {role !== ROLES.ADMIN && profileInfoHelp.map((item) => (
                     <Link to={`/profileinfo/${toOneKind(item.name)}`}>
                         <div
                             className="profileinfo__settings-main-setting-item"

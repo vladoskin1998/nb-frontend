@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
-    authorization,
+    authorization, refresh,
 } from "../services/auth"
 import { ROLES } from "../types/enum"
 import { Nullable } from "../types/types";
@@ -31,7 +31,7 @@ export const userReducer = createSlice({
         setValueUserReducer: (state, { payload }: {
             payload: Nullable<UserInitialStateInterface>
         }) => {
-            if(payload?._id){
+            if (payload?._id) {
                 delete payload._id
             }
             Object.assign(state, payload);
@@ -44,9 +44,12 @@ export const userReducer = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(authorization.fulfilled, (state, { payload }) => {
+            .addCase(refresh.fulfilled, (state, { payload }) => {
                 Object.assign(state, payload.user);
 
+            })
+            .addCase(authorization.fulfilled, (state, { payload }) => {
+                Object.assign(state, payload.user);
             })
             .addMatcher(
                 (action) => {
@@ -63,5 +66,5 @@ export const userReducer = createSlice({
     },
 })
 
-export const { setLoader,setValueUserReducer } = userReducer.actions;
+export const { setLoader, setValueUserReducer } = userReducer.actions;
 export default userReducer.reducer

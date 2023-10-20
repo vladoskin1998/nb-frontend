@@ -1,16 +1,33 @@
+import { useAppSelector } from "../../../utils/hooks"
+import { UserCurrentLocation } from "../../admin-components/users/UserCurrentLocation"
 import {
     IconLocationAim,
     IconLocationKey,
     IconLocationPoint,
 } from "../../svg/IconsLocation"
 
+const mapContainerStyle = {
+    width: "100%",
+    height: "100%",
+}
+
 const GeoLocationView = ({
     geoLocation,
     navigateToCurrentRoute,
+    pathname,
+    inputRef
+    
 }: {
     geoLocation: () => void
     navigateToCurrentRoute: () => void
+    pathname: string
+    inputRef: React.MutableRefObject<HTMLDivElement | null>
 }) => {
+    const { coordinates, city, country, houseNumber, street } = useAppSelector(
+        (s) => s.profileReducer
+    )
+
+
     return (
         <>
             <div className="location__body">
@@ -41,8 +58,36 @@ const GeoLocationView = ({
                         />
                     </div>
                 </div>
+                {pathname !== "/location" && (
+                    <div className="location__viewmap">
+                        <UserCurrentLocation
+                            mapStyle={{
+                                width: "100%",
+                                height: "100%",
+                            }}
+                            isDownloadMap={true}
+                            startLat={coordinates.lat}
+                            startLng={coordinates.lng}
+                        />
+                        <img
+                            src="/Images/MapCircle.png"
+                            className="location__viewmap-img"
+                        />
+                    </div>
+                )}
+
+                <p className="location__mess">
+                    You will see all the news and updates within a radius of 5
+                    km You can personalize your feed later in your profile
+                    settings.
+                </p>
             </div>
-            <button className="location__bt-continue" onClick={navigateToCurrentRoute}>Continue</button>
+            <button
+                className="location__bt-continue login__button"
+                onClick={navigateToCurrentRoute}
+            >
+                Continue
+            </button>
         </>
     )
 }

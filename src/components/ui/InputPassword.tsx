@@ -6,7 +6,7 @@ export const InputPassword = ({
     setPassword,
     errorMessage,
     pattern,
-    isValidated,
+    isValidated= true,
     setIsValidated,
     placeholder="Password",
 }: { 
@@ -14,7 +14,7 @@ export const InputPassword = ({
     setPassword: (s: string) => void,
     errorMessage: string;
     pattern: string | RegExp;
-    isValidated: boolean, 
+    isValidated?: boolean, 
     setIsValidated: (s:boolean) => void
     placeholder? :string
 }) => {
@@ -25,7 +25,7 @@ export const InputPassword = ({
         setShowPassword(s => !s);
     };
 
-    const [isValid, setIsValid] = useState(true);
+    const [isValid, setIsValid] = useState(isValidated);
 
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

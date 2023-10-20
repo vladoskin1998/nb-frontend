@@ -17,9 +17,10 @@ const LocationUser = () => {
                 <ButtonBackRoute click={exit} />
             </div>
             <Routes>
-                <Route path='current-location/location-success' element={<LocationSuccess />} />
+                <Route path='location-success' element={<LocationSuccess />} />
+                <Route path='confirm-location' element={<GeoLocationModule />} />
                 <Route path='current-location' element={<CurrentLocationModule />} />
-                <Route path="*" element={<GeoLocationModule />} />
+                <Route path="" element={<GeoLocationModule />} />
             </Routes>
         </div>
     )

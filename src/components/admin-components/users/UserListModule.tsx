@@ -5,25 +5,38 @@ import $api from "../../../http"
 
 import { AxiosResponse } from "axios"
 import { InputSearch } from "../../ui/InputSearch"
-import { UserInitialStateInterface } from "../../../reducer/users"
+import { UserInitialStateInterface, setLoader } from "../../../reducer/users"
 import { success } from "../../ui/LoadSuccess"
-import { useAppSelector } from "../../../utils/hooks"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
+import { useLocation } from "react-router-dom"
+import { UserHttp } from "../../../http/user-http"
+import { TextField } from "@mui/material"
 
-export const UserListModule = ({ role }: { role: ROLES }) => {
+export const UserListModule = ({ role = ROLES.ALLUSERS }: { role?: ROLES }) => {
     const [users, setUsers] = useState<UserInitialStateInterface[]>([])
     const [searchName, setSearchName] = useState("")
     const { _id } = useAppSelector((s) => s.userReducer)
+    const location = useLocation()
+    const dispatch = useAppDispatch()
+    const currentRole = location.state?.role ? location.state?.role : role
 
     useEffect(() => {
-        const timeOutId = setTimeout(() => getUsers(), 1000)
+        dispatch(setLoader(true))
+        const timeOutId = setTimeout(() => {
+            getUsers()
+        }, 1000)
         return () => clearTimeout(timeOutId)
-    }, [searchName, role])
+    }, [searchName, currentRole])
 
     const getUsers = async () => {
-        $api.post("user/get-users", { _id, role, searchName }).then(
-            (res: AxiosResponse<UserInitialStateInterface[]>) =>
-                setUsers(res.data)
-        )
+        const res: UserInitialStateInterface[] = await UserHttp.getUsers({
+            _id,
+            role: currentRole,
+            searchName,
+        })
+
+        setUsers(res)
+        dispatch(setLoader(false))
     }
 
     const deleteUser = async (_id: string) => {
@@ -42,7 +55,11 @@ export const UserListModule = ({ role }: { role: ROLES }) => {
     return (
         <>
             <InputSearch
-                placeholder={"Search User"}
+                placeholder={
+                    <>
+                        Search <span>User</span>
+                    </>
+                }
                 value={searchName}
                 changeValue={setSearchName}
             />

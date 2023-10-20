@@ -5,12 +5,20 @@ import { IconBoxComment, IconMicrophone } from "../../svg/IconActivitiesModal"
 import { baseURL } from "../../../utils/config"
 import { ROLES } from "../../../types/enum"
 import { useState } from "react"
+import { LocationEditType, UserEditMap } from "./UserEditMap"
+import { UserIdentityInterface } from "../../../services/profile"
 
-const list = [ROLES.ADMIN, ROLES.COORDINATORS, ROLES.USER]
+const list = [
+    ROLES.ADMIN,
+    ROLES.REGIONAL_ADMIN,
+    ROLES.COORDINATORS,
+    ROLES.USER,
+    ROLES.TECH_SUPPORT,
+]
 
 export const UserItemModal = ({
     role,
-    avatarFileName,
+    userIdentity,
     fullName,
     openChat,
     isOpen,
@@ -18,9 +26,11 @@ export const UserItemModal = ({
     handlerBlockUser,
     handlerDeleteUser,
     changeRole,
+    changeLocation,
+    confirmLocation,
 }: {
     role: ROLES
-    avatarFileName: string | null | undefined
+    userIdentity: UserIdentityInterface | null
     fullName: string
     isOpen: boolean
     openChat: () => void
@@ -28,8 +38,11 @@ export const UserItemModal = ({
     handlerBlockUser: () => void
     handlerDeleteUser: () => void
     changeRole: (r: ROLES) => void
+    changeLocation: (l: LocationEditType) => void
+    confirmLocation: () => void
 }) => {
     const [isOpenRoleList, seIsOpenRoleList] = useState(false)
+    const [isOpenMap, setIsOpenMap] = useState(false)
 
     return (
         <div
@@ -51,7 +64,7 @@ export const UserItemModal = ({
                     <div className="user__modal">
                         <div className="user__modal-avatar">
                             <img
-                                src={`${baseURL}/uploads/avatar/${avatarFileName}`}
+                                src={`${baseURL}/uploads/avatar/${userIdentity?.avatarFileName}`}
                                 alt=""
                                 className="user__modal-avatar-img"
                             />
@@ -66,11 +79,38 @@ export const UserItemModal = ({
                             <div>
                                 <button>Map</button>
                             </div>
-                            <button className="user__modal-body-row1-edit">
-                                Edit
+                            <button
+                                className="user__modal-body-row1-edit"
+                                onClick={() => setIsOpenMap((s) => !s)}
+                            >
+                                {isOpenMap ? "Close" : "Edit"}
                             </button>
                         </div>
-
+                        {isOpenMap && (
+                            <>
+                                <UserEditMap
+                                    changeLocation={changeLocation}
+                                    startLat={userIdentity?.coordinates.lat}
+                                    startLng={userIdentity?.coordinates.lng}
+                                    mapStyle={{
+                                        width: "100%",
+                                        height: "150px",
+                                    }}
+                                />
+                                <div className="user__modal-body-location">
+                                    <div className="user__modal-body-location-text">
+                                        <span>{userIdentity?.country}</span>
+                                        <span>{userIdentity?.city}</span>
+                                        <br />
+                                        <span>{userIdentity?.street}</span>
+                                        <span>{userIdentity?.houseNumber}</span>
+                                    </div>
+                                    <button onClick={confirmLocation}>
+                                        Confirm Location
+                                    </button>
+                                </div>
+                            </>
+                        )}
                         <div
                             className="user__modal-body-row1"
                             onClick={() => seIsOpenRoleList((s) => !s)}
@@ -115,7 +155,11 @@ export const UserItemModal = ({
                         <div className="user__modal-body-row2">
                             <IconPicker />
                             <div>
-                                <button>Write Email</button>
+                                <button>
+                                    <a href="mailto:nb_harbor@gmail.com">
+                                        Write Email
+                                    </a>
+                                </button>
                             </div>
                         </div>
 
@@ -136,7 +180,7 @@ export const UserItemModal = ({
                             <IconPicker />
                             <div>
                                 <button>
-                                    Delete <b>Username</b>
+                                    Delete <b>{fullName}</b>
                                 </button>
                             </div>
                         </div>

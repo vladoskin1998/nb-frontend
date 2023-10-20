@@ -15,7 +15,7 @@ interface AuthorizationPayloadMessanger {
 }
 
 export const refresh = createAsyncThunk<AuthResponseInterface, void>(
-    'auth/authorization',
+    'auth/refresh',
     async () => {
         const response = await $api.post('auth/refresh', {})
         return response.data

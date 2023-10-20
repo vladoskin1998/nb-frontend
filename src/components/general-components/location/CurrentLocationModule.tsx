@@ -3,7 +3,6 @@ import { CoordinatsInterface } from "../../../types/types"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { createAddressString } from "../../../utils/createAddressString"
 import { setValueProfileReducer } from "../../../reducer/profile"
-import { IconLocationAim } from "../../svg/IconsLocation"
 import { useNavigate } from "react-router-dom"
 import CurrentLocationView from "./CurrentLocationView"
 
@@ -23,7 +22,6 @@ const CurrentLocationModule = () => {
 
     useEffect(() => {
         const initMap = () => {
-            
             if (window.google && containerMapRef.current && coordinates) {
                 const mapOptions: google.maps.MapOptions = {
                     zoom: 14,
@@ -93,19 +91,69 @@ const CurrentLocationModule = () => {
         initMap()
     }, [])
 
-    const navigateToSuccess = () => {
+    const navigateToConfirm = () => {
         if (validateGeoData) {
-            navigate("location-success")
+            navigate("/location/confirm-location")
             return
         }
         alert("city, country, street, houseNumber must have")
     }
 
+    
+    const geoLocation = async () => {
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const { latitude, longitude } = position.coords
+
+                    console.log(position.coords)
+        
+                    const geocoder = new google.maps.Geocoder()
+
+                    const latLng = new google.maps.LatLng(latitude, longitude)
+                    
+                    mapRef.current?.panTo(latLng)
+
+                    geocoder.geocode(
+                        { location: latLng },
+                        async (results, status) => {
+                            console.log(results)
+
+                            if (status === "OK" && results && results[0]) {
+                                const address = createAddressString(
+                                    results[0].address_components
+                                )
+
+                                dispatch(
+                                    setValueProfileReducer({
+                                        coordinates: {
+                                            lat: latitude,
+                                            lng: longitude,
+                                        },
+                                        ...address,
+                                    })
+                                )
+                            } else {
+                                alert("Ошибка при геокодировании.")
+                            }
+                        }
+                    )
+                },
+                (error) => {
+                    alert("Ошибка при получении местоположения:" + error)
+                }
+            )
+        } else {
+            alert("Геолокация не поддерживается в вашем браузере.")
+        }
+    }
+
     return (
         <CurrentLocationView
             validateGeoData={validateGeoData}
-            navigateToSuccess={navigateToSuccess}
+            navigateToConfirm={navigateToConfirm}
             containerMapRef={containerMapRef}
+            geoLocation={geoLocation}
         />
     )
 }

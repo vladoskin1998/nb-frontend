@@ -97,18 +97,19 @@ export const ProfilePicture = () => {
             <div className="profile__method-body">
                 {!photoUrl ? (
                     <>
+                        <label
+                            htmlFor="file-avatar-profile"
+                            className="profile__method-button"
+                        >
+                            Take now
+                        </label>
                         <button
-                            className="profile__method-button profile__method-button--nobodrer"
+                            className="profile__method-button profile__method-button--nobodrer profile__method-button--nobodrer profile__method-button-2"
                             onClick={takePhoto}
                         >
                             Camera Roll
                         </button>
-                        <label
-                            htmlFor="file-avatar-profile"
-                            className="profile__method-button profile__method-button--nobodrer profile__method-button-2"
-                        >
-                            Take now
-                        </label>
+
                         <input
                             id="file-avatar-profile"
                             type="file"

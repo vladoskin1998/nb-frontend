@@ -45,7 +45,8 @@ export type OpenChatData = {
 export type ChatType = {
     chatId: string,
     lastMessage: MessageType,
-    participants: ParticipantType[]
+    participants: ParticipantType[],
+    isSupport: boolean
 }
 
 

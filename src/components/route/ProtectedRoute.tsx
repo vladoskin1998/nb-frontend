@@ -5,12 +5,11 @@ import { useAppSelector } from "../../utils/hooks"
 const ProtectedRoute = ({ element }: { element: ReactElement }) => {
     const navigate = useNavigate()
     const { isAuth } = useAppSelector((s) => s.authReducer)
+    const accessToken = localStorage.getItem("accessToken")
 
-    useEffect(() => {
-        if (!isAuth) {
-            navigate(`/auth`)
-        }
-    }, [isAuth])
+    if (!isAuth && !accessToken) {
+        navigate(`/auth`)
+    }
 
     return isAuth ? element : null
 }

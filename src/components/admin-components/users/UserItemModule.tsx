@@ -1,7 +1,10 @@
 import { UserItemView } from "./UserItemView"
 import { UserItemModal } from "./UserItemModal"
 import { useEffect, useState } from "react"
-import { UserInitialStateInterface, setValueUserReducer } from "../../../reducer/users"
+import {
+    UserInitialStateInterface,
+    setValueUserReducer,
+} from "../../../reducer/users"
 import $api from "../../../http"
 import { AxiosResponse } from "axios"
 import { UserIdentityInterface } from "../../../services/profile"
@@ -11,6 +14,9 @@ import { useAppSelector } from "../../../utils/hooks"
 import { ROLES } from "../../../types/enum"
 import { userTextInfo } from "../../../services/user"
 import { useDispatch } from "react-redux"
+import { LocationEditType } from "./UserEditMap"
+import { UserHttp } from "../../../http/user-http"
+import { success } from "../../ui/LoadSuccess"
 
 interface UserItemModuleProps extends UserInitialStateInterface {
     blockUser: (id: string) => void
@@ -43,13 +49,15 @@ export const UserItemModule = (props: UserItemModuleProps) => {
 
     const openChat = () => {
         navigate(`${roleUrl(role)}/messeges/chat`, {
-            state: [
-                {
-                    avatarFileName: userIdentity?.avatarFileName,
-                    fullName: props?.fullName,
-                    userId: props?._id,
-                },
-            ],
+            state: {
+                participants: [
+                    {
+                        avatarFileName: userIdentity?.avatarFileName,
+                        fullName: props?.fullName,
+                        userId: props?._id,
+                    },
+                ],
+            },
         })
     }
 
@@ -63,7 +71,40 @@ export const UserItemModule = (props: UserItemModuleProps) => {
         } catch (error) {
             alert("set role is faild" + error)
         }
-     
+    }
+
+    const changeLocation = (location: LocationEditType) => {
+        if (userIdentity) {
+            setUserIdentity({
+                ...userIdentity,
+                ...location,
+            })
+        }
+    }
+
+    const confirmLocation = async () => {
+        try {
+            if (
+                userIdentity &&
+                userIdentity?.coordinates &&
+                userIdentity?.city &&
+                userIdentity?.country &&
+                userIdentity?.houseNumber &&
+                userIdentity?.street
+            ) {
+                await UserHttp.changeLocation({
+                    coordinates: userIdentity?.coordinates,
+                    city: userIdentity?.city,
+                    country: userIdentity?.country,
+                    houseNumber: userIdentity?.houseNumber,
+                    street: userIdentity?.street,
+                    _id: props._id,
+                })
+                success()
+                return
+            }
+            alert("Bad address")
+        } catch (error) {}
     }
 
     return (
@@ -76,14 +117,16 @@ export const UserItemModule = (props: UserItemModuleProps) => {
             />
             <UserItemModal
                 role={itemRole}
-                avatarFileName={userIdentity?.avatarFileName}
+                userIdentity={userIdentity}
                 fullName={props?.fullName}
                 openChat={openChat}
                 isOpen={isOpen}
                 setIsOpen={(o: boolean) => setIsOpen(o)}
+                changeLocation={changeLocation}
+                confirmLocation={confirmLocation}
+                changeRole={changeRole}
                 handlerBlockUser={handlerBlockUser}
                 handlerDeleteUser={handlerDeleteUser}
-                changeRole={changeRole}
             />
         </>
     )

@@ -96,7 +96,7 @@ export const ProfileCertificates = () => {
                 onClick={addItemCertificates}
                 className="profile__method-btlater profile__method-btlater--white"
             >
-                Add SubCategory
+                Add Sertificates
             </button>
             <ProfileButtonSetupLater />
             <button

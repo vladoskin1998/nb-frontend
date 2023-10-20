@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import AdminHeader from '../admin-components/header/AdminHeader';
 import { AdminPanel } from '../admin-components/admin-panel/AdminPanel';
+import { ChatMessage } from '../general-components/messenger/ChatMessage';
 // import { Users } from '../admin-components/users/Users';
 // import { Services } from '../admin-components/services/Services';
 // import { Posts } from '../admin-components/posts/Posts';
@@ -28,9 +29,8 @@ const AdminRouter = () => {
         <Route path="users/*" element={<ProtectedRoute element={<Users />} />} />
         <Route path="services/*" element={<ProtectedRoute element={<Services />} />} />
         <Route path="posts" element={<ProtectedRoute element={<Posts />} />} />
-  
         <Route path="messeges/*" element={<ProtectedRoute element={<Messeges />} />} />
-        <Route path="helpcenter" element={<ProtectedRoute element={<HelpCenter />} />} />
+        <Route path="helpcenter/*" element={<ProtectedRoute element={<HelpCenter />} />} />
         <Route path="advertisement" element={<ProtectedRoute element={<Advertisement />} />} />
         <Route path="activities/*" element={<ProtectedRoute element={<Activities />} />} />
         <Route path="adminpanel" element={<ProtectedRoute element={<AdminPanel />} />} />

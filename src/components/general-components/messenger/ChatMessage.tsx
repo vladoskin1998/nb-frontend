@@ -31,11 +31,15 @@ export const ChatMessage = () => {
 
     const location = useLocation()
 
-    const props: {
-        userId: string
-        avatarFileName: string
-        fullName: string
-    }[] = location.state
+    const props: 
+    {
+        isSupport?:boolean,
+        participants: {
+            userId: string
+            avatarFileName: string
+            fullName: string
+        }[]
+    } = location.state
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(event.target.value)
@@ -46,8 +50,9 @@ export const ChatMessage = () => {
             const resOpenChat: AxiosResponse<OpenChatData> = await $api.post(
                 "messenger/open-chat",
                 {
+                    isSupport: props?.isSupport ?  props?.isSupport : false,
                     participants: [
-                        ...props,
+                        ...props.participants,
                         {
                             userId: _id,
                             avatarFileName,

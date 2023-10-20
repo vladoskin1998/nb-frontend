@@ -9,7 +9,6 @@ export const Messeges = () => {
                 <Route path="chat" element={<ChatMessage />} />
                 <Route path="*" element={<ChatList/>} />
             </Routes>
-            
         </div>
     )
 }

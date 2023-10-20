@@ -8,27 +8,14 @@ import { useAppSelector } from "../../../utils/hooks"
 import { AxiosResponse } from "axios"
 import { ChatType } from "../../../types/types"
 
-const chatList = [
-    {
-        avatarFileName: "",
-        chatId: "",
-        userName: "User Name",
-        senderId: "",
-        content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis minima dolore architecto, non facere enim ea. Amet necessitatibus, nihil, voluptatibus, id aut quas iste minima deleniti porro delectus provident modi!",
-        timestamp: new Date(),
-        numberMessages: 1,
-    },
-]
-
-export const ChatList = () => {
+export const ChatList = ({isSupport=false}:{isSupport?:boolean}) => {
     const [search, setSearch] = useState("")
     const [chatsList, setChatsList] = useState<ChatType[]>([])
     const { _id } = useAppSelector((s) => s.userReducer)
     const navigate = useNavigate()
 
     useEffect(() => {
-        $api.post("messenger/list-chat", { _id }).then(
+        $api.post("messenger/list-chat", { _id, isSupport }).then(
             (r: AxiosResponse<ChatType[]>) => {
                 const list = r.data.map((item) => ({
                     ...item,
@@ -46,8 +33,10 @@ export const ChatList = () => {
         fullName: string
         userId: string
     }) => {
-        navigate(`chat`, {
-            state: [props],
+        navigate(`chat?user=${JSON.stringify(props)}`, {
+            state: {
+                participants: [props]
+            },
         })
     }
 
@@ -72,7 +61,11 @@ export const ChatList = () => {
                         }
                     >
                         <img
-                            src={`${baseURL}/uploads/avatar/${item?.participants[0]?.avatarFileName}`}
+                            src={
+                                item?.participants[0]?.avatarFileName
+                                    ? `${baseURL}/uploads/avatar/${item?.participants[0]?.avatarFileName}`
+                                    : "/Images/Profile.jpg"
+                            }
                             alt=""
                         />
                         <div>

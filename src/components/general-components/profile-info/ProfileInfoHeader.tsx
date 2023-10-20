@@ -27,7 +27,7 @@ export const ProfileInfoHeader = ({fullNameUser}:{fullNameUser?: string}) => {
             <button className="profileinfo__header-chevron" onClick={exit}>
                 <IconLeftChevrons />
             </button>
-            <h6 className="profileinfo__header-text" onClick={exit}>
+            <h6 className="profileinfo__header-text">
                 {isProfileInfo
                     ? fullNameUser ? fullNameUser : fullName
                     : getProfileInfoHederTitile(location.pathname)}

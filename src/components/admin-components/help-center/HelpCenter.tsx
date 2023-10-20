@@ -1,21 +1,15 @@
-import {useState} from 'react'
-import { AdminSubHeader } from '../../ui/AdminSubHeader'
- 
+import { useState } from "react"
+import { ChatList } from "../../general-components/messenger/ChatList"
+import { ChatMessage } from "../../general-components/messenger/ChatMessage"
+import { Routes, Route } from "react-router-dom"
+import { HelpCenterChat } from "./HelpCenterChat"
 export const HelpCenter = () => {
-  const [isOpenAdd, setIsOpenAdd] = useState(false)
-  const [isOpenChevron, setIsOpenChevron] = useState(false)
-
-  const changeAdd = () => {
-    setIsOpenAdd(s => !s)
-  }
-
-  const changeChevron = () => {
-    setIsOpenChevron(s => !s)
-  }
-
-  return (
-    <div className='admin'>
-      {/* <AdminSubHeader title={"Incoming"} onClickButton={changeAdd} onClickChevron={changeChevron} /> */}
-    </div>
-  )
+    return (
+        <div className="admin">
+            <Routes>
+                <Route path="chat" element={<HelpCenterChat />} />
+                <Route path="*" element={<ChatList isSupport={true} />} />
+            </Routes>
+        </div>
+    )
 }

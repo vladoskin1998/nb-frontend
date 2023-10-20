@@ -38,7 +38,7 @@ export const InputMain = ({
                 placeholder={placeholder}
                 onBlur={handleBlur}
             />
-            {!isValid && (
+            {!(isValid && isValidated)  && (
                 <span className="ui-input__main--invalid">{errorMessage}</span>
             )}
         </div>

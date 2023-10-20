@@ -8,6 +8,7 @@ import {
     IconFooterNavExplore,
     IconFooterNavServices,
 } from "../../svg/IconFooterNav"
+import { Link } from "react-router-dom"
 
 export const FooterNav = () => {
     const { avatarFileName } = useAppSelector((s) => s.profileReducer)
@@ -15,7 +16,9 @@ export const FooterNav = () => {
 
     return (
         <div className="user__footer">
-            <div className={`user__footer--border user__footer--border-${active}`}/>
+            <div
+                className={`user__footer--border user__footer--border-${active}`}
+            />
             <button
                 className={active === 1 ? "user__footer--active" : ""}
                 onClick={() => setActive(1)}
@@ -48,16 +51,19 @@ export const FooterNav = () => {
                 className={active === 5 ? "user__footer--active" : ""}
                 onClick={() => setActive(5)}
             >
-                <div className="user__footer-profile">
-                    {avatarFileName ? (
-                        <img
-                            src={`${baseURL}/uploads/avatar/${avatarFileName}`}
-                            alt=""
-                        />
-                    ) : (
-                        <IconAdminImage />
-                    )}
-                </div>
+                <Link to="/profile">
+                    <div className="user__footer-profile">
+                        {avatarFileName ? (
+                            <img
+                                src={`${baseURL}/uploads/avatar/${avatarFileName}`}
+                                alt=""
+                            />
+                        ) : (
+                            <IconAdminImage />
+                        )}
+                    </div>
+                </Link>
+
                 <p>Profile</p>
             </button>
         </div>

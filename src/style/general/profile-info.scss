@@ -74,6 +74,10 @@
             @include title-main;
             text-align: center;
         }
+        &-subtitle{
+            @include sub-title-main;
+            text-align: center;
+        }
         &-buttons {
             margin: 24px 0;
             display: grid;
@@ -92,8 +96,14 @@
         }
         &-item {
             margin-top: 12px;
-            display: flex;
             column-gap: 4px;
+            display: flex;
+            span{
+                overflow: hidden;
+                max-width: 250px;
+                text-wrap: nowrap;
+                text-overflow: ellipsis;
+            }
             svg {
                 width: 24px;
                 margin-right: 8px;
@@ -131,11 +141,22 @@
                 flex-wrap: wrap;
                 gap: 12px;
                 &-item {
-                    display: flex;
+                    height: 40px;
+                    @include flex-all-center;
+                    flex-direction: row;
                     column-gap: 10px;
                     border-radius: 8px;
                     background: $color__white;
                     box-shadow: 0px 2px 5px 0px rgba(38, 51, 77, 0.03);
+                }
+                &-active{
+                    color: $color__white;
+                    background: $color__blue1;
+                    svg{
+                        path{
+                            fill: $color__white;
+                        }
+                    }
                 }
             }
         }
@@ -369,4 +390,35 @@
     &-slider{
         padding-top: 17px;
     }
+}
+
+.profileinfo__notification{
+    &-list{
+        flex-grow: 1;
+        overflow: scroll;
+    }
+    &-item{
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 17px;
+    }
+}
+.profileinfo__privacy-button{
+    border-radius: 30px;
+    background: $color__white;  
+    box-shadow: $box-shadow1;
+    height: 40px;
+    @include flex-all-center;
+    flex-direction: row;
+    row-gap: 5px;
+    padding: 0 20px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; 
 }

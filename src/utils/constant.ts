@@ -35,3 +35,9 @@ export const profileInfoHelp: ProfileInfoHelp[] = [
   { name: "Help & Support", label: IconBoxComment },
   { name: "About NeightborHarbor", label: IconProfileInfoComments },
 ]
+
+
+export const INIT_COORDINATES = {
+  lat: 50.440569860389814,
+  lng: 30.540884262459286
+}

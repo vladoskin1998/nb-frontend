@@ -15,6 +15,7 @@ import { UserInitialStateInterface } from "../../../reducer/users"
 import { UserIdentityInterface } from "../../../services/profile"
 import { Link, useNavigate } from "react-router-dom"
 import { baseURL } from "../../../utils/config"
+import { UserCurrentLocation } from "./UserCurrentLocation"
 
 export interface UserItemViewProps extends UserInitialStateInterface {
     setIsOpen: () => void
@@ -32,36 +33,9 @@ const initCoordinates = {
 }
 
 export const UserItemView = (props: UserItemViewProps) => {
-    const mapRef = useRef<google.maps.Map | null>(null)
-    const containerMap = useRef<HTMLDivElement | null>(null)
-    const [downloadMap, setDownloadMap] = useState(false)
 
     const { setIsOpen, fullName, email, role, userIdentity, _id } = props
-
-    // console.log(props);
-
-    useEffect(() => {
-        if (window.google && containerMap.current) {
-            const mapOptions: google.maps.MapOptions = {
-                zoom: 14,
-                fullscreenControl: false,
-                mapTypeControl: false,
-                streetViewControl: false,
-                zoomControl: false,
-                scrollwheel: false,
-                gestureHandling: "none",
-                center: new google.maps.LatLng(
-                    userIdentity?.coordinates?.lat || initCoordinates.lat,
-                    userIdentity?.coordinates?.lng || initCoordinates.lng
-                ),
-            }
-            mapRef.current = new google.maps.Map(
-                containerMap.current as HTMLElement,
-                mapOptions
-            )
-        }
-    }, [downloadMap])
-
+  
     const navigate = useNavigate()
 
     const toProfileInfo = () => {
@@ -76,14 +50,15 @@ export const UserItemView = (props: UserItemViewProps) => {
         })
     }
     return (
-        <div className="user__item" >
+        <div className="user__item">
             <div className="user__item-row1">
-                <img onClick={toProfileInfo}
+                <img
+                    onClick={toProfileInfo}
                     src={`${baseURL}/uploads/avatar/${userIdentity?.avatarFileName}`}
                     alt=""
                     className="user__item-row1-img"
                 />
-                <div className="user__item-row1-info" >
+                <div className="user__item-row1-info">
                     <p className="user__item-row1-user" onClick={toProfileInfo}>
                         <b>{fullName}</b>
                         <IconStars />
@@ -155,18 +130,17 @@ export const UserItemView = (props: UserItemViewProps) => {
                             }`}</span>
                         </div>
                     </div>
-                    {downloadMap ? (
-                        <div style={mapContainerStyle} ref={containerMap} />
-                    ) : (
-                        <div
-                            style={mapContainerStyle}
-                            className="user__item-tapmap"
-                            onClick={() => setDownloadMap(true)}
-                        >
-                            <div className="user__item-tapmapbody" />
-                            Tap to see location
-                        </div>
-                    )}
+                    <UserCurrentLocation
+                        mapStyle={mapContainerStyle}
+                        startLat={
+                            userIdentity?.coordinates?.lat ||
+                            initCoordinates.lat
+                        }
+                        startLng={
+                            userIdentity?.coordinates?.lng ||
+                            initCoordinates.lng
+                        }
+                    />
                 </>
             )}
         </div>

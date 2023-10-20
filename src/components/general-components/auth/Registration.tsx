@@ -7,6 +7,9 @@ import {
     emailPattern,
     isPasswordPattern,
 } from "../../../utils/patterns"
+import { useAppSelector } from "../../../utils/hooks"
+import { changeAuthError } from "../../../reducer/auth"
+import { useDispatch } from "react-redux"
 
 const Registration = ({
     login,
@@ -25,27 +28,37 @@ const Registration = ({
     setFullName: (s: string) => void
     handlerAuth: () => void
 }) => {
+
+    const { authError } = useAppSelector(s => s.authReducer)
+    const dispatch = useDispatch()
     const [checked, setChecked] = useState(true)
+    const [confirmPassword, setConfirmPassword] = useState("test2000")
     const [validation, setValidation] = useState({
         login: new RegExp(emailPattern).test(login),
         password: new RegExp(isPasswordPattern).test(password),
-        fullName: new RegExp(inNotEmpty).test(fullName),
+        confirmPassword: new RegExp(`^${password}$`).test(confirmPassword),
+        fullName: new RegExp(inNotEmpty).test(fullName)
     })
-
-    console.log(validation)
-
+    
+    const disabledSingUp =
+        validation.login &&
+        validation.password &&
+        validation.fullName &&
+        (confirmPassword === password)
+        
     return (
         <>
             <div className="registration">
                 <InputMain
                     value={login}
-                    setValue={setLogin}
+                    setValue={(s) => {
+                        setLogin(s)
+                        dispatch(changeAuthError(''))
+                    }}
                     placeholder={"Email"}
-                    errorMessage={
-                        "Invalid login, example@example.example"
-                    }
+                    errorMessage={authError ? authError : "Invalid login, example@example.example" }
                     pattern={emailPattern}
-                    isValidated={validation.login}
+                    isValidated={!Boolean(authError)}
                     setIsValidated={(s: boolean) =>
                         setValidation({ ...validation, login: s })
                     }
@@ -68,11 +81,23 @@ const Registration = ({
                         "Invalid password, min 8, numbers and letters"
                     }
                     pattern={isPasswordPattern}
-                    isValidated={validation.password}
                     setIsValidated={(s: boolean) =>
                         setValidation({ ...validation, password: s })
                     }
                 />
+
+                <InputPassword
+                    password={confirmPassword}
+                    setPassword={setConfirmPassword}
+                    errorMessage={
+                        "Password mismatch"
+                    }
+                    pattern={`^${password}$`}
+                    setIsValidated={(s: boolean) =>
+                        setValidation({ ...validation, confirmPassword: s })
+                    }
+                />
+
                 <div className="registration__policy">
                     <CheckBox click={() => setChecked((s) => !s)} />
                     <div>
@@ -86,20 +111,12 @@ const Registration = ({
             <button
                 className={`login__button
                 ${
-                    (validation.login &&
-                        validation.password &&
-                        validation.fullName) ||
+                    (disabledSingUp) ||
                     "login__button--disabled"
                 }
             `}
                 onClick={handlerAuth}
-                disabled={
-                    !(
-                        validation.login &&
-                        validation.password &&
-                        validation.fullName
-                    )
-                }
+                disabled={!disabledSingUp}
             >
                 Sing Up
             </button>

@@ -128,10 +128,12 @@ const styleComponent = {
         zIndex: 100,
     },
     style:{
+        maxHeight: "100px",
         width: "100%",
         outline: "none",
         border: "none",
         paddingLeft: "40px",
         position: "relative" as "relative",
+        overflow: "scroll"
     }
 }

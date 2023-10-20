@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom"
 import { CheckBox } from "../../ui/CheckBox"
 import { InputMain } from "../../ui/InputMain"
 import { emailPattern, isPasswordPattern } from "../../../utils/patterns"
-
+import { useDispatch } from "react-redux"
+import { useAppSelector } from "../../../utils/hooks"
+import { changeAuthError } from "../../../reducer/auth"
 const Login = ({
     login,
     setLogin,
@@ -18,6 +20,8 @@ const Login = ({
     setPassword: (s: string) => void
     handlerAuth: () => void
 }) => {
+    const { authError } = useAppSelector((s) => s.authReducer)
+    const dispatch = useDispatch()
     const [checked, setChecked] = useState(true)
     const navigate = useNavigate()
 
@@ -26,8 +30,8 @@ const Login = ({
     }
 
     const [validation, setValidation] = useState({
-        login:new RegExp(emailPattern).test(login),
-        password: new RegExp(isPasswordPattern).test(password)
+        login: new RegExp(emailPattern).test(login),
+        password: new RegExp(isPasswordPattern).test(password),
     })
 
     return (
@@ -35,13 +39,20 @@ const Login = ({
             <div className="login">
                 <InputMain
                     value={login}
-                    setValue={setLogin}
+                    setValue={(s) => {
+                        setLogin(s)
+                        if(authError && authError !== "Bad password" ){
+                            dispatch(changeAuthError(""))
+                        }
+                    }}
                     placeholder={"Email"}
                     errorMessage={
-                        "Invalid login example@example.example"
+                        authError && authError !== "Bad password"
+                            ? authError
+                            : "Invalid login example@example.example"
                     }
                     pattern={emailPattern}
-                    isValidated={validation.login}
+                    isValidated={authError !== "Bad password" ? !Boolean(authError) : true}
                     setIsValidated={(s: boolean) =>
                         setValidation({ ...validation, login: s })
                     }
@@ -49,12 +60,19 @@ const Login = ({
                 <div className="login__password">
                     <InputPassword
                         password={password}
-                        setPassword={setPassword}
+                        setPassword={(s) => {
+                            setPassword(s)
+                            if(authError && authError === "Bad password" ){
+                                dispatch(changeAuthError(""))
+                            }
+                        }}
                         errorMessage={
-                            "Invalid password, min 8, numbers and letters"
+                            authError && authError === "Bad password"
+                                ? authError
+                                : "Invalid password, min 8, numbers and letters"
                         }
                         pattern={isPasswordPattern}
-                        isValidated={validation.password}
+                        isValidated={authError === "Bad password" ? !Boolean(authError) : true}
                         setIsValidated={(s: boolean) =>
                             setValidation({ ...validation, password: s })
                         }
@@ -68,8 +86,10 @@ const Login = ({
             </div>
             <button
                 className={`login__button
-                ${ 
-                    (validation.login && validation.password) ? "" :"login__button--disabled"
+                ${
+                    validation.login && validation.password
+                        ? ""
+                        : "login__button--disabled"
                 }
             `}
                 onClick={handlerAuth}

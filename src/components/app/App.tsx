@@ -8,10 +8,9 @@ import { Profile } from "../general-components/profile/Profile"
 import { AppContextProvider } from "../../context/AppContext"
 import { ProfileInfo } from "../general-components/profile-info/ProfileInfo"
 import ProtectedRoute from "../route/ProtectedRoute"
-import { Main } from "../user-components/main/Main"
-import { ChatList } from "../general-components/messenger/ChatList"
-import { ChatMessage } from "../general-components/messenger/ChatMessage"
 import { SocketContextProvider } from "../../context/SocketContext"
+import UserRouter from "../route/UserRouter"
+import { Publish } from "../general-components/publication/Publish"
 
 export default function App() {
     return (
@@ -20,7 +19,12 @@ export default function App() {
                 <Routes>
                     <Route path="/admin/*" element={<AdminRouter />} />
 
-                    <Route path="/user/*" element={<Main />} />
+                    <Route path="/user/*" element={<UserRouter />} />
+
+                    <Route
+                        path="/publish/*"
+                        element={<ProtectedRoute element={<Publish />} />}
+                    />
 
                     <Route
                         path="/profileinfo/*"

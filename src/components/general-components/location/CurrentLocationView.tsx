@@ -5,16 +5,18 @@ import { useEffect } from "react"
 
 const mapContainerStyle = {
     width: "100%",
-    height: "500px",
+    height: "100%",
 }
 
 const CurrentLocationView = ({
     validateGeoData,
-    navigateToSuccess,
-    containerMapRef
+    navigateToConfirm,
+    containerMapRef,
+    geoLocation
 }: {
     validateGeoData: boolean
-    navigateToSuccess: () => void
+    navigateToConfirm: () => void
+    geoLocation: () => void
     containerMapRef: React.MutableRefObject<HTMLDivElement | null>
 }) => {
     const dispatch = useAppDispatch()
@@ -28,9 +30,8 @@ const CurrentLocationView = ({
         isLocationVerify,
     } = useAppSelector((s) => s.profileReducer)
 
-    console.log(coordinates)
-
     const userLocation = async () => {
+    
         if (coordinates && typeof coordinates.lat === 'number' && typeof coordinates.lng === 'number')  {
             dispatch(
                 profileChangeLocation({
@@ -42,19 +43,21 @@ const CurrentLocationView = ({
                     _id,
                 })
             )
+            navigateToConfirm()
         }
     }
 
     useEffect(() => {
-        if (isLocationVerify) {
-            navigateToSuccess()
-        }
+      
     }, [isLocationVerify])
 
     return (
         <>
             <div className="location__current">
                 <div className="location__current-map">
+                    <button className="location__current-map-button ui-button-back-route" onClick={geoLocation}>
+                    <IconLocationAim />
+                    </button>
                     <div
                         ref={containerMapRef}
                         style={mapContainerStyle}
@@ -74,7 +77,8 @@ const CurrentLocationView = ({
             </p>
             <div className="location__current-button">
                 <button
-                    className={`location__bt-continue ${
+                    className={`location__bt-continue login__button
+                    ${
                         !validateGeoData
                             ? "location__bt-continue--disabled"
                             : ""

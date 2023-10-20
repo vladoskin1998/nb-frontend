@@ -1,16 +1,16 @@
-import React, { useState } from "react"
 import { Modal } from "../../ui/Modal"
 import { ROLES } from "../../../types/enum"
-import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom"
 import { toOneKind } from "../../../utils/titles"
+
+const list = Object.values(ROLES)
 
 export const UserRouterModal = ({ setIsOpen }: { setIsOpen: () => void }) => {
     return (
         <div className="user__routemodal">
             <Modal setIsOpen={setIsOpen}>
-                <div className="user__routemodal-body">
-                    {[ROLES.ALLUSERS, ROLES.COORDINATORS, ROLES.BLOCKED].map(
+                <div className="user__routemodal-body" onClick={() => setIsOpen()}>
+                    {list.map(
                         (item) => {
                             return (
                                 <Link to={`/admin/users/${toOneKind(item)}`}>
@@ -21,7 +21,7 @@ export const UserRouterModal = ({ setIsOpen }: { setIsOpen: () => void }) => {
                             )
                         }
                     )}
-                    <Link to={`/admin/users/${toOneKind("groups")}`}>
+                    <Link to={`/admin/users`}>
                         <button className="user__routemodal-link">
                             Groups
                         </button>
