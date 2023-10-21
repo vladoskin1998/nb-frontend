@@ -242,3 +242,37 @@
         }
     }
 }
+
+.ui-post-slider{
+    position: relative;
+    &-list{
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 100px;
+        background: $color__black1;
+        display: flex;
+        padding: 5px;
+        gap: 10px;
+        &-item{
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: $color__grey2;
+       
+        }
+        &-item:first-child{
+            position: relative;
+        }
+    }
+    &-bar{
+        position: absolute;
+        width: 6px;
+        height: 6.2px;
+        border-radius: 3px;
+        z-index: 2;
+        background: $color__grey3;
+        transition: all 0.3s ease;
+    }
+}

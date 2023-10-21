@@ -15,6 +15,8 @@ export const PublicationMainComponent = ({
     setText,
     title,
     setTitle,
+    placeholderTitle,
+    placeholderText,
 }: {
     files: File[]
     setFiles: (f: File[]) => void
@@ -22,6 +24,8 @@ export const PublicationMainComponent = ({
     setText: (s: string) => void
     title: string
     setTitle: (s: string) => void
+    placeholderTitle?: string
+    placeholderText?: string
 }) => {
     const { fullName } = useAppSelector((s) => s.userReducer)
 
@@ -43,14 +47,19 @@ export const PublicationMainComponent = ({
     }
     return (
         <div className="publish__main">
-            <input className="services__add-input" placeholder="Title Name" value={title} onChange={e => setTitle(e.target.value)}/>
+            <input
+                className="services__add-input"
+                placeholder={placeholderTitle}
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
             <div className="profile__about-body">
                 <TextareaAutosize
                     value={text}
                     onChange={handleChange}
                     className="profile__about-autoresize"
                     minRows={1}
-                    placeholder={`${fullName}, what’s in your mind?`}
+                    placeholder={`${fullName}, ${placeholderText}`}
                 />
             </div>
             <div className="publish__main-list">

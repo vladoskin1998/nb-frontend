@@ -2,13 +2,13 @@
 @import "activities.scss";
 @import "user.scss";
 @import "admin.scss";
-
+@import "posts.scss";
 .admin {
     padding: 100px 24px 24px 24px;
     min-height: 100%;
     max-width: 100%;
     width: 100%;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     box-sizing: border-box;
 }
 
@@ -20,19 +20,19 @@
     height: 100px;
     max-width: 100%;
     width: 100%;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     background-color: $color__black1;
     padding: 0 25px;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     column-gap: 25px;
     z-index: 15;
-    &-title{
+    &-title {
         color: $color__grey3;
         font-size: 18px;
         font-style: normal;
         font-weight: 700;
-        line-height: 30px; 
+        line-height: 30px;
     }
     &-button {
         @include flex-all-center;
@@ -41,7 +41,7 @@
         border-radius: 50%;
         background-color: $color__white;
         overflow: hidden;
-        img{
+        img {
             object-fit: cover;
             width: 100%;
             height: auto;
@@ -103,4 +103,3 @@
         }
     }
 }
-

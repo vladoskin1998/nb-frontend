@@ -3,21 +3,23 @@ import { PublicationMainComponent } from "./PublishMainComponent"
 import { PublishAddLocation } from "./PublishAddLocation"
 import {
     PublishPostHttp,
-    PublishPostInterface,
 } from "../../../http/publish-post-http"
 import { useAppSelector } from "../../../utils/hooks"
 import { success } from "../../ui/LoadSuccess"
-import { CoordinatsInterface } from "../../../types/types"
+import { CoordinatsInterface, PublishPostInterface } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
 
 export const PublishPost = ({
-    currentPrivacy
-}:{
+    currentPrivacy,
+}: {
     currentPrivacy: PRIVACY
 }) => {
     const { _id } = useAppSelector((s) => s.userReducer)
     const profile = useAppSelector((s) => s.profileReducer)
 
+    const [addressLocation, setAddressLocation] = useState(
+        `${profile.country}, ${profile.city}, ${profile.street}, ${profile.houseNumber}`
+    )
     const [files, setFiles] = useState<File[]>([])
     const [text, setText] = useState("")
     const [title, setTitle] = useState("")
@@ -25,7 +27,7 @@ export const PublishPost = ({
         profile.coordinates
     )
 
-    const validate = !Boolean(text && title && files.length)
+    const validate = !Boolean(text && title && files.length && addressLocation)
 
     const handlerPublish = async () => {
         try {
@@ -34,14 +36,18 @@ export const PublishPost = ({
                 text: string
                 title: string
                 userId: string
+                userIdentityId: string
                 coordinates: CoordinatsInterface
                 privacyPost: PRIVACY
+                addressLocation: string
             } = {
                 text,
                 title,
                 coordinates,
                 userId: _id,
-                privacyPost: currentPrivacy
+                userIdentityId: profile.userIdentityId,
+                privacyPost: currentPrivacy,
+                addressLocation
             }
             formCatData.append("payload", JSON.stringify(payload))
 
@@ -66,13 +72,17 @@ export const PublishPost = ({
                 setText={setText}
                 title={title}
                 setTitle={setTitle}
+                placeholderTitle="Title Name"
+                placeholderText="what’s in your mind ?"
             />
             <PublishAddLocation
                 coordinates={coordinates}
                 setCoordinates={setCoordinates}
+                addressLocation={addressLocation}
+                setAddressLocation={setAddressLocation}
             />
             <button
-                className={`publish__publish ${
+                className={`publish__publish user--footer--button ${
                     validate && "services__add-button--disabled"
                 }`}
                 onClick={handlerPublish}

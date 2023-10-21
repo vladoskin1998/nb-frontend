@@ -27,7 +27,6 @@ const CurrentLocationView = ({
         houseNumber,
         street,
         coordinates,
-        isLocationVerify,
     } = useAppSelector((s) => s.profileReducer)
 
     const userLocation = async () => {
@@ -47,9 +46,7 @@ const CurrentLocationView = ({
         }
     }
 
-    useEffect(() => {
-      
-    }, [isLocationVerify])
+
 
     return (
         <>

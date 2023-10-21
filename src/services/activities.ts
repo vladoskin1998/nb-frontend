@@ -1,18 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import $api from "../http"
+import { Activities } from "../types/types"
+import { ActivitiesHttp } from "../http/activities-http"
 
-interface Activities {
-    _id: string
-    name: string
-    numberView: number
-    isVisiable: boolean
-}
+
 
 export const allActivities = createAsyncThunk<Activities[], void>(
     "activities/all-activities",
     async () => {
-        const response = await $api.get("activities/all-activities")
-        return response.data
+        const response = await ActivitiesHttp.getAllActivities()
+        return response
     }
 )
 

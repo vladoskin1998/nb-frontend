@@ -7,11 +7,18 @@ import { Nullable } from "../types/types"
 import { getIdentityInforamation, profileChangeLocation } from "../services/profile";
 
 export interface _IdInterface {
-    _id: string;
+    _id: string
+}
+
+export interface userIdentityIdInterface {
+    userIdentityId: string
 }
 
 
+
 export interface ProfileInitialStateInterface {
+
+
     isLoad: boolean
  
     isLocationVerify: boolean;
@@ -52,11 +59,11 @@ const initCoordinates = {
     lng: 30.540884262459286
 }
 
-export type ProfileInitialStateWithIdInterface = ProfileInitialStateInterface & _IdInterface 
+export type ProfileInitialStateWithIdInterface = ProfileInitialStateInterface & userIdentityIdInterface 
 
 const initialState: ProfileInitialStateWithIdInterface = {
     isLoad: false,
-    _id: "",
+    userIdentityId: "",
 
     isLocationVerify: false,
     isGotAllProfileInfo: false,

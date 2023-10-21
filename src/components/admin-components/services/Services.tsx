@@ -24,9 +24,7 @@ export const Services = () => {
         <>
             <div className="admin">
                 <Routes>
-
                     <Route path="favor" element={<ServicesFavor />} />
-                    
                     <Route path="services-add" element={<ServicesAdd />} />
                     <Route path="services-list-sub" element={<ServicesList event={SERVICES_EVENT.SUB_LIST}/>} />
                     <Route path="" element={<ServicesList event={SERVICES_EVENT.LIST}/>} />

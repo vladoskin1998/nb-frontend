@@ -1,0 +1,94 @@
+.admin__posts {
+    &-list {
+        margin: 16px 0;
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
+        &-item {
+            max-width: fit-content;
+            border-radius: 12px;
+            background: $color__white;
+            display: flex;
+            padding: 20px 12px;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        
+        }
+        &-row1 {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 12px;
+            align-items: center;
+            &-img {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+            &-name {
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 30px;
+            }
+            &-text {
+                color: $color__grey10;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+            &-textunder {
+                color: $color__blue5;
+                text-decoration-line: underline;
+            }
+        }
+        &-row2{
+            height: 200px;
+            width: 100%;
+            &-img{
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
+                border-radius: 8px;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        }
+        &-row3 {
+            h5 {
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 30px;
+            }
+            h6 {
+                @include sub-title-main;
+            }
+        }
+        &-row4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            width: 100%;
+            button {
+                @include flex-all-center;
+                height: 40px;
+                padding: 15px 0;
+                gap: 10px;
+                border-radius: 8px;
+                border: 2px solid $color__orange;
+                background: $color__grey3;
+                box-shadow: $box-shadow1;
+            }
+        }
+    }
+}

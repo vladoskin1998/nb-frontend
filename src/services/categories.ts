@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import $api from "../http";
+import { ServiceHttp } from "../http/service-http";
 
 
 export interface Categories {
@@ -15,16 +16,16 @@ export interface Categories {
 export const allCategories = createAsyncThunk<Categories[], void>(
   'categories/all-categories',
   async () => {
-    const response = await $api.get("categories/all-categories")
-    return response.data
+    const response = await ServiceHttp.getAllService()
+    return response
   }
 )
 
 export const allSubCategories = createAsyncThunk<Categories[], {id:string}>(
   `categories/sub-categories`,
   async (payload) => {
-    const response = await $api.get(`categories/sub-categories?id=${payload.id}`)
-    return response.data
+    const response = await ServiceHttp.getAllSubService(payload)
+    return response
   }
 )
 

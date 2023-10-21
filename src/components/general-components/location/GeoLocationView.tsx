@@ -23,7 +23,7 @@ const GeoLocationView = ({
     pathname: string
     inputRef: React.MutableRefObject<HTMLDivElement | null>
 }) => {
-    const { coordinates, city, country, houseNumber, street } = useAppSelector(
+    const { coordinates} = useAppSelector(
         (s) => s.profileReducer
     )
 

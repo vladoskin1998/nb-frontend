@@ -210,4 +210,67 @@
             @include button-main;
         }
     }
+    &__activities{
+        &-list{
+            margin-top: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap:12px;
+            &-item{
+                height: 147px;
+                border-radius: 12px;
+                background: $color__white;
+                box-shadow: $box-shadow1;
+                padding: 14px 24px;
+                &-img{
+                    height: 90px;
+                    width: 100%;
+                    overflow: hidden;
+                    img{
+                        height: 90px;
+                        width: 100%;  
+                        object-fit: cover;
+                    }
+                }
+                &-title{
+                    padding-top: 10px;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 600;
+                    text-align: center;
+                    line-height: 140%; 
+                    max-width: 110px;
+                    width: 100%;
+                    text-wrap: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+                &--active{
+                    border: 2px solid $color__black1;
+                }
+            }
+        }
+        &-picker{
+            margin-top: 36px;
+        }
+        &-ticket{
+            margin: 16px 0;
+            @include input-main;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            column-gap: 10px;
+            @include sub-title-main;
+        }
+    }
+    &__service{
+        &-categorie{
+            font-size: 14px;
+            margin: 24px 0;
+        }
+        &-select{
+           &-2{
+            margin-top: 16px;
+           }
+        }
+    }
 }

@@ -35,12 +35,16 @@ export const ServicesAdd = () => {
     const { event, categorieId } = location.state
 
     const [listSubCategory, setListSubCategory] = useState<CategoryInterface[]>(
-        []
+        [categoryBody]
     )
     const [categorie, setCategorie] = useState<CategoryInterface>(categoryBody)
 
     const validate = () => {
         if (!categorie.name || !(categorie.file || categorie.fileName)) {
+            return true
+        }
+
+        if(!listSubCategory.length){
             return true
         }
 

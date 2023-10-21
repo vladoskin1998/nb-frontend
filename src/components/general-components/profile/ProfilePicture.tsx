@@ -6,6 +6,7 @@ import { profileUploadAvatar } from "../../../services/profile"
 import { setValueProfileReducer, setLoader } from "../../../reducer/profile"
 import { baseURL } from "../../../utils/config"
 import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
+import { PHOTO_ADD_METHOD } from "../../../types/enum"
 
 export const ProfilePicture = () => {
     const { _id } = useAppSelector((s) => s.userReducer)
@@ -16,7 +17,10 @@ export const ProfilePicture = () => {
     const [avatar, setAvatar] = useState<File | null>(null)
     const [photoUrl, setPhotoUrl] = useState<string>(initAvatar)
     const dispatch = useAppDispatch()
-    const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+    let fileCameraRollRef = useRef<HTMLInputElement | null>(null)
+    let fileTakeNowlRef = useRef<HTMLInputElement | null>(null)
+
     const navigate = useNavigate()
 
     const takePhoto = async () => {
@@ -51,17 +55,31 @@ export const ProfilePicture = () => {
         }
     }
 
-    const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0] || null
-        setAvatar(file)
-        if (file) {
+    console.log(photoUrl);
+    
+
+    const handleFileSelect = (method: PHOTO_ADD_METHOD) => {
+        let fileInput =
+            PHOTO_ADD_METHOD.TAKE_NOW === method
+                ? fileTakeNowlRef?.current
+                : fileCameraRollRef?.current
+
+        if (fileInput && fileInput?.files && fileInput.files[0]) {
+            const file = fileInput?.files[0]
+            setAvatar(file)
             const url = URL.createObjectURL(file)
             setPhotoUrl(url)
         }
     }
 
     const handlerRemoveImage = () => {
-        fileInputRef.current = null
+        if (fileTakeNowlRef.current) {
+            fileTakeNowlRef.current.value = ""
+        }
+
+        if (fileCameraRollRef.current) {
+            fileCameraRollRef.current.value = ""
+        }
         setPhotoUrl("")
         setAvatar(null)
     }
@@ -98,24 +116,37 @@ export const ProfilePicture = () => {
                 {!photoUrl ? (
                     <>
                         <label
-                            htmlFor="file-avatar-profile"
-                            className="profile__method-button"
+                            htmlFor="avatar-take-file"
+                            className="profile__method-button profile__method-button--nobodrer "
                         >
                             Take now
                         </label>
-                        <button
+                        <input
+                            id="avatar-take-file"
+                            type="file"
+                            ref={fileTakeNowlRef}
+                            style={{ display: "none" }}
+                            onChange={() =>
+                                handleFileSelect(PHOTO_ADD_METHOD.TAKE_NOW)
+                            }
+                            accept={"image/*"}
+                            capture="user"
+                        />
+                        <label
+                            htmlFor="avatar-camera-roll"
                             className="profile__method-button profile__method-button--nobodrer profile__method-button--nobodrer profile__method-button-2"
-                            onClick={takePhoto}
+                            // onClick={takePhoto}
                         >
                             Camera Roll
-                        </button>
-
+                        </label>
                         <input
-                            id="file-avatar-profile"
+                            id="avatar-camera-roll"
                             type="file"
-                            ref={fileInputRef}
+                            ref={fileCameraRollRef}
                             style={{ display: "none" }}
-                            onChange={handleFileSelect}
+                            onChange={() =>
+                                handleFileSelect(PHOTO_ADD_METHOD.CAMERA_ROLL)
+                            }
                         />
                         <span className="profile__method-parag">
                             Your profile picture will be public

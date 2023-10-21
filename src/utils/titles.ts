@@ -206,3 +206,16 @@ export const getPublishTitle = (locationRoute: string) => {
             return ""
     }
 }
+
+export const postsSubTitle = (locationRoute: string) => {
+    switch (locationRoute) {
+        case "/admin/posts/all":
+            return 'Post'
+        case "/admin/posts/comments":
+            return 'Comments'
+        case "/admin/posts/reports":
+            return 'Reports'
+        default:
+            return "Post"
+    }
+}

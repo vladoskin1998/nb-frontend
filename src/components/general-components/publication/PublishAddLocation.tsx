@@ -12,14 +12,18 @@ export const PublishAddLocation = ({
     children,
     coordinates,
     setCoordinates,
+    addressLocation, 
+    setAddressLocation
 }: {
     coordinates:CoordinatsInterface, 
     setCoordinates: (c:CoordinatsInterface) => void,
     children?: ReactNode
+    addressLocation: string 
+    setAddressLocation: (s:string) => void
 }) => {
     const [isOpen, serIsOpen] = useState(false)
    
-    const [addressLocation, setAddressLocation] = useState("")
+   
 
     const changeLocation = (l: LocationEditType) => {
         setCoordinates(l.coordinates)

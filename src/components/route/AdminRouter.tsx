@@ -23,12 +23,12 @@ const Activities = lazy(() => import('../admin-components/activities/Activities'
 
 const AdminRouter = () => {
   return (
-    <div>
+    <>
       <AdminHeader />
       <Routes>
         <Route path="users/*" element={<ProtectedRoute element={<Users />} />} />
         <Route path="services/*" element={<ProtectedRoute element={<Services />} />} />
-        <Route path="posts" element={<ProtectedRoute element={<Posts />} />} />
+        <Route path="posts/*" element={<ProtectedRoute element={<Posts />} />} />
         <Route path="messeges/*" element={<ProtectedRoute element={<Messeges />} />} />
         <Route path="helpcenter/*" element={<ProtectedRoute element={<HelpCenter />} />} />
         <Route path="advertisement" element={<ProtectedRoute element={<Advertisement />} />} />
@@ -36,7 +36,7 @@ const AdminRouter = () => {
         <Route path="adminpanel" element={<ProtectedRoute element={<AdminPanel />} />} />
         <Route path="*" element={<ProtectedRoute element={<AdminPanel />} />} />
       </Routes>
-    </div>
+    </>
   );
 };
 

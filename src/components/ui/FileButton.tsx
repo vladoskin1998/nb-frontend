@@ -26,7 +26,9 @@ export const FileButton = ({getFile,image}:{getFile:(f:File) => void,image: File
             <label className="ui-file-button">
                 {
                     image
-                        ? <img className="ui-file-button-image" src={URL.createObjectURL(image)} alt="Вибране зображення" />
+                        ? <>
+                            <img className="ui-file-button-image" src={URL.createObjectURL(image)} alt="Вибране зображення" />
+                        </>
                         : <IconArrachFile />
                 }
                 <input
