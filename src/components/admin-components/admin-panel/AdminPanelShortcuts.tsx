@@ -26,25 +26,25 @@ export const AdminPanelShortcuts = () => {
             <div className="services__all">
                 <ServicesItemView
                     name={"Users"}
-                    link={"/admin/users"}
+                    nextListLink={"/admin/users"}
                     numberView={count.countUsers}
                     setIsOpen={() => {}}
                 />
                 <ServicesItemView
                     name={"Services"}
-                    link={"/admin/services"}
+                    nextListLink={"/admin/services"}
                     numberView={count.countServices}
                     setIsOpen={() => {}}
                 />
                 <ServicesItemView
                     name={"Events"}
-                    link={"/admin/activities"}
+                    nextListLink={"/admin/activities"}
                     numberView={count.countActivities}
                     setIsOpen={() => {}}
                 />
                 <ServicesItemView
                     name={"Messeges"}
-                    link={"/admin/messeges"}
+                    nextListLink={"/admin/messeges"}
                     numberView={count.countMessages}
                     setIsOpen={() => {}}
                 />

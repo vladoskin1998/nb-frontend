@@ -7,12 +7,12 @@ import {
 
 const ServicesItemView = ({
     name,
-    link,
+    nextListLink,
     numberView,
     setIsOpen
 }: {
     name: string
-    link: string
+    nextListLink: string
     numberView: number
     setIsOpen: (b: boolean) => void
 
@@ -31,10 +31,10 @@ const ServicesItemView = ({
                     <IconServicesAllPoint />
                 </button>
             </div>
-            <Link to={link}>
+            <Link to={nextListLink}>
                 <h4 className="services__all-item-title">{numberView}</h4>
             </Link>
-            <Link to={link}>
+            <Link to={nextListLink}>
                 <div className="services__all-item-buttons">
                     <button>
                         <IconServicesAllPlus />

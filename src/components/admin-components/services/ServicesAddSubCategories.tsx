@@ -55,27 +55,42 @@ export const SevicesAddSubCategories = ({
                             placeholder="Sub Category Name"
                             className="services__add-input"
                             value={item.name}
-                            onChange={(e) =>
+                            onChange={(e) => {
+
                                 changeItemSubName({
                                     index,
                                     name: e.target.value,
                                 })
+                                
+                            }
+                                
                             }
                         />
-                        <button
-                            className="services__add-remove"
-                            onClick={() =>
-                                changeItemSubFile({ index, file: null as any })
-                            }
-                        >
-                            <IconAdminClose />
-                        </button>
+
                         {item?.fileName ? (
-                            <img
-                                src={`${baseURL}/uploads/categories/${item.fileName}`}
-                                alt=""
-                                className="services__add-linkimage"
-                            />
+                            <>
+                                <img
+                                    src={`${baseURL}/uploads/categories/${item.fileName}`}
+                                    alt=""
+                                    className="services__add-linkimage"
+                                />
+                                <button
+                                    className="services__add-remove"
+                                    onClick={(e) => {
+                                         changeItemSubFile({
+                                            index,
+                                            file: null as any,
+                                        })
+                                        e.stopPropagation()
+                                        e.preventDefault()
+                                        
+                                    }
+                                       
+                                    }
+                                >
+                                    <IconAdminClose />
+                                </button>
+                            </>
                         ) : (
                             <FileButton
                                 getFile={(file: File) =>

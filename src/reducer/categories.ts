@@ -8,19 +8,23 @@ import {
     visiableSubCategories,
 } from "../services/categories"
 
-interface Categories {
+export interface CategoriesItemInterface {
     _id: string
     name: string
     numberView: number
     isVisiable: boolean
     fileName: string
+    categoryId?: string
 }
-interface SubCategories extends Categories {}
+
+export interface SubCategoriesItemInterface extends CategoriesItemInterface {
+    subCategoryId?: string
+}
 
 interface CategoriesInterface {
     isLoad: boolean
-    categories: Categories[] // Вам также нужно определить тип Categories
-    subCategories: SubCategories[] // Замените 'any' на правильный тип, если это возможно
+    categories: SubCategoriesItemInterface[] 
+    subCategories: CategoriesItemInterface[] 
 }
 
 const initialState: CategoriesInterface = {
@@ -34,7 +38,7 @@ export const categoriesReducer = createSlice({
     initialState,
     reducers: {
         addCategorie: (state, { payload }: {
-            payload: Categories
+            payload: CategoriesItemInterface
         }) => {
             state.categories = [...state.categories, payload]
         },

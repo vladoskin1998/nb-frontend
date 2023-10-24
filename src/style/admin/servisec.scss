@@ -122,24 +122,41 @@
         background: $color__white;
         margin-top: 16px;
         &-row1 {
-            display: flex;
+            display: grid;
             column-gap: 20px;
-            align-items: flex-start;
+            grid-template-columns: 70px 1fr;
             &-img {
-                min-width: 70px;
-                min-height: 70px;
+                width: 70px;
+                height: 70px;
                 border-radius: 8px;
+                overflow: hidden;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
             &-title {
                 color: $color__blue1;
                 font-size: 14px;
                 font-style: normal;
                 font-weight: 600;
-                line-height: 140%; /* 19.6px */
+                line-height: 140%; 
                 text-decoration-line: underline;
             }
+            &-time{
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+            &-header{
+                display: grid;
+                grid-template-columns: 1fr auto ;
+            }
             &-footer {
-                display: flex;
+                display: grid;
+                grid-template-columns: 25px 1fr auto auto auto;
                 column-gap: 6px;
                 align-items: center;
                 margin-top: 5px;
@@ -151,11 +168,23 @@
                 span{
                     color: $color__blue;
                 }
+                h5{
+                    max-width: 100px;
+                    text-wrap: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
             }
             &-userimg {
-                min-width: 25px;
-                min-height: 25px;
-                border-radius: 50%;
+                width: 25px;
+                height: 25px;
+                border-radius: 100%;
+                img{
+                    border-radius: 100%;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
         }
         &-row2-2{

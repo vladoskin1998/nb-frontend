@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react"
+import  { useEffect, useState } from "react"
 import { useInView } from "react-intersection-observer"
-
 import { InputSearch } from "../../ui/InputSearch"
 import { IconServicesAllPoint } from "../../svg/IconServicesAll"
 import { PostUserInterface } from "../../../types/types"
@@ -11,8 +10,9 @@ import { IconPostsLike, IconPostsRepost } from "../../svg/IconPosts"
 import { IconComment } from "../../svg/IconFavor"
 import { IconProfileInfoBookmark } from "../../svg/IconProfileInfo"
 import { PostSlick } from "../../ui/PostSlick"
+import { useLocation } from "react-router-dom"
 
-export const PostsAll = () => {
+export const PublicationPosts = () => {
     const [searsh, setSearch] = useState("")
     const [allPageNumber, setAllPageNumber] = useState(1)
     const [pageNumber, setPageNumber] = useState(1)
@@ -20,6 +20,7 @@ export const PostsAll = () => {
     const { ref, inView } = useInView({
         threshold: 0,
     })
+    const location = useLocation()
 
     useEffect(() => {
         const effectBody = async () => {
@@ -38,19 +39,24 @@ export const PostsAll = () => {
     }, [inView])
 
     return (
-        <>
-            <InputSearch
-                placeholder={
-                    <>
-                        Search<span> Post</span>
-                    </>
-                }
-                value={searsh}
-                changeValue={setSearch}
-            />
+        <div className={`user__newsfeed ${(location.pathname=== '/admin/posts') &&  'user__newsfeed--admin'}`}>
+            <div className={`${!(location.pathname=== '/admin/posts') &&  'user__newsfeed-search'}`}>
+                <InputSearch
+                    placeholder={
+                        <>
+                            Search<span> Post</span>
+                        </>
+                    }
+                    value={searsh}
+                    changeValue={setSearch}
+                />
+            </div>
+            <h5 className="user__newsfeed-title">
+                Newsfeed
+            </h5>
             <div className="admin__posts-list">
                 {posts.map((item) => (
-                    <div className="admin__posts-list-item">
+                    <div className="admin__posts-list-item" key={item._id}>
                         <div className="admin__posts-list-row1">
                             <div className="admin__posts-list-row1-img">
                                 <img
@@ -79,7 +85,7 @@ export const PostsAll = () => {
                             </button>
                         </div>
                         <div className="admin__posts-list-row2">
-                            <PostSlick list ={item.filesName}>
+                            <PostSlick list={item.filesName}>
                                 {item.filesName.map((it) => (
                                     <div className="admin__posts-list-row2-img">
                                         <img
@@ -116,6 +122,6 @@ export const PostsAll = () => {
                 ))}
             </div>
             <div ref={ref} />
-        </>
+        </div>
     )
 }

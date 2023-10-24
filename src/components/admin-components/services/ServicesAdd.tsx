@@ -8,7 +8,7 @@ import { AxiosResponse } from "axios"
 import { SevicesAddSubCategories } from "./ServicesAddSubCategories"
 import { SERVICES_EVENT } from "../../../types/enum"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
-import { Categories } from "../../../services/categories"
+import { SubCategoriesItemInterface, CategoriesItemInterface } from "../../../reducer/categories"
 import { addCategorie } from "../../../reducer/categories"
 
 interface CategorieResponse {
@@ -77,7 +77,7 @@ export const ServicesAdd = () => {
                     })
                 }
 
-                const currentSubCategorie: AxiosResponse<Categories[]> =
+                const currentSubCategorie: AxiosResponse<SubCategoriesItemInterface[]> =
                     await $api.get(
                         `categories/sub-categories?id=${categorieId}`
                     )
@@ -164,8 +164,10 @@ export const ServicesAdd = () => {
     const uploadToServer = async () => {
         try {
             const res = await uploadToServerCategorie()
+            console.log("uploadToServer", res?.data._id);
+            
             if (res) {
-                uploadToServerSubCategorie(res.data._id)
+               await uploadToServerSubCategorie(res.data._id)
             }
 
             navigate("/admin/services")

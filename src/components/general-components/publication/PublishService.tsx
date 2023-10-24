@@ -1,11 +1,10 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { PublicationMainComponent } from "./PublishMainComponent"
 import { PublishAddLocation } from "./PublishAddLocation"
 import { useAppSelector } from "../../../utils/hooks"
 import { success } from "../../ui/LoadSuccess"
 import { CoordinatsInterface, OptionsType } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
-import { Categories } from "../../../services/categories"
 import { ServiceHttp } from "../../../http/service-http"
 import { PublishServiceCategorie } from "./PublishServiceCategorie"
 
@@ -25,10 +24,14 @@ export const PublishService = ({
     )
     const [servicesValue, setServicesValue] = useState<OptionsType>([])
     const [subServicesValue, setSubServicesValue] = useState<OptionsType>([])
-    const [addressLocation, setAddressLocation] = useState("")
+    const [addressLocation, setAddressLocation] = useState(
+        `${profile.country}, ${profile.city}, ${profile.street}, ${profile.houseNumber}`)
     const validate = !Boolean(
-        text && title && files.length && servicesValue?.[0]._id
+        text && title && files.length && servicesValue?.[0]._id && subServicesValue?.[0]._id
     )
+
+   console.log(servicesValue, subServicesValue );
+   
 
     const handlerPublish = async () => {
         try {
@@ -41,14 +44,18 @@ export const PublishService = ({
                 privacyPost: PRIVACY
                 servicesId: string
                 subServicesId: string
+                userIdentityId: string
+                addressLocation: string
             } = {
                 text,
                 title,
                 coordinates,
                 userId: _id,
                 privacyPost: currentPrivacy,
-                servicesId: "",
-                subServicesId: "",
+                servicesId: servicesValue?.[0]._id.toString(),
+                subServicesId: subServicesValue?.[0]._id.toString(),
+                userIdentityId: profile.userIdentityId,
+                addressLocation
             }
             formCatData.append("payload", JSON.stringify(payload))
 
@@ -56,7 +63,7 @@ export const PublishService = ({
                 formCatData.append("files", files[index])
             }
 
-            const res: Categories = await ServiceHttp.addPublishService(
+           await ServiceHttp.addPublishService(
                 formCatData
             )
 

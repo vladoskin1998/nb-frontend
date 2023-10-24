@@ -1,19 +1,19 @@
 import { AxiosResponse } from "axios";
 import $api from ".";
 import { ROLES } from "../types/enum";
-import { Activities } from "../types/types";
-import { Categories } from "../services/categories";
+import { Activities, GetAllPublishServicetInterface } from "../types/types";
+import { CategoriesItemInterface, SubCategoriesItemInterface } from "../reducer/categories";
 
 
 
 export class ServiceHttp {
-    static async getAllService(): Promise<Categories[]> {
-        const res: AxiosResponse<Categories[]> = await $api.get("categories/all-categories")
+    static async getAllService(): Promise<CategoriesItemInterface[]> {
+        const res: AxiosResponse<CategoriesItemInterface[]> = await $api.get("categories/all-categories")
         return res.data
     }
 
-    static async getAllSubService({id}:{id:string}): Promise<Categories[]> {
-        const res: AxiosResponse<Categories[]> = await $api.get(`categories/sub-categories?id=${id}`)
+    static async getAllSubService({ id }: { id: string }): Promise<SubCategoriesItemInterface[]> {
+        const res: AxiosResponse<SubCategoriesItemInterface[]> = await $api.get(`categories/sub-categories?id=${id}`)
         return res.data
     }
 
@@ -23,5 +23,23 @@ export class ServiceHttp {
         return res.data
     }
 
+
+    static async getAllPublishService(payload: {
+        pageNumber: number
+        subServicesId: string
+    }): Promise<GetAllPublishServicetInterface> {
+        const res: AxiosResponse<GetAllPublishServicetInterface> = await $api.post(`categories/get-publish-service`, payload)
+        return res.data
+    }
+
+    static async moveSubService(payload: {
+        newCategoryId: string;
+        subCategiryId: string;
+    }) {
+        const res: AxiosResponse<Activities> = await $api.post("categories/move-subcategory", payload)
+        return res.data
+    }
+
+    
 
 }

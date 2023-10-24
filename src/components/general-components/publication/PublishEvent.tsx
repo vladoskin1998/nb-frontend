@@ -28,8 +28,11 @@ export const PublishEvent = ({
     )
     const [startDate, setStartDate] = useState<dayjs.Dayjs>(dayjs(new Date()))
     const [activitiesId, setActivitiesId] = useState<string>("")
-    const [addressLocation, setAddressLocation] = useState("")
+    const [addressLocation, setAddressLocation] = useState(
+        `${profile.country}, ${profile.city}, ${profile.street}, ${profile.houseNumber}`)
     const validate = !Boolean(text && title && files.length && activitiesId)
+
+    
 
     const handlerPublish = async () => {
         try {
@@ -39,17 +42,21 @@ export const PublishEvent = ({
                 title: string
                 userId: string
                 coordinates: CoordinatsInterface
-                privacyPost: PRIVACY
+                privacyEvent: PRIVACY
                 startDate: Date
                 activitiesId: string
+                userIdentityId: string
+                addressLocation:string
             } = {
                 text,
                 title,
                 coordinates,
                 userId: _id,
-                privacyPost: currentPrivacy,
+                privacyEvent: currentPrivacy,
                 startDate: new Date(startDate?.toDate()),
                 activitiesId,
+                userIdentityId: profile.userIdentityId,
+                addressLocation
             }
             formCatData.append("payload", JSON.stringify(payload))
 

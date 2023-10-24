@@ -3,6 +3,7 @@ import { AutocompleteSearch } from "../../ui/AutocompleteSearch"
 import { ServiceHttp } from "../../../http/service-http"
 import { OptionsType } from "../../../types/types"
 import { IconActiveList } from "../../svg/IconTicket"
+import { useSearchParams } from "react-router-dom"
 
 export const PublishServiceCategorie = ({
     servicesValue,
@@ -18,6 +19,7 @@ export const PublishServiceCategorie = ({
     const [isOpen, setIsOpen] = useState(false)
     const [optiosService, setOptiosService] = useState<OptionsType>([])
     const [optiosSubService, setOptiossubService] = useState<OptionsType>([])
+    const [searchParams] = useSearchParams()
 
     useEffect(() => {
         const effectBody = async () => {
@@ -26,12 +28,21 @@ export const PublishServiceCategorie = ({
                 title: item.name,
             }))
             setOptiosService(option)
+            const categoryId = searchParams.get("categoryId")
+            const category = option.find(
+                (item) => item._id === categoryId
+            )
+            
+            if (categoryId && category) {
+                setServicesValue([category])
+            }
         }
         effectBody()
     }, [])
 
     useEffect(() => {
         const effectBody = async () => {
+            setSubServicesValue([])
             const option = (
                 await ServiceHttp.getAllSubService({
                     id: servicesValue?.[0]?._id.toString(),
@@ -40,12 +51,23 @@ export const PublishServiceCategorie = ({
                 _id: item._id,
                 title: item.name,
             }))
-            setOptiossubService(option)
+            setOptiossubService(option)         
         }
         if (optiosService.length && servicesValue.length) {
             effectBody()
         }
     }, [servicesValue])
+
+    useEffect(() => {
+        const subCategoryId = searchParams.get("subCategoryId")
+        const subCategory = optiosSubService.find(
+            (item) => item._id === subCategoryId
+        )
+        if (subCategoryId && subCategory) {
+            setSubServicesValue([subCategory])
+            setIsOpen(true)
+        }
+    }, [optiosService, optiosSubService])
 
     return (
         <>

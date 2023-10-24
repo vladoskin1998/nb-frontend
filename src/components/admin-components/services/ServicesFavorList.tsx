@@ -6,131 +6,119 @@ import {
     IconLike,
     IconPicker,
 } from "../../svg/IconFavor"
+import { useEffect, useState } from "react"
+import { PublishPostHttp } from "../../../http/publish-post-http"
+import { useInView } from "react-intersection-observer"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
+import {
+    GetAllPublishServicetInterface,
+    OptionsType,
+    PostUserInterface,
+    PublishServiceItemInterface,
+} from "../../../types/types"
+import { ServiceHttp } from "../../../http/service-http"
+import { baseURL } from "../../../utils/config"
+import moment from "moment"
+import { Link } from "react-router-dom"
+import { AutocompleteSearch } from "../../ui/AutocompleteSearch"
+import { ServicesListItemViewModal } from "./ServicesListItemViewModal"
+import { ServicesFavorListModal } from "./ServicesFavorListModal"
 
-const data = [
-    {
-        id: "ertge44354",
-        image: "",
-        name: "Оказываю услуги такси в городе Киев",
-        user: {
-            id: "987654356765",
-            name: "User Name",
-            mark: "4.5",
-            markNumber: "808",
-            image: "",
-        },
-        comment: "1234",
-        like: "23",
-        date: new Date(),
-        location: "9081 Lakewood Gardens Junktion",
-    },
-    {
-        id: "gweg3fwev",
-        image: "",
-        name: "Оказываю услуги такси в городе Киев",
-        user: {
-            id: "ge3f3f3feewge",
-            name: "User Name",
-            mark: "4.5",
-            markNumber: "808",
-            image: "",
-        },
-        comment: "1234",
-        like: "23",
-        date: new Date(),
-        location: "9081 Lakewood Gardens Junktion",
-    },
-    {
-        id: "wegweg3gwe",
-        image: "",
-        name: "Оказываю услуги такси в городе Киев",
-        user: {
-            id: "ewgewv3grhr",
-            name: "User Name",
-            mark: "4.5",
-            markNumber: "808",
-            image: "",
-        },
-        comment: "1234",
-        like: "23",
-        date: new Date(),
-        location: "9081 Lakewood Gardens Junktion",
-    },
-    {
-        id: "errtegrt443",
-        image: "",
-        name: "Оказываю услуги такси в городе Киев",
-        user: {
-            id: "987654356765",
-            name: "User Name",
-            mark: "4.5",
-            markNumber: "808",
-            image: "",
-        },
-        comment: "1234",
-        like: "23",
-        date: new Date(),
-        location: "9081 Lakewood Gardens Junktion",
-    },
-]
+const ServicesFavorList = ({ changeAdd }: { changeAdd: () => void }) => {
+    const [isOpen, setIsOpen] = useState(false)
+    const [searchParams] = useSearchParams()
+    const [allPageNumber, setAllPageNumber] = useState(1)
+    const [pageNumber, setPageNumber] = useState(1)
+    const [publishService, setPublishService] = useState<
+        PublishServiceItemInterface[]
+    >([])
+    const { ref, inView } = useInView({
+        threshold: 0,
+    })
 
-const ServicesFavorList = () => {
+    useEffect(() => {
+        const effectBody = async () => {
+            const subServicesId = searchParams.get("subCategoryId")
+            if (inView && allPageNumber >= pageNumber && subServicesId) {
+                const res: GetAllPublishServicetInterface =
+                    await ServiceHttp.getAllPublishService({
+                        pageNumber,
+                        subServicesId,
+                    })
+                setPublishService((s) => [...s, ...res.publishServices])
+                setAllPageNumber(res.allPageNumber)
+                setPageNumber((s) => s + 1)
+            }
+        }
+
+        effectBody()
+    }, [inView])
+
     return (
         <>
-            {data.map((item) => {
+            {publishService.map((item) => {
                 return (
-                    <div className="services__favor-item" key={item.id}>
-                        <div className="services__favor-item-row1">
-                            <img
-                                src={item.image || "/Images/favor.png"}
-                                alt=""
-                                className="services__favor-item-row1-img"
-                            />
-                            <div>
-                                <h5 className="services__favor-item-row1-title">
-                                    {item.name}
-                                </h5>
-                                <div className="services__favor-item-row1-footer">
+                    <>
+                        <div className="services__favor-item" key={item._id}>
+                            <div className="services__favor-item-row1">
+                                <div className="services__favor-item-row1-img">
                                     <img
-                                        src={
-                                            item.user.image ||
-                                            "/Images/favor-avatar-image.png"
-                                        }
-                                        alt=""
-                                        className="services__favor-item-row1-userimg"
+                                        src={`${baseURL}/uploads/publish_services/${item.filesName[0]}`}
+                                        alt="publish_services"
                                     />
-                                    <h5>{item.user.name}</h5>
-                                    <IconStars />
-                                    <span>{item.user.mark}</span>
+                                </div>
+                                <div>
+                                    <div className="services__favor-item-row1-header">
+                                        <h5 className="services__favor-item-row1-title">
+                                            {item.title}
+                                        </h5>
+                                        <button onClick={() => setIsOpen(true)}>
+                                            <IconServicesAllPoint />
+                                        </button>
+                                    </div>
+                                    <div className="services__favor-item-row1-footer">
+                                        <div className="services__favor-item-row1-userimg">
+                                            <img
+                                                src={`${baseURL}/uploads/avatar/${item.userIdentityId.avatarFileName}`}
+                                                alt="publish services"
+                                            />
+                                        </div>
+
+                                        <h5> {item.userId.fullName}</h5>
+                                        <IconStars />
+                                        <span>{4.5}</span>
+                                        <span>{"(" + 808 + ")"}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="services__favor-item-row2">
+                                    <IconComment />
+                                    <span>{0}</span>
+                                    <IconPicker />
                                     <span>
-                                        {"(" + item.user.markNumber + ")"}
+                                        {moment(
+                                            item.createdPublishServiceDate
+                                        ).format("DD MMM YYYY HH:mm")}
                                     </span>
                                 </div>
-                            </div>
-                            <button>
-                                <IconServicesAllPoint />
-                            </button>
-                        </div>
-                        <div>
-                            <div className="services__favor-item-row2">
-                                <IconComment />
-                                <span>{item.comment}</span>
-                                <IconPicker />
-                                <span>{item.date.toLocaleString()}</span>
-                            </div>
-                            <div className="services__favor-item-row2 services__favor-item-row2-2">
-                                <IconLike />
-                                <span>{item.like}</span>
-                                <div className="services__favor-item-row2-svg">
-                                    <IconLocationPoint />
+                                <div className="services__favor-item-row2 services__favor-item-row2-2">
+                                    <IconLike />
+                                    <span>{0}</span>
+                                    <div className="services__favor-item-row2-svg">
+                                        <IconLocationPoint />
+                                    </div>
+                                    <span>{item.addressLocation}</span>
                                 </div>
-
-                                <span>{item.location}</span>
                             </div>
                         </div>
-                    </div>
+                        {isOpen && (
+                            <ServicesFavorListModal setIsOpen={setIsOpen} isOpen={isOpen}/>
+                        )}
+                    </>
                 )
             })}
+            <div ref={ref} />
         </>
     )
 }

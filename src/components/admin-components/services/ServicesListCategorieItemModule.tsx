@@ -4,36 +4,31 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../../utils/hooks"
 import {
     deleteCategories,
-    deleteSubCategories,
     visiableCategories,
-    visiableSubCategories,
 } from "../../../services/categories"
-import ServicesItemViewModal from "./ServicesItemViewModal"
 import { SERVICES_EVENT } from "../../../types/enum"
-import {ServicesListItemViewModal} from "./ServicesListItemViewModal"
+import { ServicesListItemViewModal } from "./ServicesListItemViewModal"
 
-export const ServicesListItemModule = ({
+export const ServicesListCategorieItemModule = ({
     _id,
     name,
     numberView,
-    link,
+    nextListLink,
     isVisiable,
     categorieId,
-    handlerAddServices
+    handlerAddServices,
 }: {
     _id: string
     name: string
     numberView: number
-    link: string
+    nextListLink: string
     isVisiable: boolean
     categorieId: string
     handlerAddServices: () => void
-
 }) => {
-    const location = useLocation()
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    
+
     const [isOpen, setIsOpen] = useState(false)
     const [isTougle, setIsTougle] = useState(isVisiable)
 
@@ -50,29 +45,12 @@ export const ServicesListItemModule = ({
         })
     }
 
-    const handlerMoveServices = () => {
-        navigate("/admin/services/services-add", {
-            state: {
-                event: SERVICES_EVENT.EDIT_SUB_SERVICES,
-                categorieId: categorieId,
-            },
-        })
-    }
-
     const handlerVisiable = () => {
-        dispatch(
-            location.pathname.includes("services-list-sub")
-                ? visiableSubCategories({ id: _id, isVisiable: isTougle })
-                : visiableCategories({ id: _id, isVisiable: isTougle })
-        )
+        dispatch(visiableCategories({ id: _id, isVisiable: isTougle }))
     }
 
     const handlerDeleteItem = () => {
-        dispatch(
-            location.pathname.includes("services-list-sub")
-                ? deleteSubCategories({ id: _id })
-                : deleteCategories({ id: _id })
-        )
+        dispatch(deleteCategories({ id: _id }))
         setIsOpen(false)
     }
 
@@ -81,24 +59,22 @@ export const ServicesListItemModule = ({
             <ServicesItemView
                 numberView={numberView}
                 name={name}
-                link={link}
+                nextListLink={nextListLink}
                 setIsOpen={(b: boolean) => setIsOpen(b)}
             />
-            {
-                isOpen &&
+            {isOpen && (
                 <ServicesListItemViewModal
                     name={name}
                     isTougle={isTougle}
                     onChangeTougle={onChangeTougle}
                     setIsOpen={(b: boolean) => setIsOpen(b)}
-
                     handlerAddServices={handlerAddServices}
                     handlerEditServices={handlerEditServices}
-                    handlerMoveServices={handlerMoveServices}
                     handlerVisiable={handlerVisiable}
                     handlerDeleteItem={handlerDeleteItem}
+                    handlerMoveServices={null}
                 />
-            }
+            )}
         </>
     )
 }

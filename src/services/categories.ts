@@ -1,19 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import $api from "../http";
 import { ServiceHttp } from "../http/service-http";
+import { CategoriesItemInterface, SubCategoriesItemInterface } from "../reducer/categories";
 
 
-export interface Categories {
-  _id: string
-  name: string
-  numberView: number
-  isVisiable:boolean
-  fileName: string
-}
 
 //<respons axios, payload >
 /////////////////////////////////////get all
-export const allCategories = createAsyncThunk<Categories[], void>(
+export const allCategories = createAsyncThunk<CategoriesItemInterface[], void>(
   'categories/all-categories',
   async () => {
     const response = await ServiceHttp.getAllService()
@@ -21,7 +15,7 @@ export const allCategories = createAsyncThunk<Categories[], void>(
   }
 )
 
-export const allSubCategories = createAsyncThunk<Categories[], {id:string}>(
+export const allSubCategories = createAsyncThunk<SubCategoriesItemInterface[], {id:string}>(
   `categories/sub-categories`,
   async (payload) => {
     const response = await ServiceHttp.getAllSubService(payload)
@@ -34,7 +28,7 @@ export const allSubCategories = createAsyncThunk<Categories[], {id:string}>(
 export const deleteCategories = createAsyncThunk<string, {id:string}>(
   `categories/delete-category`,
   async (payload) => {
-    const response = await $api.post(`categories/delete-category`, {id:payload.id})
+    const response = await $api.post(`categories/delete-category`, {categiryId:payload.id})
     return response.data
   }
 )
@@ -42,7 +36,7 @@ export const deleteCategories = createAsyncThunk<string, {id:string}>(
 export const deleteSubCategories = createAsyncThunk<string, {id:string}>(
   `categories/delete-subcategory`,
   async (payload) => {
-    const response = await $api.post(`categories/delete-subcategory`, {id:payload.id})
+    const response = await $api.post(`categories/delete-subcategory`, {subCategiryId:payload.id})
     return response.data
   }
 )

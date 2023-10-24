@@ -1,6 +1,5 @@
 
 import { Route, Routes } from "react-router-dom"
-import ServicesAll from "./ServicesAll"
 import ServicesFavor from "./ServicesFavor"
 import { Loader } from "../../ui/Loader"
 import { useAppSelector } from "../../../utils/hooks"
@@ -28,8 +27,6 @@ export const Services = () => {
                     <Route path="services-add" element={<ServicesAdd />} />
                     <Route path="services-list-sub" element={<ServicesList event={SERVICES_EVENT.SUB_LIST}/>} />
                     <Route path="" element={<ServicesList event={SERVICES_EVENT.LIST}/>} />
-
-                    {/* <Route path="" element={<ServicesAll />} /> */}
                 </Routes>
             </div>
             {isLoad && <Loader />}

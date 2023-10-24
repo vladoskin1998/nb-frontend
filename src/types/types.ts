@@ -92,3 +92,57 @@ export interface GetAllPostInterface {
     allPageNumber: number
     posts: PostUserInterface[]
 }
+
+export type PublishServiceItemInterface =  {
+    _id: string,
+    userId: {
+        _id: string,
+        fullName: string,
+    },
+    userIdentityId: {
+        _id: string,
+        avatarFileName: string,
+    },
+    title: string,
+    text: string,
+    filesName: string[]
+    coordinates: CoordinatsInterface,
+    servicesId: string,
+    subServicesId: string,
+    privacyPublishService: PRIVACY,
+    createdPublishServiceDate: Date,
+    addressLocation: string
+}
+
+export interface GetAllPublishServicetInterface {
+    allPageNumber: number,
+    publishServices: PublishServiceItemInterface[]
+}
+
+
+export type PublishEventItemInterface =  {
+    _id: string,
+    userId: {
+        _id: string,
+        fullName: string,
+    },
+    userIdentityId: {
+        _id: string,
+        avatarFileName: string,
+    },
+    title: string,
+    text: string,
+    filesName: string[]
+    coordinates: CoordinatsInterface,
+    activitiesId: string,
+    privacyEvent: PRIVACY,
+    createEventDate: Date,
+    startDate: Date,
+    addressLocation: string
+}
+
+
+export interface GetAllPublishActivitiesInterface {
+    allPageNumber: number,
+    publishActivities: PublishEventItemInterface[]
+}

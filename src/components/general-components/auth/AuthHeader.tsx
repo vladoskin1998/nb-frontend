@@ -1,4 +1,5 @@
 import { METHOD_AUTH } from "../../../types/enum"
+import { baseURL } from "../../../utils/config"
 import { IconFacebook } from "../../svg/IconFacebook"
 import { IconGoogle } from "../../svg/IconGoogle"
 
@@ -16,7 +17,7 @@ const AuthHeader = ({
     const hendlerAuthMessenger = (
         method: METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE
     ) => {
-        window.location.href = `http://5.180.180.221:5000/api/auth/${method}`
+        window.location.href = `${baseURL}/api/auth/${method}`
     }
 
     return (

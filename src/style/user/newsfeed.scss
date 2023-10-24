@@ -1,0 +1,20 @@
+.user__newsfeed{
+    margin-top: 60px;
+    &--admin{
+        margin-top: 0px;
+    }
+    &-title{
+        margin-top: 16px;
+        @include title-main;
+    }
+    &-search{
+        margin-top: 16px;
+        position: fixed;
+        top: 65px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 30;
+        width: calc(100% - 48px);
+        
+    }
+}

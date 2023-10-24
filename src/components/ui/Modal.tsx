@@ -15,7 +15,7 @@ export const Modal = ({children, setIsOpen }: {children:ReactNode, setIsOpen: (o
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []);
+    }, [setIsOpen]);
 
     return (
         <div className='ui-modal' ref={modal}>

@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import { InputSearch } from "../../ui/InputSearch"
 import { SlickCategories } from "../../ui/SlickCategories"
 import { useAppSelector } from "../../../utils/hooks"
-import { ActivitiesFavorList } from "./ActivitiesFavor"
+import { ActivitiesFavor } from "./ActivitiesFavor"
 
 const ActivitiesEvent = () => {
     const navigate = useNavigate()
@@ -23,11 +23,11 @@ const ActivitiesEvent = () => {
         setCurrentSlide(index)
         navigate(`?id=${id}`)
     }
+  
     const changeAdd = () => {
-        navigate("/admin/activities/addactivities")
+        const activitiesId = searchParams.get("activitiesId")
+        navigate(`/publish/event?activitiesId=${activitiesId}`)
     }
-
-    const onClickFilter = () => {}
 
     return (
         <>
@@ -38,7 +38,6 @@ const ActivitiesEvent = () => {
             </AdminSubHeader>
             <InputSearch
                 placeholder={"Search Events"}
-                onClickFilter={onClickFilter}
                 value={search}
                 changeValue={setSearch}
             />
@@ -58,7 +57,7 @@ const ActivitiesEvent = () => {
                     ))}
                 </SlickCategories>
             </div>
-            <ActivitiesFavorList/>
+            <ActivitiesFavor/>
         </>
     )
 }

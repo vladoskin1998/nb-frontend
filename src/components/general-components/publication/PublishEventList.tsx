@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Activities } from "../../../types/types"
 import { ActivitiesHttp } from "../../../http/activities-http"
 import { baseURL } from "../../../utils/config"
+import { useSearchParams } from "react-router-dom"
 
 export const PublishEventList = ({
     activitiesId,
@@ -11,11 +12,16 @@ export const PublishEventList = ({
     setActivitiesId: (s: string) => void
 }) => {
     const [activities, setActivities] = useState<Activities[]>([])
+    const [searchParams] = useSearchParams()
 
     useEffect(() => {
         const effectBody = async () => {
             const res = await ActivitiesHttp.getAllActivities()
             setActivities(res)
+            const actId = searchParams.get("activitiesId")
+            if(actId){
+                setActivitiesId(actId)
+            }
         }
         effectBody()
     }, [])

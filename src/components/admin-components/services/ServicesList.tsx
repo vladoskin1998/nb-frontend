@@ -1,11 +1,12 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
-import { ServicesItemModule } from "./ServicesItemModule"
 import { AdminSubHeader } from "../../ui/AdminSubHeader"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { SERVICES_EVENT } from "../../../types/enum"
 import { useEffect, useState } from "react"
 import { allSubCategories } from "../../../services/categories"
-import { ServicesListItemModule } from "./ServicesListItemModule"
+import { ServicesListCategorieItemModule } from "./ServicesListCategorieItemModule"
+import { CategoriesItemInterface, SubCategoriesItemInterface } from "../../../reducer/categories"
+import { ServicesListSubCategorieItemModule } from "./ServicesListSubCategorieItemModule"
 
 export const ServicesList = ({ event }: { event: SERVICES_EVENT }) => {
     const location = useLocation()
@@ -21,7 +22,6 @@ export const ServicesList = ({ event }: { event: SERVICES_EVENT }) => {
     useEffect(() => {
         if (event === SERVICES_EVENT.SUB_LIST) {
             const id = searchParams.get("id")
-            console.log("id----->", id)
             setCategorieId(id as string)
             dispatch(allSubCategories({ id: id as string }))
         }
@@ -40,15 +40,6 @@ export const ServicesList = ({ event }: { event: SERVICES_EVENT }) => {
         })
     }
 
-    const link = () => {
-        switch (event) {
-            case SERVICES_EVENT.LIST:
-                return "/admin/services/services-list-sub"
-            case SERVICES_EVENT.SUB_LIST:
-                return "/admin/services/favor"
-        }
-    }
-
     return (
         <>
             <AdminSubHeader onClickButton={handlerAddServices}>
@@ -62,25 +53,35 @@ export const ServicesList = ({ event }: { event: SERVICES_EVENT }) => {
                 </div>
             </AdminSubHeader>
             <div className="services__all">
-                {(event === SERVICES_EVENT.SUB_LIST
-                    ? subCategories
-                    : categories
-                ).map((item) => (
-                    <ServicesListItemModule
-                        categorieId={
-                            event === SERVICES_EVENT.LIST
-                                ? item._id
-                                : categorieId
-                        }
-                        _id={item._id}
-                        link={link() + `?id=${item._id}`}
-                        name={item.name}
-                        numberView={item.numberView}
-                        isVisiable={item.isVisiable}
-                        key={item._id}
-                        handlerAddServices={handlerAddServices}
-                    />
-                ))}
+                {event === SERVICES_EVENT.LIST
+                    ? categories.map((item: CategoriesItemInterface) => (
+                          <ServicesListCategorieItemModule
+                              categorieId={item._id}
+                              _id={item._id}
+                              nextListLink={
+                                  `/admin/services/services-list-sub?id=${item._id}&categoryId=${item?.categoryId || ""}`
+                              }
+                              name={item.name}
+                              numberView={item.numberView}
+                              isVisiable={item.isVisiable}
+                              key={item._id}
+                              handlerAddServices={handlerAddServices}
+                          />
+                      ))
+                    : subCategories.map((item: SubCategoriesItemInterface) => (
+                          <ServicesListSubCategorieItemModule
+                              categorieId={categorieId}
+                              _id={item._id}
+                              nextListLink={
+                                  `/admin/services/favor?id=${item._id}&categoryId=${item?.categoryId || ""}&subCategoryId=${item?.subCategoryId || ""}`
+                              }
+                              name={item.name}
+                              numberView={item.numberView}
+                              isVisiable={item.isVisiable}
+                              key={item._id}
+                              handlerAddServices={handlerAddServices}
+                          />
+                      ))}
             </div>
         </>
     )

@@ -5,7 +5,7 @@ import { IconBottomChevrons } from "../../svg/IconChevrons"
 import { postsSubTitle } from "../../../utils/titles"
 import { PostsRouterModal } from "./PostsRouterModal"
 import { PostsReports } from "./PostsReports"
-import { PostsAll } from "./PostsAll"
+import { PublicationPosts } from "../../general-components/publication-lists/PublicationPosts"
 import { PostsComments } from "./PostsComments"
 
 export const Posts = () => {
@@ -39,8 +39,8 @@ export const Posts = () => {
             <Routes>
                 <Route path="reports" element={<PostsReports />} />
                 <Route path="commens" element={<PostsComments />} />
-                <Route path="all" element={<PostsAll />} />
-                <Route path="" element={<PostsAll />} />
+                <Route path="all" element={<PublicationPosts />} />
+                <Route path="" element={<PublicationPosts />} />
             </Routes>
         </div>
     )

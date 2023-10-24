@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import $api from ".";
 import { ROLES } from "../types/enum";
-import { Activities } from "../types/types";
+import { Activities, GetAllPublishActivitiesInterface } from "../types/types";
 
 
 
@@ -16,5 +16,13 @@ export class ActivitiesHttp {
         return res.data
     }
     
+    
+    static async getAllPublishEvent(payload: {
+        pageNumber: number
+        activitiesId : string
+    }): Promise<GetAllPublishActivitiesInterface> {
+        const res: AxiosResponse<GetAllPublishActivitiesInterface> = await $api.post(`activities/get-publish-activities`, payload)        
+        return res.data
+    }
 
 }

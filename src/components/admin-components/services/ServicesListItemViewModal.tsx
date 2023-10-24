@@ -1,9 +1,8 @@
 import { Modal } from "../../ui/Modal"
 import { IconPicker } from "../../svg/IconFavor"
 import { IosTougle } from "../../ui/IosTougle"
-import { useEffect } from "react"
+import { ReactNode, useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { SERVICES_EVENT } from "../../../types/enum"
 
 export const ServicesListItemViewModal = ({
     name,
@@ -11,33 +10,28 @@ export const ServicesListItemViewModal = ({
 
     setIsOpen,
     onChangeTougle,
-
-
     handlerAddServices,
     handlerEditServices,
     handlerMoveServices,
     handlerDeleteItem,
     handlerVisiable,
+    children,
 }: {
     name: string
     isTougle: boolean
 
     setIsOpen: (o: boolean) => void
     onChangeTougle: () => void
-
     handlerAddServices: () => void
     handlerEditServices: () => void
-    handlerMoveServices: () => void
+    handlerMoveServices: (() => void) | null
     handlerDeleteItem: () => void
     handlerVisiable: () => void
+    children?: ReactNode
 }) => {
-    const navigate = useNavigate()
-    const location = useLocation()
-
     useEffect(() => {
         return () => handlerVisiable()
     }, [])
-
 
     return (
         <div className="services__modal">
@@ -60,13 +54,20 @@ export const ServicesListItemViewModal = ({
                         <IconPicker />
                         <span>Edit</span>
                     </div>
-                    <div
-                        className="services__modal-body-line"
-                        onClick={handlerMoveServices}
-                    >
-                        <IconPicker />
-                        <span>Move</span>
-                    </div>
+                    {handlerMoveServices ? (
+                        <>
+                            <div
+                                className="services__modal-body-line"
+                                onClick={handlerMoveServices}
+                            >
+                                <IconPicker />
+                                <span>Move</span>
+                            </div>
+                            {children}
+                        </>
+                    ) : (
+                        <></>
+                    )}
                     <div className="services__modal-body-visiable">
                         <IconPicker />
                         <span>Visible?</span>
@@ -87,5 +88,3 @@ export const ServicesListItemViewModal = ({
         </div>
     )
 }
-
-

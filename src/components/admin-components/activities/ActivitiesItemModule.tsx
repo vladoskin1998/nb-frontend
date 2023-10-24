@@ -2,7 +2,7 @@ import { useState } from "react"
 import ServicesItemView from "../services/ServicesItemView"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch } from "../../../utils/hooks"
-import ServicesItemViewModal from "../services/ServicesItemViewModal"
+import { ServicesListItemViewModal } from "../services/ServicesListItemViewModal"
 import {
     deleteActivities,
     visiableActivities,
@@ -47,21 +47,21 @@ export const ActivitiesItemModule = ({
             <ServicesItemView
                 numberView={numberView}
                 name={name}
-                link={`/admin/activities/eventactivities?id=${_id}`}
+                nextListLink={`/admin/activities/eventactivities?activitiesId=${_id}`}
                 setIsOpen={(b: boolean) => setIsOpen(b)}
             />
-            {
+            {/* {
                 isOpen &&
-                <ServicesItemViewModal
+                <ServicesListItemViewModal
                     isTougle={isTougle}
                     name={name}
-                    addItems={addActivities}
+                    handlerAddServices={addActivities}
                     handlerDeleteItem={handlerDeleteItem}
                     onChangeTougle={onChangeTougle}
                     setIsOpen={(b: boolean) => setIsOpen(b)}
                     handlerVisiable={handlerVisiable}
                 />
-            }
+            } */}
         </>
     )
 }

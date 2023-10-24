@@ -1,5 +1,6 @@
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { UserHeaderMain } from "../header/UserHeaderMain"
+import { PublicationPosts } from "../../general-components/publication-lists/PublicationPosts";
 
 export const NewsFeeds = () => {
 
@@ -13,6 +14,10 @@ export const NewsFeeds = () => {
     return (
         <div className="user">
             <UserHeaderMain />
+            <Routes>
+                <Route path="all" element={<PublicationPosts />} />
+                <Route path="" element={<PublicationPosts />} />
+            </Routes>
         </div>
     )
 }

@@ -1,19 +1,22 @@
 import { useState } from "react"
 import { IconLeftChevrons } from "../../svg/IconChevrons"
 import { AdminSubHeader } from "../../ui/AdminSubHeader"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import { InputSearch } from "../../ui/InputSearch"
 import ServicesFavorList from "./ServicesFavorList"
 
 const ServicesFavor = () => {
-    const [isOpenAdd, setIsOpenAdd] = useState(false)
+
     const [search, setSearch] = useState("")
     const [openFilter, setOpenFilter] = useState(true)
-
+    const [searchParams] = useSearchParams()
+    
     const navigate = useNavigate()
+
     const changeAdd = () => {
-        setIsOpenAdd((s) => !s)
-        navigate("servicesadd")
+        const categoryId = searchParams.get("categoryId")
+        const subCategoryId = searchParams.get("subCategoryId")
+        navigate(`/publish/service?categoryId=${categoryId}&subCategoryId=${subCategoryId}`)
     }
 
     const exit = () => navigate(-1)
@@ -25,7 +28,7 @@ const ServicesFavor = () => {
                     <button>
                         <IconLeftChevrons />
                     </button>
-                    <h6>ServicesFavor</h6>
+                    <h6>Publish Services</h6>
                 </div>
             </AdminSubHeader>
             <InputSearch
@@ -35,7 +38,7 @@ const ServicesFavor = () => {
                 changeValue={(s: string) => setSearch(s)}
             />
             <div>
-                <ServicesFavorList />
+                <ServicesFavorList changeAdd={changeAdd}/>
             </div>
         </>
     )
