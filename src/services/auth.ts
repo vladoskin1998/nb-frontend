@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import $api from "../http";
 import { AuthResponseInterface } from "../types/types";
 import { METHOD_AUTH } from "../types/enum";
+import { AxiosResponse } from "axios";
 
 interface AuthorizationPayload {
     method: METHOD_AUTH;
@@ -58,3 +59,19 @@ export const logout = createAsyncThunk(
         window.location.href = '/auth'
     }
 )
+
+
+export interface ConfirmEmailResponseInterface {
+    isCheckedEmail: boolean
+}
+
+export interface ConfirmEmailPayloadInterface {
+    email: string
+    code: number
+}
+export const confirmEmail = createAsyncThunk<ConfirmEmailResponseInterface, ConfirmEmailPayloadInterface>(
+    `auth/confirm-code-email`, async (payload) => {
+        const res: AxiosResponse<ConfirmEmailResponseInterface> = await $api.post(`auth/confirm-code-email`, payload)
+        return res.data
+    }
+) 

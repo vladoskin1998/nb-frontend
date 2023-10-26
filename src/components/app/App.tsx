@@ -11,6 +11,8 @@ import ProtectedRoute from "../route/ProtectedRoute"
 import { SocketContextProvider } from "../../context/SocketContext"
 import UserRouter from "../route/UserRouter"
 import { Publish } from "../general-components/publication/Publish"
+import { AuthRegistrationConfirm } from "../general-components/auth/AuthRegistrationConfirm"
+import { AuthRegistrationConfirmCode } from "../general-components/auth/AuthRegistrationConfirmCode"
 
 export default function App() {
     return (
@@ -43,6 +45,8 @@ export default function App() {
 
                     <Route path="/auth">
                         <Route path="forget-pass/*" element={<ForgetPass />} />
+                        <Route path="confirm-code" element={<AuthRegistrationConfirmCode />} />
+                        <Route path="confirm" element={<AuthRegistrationConfirm />} />
                         <Route path="" element={<Auth />} />
                     </Route>
 

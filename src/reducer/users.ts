@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 import {
-    authorization, refresh,
+    authorization, confirmEmail, refresh,
 } from "../services/auth"
 import { ROLES } from "../types/enum"
 import { Nullable } from "../types/types";
@@ -12,6 +12,7 @@ export interface UserInitialStateInterface {
     role: ROLES;
     fullName: string;
     phone?: string
+    isCheckedEmail: boolean
 }
 
 const initialState: UserInitialStateInterface = {
@@ -20,7 +21,8 @@ const initialState: UserInitialStateInterface = {
     email: "",
     role: ROLES.ADMIN,
     fullName: "",
-    phone: ""
+    phone: "",
+    isCheckedEmail: false
 
 }
 
@@ -46,11 +48,14 @@ export const userReducer = createSlice({
         builder
             .addCase(refresh.fulfilled, (state, { payload }) => {
                 Object.assign(state, payload.user);
-
             })
             .addCase(authorization.fulfilled, (state, { payload }) => {
                 Object.assign(state, payload.user);
             })
+            .addCase(confirmEmail.fulfilled, (state, { payload }) => {
+                state.isCheckedEmail = payload.isCheckedEmail
+            })
+
             .addMatcher(
                 (action) => {
                     return (

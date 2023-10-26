@@ -4,6 +4,7 @@ import {
     logout,
     authorizationMessenger,
     refresh,
+    confirmEmail
 } from "../services/auth"
 import { ROLES } from "../types/enum"
 
@@ -12,6 +13,8 @@ interface InitialStateInterface {
     isLoad: boolean,
     accessToken: string | null | undefined
     authError: string
+    codeError: string
+ 
 }
 
 const initialState: InitialStateInterface = {
@@ -19,6 +22,8 @@ const initialState: InitialStateInterface = {
     isLoad: false,
     accessToken: null,
     authError: "",
+    codeError: "",
+
 }
 
 export const authReducer = createSlice({
@@ -52,18 +57,18 @@ export const authReducer = createSlice({
                 state.isAuth = false
             })
 
-            .addMatcher(
-                (action) => {
-                    return (
-                        action.type.endsWith("/pending") ||
-                        action.type.endsWith("/fulfilled") ||
-                        action.type.endsWith("/rejected")
-                    )
-                },
-                (state, action) => {
-                    state.isLoad = action.type.endsWith("/pending")
-                }
-            )
+        // .addMatcher(
+        //     (action) => {
+        //         return (
+        //             action.type.endsWith("/pending") ||
+        //             action.type.endsWith("/fulfilled") ||
+        //             action.type.endsWith("/rejected")
+        //         )
+        //     },
+        //     (state, action) => {
+        //         state.isLoad = action.type.endsWith("/pending")
+        //     }
+        // )
     },
 })
 

@@ -3,7 +3,30 @@
         top: 20px;
     }
     .forget {
-        padding: 79px 40px 24px 40px;
+        padding: 79px 40px 60px 40px;
+    }
+    .forget__title{
+        font-size: 22px;
+    }
+    .forget__subtitle {
+        font-size: 12px;
+        text-wrap: nowrap;
+        margin-top: 10px;
+    }
+    .location__but {
+        margin-top: 20px;
+    }
+    .location__current-subtitle{
+        margin-top: 0px;
+    }
+    .location__current-map-button{
+        top: 20px;
+    }
+    .location__viewmap{
+        height: 150px;
+    }
+    .location__mess{
+        font-size: 10px;
     }
     .profile__method-body {
         margin-top: 25px;

@@ -29,20 +29,26 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const location = useLocation()
     const dispatch = useAppDispatch()
     const { isAuth } = useAppSelector((s) => s.authReducer)
-    const { _id, role } = useAppSelector((s) => s.userReducer)
+    const { _id, role, isCheckedEmail } = useAppSelector((s) => s.userReducer)
     const navigate = useNavigate()
 
     useEffect(() => {
-        const accessToken = localStorage.getItem("accessToken")
-        if (accessToken) {
+        // const accessToken = localStorage.getItem("accessToken")
+        // if (accessToken) {
             dispatch(refresh())
                 .unwrap()
                 .then((res: AuthResponseInterface) => {})
-        }
+                .catch(e => {
+                    navigate(`/auth`)
+                })
+        // }
     }, [])
 
     useEffect(() => {
-        if (isAuth && _id) {
+        if(isAuth && _id && !isCheckedEmail){
+            navigate(`/auth/confirm`)
+        }
+        if (isAuth && _id && isCheckedEmail) {
             dispatch(getIdentityInforamation({ _id }))
                 .unwrap()
                 .then((res) => {
@@ -56,7 +62,7 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
                    
                 })
         }
-    }, [isAuth, _id])
+    }, [isAuth, _id, isCheckedEmail])
 
     return <AppContext.Provider value={
         {userRoleUrl}

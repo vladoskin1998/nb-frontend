@@ -17,7 +17,7 @@ const AuthHeader = ({
     const hendlerAuthMessenger = (
         method: METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE
     ) => {
-        window.location.href = `${baseURL}/api/auth/${method}`
+        window.location.href = `https://environs.life/api/auth/${method}`
     }
 
     return (
