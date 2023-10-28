@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { TextareaAutosize } from "@mui/base/TextareaAutosize"
 import { useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
@@ -13,6 +13,10 @@ export const ProfileAbout = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const { _id, role } = useAppSelector((s) => s.userReducer)
+
+    useEffect(() => {
+        setAboutMe(initAboutMe)
+    }, [initAboutMe])
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         const newText = event.target.value

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FAMILYSTATUS } from "../../../types/enum"
 import { IconProfileCircle } from "../../svg/IconProfile"
 import {  useNavigate } from "react-router-dom"
@@ -15,6 +15,10 @@ export const ProfileFamilyStatus = () => {
     const [familyStatus, setFamilyStatus] = useState<FAMILYSTATUS | null>(initFamilyStatus)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        setFamilyStatus(initFamilyStatus)
+    }, [initFamilyStatus])
 
     const handlerChangeFamilyStatus = async () => {
         try {

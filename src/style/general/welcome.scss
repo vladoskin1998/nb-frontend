@@ -1,0 +1,48 @@
+.welcome {
+    padding: 42px 40px 125px 40px;
+    min-height: 100%;
+
+    @include flex-all-center;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100%;
+    gap: 12px;
+    &-img {
+        @include flex-all-center;
+        flex-direction: column;
+        &-1 {
+            max-height: 40px;
+            height: 100%;
+            width: auto;
+            margin-bottom: 12px;
+        }
+        &-2 {
+            max-height: 254px;
+            height: 100%;
+            width: auto;
+        }
+    }
+    &-title {
+        @include title-main;
+        font-size: 400;
+    }
+    &-subtitle {
+        text-align: center;
+        @include sub-title-main;
+    }
+    &-btitle {
+        text-align: center;
+        @include title-main;
+        margin-bottom: 8px;
+    }
+    &-buttons {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 80px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+}

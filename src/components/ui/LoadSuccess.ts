@@ -21,6 +21,6 @@ export const success = (): void => {
 
     setTimeout(() => {
       document.body.removeChild(messageDiv);
-    }, 1500);
+    }, 750);
   }
   

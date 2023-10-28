@@ -28,6 +28,14 @@
         position: relative;
 
     }
+    &__success-img{
+        &-1{
+            height: 40px;
+        }
+        &-2{
+             height: 250px;
+        }
+    }
     &__viewmap{
         margin-top: 16px;
         width: 100%;

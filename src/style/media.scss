@@ -40,4 +40,18 @@
     .profile__zone-map-google{
         height: 450px !important;
     }
+    .location__success-img{
+            &-1{
+                height: 30px;
+            }
+            &-2{
+                 height: 180px;
+            }
+    }
+    .authsuccess__body-title{
+        font-size: 22px;
+    }
+    .authsuccess__body-setup{
+        font-size: 14px;
+    }
 }

@@ -12,6 +12,7 @@ const UserRouter = () => {
     <div>
       <Routes>
         <Route path="messeges/*" element={<ProtectedRoute element={<Messeges />} />} />
+        <Route path="posts" element={<ProtectedRoute element={<NewsFeeds />} />} />
         <Route path="*" element={<ProtectedRoute element={<NewsFeeds />} />} />
       </Routes>
       <FooterNav/>

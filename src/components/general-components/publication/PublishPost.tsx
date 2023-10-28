@@ -8,13 +8,15 @@ import { useAppSelector } from "../../../utils/hooks"
 import { success } from "../../ui/LoadSuccess"
 import { CoordinatsInterface, PublishPostInterface } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
+import { useNavigate } from "react-router-dom"
 
 export const PublishPost = ({
     currentPrivacy,
 }: {
     currentPrivacy: PRIVACY
 }) => {
-    const { _id } = useAppSelector((s) => s.userReducer)
+    const navigate = useNavigate()
+    const { _id, role } = useAppSelector((s) => s.userReducer)
     const profile = useAppSelector((s) => s.profileReducer)
 
     const [addressLocation, setAddressLocation] = useState(
@@ -59,6 +61,7 @@ export const PublishPost = ({
                 await PublishPostHttp.addPost(formCatData)
 
             success()
+            navigate(`/${role}/posts`)
         } catch (error) {
             alert("publish post new" + error)
         }

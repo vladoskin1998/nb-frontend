@@ -66,13 +66,12 @@ export const PublicationMainComponent = ({
                 {files.map((item, index) => (
                     <div className="publish__main-list-item">
                         <button
-                            className="services__add-remove"
+                            className="services__add-remove publish__main-list-item-remove"
                             onClick={() => handlerDeleteFile(index)}
                         >
                             <IconAdminClose />
                         </button>
                         <img
-                            className="ui-file-button-image"
                             src={URL.createObjectURL(item)}
                             alt="Вибране зображення"
                         />

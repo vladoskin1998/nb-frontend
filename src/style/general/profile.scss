@@ -76,7 +76,9 @@
             transform: translateX(-50%);
             bottom: -21px;
             @include button-main;
-            text-wrap: nowrap;
+            a{
+                text-wrap: nowrap;
+            }
         }
         &-map {
             position: fixed;
@@ -239,6 +241,7 @@
     &__certificates {
         flex-grow: 1;
         overflow-y: scroll;
+        overflow: visible;
         margin-top: 45px;
         margin-bottom: 15px;
         &-body {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { IconAdminClose } from "../../svg/IconAdminHeader"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
@@ -22,6 +22,11 @@ export const ProfilePicture = () => {
     let fileTakeNowlRef = useRef<HTMLInputElement | null>(null)
 
     const navigate = useNavigate()
+
+    
+    useEffect(() => {
+        setPhotoUrl(initAvatar)
+    }, [avatarFileName])
 
     const takePhoto = async () => {
         try {

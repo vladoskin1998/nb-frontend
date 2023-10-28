@@ -6,7 +6,7 @@ import { GetAllPostInterface, PublishPostInterface } from "../types/types";
 
 export class PublishPostHttp {
 
-    static async getPost(payload: {pageNumber:number}) {
+    static async getPost(payload: {pageNumber:number,userId:string}) {
         const res: AxiosResponse<GetAllPostInterface> = await $api.post("posts/get-posts",payload)
         return res.data
     }

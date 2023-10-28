@@ -85,7 +85,10 @@ export type PostUserInterface =  {
     coordinates: CoordinatsInterface,
     privacyPost: PRIVACY,
     createdPostDate: Date,
-    addressLocation: string
+    addressLocation: string,
+    likes: number,
+    isLiked: boolean,
+    likeId: string,
 }
 
 export interface GetAllPostInterface {

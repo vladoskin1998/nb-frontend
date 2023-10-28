@@ -77,8 +77,10 @@
         }
         &-row4 {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: 1fr 1fr 1fr auto;
             width: 100%;
+            gap: 12px;
+            align-items: center;
             button {
                 @include flex-all-center;
                 height: 40px;

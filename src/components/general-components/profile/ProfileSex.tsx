@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { ORIENTATION, SEX } from "../../../types/enum"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
@@ -18,6 +18,11 @@ export const ProfileSex = () => {
     const [orientation, setOrientation] = useState<ORIENTATION>(initOrientation)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        setSex(initSex)
+        setOrientation(initOrientation)
+    }, [initSex,initOrientation])
 
     const handlerChangeSexOrientation = async () => {
         try {

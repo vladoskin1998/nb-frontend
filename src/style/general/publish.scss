@@ -62,17 +62,23 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
+            position: relative;
             &-item{
-                width: fit-content;
                 position: relative;
                 .services__add-remove{
                     top: -25px;
                 }
+                height: 108px;
+                width: 100%;
+                overflow: visible;
+                &-remove{
+
+                }
             }
             img{
                 border-radius: 8px;
-                width: 161px;
-                height: 108px;
+                width: 100%;
+                height: 100%;
                 object-fit: cover;
             }
 

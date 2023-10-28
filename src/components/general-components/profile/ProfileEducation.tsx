@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { EDUCATION } from "../../../types/enum"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
@@ -16,11 +16,17 @@ export const ProfileEducation = () => {
     const [education, setEducation] = useState<EDUCATION | null>(
         initEducation || null
     )
+
     const [studySchool, setStudySchool] = useState(initStudySchool || "")
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
+    useEffect(() => {
+        setEducation( initEducation || null)
+        setStudySchool(initStudySchool || "")
+    }, [initEducation,initStudySchool])
+    
     const handlerChangeEducation = async () => {
         try {
             dispatch(setLoader(true))

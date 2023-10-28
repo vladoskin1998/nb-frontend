@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useInView } from "react-intersection-observer"
 import { InputSearch } from "../../ui/InputSearch"
 import { IconServicesAllPoint } from "../../svg/IconServicesAll"
@@ -6,13 +6,21 @@ import { PostUserInterface } from "../../../types/types"
 import { PublishPostHttp } from "../../../http/publish-post-http"
 import { baseURL } from "../../../utils/config"
 import moment from "moment"
-import { IconPostsLike, IconPostsRepost } from "../../svg/IconPosts"
-import { IconComment } from "../../svg/IconFavor"
-import { IconProfileInfoBookmark } from "../../svg/IconProfileInfo"
 import { PostSlick } from "../../ui/PostSlick"
 import { useLocation } from "react-router-dom"
+import { PublicationPostsPanel } from "./PublicationPostsPanel"
+import { useAppSelector } from "../../../utils/hooks"
+import {
+    IconPostsLike,
+    IconPostsRedLike,
+    IconPostsRepost,
+} from "../../svg/IconPosts"
+import { IconComment } from "../../svg/IconFavor"
+import { IconProfileInfoBookmark } from "../../svg/IconProfileInfo"
+import { FeedBackHttp } from "../../../http/feedback-http"
 
 export const PublicationPosts = () => {
+    const { _id } = useAppSelector((s) => s.userReducer)
     const [searsh, setSearch] = useState("")
     const [allPageNumber, setAllPageNumber] = useState(1)
     const [pageNumber, setPageNumber] = useState(1)
@@ -27,6 +35,7 @@ export const PublicationPosts = () => {
             if (inView && allPageNumber >= pageNumber) {
                 const res = await PublishPostHttp.getPost({
                     pageNumber,
+                    userId: _id,
                 })
                 console.log(res)
                 setPosts((s) => [...s, ...res.posts])
@@ -38,9 +47,38 @@ export const PublicationPosts = () => {
         effectBody()
     }, [inView])
 
+    const updateLike = async (likeId: string, postId: string) => {
+        await FeedBackHttp.updateLike({
+            likeId,
+            userId: _id,
+        })
+        setPosts((s) =>
+            s.map((p) => {
+                if (p._id === postId) {
+                    return {
+                        ...p,
+                        isLiked: !p.isLiked,
+                        likes: p.isLiked ? p.likes - 1 : p.likes + 1,
+                    }
+                } else {
+                    return p
+                }
+            })
+        )
+    }
+
     return (
-        <div className={`user__newsfeed ${(location.pathname=== '/admin/posts') &&  'user__newsfeed--admin'}`}>
-            <div className={`${!(location.pathname=== '/admin/posts') &&  'user__newsfeed-search'}`}>
+        <div
+            className={`user__newsfeed ${
+                location.pathname === "/admin/posts" && "user__newsfeed--admin"
+            }`}
+        >
+            <div
+                className={`${
+                    !(location.pathname === "/admin/posts") &&
+                    "user__newsfeed-search"
+                }`}
+            >
                 <InputSearch
                     placeholder={
                         <>
@@ -51,9 +89,7 @@ export const PublicationPosts = () => {
                     changeValue={setSearch}
                 />
             </div>
-            <h5 className="user__newsfeed-title">
-                Newsfeed
-            </h5>
+            <h5 className="user__newsfeed-title">Newsfeed</h5>
             <div className="admin__posts-list">
                 {posts.map((item) => (
                     <div className="admin__posts-list-item" key={item._id}>
@@ -101,9 +137,19 @@ export const PublicationPosts = () => {
                             <h6>{item.text}</h6>
                         </div>
                         <div className="admin__posts-list-row4">
-                            <button>
-                                <IconPostsLike />
-                                <span>0</span>
+                            <button
+                                onClick={() =>
+                                    updateLike(item.likeId, item._id)
+                                }
+                            >
+                                <div>
+                                    {item.isLiked ? (
+                                        <IconPostsRedLike />
+                                    ) : (
+                                        <IconPostsLike />
+                                    )}
+                                </div>
+                                <span>{item.likes}</span>
                             </button>
                             <button>
                                 <IconComment />
@@ -113,10 +159,9 @@ export const PublicationPosts = () => {
                                 <IconPostsRepost />
                                 <span>0</span>
                             </button>
-                            <button>
+                            <div>
                                 <IconProfileInfoBookmark />
-                                <span>0</span>
-                            </button>
+                            </div>
                         </div>
                     </div>
                 ))}

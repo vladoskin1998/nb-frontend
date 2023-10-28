@@ -22,7 +22,10 @@ export const ProfileBirth = () => {
     const [city, setCity] = useState(cityBirth)
     const navigate = useNavigate()
 
-    console.log("pickerValue------>")
+    useEffect(() => {
+        setPickerValue( dayjs(dateBirth))
+        setCity(cityBirth)
+    }, [dateBirth, cityBirth])
 
     const handlerChangeBirth = async () => {
         try {

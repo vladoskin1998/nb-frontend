@@ -12,13 +12,13 @@ const LocationSuccess = () => {
                     <img
                         src="/Images/ImageSuccess.png"
                         alt="not-image"
-                        className="authsuccess__body-img-1"
+                        className="location__success-img-1"
                     />
                     <h4 className="authsuccess__body-title">Neighbor Harbor</h4>
                     <img
                         src="/Images/GirlsSuccess.png"
                         alt=""
-                        className="authsuccess__body-img-2"
+                        className="location__success-img-2"
                     />
                     <h4 className="authsuccess__body-title authsuccess__body-subtitle">
                         Welcome,
