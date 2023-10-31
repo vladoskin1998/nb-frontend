@@ -7,7 +7,7 @@ import { PublishPostHttp } from "../../../http/publish-post-http"
 import { baseURL } from "../../../utils/config"
 import moment from "moment"
 import { PostSlick } from "../../ui/PostSlick"
-import { useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { PublicationPostsPanel } from "./PublicationPostsPanel"
 import { useAppSelector } from "../../../utils/hooks"
 import {
@@ -18,9 +18,10 @@ import {
 import { IconComment } from "../../svg/IconFavor"
 import { IconProfileInfoBookmark } from "../../svg/IconProfileInfo"
 import { FeedBackHttp } from "../../../http/feedback-http"
+import { ROLES } from "../../../types/enum"
 
 export const PublicationPosts = () => {
-    const { _id } = useAppSelector((s) => s.userReducer)
+    const { _id, role } = useAppSelector((s) => s.userReducer)
     const [searsh, setSearch] = useState("")
     const [allPageNumber, setAllPageNumber] = useState(1)
     const [pageNumber, setPageNumber] = useState(1)
@@ -29,11 +30,12 @@ export const PublicationPosts = () => {
         threshold: 0,
     })
     const location = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const effectBody = async () => {
             if (inView && allPageNumber >= pageNumber) {
-                const res = await PublishPostHttp.getPost({
+                const res = await PublishPostHttp.getPosts({
                     pageNumber,
                     userId: _id,
                 })
@@ -67,6 +69,23 @@ export const PublicationPosts = () => {
         )
     }
 
+    const navigateToComments = (postId:string) => {
+        navigate(`/${role}/comments?postId=${postId}`)
+    }
+
+    const toProfileInfo = (prop: {
+        _id:string,
+        email:string,
+        role:string,
+        fullName:string,
+    }) => {
+        console.log(prop);
+        
+        navigate("/profileinfo", {
+            state: prop,
+        })
+    }
+
     return (
         <div
             className={`user__newsfeed ${
@@ -94,7 +113,14 @@ export const PublicationPosts = () => {
                 {posts.map((item) => (
                     <div className="admin__posts-list-item" key={item._id}>
                         <div className="admin__posts-list-row1">
-                            <div className="admin__posts-list-row1-img">
+                            <div className="admin__posts-list-row1-img" onClick={() => toProfileInfo(
+                                {
+                                    _id:item.userId._id,
+                                    email: '',
+                                    role: ROLES.USER,
+                                    fullName: item.userId.fullName,
+                                }
+                            )}>
                                 <img
                                     src={`${baseURL}/uploads/avatar/${item.userIdentityId.avatarFileName}`}
                                     alt=""
@@ -151,9 +177,9 @@ export const PublicationPosts = () => {
                                 </div>
                                 <span>{item.likes}</span>
                             </button>
-                            <button>
+                            <button onClick={() => navigateToComments(item._id)}>
                                 <IconComment />
-                                <span>0</span>
+                                <span>{item.countComments}</span>
                             </button>
                             <button>
                                 <IconPostsRepost />

@@ -17,6 +17,7 @@ import { useDispatch } from "react-redux"
 import { LocationEditType } from "./UserEditMap"
 import { UserHttp } from "../../../http/user-http"
 import { success } from "../../ui/LoadSuccess"
+import { IdentityHttp } from "../../../http/identity-http"
 
 interface UserItemModuleProps extends UserInitialStateInterface {
     blockUser: (id: string) => void
@@ -41,10 +42,12 @@ export const UserItemModule = (props: UserItemModuleProps) => {
     }
 
     useEffect(() => {
-        $api.post("identity/get-user-identity", { _id: props._id }).then(
-            (res: AxiosResponse<UserIdentityInterface>) =>
-                setUserIdentity(res.data)
-        )
+        const effectBody = async () => {
+            const res = await IdentityHttp.getUserIdentity({ _id: props._id })
+            setUserIdentity(res)
+        }
+
+        effectBody()
     }, [props])
 
     const openChat = () => {

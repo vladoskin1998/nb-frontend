@@ -2,45 +2,45 @@ import { PRIVACY, ROLES } from "./enum";
 
 export type RoleType = ROLES.ADMIN | ROLES.USER
 
-export interface UserMainInterface{
+export interface UserMainInterface {
     email: string;
     role: ROLES;
     _id: string;
     fullName: string;
 }
 
-export interface AuthResponseInterface{
+export interface AuthResponseInterface {
     user: UserMainInterface;
     accessToken: string;
     refreshToken: string;
 }
 
 
-export interface CoordinatsInterface{
-    lat: number , lng: number  
+export interface CoordinatsInterface {
+    lat: number, lng: number
 }
 
 export type Nullable<T> = {
     [K in keyof T]?: T[K] | null;
-  };
+};
 
 
-  export interface OptionsItemType{
+export interface OptionsItemType {
     _id: string | number
     title: any
 }
 export type OptionsType = Array<OptionsItemType>
 
-export type MessageType =  { chatId:string, senderId:string, content:string, timestamp:Date, isRead:boolean, file:string | null }
+export type MessageType = { chatId: string, senderId: string, content: string, timestamp: Date, isRead: boolean, file: string | null }
 export type ParticipantType = {
-        userId: string,
-        avatarFileName: string,
-        fullName: string,
-    }
+    userId: string,
+    avatarFileName: string,
+    fullName: string,
+}
 
 export type OpenChatData = {
     participants: ParticipantType[],
-    chatId: string 
+    chatId: string
 }
 
 
@@ -69,11 +69,13 @@ export interface PublishPostInterface {
     coordinates: { lat: number; lng: number };
 }
 
-export type PostUserInterface =  {
+export type PostUserInterface = {
     _id: string,
     userId: {
         _id: string,
         fullName: string,
+        email?: string,
+        role?: RoleType,
     },
     userIdentityId: {
         _id: string,
@@ -89,6 +91,8 @@ export type PostUserInterface =  {
     likes: number,
     isLiked: boolean,
     likeId: string,
+    countComments: number,
+    viewPost: number
 }
 
 export interface GetAllPostInterface {
@@ -96,7 +100,7 @@ export interface GetAllPostInterface {
     posts: PostUserInterface[]
 }
 
-export type PublishServiceItemInterface =  {
+export type PublishServiceItemInterface = {
     _id: string,
     userId: {
         _id: string,
@@ -123,7 +127,7 @@ export interface GetAllPublishServicetInterface {
 }
 
 
-export type PublishEventItemInterface =  {
+export type PublishEventItemInterface = {
     _id: string,
     userId: {
         _id: string,
@@ -148,4 +152,24 @@ export type PublishEventItemInterface =  {
 export interface GetAllPublishActivitiesInterface {
     allPageNumber: number,
     publishActivities: PublishEventItemInterface[]
+}
+
+export interface CommentInterface {
+    _id: string
+    createdDateComment: Date
+    isLiked: boolean
+    likeId: string
+    likes: number
+    postId: string
+    text: string
+  
+        userId: {
+            _id: string,
+            fullName: string,
+        },
+        userIdentityId: {
+            _id: string,
+            avatarFileName: string,
+        }
+    
 }

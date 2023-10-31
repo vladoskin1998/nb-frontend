@@ -75,7 +75,7 @@ const GeoLocationModule = () => {
 
         const options = {
             types: ["geocode"],
-            componentRestrictions: { country: "UA" },
+            // componentRestrictions: { country: "UA" },
         }
 
         const autocomplete = new google.maps.places.Autocomplete(inputRef.current, options)

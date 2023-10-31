@@ -1,0 +1,176 @@
+.commenst{
+    &__back{
+        position: absolute;
+        z-index: 2;
+        padding: 40px 24px 0 24px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        .ui-button-back-route{
+            background: $color__black1;
+            svg{
+                path{
+                    stroke: $color__grey3;
+                }
+            }
+        }
+        &-points{
+            background: $color__black1;
+            @include flex-all-center;
+        }
+    }
+    &__slick{
+        position: relative;
+        &-img{
+            height: 290px;
+            border-radius: 0px;
+            & img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        &-bookmark{
+            position: absolute;
+            right: 24px;
+            bottom: -24px;
+            svg{
+                path{
+                    stroke: $color__blue1;
+                }
+            }
+        }
+    }   
+    &__content{
+        padding: 24px 40px 10px 40px;
+    }
+    &__user{
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 12px;
+        &-img{
+            width: 48px;
+            height: 48px;
+            border-radius: 100%;
+            overflow: hidden;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit:  cover;
+
+            }
+        }
+        &-info{
+            &-name{
+                font-size: 16px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 30px; 
+            }
+            &-time{
+                color: $color__grey10;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%; 
+            }
+        }
+    }
+    &-title{
+        margin-top: 24px;
+        @include title-main;
+    }
+    &-subtitle{
+        margin-top: 16px;
+        @include sub-title-main;
+    }
+    &__viewmap{
+        margin-top: 24px;
+        border-radius: 12px;
+        background: $color__white;
+        padding: 20px ;
+    }
+    &__view{
+        position: relative;
+        height: 45px;
+        &>div{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        &>div:first-child{
+            transform: translateX(-125%);
+            z-index: 1;
+        }
+        &>div:last-child{
+            transform: translateX(25%);
+            z-index: 3;
+        }
+        &-text{
+            margin-top: 12px;
+            text-align: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+            b{
+                font-weight: 600;
+            }
+        }
+    }
+    &__map{
+        margin-top: 10px;
+        &-text{
+            color: $color__blue1;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 140%;
+            text-decoration-line: underline;
+        }
+    }
+    &__item{    
+        margin-top: 24px; 
+        position: relative;
+        &-like{
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        &_body{
+            &-user{
+                 font-size: 12px;
+            }
+           &-likes{
+            padding-top: 4px;
+            display: flex;
+            gap: 16px;
+           }
+            
+            &-text{
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%; 
+            }
+        }
+        
+    }
+    .admin__posts-list-row4{
+        padding: 14px 0;
+        button{
+            background: $color__white;
+        }
+    }
+    &__input{
+        background: $color__white;
+        border-radius: 8px;
+        box-shadow: 0px 2px 5px 0px rgba(38, 51, 77, 0.03);
+        padding:7px 7px 7px 20px ;
+        display: grid;
+        grid-template-columns: 1fr 60px;
+        column-gap: 10px;
+    }
+}

@@ -22,9 +22,10 @@ var settings = {
 export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
     const [category, setCategory] = useState(ACTIVITIE.ALL)
     const [isPersonal, setIsPersonal] = useState(true)
-    const { aboutMe, skills, interests, certificatesFileName } = useAppSelector(
+    const {  skills, interests } = useAppSelector(
         (s) => s.profileReducer
     )
+    const {  _id } = useAppSelector((s) => s.userReducer)
     return (
         <div className="profileinfo__perprof">
             <SliderButtons
@@ -39,26 +40,17 @@ export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
                         About me
                     </h5>
                     <p className="profileinfo__perprof-about-text">
-                        {props?.userIdentity.aboutMe
-                            ? props?.userIdentity.aboutMe
-                            : aboutMe}
+                        {props?.userIdentity.aboutMe}
                     </p>
                     <h5 className="profileinfo__avatar-information profileinfo__perprof-skills-title">
-                        Skills (
-                        {props?.userIdentity.skills
-                            ? props?.userIdentity.skills.length
-                            : skills.length}
-                        )
+                        Skills ({props?.userIdentity.skills.length})
                     </h5>
                     <div className="profileinfo__perprof-skills-list">
-                        {(props?.userIdentity.skills
-                            ? props?.userIdentity.skills
-                            : skills
-                        ).map((item) => (
+                        {props?.userIdentity.skills.map((item) => (
                             <div
                                 className={`profileinfo__perprof-skills-list-item
                                 ${
-                                    props?.userIdentity.skills &&
+                                    props?._id !== _id  &&
                                     skills.find((it) => it.title === item.title)
                                         ? "profileinfo__perprof-skills-list-active"
                                         : ""
@@ -71,27 +63,20 @@ export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
                         ))}
                     </div>
                     <h5 className="profileinfo__avatar-information profileinfo__perprof-skills-title">
-                        Interests (
-                        {props?.userIdentity.interests.length
-                            ? props?.userIdentity.interests.length
-                            : interests.length}
-                        )
+                        Interests ({props?.userIdentity.interests.length})
                     </h5>
                     <div className="profileinfo__perprof-skills-list">
-                        {(props?.userIdentity.interests
-                            ? props?.userIdentity.interests
-                            : interests
-                        ).map((item) => (
+                        {props?.userIdentity.interests.map((item) => (
                             <div
-                            className={`profileinfo__perprof-skills-list-item
+                                className={`profileinfo__perprof-skills-list-item
                             ${
-                                props?.userIdentity.interests &&
+                                props?._id !== _id &&
                                 interests.find((it) => it.title === item.title)
                                     ? "profileinfo__perprof-skills-list-active"
                                     : ""
                             }
                         `}
-                        >
+                            >
                                 <IconProfileCircle />
                                 {item.title}
                             </div>
@@ -105,30 +90,25 @@ export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
                 <>
                     <h5 className="profileinfo__avatar-information profileinfo__perprof-skills-title">
                         Certificates (
-                        {props?.userIdentity.certificatesFileName
-                            ? props?.userIdentity.certificatesFileName.length
-                            : certificatesFileName.length}
-                        )
+                        {props?.userIdentity.certificatesFileName.length})
                     </h5>
                     <div className="profileinfo__perprof-certificates">
                         <Slider {...settings}>
-                            {(props?.userIdentity.certificatesFileName
-                                ? props?.userIdentity.certificatesFileName
-                                : certificatesFileName
-                            ).map((item) => (
-                                <div className="profileinfo__perprof-certeficate">
-                                    <img
-                                        src={`${baseURL}/uploads/certificates/${item}`}
-                                        alt=""
-                                        key={item}
-                                    />
-                                </div>
-                            ))}
+                            {props?.userIdentity.certificatesFileName.map(
+                                (item) => (
+                                    <div className="profileinfo__perprof-certeficate">
+                                        <img
+                                            src={`${baseURL}/uploads/certificates/${item}`}
+                                            alt=""
+                                            key={item}
+                                        />
+                                    </div>
+                                )
+                            )}
                         </Slider>
                     </div>
                 </>
             )}
-
             <div className="profileinfo__perprof-skills-list">
                 {list.map((item) => (
                     <button

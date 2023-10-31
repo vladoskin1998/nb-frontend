@@ -1,5 +1,12 @@
 import React from "react"
 
+export const WelcomeLogo = () => {
+  return (
+    <div className="welcome__logo">NeighborHarbor</div>
+  )
+}
+
+
 export const WelcomeYourCompas = () => {
     return (
         <>

@@ -45,7 +45,6 @@ export const UserItemView = (props: UserItemViewProps) => {
                 email,
                 role,
                 fullName,
-                userIdentity,
             },
         })
     }

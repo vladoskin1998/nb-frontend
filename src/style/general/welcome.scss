@@ -1,12 +1,14 @@
 .welcome {
     padding: 42px 40px 125px 40px;
     min-height: 100%;
-
     @include flex-all-center;
     flex-direction: column;
     justify-content: space-between;
     min-height: 100%;
     gap: 12px;
+    background-image: url("../../../public/Images/welcomebg.png");
+    background-repeat: no-repeat;
+    background-position: center;
     &-img {
         @include flex-all-center;
         flex-direction: column;
@@ -44,5 +46,57 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 14px;
+        &-first{
+            grid-template-columns: 1fr;
+            &>button:first-child{
+                display: none;
+            }
+        }
     }
 }
+
+
+.welcome__logo {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $color__black1;
+    border-radius: 16px 0px;
+    color: $color__grey3;
+    animation:  fadeIn 1.5s ease;
+    padding: 10px 20px;
+    &::before {
+        content: ''; 
+        width: 100%; 
+        height: 100%; 
+        position: absolute;
+        background: $color__grey3; 
+        top: 0;
+        left: 0;
+        transform: scale(0); 
+        opacity: 0; 
+        animation: shine 2s ease; 
+      }
+      @keyframes shine {
+        0% {
+          transform: scale(0);
+        }
+        80% {
+          transform: scale(1.2); 
+          opacity: 0.1;
+        }
+        100% {
+          transform: scale(0);
+          opacity: 0;
+        }
+      }
+    @keyframes fadeIn {
+      0% {
+        opacity: 0; 
+      }
+      100% {
+        opacity: 1; 
+      }
+    }
+  }

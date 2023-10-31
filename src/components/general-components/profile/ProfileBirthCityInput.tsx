@@ -14,7 +14,7 @@ export const ProfileCityBirthInput = ({
 
         const options = {
             types: ["(cities)"],
-            componentRestrictions: { country: "UA" },
+            // componentRestrictions: { country: "UA" },
         }
 
         const autocomplete = new google.maps.places.Autocomplete(input, options)
