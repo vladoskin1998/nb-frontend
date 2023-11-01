@@ -1,10 +1,11 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, useSearchParams } from "react-router-dom";
 import { ButtonBackRoute } from "../../../ui/ButtonBackRoute";
 import { IconsChat, IconsMessage } from '../../../svg/IconsResetPass'
 import RecoveryPhone from "./RecoveryPhone";
 import RecoveryEmail from "./RecoveryEmail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChangePassword from "./ChangePassword";
+import { AuthHttp } from "../../../../http/auth";
 
 const ForgetPass = () => {
 
@@ -37,6 +38,22 @@ const ForgetPassBody = () => {
 
     const navigate = useNavigate()
     const [method, setMethod] = useState<'phone' | 'email'>('phone')
+    const [email,setEmail] = useState('')
+    const [phone,setPhone] = useState('')
+    const [searchParams] = useSearchParams()
+
+    useEffect(() => {
+        const effectBody = async () => {
+            const email = searchParams.get("emailAddress") || ""
+            const res = await AuthHttp.getPhone({email})
+            setEmail(res.email)
+            setPhone(res.phone)
+        }
+        
+
+        effectBody()
+        
+    }, [])
 
 
     const toNav = () => {
@@ -55,7 +72,7 @@ const ForgetPassBody = () => {
             </div>
             <div>
                 <p className="forget__body-method-title">via SMS:</p>
-                <p className="forget__body-method-subtitle">+1 111 ******99</p>
+                <p className="forget__body-method-subtitle">{phone}</p>
             </div>
         </div>
         <div className={`forget__body-method ${method === "email" ? "forget__body-method--active" : ""}`} onClick={() => { setMethod('email') }}>
@@ -64,7 +81,7 @@ const ForgetPassBody = () => {
             </div>
             <div>
                 <p className="forget__body-method-title">via Email:</p>
-                <p className="forget__body-method-subtitle">felix...ov@gmail.com</p>
+                <p className="forget__body-method-subtitle">{email}</p>
             </div>
         </div>
         <button className="forget__button" onClick={toNav}>

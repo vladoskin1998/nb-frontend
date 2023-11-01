@@ -117,6 +117,9 @@
         &-but {
             color: $color__blue;
             text-align: start;
+            &--active{
+                color: $color__grey1;
+            }
         }
         &-checkbox {
             width: 15px;

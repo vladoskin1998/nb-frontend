@@ -22,3 +22,4 @@ const RecoveryEmail = () => {
 }
 
 export default RecoveryEmail
+

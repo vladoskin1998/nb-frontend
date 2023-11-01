@@ -32,7 +32,7 @@ const Registration = ({
     const { authError } = useAppSelector(s => s.authReducer)
     const dispatch = useDispatch()
     const [checked, setChecked] = useState(true)
-    const [confirmPassword, setConfirmPassword] = useState("test2000")
+    const [confirmPassword, setConfirmPassword] = useState("")
     const [validation, setValidation] = useState({
         login: new RegExp(emailPattern).test(login),
         password: new RegExp(isPasswordPattern).test(password),
@@ -67,9 +67,9 @@ const Registration = ({
                     value={fullName}
                     setValue={setFullName}
                     placeholder={"Full Name"}
-                    errorMessage={"Еhe name must be"}
+                    errorMessage={"The name must be"}
                     pattern={inNotEmpty}
-                    isValidated={validation.fullName}
+                    isValidated={!Boolean(validation.fullName)}
                     setIsValidated={(s: boolean) =>
                         setValidation({ ...validation, fullName: s })
                     }
