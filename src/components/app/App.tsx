@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom"
 import Auth from "../general-components/auth/Auth"
-import ForgetPass from "../general-components/auth/forgot-pass/ForgetPass"
+import ForgetPass from "../general-components/forgot-pass/ForgetPass"
 import LocationUser from "../general-components/location/Location"
 import AdminRouter from "../route/AdminRouter"
 
@@ -21,10 +21,13 @@ export default function App() {
         <AppContextProvider>
             <SocketContextProvider>
                 <Routes>
-                    {!isWelcome && isWelcome !== 'true' ? (
+                    {!isWelcome && isWelcome !== "true" ? (
                         <>
                             <Route path="/welcome/*" element={<Welcome />} />
-                            <Route path="*" element={<Navigate to="/welcome" />} />
+                            <Route
+                                path="*"
+                                element={<Navigate to="/welcome" />}
+                            />
                         </>
                     ) : (
                         <>
@@ -62,11 +65,12 @@ export default function App() {
                                 }
                             />
 
+                            <Route
+                                path="/forget-pass/*"
+                                element={<ForgetPass />}
+                            />
+
                             <Route path="/auth">
-                                <Route
-                                    path="forget-pass/*"
-                                    element={<ForgetPass />}
-                                />
                                 <Route
                                     path="confirm-code"
                                     element={<AuthRegistrationConfirmCode />}

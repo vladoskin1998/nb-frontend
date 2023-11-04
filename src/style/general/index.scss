@@ -113,9 +113,9 @@
         font-style: normal;
         font-weight: 400;
         line-height: 140%;
-        color: $color__blue1;
+        justify-items: baseline;
         &-but {
-            color: $color__blue;
+            color: $color__blue1;
             text-align: start;
             &--active{
                 color: $color__grey1;

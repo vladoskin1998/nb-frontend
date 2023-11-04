@@ -37,7 +37,7 @@ const Registration = ({
         login: new RegExp(emailPattern).test(login),
         password: new RegExp(isPasswordPattern).test(password),
         confirmPassword: new RegExp(`^${password}$`).test(confirmPassword),
-        fullName: new RegExp(inNotEmpty).test(fullName)
+        fullName: true
     })
     
     const disabledSingUp =
@@ -69,7 +69,7 @@ const Registration = ({
                     placeholder={"Full Name"}
                     errorMessage={"The name must be"}
                     pattern={inNotEmpty}
-                    isValidated={!Boolean(validation.fullName)}
+                    isValidated={Boolean(validation.fullName)}
                     setIsValidated={(s: boolean) =>
                         setValidation({ ...validation, fullName: s })
                     }

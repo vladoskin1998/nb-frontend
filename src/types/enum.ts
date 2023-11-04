@@ -106,3 +106,7 @@ export enum QUALITYENUM {
   }
 
  
+  export enum METHOD_FORGET_PASSWORD{
+    PHONE='phone',
+    EMAIL='email'
+  }

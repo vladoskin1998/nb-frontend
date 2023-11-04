@@ -71,7 +71,7 @@ export interface ConfirmEmailPayloadInterface {
 }
 export const confirmEmail = createAsyncThunk<ConfirmEmailResponseInterface, ConfirmEmailPayloadInterface>(
     `auth/confirm-code-email`, async (payload) => {
-        const res: AxiosResponse<ConfirmEmailResponseInterface> = await $api.post(`auth/confirm-code-email`, payload)
+        const res: AxiosResponse<ConfirmEmailResponseInterface> = await $api.post(`auth/confirm-account`, payload)
         return res.data
     }
 ) 

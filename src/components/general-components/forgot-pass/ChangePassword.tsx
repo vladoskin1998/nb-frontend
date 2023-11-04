@@ -1,15 +1,39 @@
 import { useState } from "react"
-import { InputPassword } from "../../../ui/InputPassword"
-import { isPasswordPattern } from "../../../../utils/patterns"
+import { InputPassword } from "../../ui/InputPassword"
+import { isPasswordPattern } from "../../../utils/patterns"
+import { AuthHttp } from "../../../http/auth"
+import { useNavigate, useSearchParams } from "react-router-dom"
+import { success } from "../../ui/LoadSuccess"
 
-const ChangePassword = () => {
+const ChangePassword = ({ email }: { email: string }) => {
     const [password, setPassword] = useState("")
     const [passwordRepeat, setPasswordRepeat] = useState("")
-
+    const [searchParams] = useSearchParams()
+    const navigate = useNavigate()
     const [validation, setValidation] = useState({
-        passwordRepeat: false,
-        password: false,
+        password: true,
+        passwordRepeat: true,
     })
+    const disablde = !new RegExp(isPasswordPattern).test(password) ||
+    !new RegExp(isPasswordPattern).test(passwordRepeat)
+    || password !== passwordRepeat
+
+    const changePassword = async () => {
+        const hashPassword = searchParams.get("hash") || ""
+        if (
+            disablde
+        ) {
+            alert("Invalid password, min 8, numbers and letters")
+            return
+        }
+        await AuthHttp.changePassword({
+            hashPassword,
+            newPassword: password,
+            email,
+        })
+        success()
+        navigate("/auth")
+    }
 
     return (
         <>
@@ -43,7 +67,18 @@ const ChangePassword = () => {
                     }
                 />
             </div>
-            <button className="forget__button">Action Button</button>
+            <button
+                className={`login__button
+                ${
+                    disablde && "login__button--disabled"
+                }
+            `}
+                onClick={changePassword}
+                disabled={disablde}
+            >
+    
+                Action Button
+            </button>
         </>
     )
 }

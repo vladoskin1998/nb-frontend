@@ -11,6 +11,7 @@ import { userChangePassword, userTextInfo } from "../../../services/user"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader } from "../../../reducer/profile"
 import { setValueUserReducer } from "../../../reducer/users"
+import { AuthHttp } from "../../../http/auth"
 
 export const ProfileInfoSecurity = () => {
     const { _id } = useAppSelector((s) => s.userReducer)
@@ -27,7 +28,7 @@ export const ProfileInfoSecurity = () => {
     const [newPassword2, setNewPassword2] = useState("")
     const [validation, setValidation] = useState({
         login: new RegExp(emailPattern).test(login),
-        phone: new RegExp(phonePattern).test(login),
+        phone: new RegExp(phonePattern).test(phone),
         password: new RegExp(isPasswordPattern).test(password),
         newPassword1: new RegExp(isPasswordPattern).test(password),
         newPassword2: new RegExp(isPasswordPattern).test(password),
@@ -37,11 +38,16 @@ export const ProfileInfoSecurity = () => {
         try {
             dispatch(setLoader(true))
 
-            const res = await userTextInfo({
-                email: login || initLogin,
+            let userTextInfoPayload: any = {
                 phone: phone || initPhone,
                 _id,
-            })
+            }
+
+            if( login !== initLogin){
+                userTextInfoPayload.email = login
+            }
+
+            const res = await userTextInfo(userTextInfoPayload)
 
             if (
                 password &&
@@ -49,11 +55,10 @@ export const ProfileInfoSecurity = () => {
                 newPassword2 &&
                 newPassword2 === newPassword1
             ) {
-                await userChangePassword({
-                    password,
-                    newPassword1,
-                    newPassword2,
-                    _id,
+                await AuthHttp.changePassword({
+                    oldPassword: password,
+                    newPassword: newPassword1,
+                    email: login
                 })
             }
 

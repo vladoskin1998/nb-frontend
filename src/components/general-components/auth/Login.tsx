@@ -26,7 +26,7 @@ const Login = ({
     const navigate = useNavigate()
 
     const forgetPass = () => {
-        navigate(`forget-pass?emailAddress=${login}`)
+        navigate(`/forget-pass?emailAddress=${login}`)
     }
 
     const [validation, setValidation] = useState({
@@ -80,11 +80,11 @@ const Login = ({
                 </div>
                 <div className="login__forgot">
                     <CheckBox click={() => setChecked((s) => !s)} />
-                    <button className="login__forgot">
+                    <button >
                         Remember me
                     </button>
                     <button disabled={!(validation.login)} onClick={forgetPass}
-                        className={`${!validation.login && "login__forgot-but--active"}`}
+                        className={`login__forgot-but ${!validation.login && "login__forgot-but--active"}`}
                     >
                         Forget password?
                     </button>

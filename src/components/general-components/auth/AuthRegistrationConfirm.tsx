@@ -4,15 +4,12 @@ import { useAppDispatch } from "../../../utils/hooks"
 import { logout } from "../../../services/auth"
 
 export const AuthRegistrationConfirm = () => {
-
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
     const handlerBackLogin = () => {
-        dispatch(
-            logout()
-        )
-    } 
+        dispatch(logout())
+    }
 
     return (
         <div className="forget">
@@ -26,15 +23,20 @@ export const AuthRegistrationConfirm = () => {
             <div className="forget__body-img">
                 <img src="/Images/Megapone.png" alt="" />
             </div>
-            <button className="forget__email-but1 forget__email-but1--white" onClick={handlerBackLogin}>
-                Back to Login In
-            </button>
-            <button
-                className="forget__email-but2"
-                onClick={() => navigate("/auth/confirm-code")}
-            >
-                Confirm Your Email
-            </button>
+            <div className="forget__buttons">
+                <button
+                    className="forget__email-but1 forget__email-but1--white"
+                    onClick={handlerBackLogin}
+                >
+                    Back to Login In
+                </button>
+                <button
+                    className="forget__email-but2"
+                    onClick={() => navigate("/auth/confirm-code")}
+                >
+                    Confirm Your Email
+                </button>
+            </div>
         </div>
     )
 }

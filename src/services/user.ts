@@ -21,7 +21,7 @@ export type ChangePasswordType = {
 
 export const userChangePassword = async (payload: ChangePasswordType): Promise<string> => {
     try {
-        const response = await $api.post('user-change-password', payload)
+        const response = await $api.post('/user/user-change-password', payload)
         alert(response.data)
         return response.data
     } catch (error) {

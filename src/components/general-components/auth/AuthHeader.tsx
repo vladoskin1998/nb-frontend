@@ -10,9 +10,6 @@ const AuthHeader = ({
     isLogin: boolean
     setIsLogin: (b: boolean) => void
 }) => {
-    // const hendlerAuthMessenger = (method:METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE) => {
-    //     window.location.href = `http://localhost:5000/api/auth/${method}`;
-    // }
 
     const hendlerAuthMessenger = (
         method: METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE

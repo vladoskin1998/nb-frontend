@@ -4,11 +4,12 @@ import { useDispatch } from "react-redux"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { confirmEmail } from "../../../services/auth"
 import { AuthHttp } from "../../../http/auth"
+import { METHOD_FORGET_PASSWORD } from "../../../types/enum"
 
 export const AuthRegistrationConfirmCode = () => {
     const { email } = useAppSelector((s) => s.userReducer)
     const [code, setCode] = useState("")
-    const [seconds, setSeconds] = useState(20)
+    const [seconds, setSeconds] = useState(30)
     const [showResendButton, setShowResendButton] = useState(false)
     const dispatch = useAppDispatch()
 
@@ -26,7 +27,8 @@ export const AuthRegistrationConfirmCode = () => {
 
     const handleResendClick = async () => {
         await AuthHttp.regenereteCodeByEmail({
-            email
+            email,
+            sendMethod:METHOD_FORGET_PASSWORD.EMAIL
         })
         setShowResendButton(false)
     }

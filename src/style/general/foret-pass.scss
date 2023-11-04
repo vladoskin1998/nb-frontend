@@ -45,6 +45,9 @@
             text-align: start;
             background-color: $color__white;
             margin-top: 15px;
+            &-2{
+                margin-bottom: 25px;  
+            }
             &--active{
                 border: 2px solid $color__black1;
             }
@@ -70,6 +73,14 @@
                 line-height: 30px; /* 187.5% */
             }
         }
+    }
+
+    &__buttons{
+        position: fixed;
+        bottom: 24px;
+        width: 100%;
+        left: 0;
+        padding: 0 40px;
     }
     &__button {
         margin-top: 26px;
