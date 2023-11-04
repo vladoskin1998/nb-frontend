@@ -18,7 +18,7 @@ interface PayloadInterface {
 const Auth = () => {
     const [isLogin, setIsLogin] = useState(true)
 
-    const [login, setLogin] = useState("vladosik4891@gmail.com")
+    const [login, setLogin] = useState("")
     const [password, setPassword] = useState("")
     const [fullName, setFullName] = useState("")
 

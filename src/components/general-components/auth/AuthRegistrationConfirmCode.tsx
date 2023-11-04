@@ -14,16 +14,17 @@ export const AuthRegistrationConfirmCode = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            if (seconds > 0) {
+        const timer = setTimeout(() => {
+        
+             if (seconds > 0 && !showResendButton) {
                 setSeconds((prevSeconds) => prevSeconds - 1)
             } else {
                 setSeconds(30)
                 setShowResendButton(true)
             }
         }, 1000)
-        return () => clearInterval(timer)
-    }, [seconds])
+        return () => clearTimeout(timer)
+    }, [seconds, showResendButton])
 
     const handleResendClick = async () => {
         await AuthHttp.regenereteCodeByEmail({

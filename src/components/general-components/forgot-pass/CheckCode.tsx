@@ -16,16 +16,16 @@ const CheckCode = ({ email, phone }: { email: string; phone: string }) => {
     }, [])
 
     useEffect(() => {
-        const timer = setInterval(() => {
-            if (seconds > 0) {
+        const timer = setTimeout(() => {
+            if (seconds > 0 && !showResendButton) {
                 setSeconds((prevSeconds) => prevSeconds - 1)
             } else {
                 setSeconds(30)
                 setShowResendButton(true)
             }
         }, 1000)
-        return () => clearInterval(timer)
-    }, [seconds])
+        return () => clearTimeout(timer)
+    }, [seconds,showResendButton])
 
     const handleResendClick = async () => {
         const sendMethod: string =

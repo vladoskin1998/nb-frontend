@@ -26,6 +26,12 @@ const Login = ({
     const navigate = useNavigate()
 
     const forgetPass = () => {
+        if(!(validation.login)){
+            dispatch(
+                changeAuthError('Enter your login to reset your password')
+            )
+            return
+        }
         navigate(`/forget-pass?emailAddress=${login}`)
     }
 
@@ -83,7 +89,7 @@ const Login = ({
                     <button >
                         Remember me
                     </button>
-                    <button disabled={!(validation.login)} onClick={forgetPass}
+                    <button  onClick={forgetPass}
                         className={`login__forgot-but ${!validation.login && "login__forgot-but--active"}`}
                     >
                         Forget password?

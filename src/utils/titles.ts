@@ -219,3 +219,16 @@ export const postsSubTitle = (locationRoute: string) => {
             return "Post"
     }
 }
+
+
+export const isShowFooterNavUser = (key: string) => {
+    if(
+        key === '/user' ||
+        key === '/user/service' ||
+        key === '/user/explore' ||
+        key === '/user/activities' 
+    ){
+        return true
+    }
+    return false
+}

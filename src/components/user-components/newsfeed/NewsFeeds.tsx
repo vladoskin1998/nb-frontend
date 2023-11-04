@@ -19,7 +19,6 @@ export const NewsFeeds = () => {
                 <Route path="all" element={<PublicationPosts />} />
                 <Route path="" element={<PublicationPosts />} />
             </Routes>
-            <FooterNav/>
         </div>
     )
 }
