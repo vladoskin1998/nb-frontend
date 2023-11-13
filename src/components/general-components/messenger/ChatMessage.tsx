@@ -9,20 +9,20 @@ import { SOCKET_MESSENDER_EVENT } from "../../../types/enum"
 import $api from "../../../http"
 import { AxiosResponse } from "axios"
 import { MessageType, OpenChatData } from "../../../types/types"
-
 import { IconSmile } from "../../svg/IconSmile"
 import { ModalSmile } from "./ModalSmile"
 import { IconAdminClose } from "../../svg/IconAdminHeader"
 import { baseURL } from "../../../utils/config"
 
 export const ChatMessage = () => {
+
+    const myRef = useRef<null | HTMLDivElement>(null)
     const { _id, fullName } = useAppSelector((s) => s.userReducer)
     const { avatarFileName } = useAppSelector((s) => s.profileReducer)
     const { socket } = useContext(SocketContext)
     const [messageList, setMessageList] = useState<MessageType[]>([])
     const [message, setMessage] = useState("")
     const [chatId, setChatId] = useState("")
-    const messagesContainerRef = useRef<HTMLDivElement | null>(null)
     const [isOpenSmile, setIsOpenSmile] = useState(false)
 
     const [image, setImage] = useState<File | null>(null)
@@ -98,6 +98,12 @@ export const ChatMessage = () => {
         effectBody()
     }, [])
 
+    useEffect(() => {
+        if ( myRef.current ) {
+            myRef.current.scrollIntoView() 
+        }
+    }, [messageList, messageList.length])
+
     const sendMessage = async () => {
         let fileName: null | string = null
         if (image) {
@@ -141,18 +147,8 @@ export const ChatMessage = () => {
         setImage(null)
         setImageUrl('')
     }
-
-    console.log(image, imageUrl, fileInputRef);
     
-    useEffect(() => {
-        if (messagesContainerRef.current && messageList.length > 0) {
-            console.log(messagesContainerRef)
-            window.scrollTo({
-                top: messagesContainerRef.current.scrollHeight + 100,
-                behavior: "smooth",
-            })
-        }
-    }, [messageList])
+
 
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0] || null
@@ -167,7 +163,6 @@ export const ChatMessage = () => {
         <>
             <div
                 className="messenger__chat-messages"
-                ref={messagesContainerRef}
             >
                 {messageList.map((item) => (
                     <div
@@ -185,6 +180,7 @@ export const ChatMessage = () => {
                         </div>
                     </div>
                 ))}
+                <div ref={myRef}/>
             </div>
             <div className="messenger__chat-sender-body">
                 {imageUrl && (

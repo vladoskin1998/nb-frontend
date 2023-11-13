@@ -51,7 +51,7 @@ export const ProfileFamilyStatus = () => {
                         `}
                             onClick={() => setFamilyStatus(item)}
                         >
-                            <IconProfileCircle />
+                            <div className="profile__family_item-circle"/>
                             <p>{item}</p>
                         </div>
                     ))}
@@ -59,7 +59,9 @@ export const ProfileFamilyStatus = () => {
             </div>
             <ProfileButtonSetupLater />
             <button
-                className={`profile__method-btlater`}
+            disabled={!familyStatus}
+            className={`profile__method-btlater
+            ${!familyStatus && "profile__method-btlater--disabled"}`}
                 onClick={handlerChangeFamilyStatus}
             >
                 Continue

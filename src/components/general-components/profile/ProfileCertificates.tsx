@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { v1 as uuidv4 } from "uuid"
-import { FileButton } from "../../ui/FileButton"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import { profileUploadCertificates } from "../../../services/profile"
@@ -12,6 +10,8 @@ import { IconAdminClose } from "../../svg/IconAdminHeader"
 import { baseURL } from "../../../utils/config"
 
 export const ProfileCertificates = () => {
+
+    const myRef = useRef<null | HTMLDivElement>(null)
     const navigate = useNavigate()
     const { _id, role } = useAppSelector((s) => s.userReducer)
     const { certificatesFileName } = useAppSelector((s) => s.profileReducer)
@@ -19,6 +19,14 @@ export const ProfileCertificates = () => {
     const dispatch = useAppDispatch()
     const [uploadedCertificates, setUploadedCertificates] = useState(certificatesFileName)
     const [certificates, setCertificates] = useState<File[]>([])
+    const maxCountFile = 10 - (uploadedCertificates.length + certificates.length)
+
+    
+    useEffect(() => {
+        if ( myRef.current ) {
+            myRef.current.scrollIntoView() 
+        }
+    }, [ uploadedCertificates.length , certificates.length])
 
     useEffect(() => {
         setUploadedCertificates(certificatesFileName)
@@ -99,6 +107,7 @@ export const ProfileCertificates = () => {
                             <button
                                 className="services__add-remove publish__main-list-item-remove"
                                 onClick={() => handlerDeleteFile(index)}
+                                style={{zIndex: (99 - index)}}
                             >
                                 <IconAdminClose />
                             </button>
@@ -108,7 +117,12 @@ export const ProfileCertificates = () => {
                             />
                         </div>
                     ))}
-                    <PublishAttachButton onClick={() => setIsOpen(true)} />
+                    {
+                       Boolean(maxCountFile)  &&  <PublishAttachButton onClick={() => setIsOpen(true)}
+                         counterFile={(uploadedCertificates.length || certificates.length) && (maxCountFile)}
+                         />
+                    }
+                    <div ref={myRef}/>
                 </div>
             </div>
             <ProfileButtonSetupLater />

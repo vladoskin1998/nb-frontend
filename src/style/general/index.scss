@@ -6,6 +6,7 @@
 @import "publish.scss";
 @import "welcome.scss";
 @import "comments.scss";
+@import "notification.scss";
 
 .auth {
     display: flex;
@@ -199,5 +200,17 @@
                 width: 100%;
             }
         }
+    }
+}
+
+
+.auth__agree{
+    &-list{
+        margin-top: 16px;
+    }
+    &-button{
+        margin-top: 24px;
+        @include button-main;
+        width: 100%;
     }
 }

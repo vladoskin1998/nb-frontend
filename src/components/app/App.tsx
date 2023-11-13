@@ -14,78 +14,96 @@ import { Publish } from "../general-components/publication/Publish"
 import { AuthRegistrationConfirm } from "../general-components/auth/AuthRegistrationConfirm"
 import { AuthRegistrationConfirmCode } from "../general-components/auth/AuthRegistrationConfirmCode"
 import { Welcome } from "../general-components/welcome/Welcome"
-
+import { Notification } from "../general-components/notification/Notification"
 export default function App() {
     const isWelcome = localStorage.getItem("isWelcome")
     return (
         <AppContextProvider>
             <SocketContextProvider>
-                <Routes>
-                    {!isWelcome && isWelcome !== "true" ? (
-                        <>
-                            <Route path="/welcome/*" element={<Welcome />} />
-                            <Route
-                                path="*"
-                                element={<Navigate to="/welcome" />}
-                            />
-                        </>
-                    ) : (
-                        <>
-                            <Route path="/admin/*" element={<AdminRouter />} />
+                <Notification>
+                    <Routes>
+                        {!isWelcome && isWelcome !== "true" ? (
+                            <>
+                                <Route
+                                    path="/welcome/*"
+                                    element={<Welcome />}
+                                />
+                                <Route
+                                    path="*"
+                                    element={<Navigate to="/welcome" />}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <Route
+                                    path="/admin/*"
+                                    element={<AdminRouter />}
+                                />
 
-                            <Route path="/user/*" element={<UserRouter />} />
+                                <Route
+                                    path="/user/*"
+                                    element={<UserRouter />}
+                                />
 
-                            <Route
-                                path="/publish/*"
-                                element={
-                                    <ProtectedRoute element={<Publish />} />
-                                }
-                            />
+                                <Route
+                                    path="/publish/*"
+                                    element={
+                                        <ProtectedRoute element={<Publish />} />
+                                    }
+                                />
 
-                            <Route
-                                path="/profileinfo/*"
-                                element={
-                                    <ProtectedRoute element={<ProfileInfo />} />
-                                }
-                            />
+                                <Route
+                                    path="/profileinfo/*"
+                                    element={
+                                        <ProtectedRoute
+                                            element={<ProfileInfo />}
+                                        />
+                                    }
+                                />
 
-                            <Route
-                                path="/profile/*"
-                                element={
-                                    <ProtectedRoute element={<Profile />} />
-                                }
-                            />
+                                <Route
+                                    path="/profile/*"
+                                    element={
+                                        <ProtectedRoute element={<Profile />} />
+                                    }
+                                />
 
-                            <Route
-                                path="/location/*"
-                                element={
-                                    <ProtectedRoute
-                                        element={<LocationUser />}
+                                <Route
+                                    path="/location/*"
+                                    element={
+                                        <ProtectedRoute
+                                            element={<LocationUser />}
+                                        />
+                                    }
+                                />
+
+                                <Route
+                                    path="/forget-pass/*"
+                                    element={<ForgetPass />}
+                                />
+
+                                <Route path="/auth">
+                                    <Route
+                                        path="confirm-code"
+                                        element={
+                                            <AuthRegistrationConfirmCode />
+                                        }
                                     />
-                                }
-                            />
+                                    <Route
+                                        path="confirm"
+                                        element={<AuthRegistrationConfirm />}
+                                    />
+                                    <Route path="" element={<Auth />} />
+                                </Route>
 
-                            <Route
-                                path="/forget-pass/*"
-                                element={<ForgetPass />}
-                            />
-
-                            <Route path="/auth">
                                 <Route
-                                    path="confirm-code"
-                                    element={<AuthRegistrationConfirmCode />}
+                                    path="*"
+                                    element={<Navigate to="/auth" />}
                                 />
-                                <Route
-                                    path="confirm"
-                                    element={<AuthRegistrationConfirm />}
-                                />
-                                <Route path="" element={<Auth />} />
-                            </Route>
-
-                            <Route path="*" element={<Navigate to="/auth" />} />
-                        </>
-                    )}
-                </Routes>
+                            </>
+                        )}
+                    </Routes>
+                </Notification>
             </SocketContextProvider>
         </AppContextProvider>
     )

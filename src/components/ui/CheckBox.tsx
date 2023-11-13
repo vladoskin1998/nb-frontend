@@ -2,11 +2,18 @@ import { Checkbox } from "@mui/material";
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
-export const CheckBox = ({ click }: { click: () => void }) => {
+export const CheckBox = ({ 
+    click, 
+    defaultChecked=false
+}: { 
+        click: () => void, 
+        defaultChecked?: boolean 
+    }) => {
     return (
         <Checkbox
             {...label}
-            defaultChecked
+            defaultChecked={defaultChecked}
+            onClick={click}
             sx={{
                 '&.Mui-checked': {
                     color: "#15104D",

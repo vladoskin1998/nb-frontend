@@ -23,7 +23,6 @@ export const ProfilePicture = () => {
 
     const navigate = useNavigate()
 
-    
     useEffect(() => {
         setPhotoUrl(initAvatar)
     }, [avatarFileName])
@@ -60,8 +59,7 @@ export const ProfilePicture = () => {
         }
     }
 
-    console.log(photoUrl);
-    
+    console.log(photoUrl)
 
     const handleFileSelect = (method: PHOTO_ADD_METHOD) => {
         let fileInput =
@@ -159,7 +157,10 @@ export const ProfilePicture = () => {
                     </>
                 ) : (
                     <div className="profile__method-avatar">
-                        <img src={`${photoUrl}`} alt="" />
+                        <div className="profile__method-avatar-img">
+                            <img src={`${photoUrl}`} alt="" />
+                        </div>
+
                         <button
                             className="profile__method-avatar-close"
                             onClick={handlerRemoveImage}

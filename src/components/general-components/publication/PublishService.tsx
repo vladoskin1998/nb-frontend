@@ -7,6 +7,7 @@ import { CoordinatsInterface, OptionsType } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
 import { ServiceHttp } from "../../../http/service-http"
 import { PublishServiceCategorie } from "./PublishServiceCategorie"
+import { useNavigate } from "react-router-dom"
 
 export const PublishService = ({
     currentPrivacy,
@@ -27,9 +28,9 @@ export const PublishService = ({
     const [addressLocation, setAddressLocation] = useState(
         `${profile.country}, ${profile.city}, ${profile.street}, ${profile.houseNumber}`)
     const validate = !Boolean(
-        text && title && files.length && servicesValue?.[0]._id && subServicesValue?.[0]._id
+        text && title && files.length && servicesValue?.[0]?._id && subServicesValue?.[0]?._id
     )
-
+    const navigate = useNavigate()
    console.log(servicesValue, subServicesValue );
    
 
@@ -68,6 +69,7 @@ export const PublishService = ({
             )
 
             success()
+            navigate(-1)
         } catch (error) {
             alert("publish post new" + error)
         }

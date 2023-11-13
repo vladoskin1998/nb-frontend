@@ -8,6 +8,7 @@ export const ProfileWelcomeNeibs = () => {
     const { _id,role } = useAppSelector((s) => s.userReducer)
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
+    
     const handlerChangeWellcome = async () => {
         try {
             dispatch(setLoader(true))

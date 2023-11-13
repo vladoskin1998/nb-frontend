@@ -12,10 +12,11 @@ const SocketContextProvider = ({ children }: { children: ReactNode }) => {
     let socketRef = useRef<Socket | null>(null)
 
     useEffect(() => {
-        socketRef.current =  io(baseURLSocket, {
+        socketRef.current =  io(baseURLSocket , {
             auth: {
                 accessToken: `Bearer ${localStorage.getItem("accessToken")}`,
             },
+            
         })
 
         socketRef.current.on('connect', () => {

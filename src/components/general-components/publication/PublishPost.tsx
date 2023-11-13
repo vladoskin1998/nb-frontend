@@ -9,6 +9,7 @@ import { success } from "../../ui/LoadSuccess"
 import { CoordinatsInterface, PublishPostInterface } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
 import { useNavigate } from "react-router-dom"
+import { roleUrl } from "../../../utils/config"
 
 export const PublishPost = ({
     currentPrivacy,
@@ -61,7 +62,7 @@ export const PublishPost = ({
                 await PublishPostHttp.addPost(formCatData)
 
             success()
-            navigate(`/${role}/posts`)
+            navigate(`${roleUrl(role)}/posts`)
         } catch (error) {
             alert("publish post new" + error)
         }

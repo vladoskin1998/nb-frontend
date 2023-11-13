@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import { useAppSelector } from "../../../utils/hooks"
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 
 const mapContainerStyle = {
@@ -15,6 +15,7 @@ export const ProfileInterestZone = () => {
     const containerMap = useRef<HTMLDivElement | null>(null)
 
     const { coordinates } = useAppSelector((s) => s.profileReducer)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (window.google && containerMap.current) {
@@ -43,17 +44,23 @@ export const ProfileInterestZone = () => {
             <div className="profile__method-body">
                 <div className="profile__zone-body">
                     <div style={mapContainerStyle} ref={containerMap} />
-                    <button className="profile__zone-button">
-                        <Link to="/profile/setup-interest-zone">
-                            Setup Interest Zone
-                        </Link>
+                    <button
+                        className="profile__zone-button"
+                        onClick={() => navigate("/profile/setup-interest-zone")}
+                    >
+                        Setup Interest Zone
                     </button>
                 </div>
             </div>
             <ProfileButtonSetupLater />
-            <button className={`profile__method-btlater`}>
-                <Link to={"/profile/about"}>Continue</Link>
+            <button
+                className={`profile__method-btlater`}
+                onClick={() => navigate("/profile/about")}
+            >
+                Continue
             </button>
+
+            
         </>
     )
 }

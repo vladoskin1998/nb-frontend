@@ -79,14 +79,14 @@ export const PublishServiceCategorie = ({
                         value={servicesValue}
                         setValue={setServicesValue}
                     />
-                    <div className="publish__service-select-2">
+                    <div className="publish__service-select-2" />
                         <AutocompleteSearch
                             isLimit={-1}
                             options={optiosSubService}
                             value={subServicesValue}
                             setValue={setSubServicesValue}
                         />
-                    </div>
+                    
                 </>
             ) : (
                 <button

@@ -29,10 +29,24 @@
         font-size: 10px;
     }
     .profile__method-body {
-        margin-top: 25px;
+        margin: 20px 0 3px 0;
+
     }
     .ui-standart__header-subtitle{
         padding-top: 14px;
+    }
+    .profile{
+        padding: 84px 40px 14px 40px;
+    }
+    .profile__sex{
+        margin-top: 13px;
+    }
+    .profile__sex-orintation{
+        margin-top: 15px;
+    }
+    .profile__sex-orintation-list{
+        margin: 15px 0 5px 0;
+        gap: 10px;
     }
     .profile__zone-body{
         max-height: 300px;
@@ -53,5 +67,15 @@
     }
     .authsuccess__body-setup{
         font-size: 14px;
+    }
+}
+
+
+@media screen and (max-width: 400px)  {
+    .profile__sex-orintation-list{
+        column-gap: 10px;
+    }
+    .profile__sex-orintation-list-item{
+        padding: 0 10px;
     }
 }

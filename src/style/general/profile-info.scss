@@ -304,6 +304,7 @@
         border-radius: 8px !important;
         background-color: $color__white !important;
         input{
+            color: $color__grey1 !important;
             font-size: 14px !important;
         }
         fieldset{
@@ -335,19 +336,29 @@
     width: 100%;
     padding: 24px 40px;
     margin-top: 25px;
-    min-height: calc(100% - 124px);
+    height: 100%;
+    max-height: calc(100% - 220px);
+    overflow: hidden;
     &-list{
         margin-top: 25px;
     }
     display: flex;
     flex-direction: column;
     .profileinfo__skillsinterets-list{
-        flex-grow: 1;
         display: flex;
         flex-direction: column;
+        height: 1000px;
     }
     .profile__identity-list{
         flex-grow: 1;
+
+    }
+    .profile__method-btlater{
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 48px);
 
     }
     .profile__method-btlater--inherit{
@@ -423,3 +434,4 @@
     font-weight: 600;
     line-height: 140%; 
 }
+

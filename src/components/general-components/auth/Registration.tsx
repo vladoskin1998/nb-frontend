@@ -10,6 +10,8 @@ import {
 import { useAppSelector } from "../../../utils/hooks"
 import { changeAuthError } from "../../../reducer/auth"
 import { useDispatch } from "react-redux"
+import { AuthModalAgree } from "./AuthModalAgree"
+import { AUTH_AGREE_TYPES } from "../../../types/enum"
 
 const Registration = ({
     login,
@@ -28,24 +30,28 @@ const Registration = ({
     setFullName: (s: string) => void
     handlerAuth: () => void
 }) => {
-
-    const { authError } = useAppSelector(s => s.authReducer)
+    const { authError } = useAppSelector((s) => s.authReducer)
     const dispatch = useDispatch()
-    const [checked, setChecked] = useState(true)
+    const [checked, setChecked] = useState(false)
     const [confirmPassword, setConfirmPassword] = useState("")
     const [validation, setValidation] = useState({
         login: new RegExp(emailPattern).test(login),
         password: new RegExp(isPasswordPattern).test(password),
         confirmPassword: new RegExp(`^${password}$`).test(confirmPassword),
-        fullName: true
+        fullName: true,
     })
+
+    const [isOpenTerms, setIsOpenTerms] = useState(false)
+    const [isOpenPolicy, setIsOpenPolicy] = useState(false)
+
     
     const disabledSingUp =
+        checked &&
         validation.login &&
         validation.password &&
         validation.fullName &&
-        (confirmPassword === password)
-        
+        confirmPassword === password 
+
     return (
         <>
             <div className="registration">
@@ -53,10 +59,14 @@ const Registration = ({
                     value={login}
                     setValue={(s) => {
                         setLogin(s)
-                        dispatch(changeAuthError(''))
+                        dispatch(changeAuthError(""))
                     }}
                     placeholder={"Email"}
-                    errorMessage={authError ? authError : "Invalid login, example@example.example" }
+                    errorMessage={
+                        authError
+                            ? authError
+                            : "Invalid login, example@example.example"
+                    }
                     pattern={emailPattern}
                     isValidated={!Boolean(authError)}
                     setIsValidated={(s: boolean) =>
@@ -89,9 +99,7 @@ const Registration = ({
                 <InputPassword
                     password={confirmPassword}
                     setPassword={setConfirmPassword}
-                    errorMessage={
-                        "Password mismatch"
-                    }
+                    errorMessage={"Password mismatch"}
                     pattern={`^${password}$`}
                     setIsValidated={(s: boolean) =>
                         setValidation({ ...validation, confirmPassword: s })
@@ -99,21 +107,36 @@ const Registration = ({
                 />
 
                 <div className="registration__policy">
-                    <CheckBox click={() => setChecked((s) => !s)} />
+                    <CheckBox click={() => setChecked(s => !s)} defaultChecked={checked}/>
                     <div>
                         <p>By Signing up, you agree to the</p>
                         <p>
-                            <b> Terms of Service</b> and <b>Privacy Policy</b>
+                            <b onClick={() => setIsOpenTerms(true)}>
+                                {" "}
+                                Terms of Service{" "}
+                            </b>
+                            and
+                            <b onClick={() => setIsOpenPolicy(true)}>
+                                {" "}
+                                Privacy Policy
+                            </b>
                         </p>
                     </div>
+                    <AuthModalAgree
+                        isOpen={isOpenTerms}
+                        setIsOpen={setIsOpenTerms}
+                        typeAgree={AUTH_AGREE_TYPES.TERMS}
+                    />
+                    <AuthModalAgree
+                        isOpen={isOpenPolicy}
+                        setIsOpen={setIsOpenPolicy}
+                        typeAgree={AUTH_AGREE_TYPES.POLICY}
+                    />
                 </div>
             </div>
             <button
                 className={`login__button
-                ${
-                    (disabledSingUp) ||
-                    "login__button--disabled"
-                }
+                ${disabledSingUp || "login__button--disabled"}
             `}
                 onClick={handlerAuth}
                 disabled={!disabledSingUp}

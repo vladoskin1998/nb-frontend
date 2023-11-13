@@ -12,7 +12,7 @@ export const PublishModalAddFile = ({
     setIsOpen: (s: boolean) => void
     getFile: (f: File) => void
 }) => {
-    const [active, setActive] = useState<PHOTO_ADD_METHOD>(PHOTO_ADD_METHOD.CAMERA_ROLL)
+    const [active, setActive] = useState<PHOTO_ADD_METHOD | null>(null)
 
     let fileCameraRollRef = useRef<HTMLInputElement | null>(null)
     let fileTakeNowlRef = useRef<HTMLInputElement | null>(null)
@@ -41,6 +41,7 @@ export const PublishModalAddFile = ({
         }
 
         setIsOpen(false)
+        setActive(null)
     }
 
     return (

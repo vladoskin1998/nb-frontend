@@ -4,7 +4,7 @@ import { InputSearch } from "../../ui/InputSearch"
 import { IconServicesAllPoint } from "../../svg/IconServicesAll"
 import { PostUserInterface } from "../../../types/types"
 import { PublishPostHttp } from "../../../http/publish-post-http"
-import { baseURL } from "../../../utils/config"
+import { baseURL, roleUrl } from "../../../utils/config"
 import moment from "moment"
 import { PostSlick } from "../../ui/PostSlick"
 import { useLocation, useNavigate } from "react-router-dom"
@@ -70,7 +70,7 @@ export const PublicationPosts = () => {
     }
 
     const navigateToComments = (postId:string) => {
-        navigate(`/${role}/comments?postId=${postId}`)
+        navigate(`/${roleUrl(role)}/comments?postId=${postId}`)
     }
 
     const toProfileInfo = (prop: {

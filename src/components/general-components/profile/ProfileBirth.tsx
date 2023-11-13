@@ -80,7 +80,7 @@ export const ProfileBirth = () => {
     return (
         <>
             <div className="profile__method-body">
-                <div className="profileinfo__edit-body-items">
+                <div className="profileinfo__edit-body-items profile__birth-picker">
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
                             className="profileinfo__edit-picker"

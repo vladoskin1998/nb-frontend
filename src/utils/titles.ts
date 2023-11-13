@@ -1,3 +1,5 @@
+import { NOTIFICATION_EVENT } from "../types/enum";
+
 export const toOneKind = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
 
 export const headerTitle = (locationRoute: string | undefined) => {
@@ -45,7 +47,7 @@ export const headerTitle = (locationRoute: string | undefined) => {
 
 export const userSubTitle = (locationRoute: string | undefined) => {
     const key = String(locationRoute)
-   
+
 
     switch (key) {
         case "/admin/users/user":
@@ -222,13 +224,29 @@ export const postsSubTitle = (locationRoute: string) => {
 
 
 export const isShowFooterNavUser = (key: string) => {
-    if(
+    if (
         key === '/user' ||
         key === '/user/service' ||
         key === '/user/explore' ||
-        key === '/user/activities' 
-    ){
+        key === '/user/activities'
+    ) {
         return true
     }
     return false
+}
+
+
+export const notificationDirname = (key: NOTIFICATION_EVENT) => {
+    switch (key) {
+        case NOTIFICATION_EVENT.NOTIFICATION_ACTIVITIES:
+            return "publish_activities";
+        case NOTIFICATION_EVENT.NOTIFICATION_MESSAGE:
+            return "avatar";
+        case NOTIFICATION_EVENT.NOTIFICATION_NEWS:
+            return "publish_post";
+        case NOTIFICATION_EVENT.NOTIFICATION_SERVICE:
+            return "publish_services";
+        default:
+            return "avatar";
+    }
 }

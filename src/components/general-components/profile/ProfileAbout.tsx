@@ -32,7 +32,7 @@ export const ProfileAbout = () => {
                 aboutMe,
                 _id,
             })
-          
+
             dispatch(setValueProfileReducer(res))
             dispatch(setLoader(false))
             navigate("/profile/profession")
@@ -41,7 +41,7 @@ export const ProfileAbout = () => {
             alert(error + "about text error")
         }
     }
-    
+
     return (
         <>
             <div className="profile__method-body">
@@ -50,7 +50,7 @@ export const ProfileAbout = () => {
                         value={aboutMe}
                         onChange={handleChange}
                         className="profile__about-autoresize"
-                        minRows={3}
+                        minRows={7}
                         placeholder="Be concise, authentic, and feel free to let your personality shine through"
                     />
                     <button className="profile__about-resize">
@@ -61,9 +61,12 @@ export const ProfileAbout = () => {
                 </div>
             </div>
             <ProfileButtonSetupLater />
+
             <button
-                className={`profile__method-btlater`}
+                className={`profile__method-btlater
+                  ${!aboutMe && "profile__method-btlater--disabled"}`}
                 onClick={handlerChangeAboutMe}
+                disabled={!aboutMe}
             >
                 Continue
             </button>

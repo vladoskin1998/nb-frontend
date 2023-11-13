@@ -9,9 +9,9 @@ export const ProfileStayTouch = () => {
                     <img src="/Images/setUpNOtification.png" alt="" />
                 </div>
             </div>
-                <ProfileButtonSetupLater />
+            <ProfileButtonSetupLater />
             <button className={`profile__method-btlater`}>
-                <Link to={"/profile/welcome-neibs"}>Continue</Link>
+                <Link to={"/profile/welcome-neibs"}>Recieve Notifications</Link>
             </button>
         </>
     )

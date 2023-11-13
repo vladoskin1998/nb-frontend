@@ -31,7 +31,10 @@
                 top: 50%;
                 transform: translateY(-50%);
                 z-index: -1;
-                
+                left: -40px;
+                width: 100vw;
+                max-width: 100vw;
+                height: auto;
             }
             
         }

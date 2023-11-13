@@ -6,6 +6,8 @@ import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
 import { profileTextInfo } from "../../../services/profile"
 import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 import { ProfileEducationList } from "./ProfileEducationList"
+import { InputMain } from "../../ui/InputMain"
+import { IconRightChevrons } from "../../svg/IconChevrons"
 
 const list = Object.values(EDUCATION)
 
@@ -23,10 +25,10 @@ export const ProfileEducation = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        setEducation( initEducation || null)
+        setEducation(initEducation || null)
         setStudySchool(initStudySchool || "")
-    }, [initEducation,initStudySchool])
-    
+    }, [initEducation, initStudySchool])
+
     const handlerChangeEducation = async () => {
         try {
             dispatch(setLoader(true))
@@ -57,12 +59,20 @@ export const ProfileEducation = () => {
                         Where did you study?
                     </h5>
                     <div className="profile__sex-orintation-list">
-                        <input
-                            className="profile__education-input"
-                            type="text"
-                            value={studySchool}
-                            onChange={(e) => setStudySchool(e.target.value)}
-                        />
+                        <div className="profile__education-input">
+                            <InputMain
+                                value={studySchool}
+                                setValue={setStudySchool}
+                                placeholder={
+                                    <>
+                                        Add <b>school</b> or <b>univercity</b>
+                                    </>
+                                }
+                            />
+                            <div className="profile__education-input-chevron">
+                                <IconRightChevrons />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -14,7 +14,7 @@
     row-gap: 16px;
     &-item {
         display: grid;
-        grid-template-columns: auto 1fr auto;
+        grid-template-columns: 67px 1fr auto;
         column-gap: 11px;
         max-height: 67px;
         img {

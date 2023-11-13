@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { IconLocationPoint } from "../../svg/IconsLocation"
+import { IconRightChevrons } from "../../svg/IconChevrons"
 
 export const ProfileCityBirthInput = ({
     city,
@@ -9,6 +10,8 @@ export const ProfileCityBirthInput = ({
     setCity: (s: string | null) => void
 }) => {
     const containerInputRef = useRef<HTMLInputElement | null>(null)
+    const [isShowPlaceholder, setIsShowPlaceholder] = useState(true)
+
     useEffect(() => {
         const input = containerInputRef.current as HTMLInputElement
 
@@ -36,19 +39,37 @@ export const ProfileCityBirthInput = ({
         })
     }, [])
 
+    useEffect(() => {
+        if(city ){
+            setIsShowPlaceholder(false)
+        }
+        else {
+            setIsShowPlaceholder(true)
+        }
+    }, [city])
+
     return (
-        <div className="location__field">
-            <div className="location__field-icon">
-                <IconLocationPoint />
-            </div>
+        <div className="profile__birth-input">
             <input
                 ref={containerInputRef}
                 type="text"
-                id="autocomplete--google"
                 className="login__email"
-                placeholder="Вінниця"
+                placeholder=""
                 defaultValue={city || ""}
+                onChange={e => setCity(e.target.value)}
             />
+            {isShowPlaceholder && (
+                <span className="profile__birth-input-placeholder">
+                    {
+                        <>
+                            Search <b> City</b>
+                        </>
+                    }
+                </span>
+            )}
+            <div  className="profile__birth-input-chevron">
+                 < IconRightChevrons/>
+            </div>
         </div>
     )
 }

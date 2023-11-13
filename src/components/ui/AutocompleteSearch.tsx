@@ -34,6 +34,7 @@ export const AutocompleteSearch = ({
                 styleOverrides: {
                     paper: {
                         zIndex: 9999, 
+                        background: 'white'
                     },
                 },
             },
@@ -83,7 +84,7 @@ export const AutocompleteSearch = ({
                         <TextField
                             {...params}
                             placeholder={placeholder || "Search"}
-                            style={{zIndex:9999, position:'relative'}}
+                            style={{zIndex:998, position:'relative'}}
                         />
                     </>
                 )}
@@ -124,7 +125,8 @@ const styleComponent = {
         outline: "none",
         border: "none",
         boxShadow: "none",
-        zIndex: 999,
+        background: "white",
+        zIndex: 9999,
     },
     renderOption: {
         display: "flex",
@@ -132,22 +134,22 @@ const styleComponent = {
         borderBottom: "1px solid #ccc",
         padding: "8px 0",
         width: "100%",
-        zIndex: 999,
+        zIndex: 998,
     },
     renderInput: {
         position: "absolute" as "absolute",
         left: "10px",
         top: "15px",
-        zIndex: 999,
+        zIndex: 998,
     },
     style: {
-        maxHeight: "100px",
+        maxHeight: "120px",
         width: "100%",
         outline: "none",
         border: "none",
         paddingLeft: "40px",
         position: "relative" as "relative",
         overflow: "scroll",
-        zIndex: "999 !important",
+        zIndex: "998 !important",
     },
 }

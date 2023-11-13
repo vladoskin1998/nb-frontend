@@ -41,3 +41,16 @@ export const INIT_COORDINATES = {
   lat: 50.440569860389814,
   lng: 30.540884262459286
 }
+
+
+export const CONST__TERMS = [
+  '1.1. All the text goes here',
+  '1.1. All the text goes here',
+  '1.1. All the text goes here',
+]
+
+export const CONST__POLICY = [
+  '1.1. All the text goes here',
+  '1.1. All the text goes here',
+  '1.1. All the text goes here',
+]

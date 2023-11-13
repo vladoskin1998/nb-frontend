@@ -20,14 +20,18 @@ export const UserHeaderMain = (props:{
     const [isOpenPublish, setIsOpenPublish] = useState(false)
     const dispatch = useAppDispatch()
 
-    
-
     const messenger = () => {
         navigate('/user/messeges')
     }
     const  publish = () => {
         setIsOpenPublish(true)
     }
+
+    const notification = () => {
+        navigate('/user/notification-list')
+    }
+
+  
     return (
         <UserHeader>
             <div className="user__header-main">
@@ -35,7 +39,7 @@ export const UserHeaderMain = (props:{
                 onClick={() => dispatch(logout())}>NeighborHarbor</h5>
                 <div className="user__header-main-buttons">
                     <button className="user__header-main-button"
-                        // onClick={props.notification}
+                        onClick={notification}
                     >
                         <IconProfileInfoNotification />
                     </button>

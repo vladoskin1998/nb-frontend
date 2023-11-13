@@ -89,7 +89,10 @@ export const ProfoleIdentityModule = ({
     }
 
     const handlerPopularList = (l: OptionsItemType) => {
-        setValue((s) => [...s, l].slice(isLimit))
+        if(!value.find(item => item._id === l._id)){
+             setValue((s) => [...s, l].slice(isLimit))
+        }
+       
     }
 
     return (

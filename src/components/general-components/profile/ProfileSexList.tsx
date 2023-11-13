@@ -1,15 +1,13 @@
 import React from "react"
 import { SEX } from "../../../types/enum"
 
-export const ProfileSexList = (
-    {
-        sex,
-        setSex,
-    }:{
-        sex: SEX | null,
-        setSex: (s:SEX) => void
-    }
-) => {
+export const ProfileSexList = ({
+    sex,
+    setSex,
+}: {
+    sex: SEX | null
+    setSex: (s: SEX) => void
+}) => {
     return (
         <div className="profile__sex-radio">
             <div
@@ -18,8 +16,10 @@ export const ProfileSexList = (
                 }`}
                 onClick={() => setSex(SEX.MALE)}
             >
-                <img src="/Images/male.png" alt="" />
-                <p>{SEX.MALE}</p>
+                <div className="profile__sex-radio-item-body">
+                    <img src="/Images/male.png" alt="" />
+                    <p>{SEX.MALE}</p>
+                </div>
             </div>
             <div
                 className={`profile__sex-radio-item ${
@@ -27,8 +27,10 @@ export const ProfileSexList = (
                 }`}
                 onClick={() => setSex(SEX.FEMALE)}
             >
-                <img src="/Images/female.png" alt="" />
-                <p>{SEX.FEMALE}</p>
+                <div className="profile__sex-radio-item-body">
+                    <img src="/Images/female.png" alt="" />
+                    <p>{SEX.FEMALE}</p>
+                </div>
             </div>
         </div>
     )
