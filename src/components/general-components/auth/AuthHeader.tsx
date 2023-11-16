@@ -15,6 +15,7 @@ const AuthHeader = ({
         method: METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE
     ) => {
         window.location.href = `https://environs.life/api/auth/${method}`
+        localStorage.setItem('authLoaderMethod', 'true')
     }
 
     return (

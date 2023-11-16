@@ -6,7 +6,6 @@ export const isPasswordPattern = /^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$/
 
 export const inNotEmpty = /^.+$/
 
-
 export const isEmptyFiledsObject = (obj: any) => {
     for (const key in obj) {
         if (obj.hasOwnProperty(key)) {

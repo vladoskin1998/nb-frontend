@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export const ServicesUser = () => {
+
+
   return (
     <div>Services</div>
   )

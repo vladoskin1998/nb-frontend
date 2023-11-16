@@ -47,11 +47,8 @@ export const Welcome = () => {
                 <WelcomeLogo />
             ) : (
                 <>
-                    <div className="welcome-img">
-                        <h4 className="welcome-title">Neighbor Harbor</h4>
-                        <h5 className="welcome-subtitle">
-                            One stop social network
-                        </h5>
+                    <div className="welcome-item__logo">
+                        <img src="/Images/logo.png" alt="" />   
                     </div>
                     {
                         <Routes>

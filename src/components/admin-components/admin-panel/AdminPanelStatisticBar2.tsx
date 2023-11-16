@@ -31,19 +31,19 @@ export const AdminPanelStatisticBar2 = () => {
         const value = [...data]
         const sortedData = value.sort(
             (a, b) =>
-                b.totalUsers +
-                b.newUsers +
-                b.nonActiveUsers +
-                b.activeUsers -
-                (a.totalUsers + a.newUsers + a.nonActiveUsers + a.activeUsers)
+                b?.totalUsers +
+                b?.newUsers +
+                b?.nonActiveUsers +
+                b?.activeUsers -
+                (a?.totalUsers + a?.newUsers + a?.nonActiveUsers + a?.activeUsers)
         )
 
         if (sortedData.length > 0) {
             setMaxValue(
-                sortedData[0].totalUsers +
-                    sortedData[0].newUsers +
-                    sortedData[0].nonActiveUsers +
-                    sortedData[0].activeUsers
+                sortedData[0]?.totalUsers +
+                    sortedData[0]?.newUsers +
+                    sortedData[0]?.nonActiveUsers +
+                    sortedData[0]?.activeUsers
             )
         }
     }, [data])

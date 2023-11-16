@@ -14,6 +14,7 @@ import {
 import { AuthResponseInterface } from "../types/types"
 import { roleUrl } from "../utils/config"
 import { ROLES } from "../types/enum"
+import { WelcomeLogo } from "../components/general-components/welcome/WelcomeItems"
 
 
 const AppContext = createContext<{
@@ -31,10 +32,13 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
     const { isAuth } = useAppSelector((s) => s.authReducer)
     const { _id, role, isCheckedEmail } = useAppSelector((s) => s.userReducer)
     const navigate = useNavigate()
+   
 
     useEffect(() => {
         // const accessToken = localStorage.getItem("accessToken")
         // if (accessToken) {
+     
+
             dispatch(refresh())
                 .unwrap()
                 .then((res: AuthResponseInterface) => {})
@@ -64,9 +68,16 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
         }
     }, [isAuth, _id, isCheckedEmail])
 
+
+
     return <AppContext.Provider value={
         {userRoleUrl}
-    }>{children}</AppContext.Provider>
+    }>
+        <>
+          {children}    
+        </>
+      
+        </AppContext.Provider>
 }
 
 export { AppContextProvider, AppContext }

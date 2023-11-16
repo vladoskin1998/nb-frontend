@@ -1,3 +1,5 @@
+import { IconPicker, IconPickerSmoll } from "../components/svg/IconFavor";
+import { IconsNotificationStatusEvent, IconsNotificationStatusMessage, IconsNotificationStatusPost, IconsNotificationStatusServices } from "../components/svg/IconsNotificationStatus";
 import { NOTIFICATION_EVENT } from "../types/enum";
 
 export const toOneKind = (s: string) => s.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
@@ -248,5 +250,41 @@ export const notificationDirname = (key: NOTIFICATION_EVENT) => {
             return "publish_services";
         default:
             return "avatar";
+    }
+}
+
+
+export const notificationTypeTitle = (key: NOTIFICATION_EVENT) => {
+    switch (key) {
+        case NOTIFICATION_EVENT.NOTIFICATION_ACTIVITIES:
+            return {
+                text: "added a new event called",
+                label: IconsNotificationStatusEvent,
+                link: 'activities'
+            };
+        case NOTIFICATION_EVENT.NOTIFICATION_MESSAGE:
+            return {
+                text: "added a new event called",
+                label: IconsNotificationStatusMessage,
+                link: 'messeges'
+            };
+        case NOTIFICATION_EVENT.NOTIFICATION_NEWS:
+            return {
+                text: "added a new event called",
+                label: IconsNotificationStatusPost,
+                link: 'posts'
+            };
+        case NOTIFICATION_EVENT.NOTIFICATION_SERVICE:
+            return {
+                text: "added a new event called",
+                label: IconsNotificationStatusServices,
+                link: 'service'
+            };
+        default:
+            return {
+                text: "added a new called",
+                label: IconsNotificationStatusMessage,
+                link: 'posts'
+            };
     }
 }

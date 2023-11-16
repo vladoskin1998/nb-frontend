@@ -70,7 +70,7 @@ export const PublicationPosts = () => {
     }
 
     const navigateToComments = (postId:string) => {
-        navigate(`/${roleUrl(role)}/comments?postId=${postId}`)
+        navigate(`${roleUrl(role)}/comments?postId=${postId}`)
     }
 
     const toProfileInfo = (prop: {

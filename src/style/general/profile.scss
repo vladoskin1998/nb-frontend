@@ -43,15 +43,19 @@
             border-radius: 12px;
             height: 100%;
             position: relative;
+            max-height: 50vh;
             &-img {
                 border-radius: 12px;
                 overflow: hidden;
+                max-height: 50vh;
                 height: 100%;
                 img {
                     border-radius: 12px;
                     overflow: hidden;
                     width: auto;
+                    max-height: 50vh;
                     height: 100%;
+                    object-position: center;
                     object-fit: cover;
                 }
             }
@@ -83,7 +87,8 @@
             text-wrap: nowrap;
             overflow-wrap: normal;
             width: 100%;
-            max-width: 180px;
+            max-width: 190px;
+            border: 2px solid $color__white;
         }
         &-map {
             position: fixed;

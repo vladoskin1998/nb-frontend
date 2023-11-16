@@ -1,13 +1,13 @@
-.user__newsfeed{
+.user__newsfeed {
     margin-top: 60px;
-    &--admin{
+    &--admin {
         margin-top: 0px;
     }
-    &-title{
+    &-title {
         margin-top: 16px;
         @include title-main;
     }
-    &-search{
+    &-search {
         margin-top: 16px;
         position: fixed;
         top: 65px;
@@ -15,6 +15,103 @@
         transform: translateX(-50%);
         z-index: 30;
         width: calc(100% - 48px);
-        
+    }
+    &__getstarted {
+        padding-top: 45px;
+        &-mind {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            gap: 12px;
+            padding: 14px;
+            border-radius: 8px;
+            background: $color__white;
+            box-shadow: $box-shadow1;
+            &-text {
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+                max-width: 250px;
+                text-overflow: ellipsis;
+                b {
+                    font-weight: 600;
+                }
+            }
+            &-img {
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+        }
+        &-title {
+            padding-top: 24px;
+            @include title-main;
+        }
+        &-subtitle {
+            padding-top: 8px;
+            @include sub-title-main;
+        }
+    }
+    &-slick{
+        margin-top: 16px;
+        &-item{
+            width: 200px;
+            height: 200px;
+            display: inline-flex !important;
+            flex-direction: column;
+            padding: 12px;
+        }
+        &-mark{
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        &-img{
+            flex-grow: 1;
+            @include flex-all-center;
+        }
+        &-button{
+            height: 35px;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            border-radius: 8px;
+            border: 2px solid $color__orange;
+            background: $color__grey3;
+            box-shadow: $box-shadow1;
+            color: var(--Text-Main, #15104D);
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 16px; 
+        }
+    }
+    &-steper{
+        margin-top: 12px;
+        &-title{
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 16px; 
+        }
+        &-body{
+            display: flex;
+            gap: 12px;
+        }
+        &-item{
+            margin-top: 8px;
+            width: 100%;
+            border-radius: 20px;
+            height: 4px;
+            background: $color__grey13;
+            &-active{
+                background: $color__blue1;
+            }
+        }
     }
 }

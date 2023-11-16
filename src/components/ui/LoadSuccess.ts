@@ -1,26 +1,26 @@
 export const success = (): void => {
-    const messageDiv = document.createElement('div');
-    messageDiv.textContent = 'Success';
+  // Создаем элемент img
+  const imageElement = document.createElement('img');
 
-    messageDiv.classList.add('success-message');
+  // Устанавливаем атрибут src
+  imageElement.src = '/Images/logo.png'; // Замените на реальный путь к изображению
 
-    messageDiv.style.position = 'fixed';
-    messageDiv.style.top = '0';
-    messageDiv.style.left = '0';
-    messageDiv.style.fontSize = '25px';
-    messageDiv.style.width = '100%';
-    messageDiv.style.height = '100%';
-    messageDiv.style.backgroundColor = 'rgb(125 143 179 / 66%)';
-    messageDiv.style.color = 'green';
-    messageDiv.style.display = 'flex';
-    messageDiv.style.alignItems = 'center';
-    messageDiv.style.justifyContent = 'center';
-    messageDiv.style.zIndex = '9999';
+  // Добавляем класс и стили (ваш код)
+  imageElement.classList.add('success-message');
+  imageElement.style.position = 'fixed';
+  imageElement.style.top = '50%';
+  imageElement.style.left = '50%';
+  imageElement.style.transform = 'translate(-50%,-50%)';
+  imageElement.style.width = '214px';
+  imageElement.style.height = '59px';
+  // imageElement.style.backgroundColor = 'rgb(125 143 179 / 66%)';
+  imageElement.style.zIndex = '9999';
 
-    document.body.appendChild(messageDiv);
+  // Добавляем элемент в body
+  document.body.appendChild(imageElement);
 
-    setTimeout(() => {
-      document.body.removeChild(messageDiv);
-    }, 750);
-  }
-  
+  // Устанавливаем таймер для удаления изображения через 750 миллисекунд
+  setTimeout(() => {
+      document.body.removeChild(imageElement);
+  }, 1000);
+}

@@ -52,6 +52,9 @@ export interface ProfileInitialStateInterface {
     studySchool:string,
     education: EDUCATION | null,
 
+    isSeenServices:boolean,
+    isSeenActvities:boolean,
+
 }
 
 const initCoordinates = {
@@ -95,6 +98,9 @@ const initialState: ProfileInitialStateWithIdInterface = {
 
     studySchool:"",
     education: null,
+
+    isSeenServices: false,
+    isSeenActvities: false,
 }
 
 export const profileReducer = createSlice({

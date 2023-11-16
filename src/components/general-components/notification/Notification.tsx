@@ -12,7 +12,7 @@ import {
 } from "../../../types/enum"
 import { useAppSelector } from "../../../utils/hooks"
 import { baseURL } from "../../../utils/config"
-import { notificationDirname } from "../../../utils/titles"
+import { notificationDirname, notificationTypeTitle } from "../../../utils/titles"
 import { IconAdminClose } from "../../svg/IconAdminHeader"
 
 export const Notification = ({ children }: { children: ReactNode }) => {
@@ -99,6 +99,7 @@ export const Notification = ({ children }: { children: ReactNode }) => {
                             src={`${baseURL}/uploads/${dirname}/${notification.fileName}`}
                             alt=""
                         />
+                      
                     </div>
                     <div>
                         <h5 className="notification__alert-text">{notification.fullName}</h5>

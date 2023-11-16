@@ -48,7 +48,7 @@ export const ProfileInterestZone = () => {
                         className="profile__zone-button"
                         onClick={() => navigate("/profile/setup-interest-zone")}
                     >
-                        Setup Interest Zone
+                        {'Setup Interest Zone'}
                     </button>
                 </div>
             </div>

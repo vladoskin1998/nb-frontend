@@ -1,16 +1,19 @@
 import React from "react"
 
 export const WelcomeLogo = () => {
-  return (
-    <div className="welcome__logo">NeighborHarbor</div>
-  )
+    return (
+        <div className="welcome__logo">
+            <img src="/Images/logo.png" alt="" />
+        </div>
+    )
 }
-
 
 export const WelcomeYourCompas = () => {
     return (
         <>
-            <img src="/Images/welcome1.png" alt="" className="welcome-img-2" />
+  
+                <img src="/Images/welcome1.png" alt="" className="welcome-img-2" />
+            
             <div>
                 <h4 className="welcome-btitle">Your compass of real life</h4>
                 <h5 className="welcome-subtitle">

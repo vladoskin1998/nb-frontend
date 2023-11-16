@@ -2,6 +2,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { UserHeaderMain } from "../header/UserHeaderMain"
 import { PublicationPosts } from "../../general-components/publication-lists/PublicationPosts";
 import { FooterNav } from "../footer-navigate/FooterNav";
+import { GetStarted } from "./GetStarted";
 
 export const NewsFeeds = () => {
 
@@ -15,6 +16,7 @@ export const NewsFeeds = () => {
     return (
         <div className="user">
             <UserHeaderMain />
+            <GetStarted />
             <Routes>
                 <Route path="all" element={<PublicationPosts />} />
                 <Route path="" element={<PublicationPosts />} />

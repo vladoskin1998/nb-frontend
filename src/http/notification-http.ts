@@ -7,7 +7,14 @@ interface PayloadNotificationListInterface {
 }
 
 export interface NotificationListInterface {
-    ownerId: string;
+    ownerId: {
+        _id: string,
+        fullName: string
+    };
+    ownerIdentityId:{
+        _id: string,
+        avatarFileName: string
+    };
     userId: string;
     title: string;
     fileName: string;
