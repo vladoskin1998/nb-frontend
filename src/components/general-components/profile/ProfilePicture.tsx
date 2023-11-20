@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { IconAdminClose } from "../../svg/IconAdminHeader"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
-import { profileUploadAvatar } from "../../../services/profile"
+import { profileTextInfo, profileUploadAvatar } from "../../../services/profile"
 import { setValueProfileReducer, setLoader } from "../../../reducer/profile"
 import { baseURL } from "../../../utils/config"
 import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
@@ -102,7 +102,13 @@ export const ProfilePicture = () => {
 
                 const res = await profileUploadAvatar(formData)
 
-                dispatch(setValueProfileReducer(res))
+                const reslastStepChangeProfile = await profileTextInfo({
+                    lastStepChangeProfile:"/profile/interest-zone",
+                    _id,
+                })
+    
+
+                dispatch(setValueProfileReducer({...res,...reslastStepChangeProfile}))
                 dispatch(setLoader(false))
             }
 

@@ -51,6 +51,7 @@ export const ProfileInterestZoneSetup = () => {
     const handlerChangeStep = async () => {
         try {
             const res = await profileTextInfo({
+                lastStepChangeProfile:"/profile/about",
                 step,
                 _id,
             })

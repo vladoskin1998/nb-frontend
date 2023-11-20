@@ -33,6 +33,7 @@ export const ProfileBirth = () => {
                 dispatch(setLoader(true))
 
                 const res = await profileTextInfo({
+                    lastStepChangeProfile:"/profile/nationality",
                     dateBirth: new Date(pickerValue?.toDate() || ""),
                     cityBirth: city,
                     _id,

@@ -24,6 +24,7 @@ export const ProfileFamilyStatus = () => {
         try {
             dispatch(setLoader(true))
             const res = await profileTextInfo({
+                lastStepChangeProfile:"/profile/stay-touch",
                 familyStatus,
                 _id,
             })

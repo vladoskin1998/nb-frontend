@@ -28,6 +28,7 @@ export const ProfileSex = () => {
         try {
             dispatch(setLoader(true))
             const res = await profileTextInfo({
+                lastStepChangeProfile:"/profile/education",
                 orientation,
                 sex,
                 _id,

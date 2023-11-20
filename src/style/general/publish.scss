@@ -65,14 +65,21 @@
             position: relative;
             &-item{
                 position: relative;
-                .services__add-remove{
-                    top: -25px;
-                }
                 height: 108px;
                 width: 100%;
                 overflow: visible;
                 &-remove{
-
+                    width: 30px;
+                    height: 30px;
+                    top: -15px;
+                    right: -15px;
+                    width: 30px;
+                    height: 30px;
+                    background: $color__white;
+                    border-radius: 50%;
+                    position: absolute;
+                    @include flex-all-center;
+                    overflow: hidden;
                 }
             }
             img{

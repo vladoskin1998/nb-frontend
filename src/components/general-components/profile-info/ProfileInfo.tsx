@@ -13,6 +13,8 @@ import { UserInitialStateInterface } from "../../../reducer/users"
 import { UserIdentityInterface } from "../../../services/profile"
 import { ProfileInfoNotification } from "./ProfileInfoNotification"
 import { ProfileInfoPrivacy } from "./ProfileInfoPrivacy"
+import { ProfileInfoModalProfile } from "./ProfileInfoModalProfile"
+import { useAppSelector } from "../../../utils/hooks"
 
 export interface UserItem extends UserInitialStateInterface {
     userIdentity: UserIdentityInterface
@@ -25,6 +27,7 @@ export const ProfileInfo = () => {
     
     return (
         <div className="profileinfo">
+            <ProfileInfoModalProfile />
             <ProfileInfoHeader fullNameUser={props?.fullName}/>
             <div className="profileinfo__edit">
                 <Routes>

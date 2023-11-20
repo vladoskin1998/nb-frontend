@@ -7,7 +7,7 @@ import {
     setLoader,
     setValueProfileReducer,
 } from "../../../reducer/profile"
-import { profilePutIdentity } from "../../../services/profile"
+import { profilePutIdentity, profileTextInfo } from "../../../services/profile"
 import { OptionsItemType, OptionsType } from "../../../types/types"
 import { toOneKind } from "../../../utils/titles"
 import { QUALITYENUM } from "../../../types/enum"
@@ -77,7 +77,13 @@ export const ProfoleIdentityModule = ({
                 quality,
             })
 
-            dispatch(setValueProfileReducer(res))
+            const reslastStepChangeProfile = await profileTextInfo({
+                lastStepChangeProfile: nextRoute,
+                _id,
+            })
+
+
+            dispatch(setValueProfileReducer({...interests, ...reslastStepChangeProfile}))
             dispatch(setLoader(false))
             if(nextRoute){
                     navigate(nextRoute)

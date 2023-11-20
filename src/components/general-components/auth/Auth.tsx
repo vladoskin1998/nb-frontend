@@ -47,6 +47,12 @@ const Auth = () => {
         if(authLoaderMethod && authLoaderMethod === 'true'){
             setIsMessengerLogo(true)
         }
+
+        setTimeout(() => {
+            setIsMessengerLogo(false)
+            localStorage.removeItem('authLoaderMethod')
+            alert('auth method google or facebook not found')
+        }, 12000)
         
         return () => {
             localStorage.removeItem('authLoaderMethod')

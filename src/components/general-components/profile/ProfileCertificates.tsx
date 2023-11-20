@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
-import { profileUploadCertificates } from "../../../services/profile"
+import { profileTextInfo, profileUploadCertificates } from "../../../services/profile"
 import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 import { PublishModalAddFile } from "../publication/PublishModalAddFile"
 import { PublishAttachButton } from "../publication/PublishAttachButton"
@@ -69,7 +69,12 @@ export const ProfileCertificates = () => {
 
             const res = await profileUploadCertificates(formData)
 
-            dispatch(setValueProfileReducer(res))
+            const reslastStepChangeProfile = await profileTextInfo({
+                lastStepChangeProfile:"/profile/birth",
+                _id,
+            })
+
+            dispatch(setValueProfileReducer({...res, ...reslastStepChangeProfile}))
             dispatch(setLoader(false))
 
             navigate("/profile/birth")
@@ -105,7 +110,7 @@ export const ProfileCertificates = () => {
                     {certificates.map((item, index) => (
                         <div className="publish__main-list-item">
                             <button
-                                className="services__add-remove publish__main-list-item-remove"
+                                className="publish__main-list-item-remove"
                                 onClick={() => handlerDeleteFile(index)}
                                 style={{zIndex: (99 - index)}}
                             >

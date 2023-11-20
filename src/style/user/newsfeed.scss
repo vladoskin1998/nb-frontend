@@ -1,10 +1,10 @@
 .user__newsfeed {
-    margin-top: 60px;
+    margin-top: 54px;
     &--admin {
         margin-top: 0px;
     }
     &-title {
-        margin-top: 16px;
+        margin-top: 24px;
         @include title-main;
     }
     &-search {
@@ -17,7 +17,6 @@
         width: calc(100% - 48px);
     }
     &__getstarted {
-        padding-top: 45px;
         &-mind {
             display: flex;
             align-items: center;
@@ -43,6 +42,11 @@
                 height: 48px;
                 border-radius: 50%;
                 overflow: hidden;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
             }
         }
         &-title {

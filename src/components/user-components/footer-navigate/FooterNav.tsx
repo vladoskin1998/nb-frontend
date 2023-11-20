@@ -16,10 +16,28 @@ export const FooterNav = () => {
     const [active, setActive] = useState(1)
     const navigate = useNavigate()
     const location = useLocation()
+    const { _id, email, role, fullName } = useAppSelector((s) => s.userReducer)
+
+    const toProfile = () => {
+        navigate("/profileinfo", {
+            state: {
+                _id,
+                email,
+                role,
+                fullName,
+            },
+        })
+    }
+
     return (
-        <div className="user__footer" style={{
-            display: `${isShowFooterNavUser(location.pathname) ? "grid" : "none" }`
-        }}  >
+        <div
+            className="user__footer"
+            style={{
+                display: `${
+                    isShowFooterNavUser(location.pathname) ? "grid" : "none"
+                }`,
+            }}
+        >
             <div
                 className={`user__footer--border user__footer--border-${active}`}
             />
@@ -27,7 +45,7 @@ export const FooterNav = () => {
                 className={active === 1 ? "user__footer--active" : ""}
                 onClick={() => {
                     setActive(1)
-                    navigate('/user')
+                    navigate("/user")
                 }}
             >
                 <IconFooterNavHome />
@@ -35,8 +53,9 @@ export const FooterNav = () => {
             </button>
             <button
                 className={active === 2 ? "user__footer--active" : ""}
-                onClick={() => {setActive(2)
-                    navigate('/user/explore')
+                onClick={() => {
+                    setActive(2)
+                    navigate("/user/explore")
                 }}
             >
                 <IconFooterNavExplore />
@@ -44,8 +63,9 @@ export const FooterNav = () => {
             </button>
             <button
                 className={active === 3 ? "user__footer--active" : ""}
-                onClick={() => {setActive(3)
-                    navigate('/user/service')
+                onClick={() => {
+                    setActive(3)
+                    navigate("/user/service")
                 }}
             >
                 <IconFooterNavServices />
@@ -53,8 +73,9 @@ export const FooterNav = () => {
             </button>
             <button
                 className={active === 4 ? "user__footer--active" : ""}
-                onClick={() => {setActive(4)
-                    navigate('/user/activities')
+                onClick={() => {
+                    setActive(4)
+                    navigate("/user/activities")
                 }}
             >
                 <IconFooterNavActivities />
@@ -64,18 +85,16 @@ export const FooterNav = () => {
                 className={active === 5 ? "user__footer--active" : ""}
                 onClick={() => setActive(5)}
             >
-                <Link to="/profile">
-                    <div className="user__footer-profile">
-                        {avatarFileName ? (
-                            <img
-                                src={`${baseURL}/uploads/avatar/${avatarFileName}`}
-                                alt=""
-                            />
-                        ) : (
-                            <IconAdminImage />
-                        )}
-                    </div>
-                </Link>
+                <div className="user__footer-profile" onClick={toProfile}>
+                    {avatarFileName ? (
+                        <img
+                            src={`${baseURL}/uploads/avatar/${avatarFileName}`}
+                            alt=""
+                        />
+                    ) : (
+                        <IconAdminImage />
+                    )}
+                </div>
 
                 <p>Profile</p>
             </button>

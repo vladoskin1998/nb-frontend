@@ -34,7 +34,7 @@ export const ProfoleIdentityView = ({
                     options={optionst}
                     value={value}
                     setValue={setValue}
-                    placeholder={`Search ${quality}`}
+                    placeholder={<>Search <b>{quality}</b></>}
                     isLimit={isLimit}
                     inputValue={inputValue}
                     setInputValue={setInputValue}
@@ -56,7 +56,6 @@ export const ProfoleIdentityView = ({
                             key={index}
                             onClick={() => clickPopularList(item)}
                         >
-                            <IconProfileCircle />
                             <div className="profile__identity-list-item-text">
                                 {item.title}
                             </div>

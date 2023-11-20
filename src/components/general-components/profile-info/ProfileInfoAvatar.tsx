@@ -51,7 +51,7 @@ export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
                         Follow
                     </button>
                     <button
-                        className="profileinfo__avatar-buttons-button profileinfo__avatar-buttons-button--white"
+                        className="profileinfo__avatar-buttons-button profileinfo__avatar-buttons-button--inheritbody"
                         onClick={openChat}
                     >
                         Messege

@@ -55,6 +55,8 @@ export interface ProfileInitialStateInterface {
     isSeenServices:boolean,
     isSeenActvities:boolean,
 
+    lastStepChangeProfile: string
+
 }
 
 const initCoordinates = {
@@ -101,6 +103,8 @@ const initialState: ProfileInitialStateWithIdInterface = {
 
     isSeenServices: false,
     isSeenActvities: false,
+
+    lastStepChangeProfile: '/profile'
 }
 
 export const profileReducer = createSlice({

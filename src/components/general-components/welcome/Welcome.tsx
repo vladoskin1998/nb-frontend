@@ -69,7 +69,7 @@ export const Welcome = () => {
                     ${ location.pathname === '/welcome' && "welcome-buttons-first"}
                     `}>
                         <button
-                            className="authsuccess__body-buttons-button authsuccess__body-buttons-button--white"
+                            className="authsuccess__body-buttons-button authsuccess__body-buttons-button--inheritbody"
                             onClick={() => navigate(-1)}
                         >
                             Back
@@ -77,7 +77,8 @@ export const Welcome = () => {
                         <Link to={next()}>
                             <button className="authsuccess__body-buttons-button" onClick={singUp}>
                                 {
-                                    location.pathname === '/welcome/area' ? "Sing Up" : "Next"
+                                    location.pathname === '/welcome/area' ? "Sing Up" : 
+                                    location.pathname === '/welcome' ? "Get Started": "Next"
                                 }
                                 
                             </button>

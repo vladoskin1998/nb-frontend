@@ -227,9 +227,7 @@
                 height: 40px;
                 background: $color__white;
                 padding: 12px;
-                display: flex;
-                align-items: center;
-                column-gap: 10px;
+                @include flex-all-center;
                 font-size: 14px;
                 font-style: normal;
                 font-weight: 600;
@@ -237,6 +235,8 @@
                 box-shadow: $box-shadow1;
                 border-radius: 8px;
                 &-text {
+                    font-weight: 600;
+                    font-size: 14px;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;

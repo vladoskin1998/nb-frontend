@@ -37,6 +37,12 @@
         border: 1px solid $color__black;
     }
 
+    &--inheritbody{
+        color: $color__black;
+        background: $color__grey3;
+        border: 1px solid $color__black;
+    }
+
     &--inherit{
         color: $color__grey1;
         background:  inherit;

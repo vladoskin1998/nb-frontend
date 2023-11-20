@@ -17,6 +17,7 @@
     &__fields{
         margin-top: 12px
     }
+    
     &__mess{
         padding-top: 16px;
         font-size: 12px;
@@ -60,9 +61,14 @@
         font-style: normal;
         font-weight: 400;
         line-height: 140%;
+        overflow: hidden;
         input{
-            padding-left: 40px;
+            margin-left: 25px;
             width: 100%;
+            z-index: 9999;
+        }
+        .profile__birth-input-placeholder{
+            left: 40px !important;
         }
         &-icon{
             position: absolute;

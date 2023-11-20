@@ -9,17 +9,28 @@ const LocationSuccess = () => {
         <>
             <div className="authsuccess auth">
                 <div className="authsuccess__body">
-                    <img
-                        src="/Images/ImageSuccess.png"
-                        alt="not-image"
-                        className="location__success-img-1"
-                    />
-                    <h4 className="authsuccess__body-title">Neighbor Harbor</h4>
-                    <img
-                        src="/Images/GirlsSuccess.png"
-                        alt=""
-                        className="location__success-img-2"
-                    />
+                    <div className="authsuccess__body-logo">
+                        <img
+                            src="/Images/logo.png"
+                            alt="not-image"
+                            className="location__success-img-1"
+                        />
+                    </div>
+                    <div className="authsuccess__body--img">
+                        <div className="authsuccess__body--bg">
+                            <img
+                                src="/Images/welcomebg.png"
+                                alt=""
+                                className="authsuccess__body--bg--bgimg"
+                            />
+                        </div>
+                        <img
+                            src="/Images/GirlsSuccess.png"
+                            alt=""
+                            className="authsuccess__body--img--girl"
+                        />
+                    </div>
+
                     <h4 className="authsuccess__body-title authsuccess__body-subtitle">
                         Welcome,
                         <b>{fullName || "Name"} !</b>

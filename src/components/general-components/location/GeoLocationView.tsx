@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { useAppSelector } from "../../../utils/hooks"
 import { UserCurrentLocation } from "../../admin-components/users/UserCurrentLocation"
 import {
@@ -6,27 +7,30 @@ import {
     IconLocationPoint,
 } from "../../svg/IconsLocation"
 
-const mapContainerStyle = {
-    width: "100%",
-    height: "100%",
-}
-
 const GeoLocationView = ({
     geoLocation,
     navigateToCurrentRoute,
     pathname,
-    inputRef
-    
+    inputRef,
 }: {
     geoLocation: () => void
     navigateToCurrentRoute: () => void
     pathname: string
     inputRef: React.MutableRefObject<HTMLDivElement | null>
 }) => {
-    const { coordinates} = useAppSelector(
+    const [isShowPlaceholder, setIsShowPlaceholder] = useState(true)
+    const { coordinates, city, country, houseNumber, street } = useAppSelector(
         (s) => s.profileReducer
     )
-
+    const [cityInput, setCityInput] = useState("")
+    const address = city && country && houseNumber && street
+    useEffect(() => {
+        if (cityInput || address) {
+            setIsShowPlaceholder(false)
+        } else {
+            setIsShowPlaceholder(true)
+        }
+    }, [cityInput, address])
 
     return (
         <>
@@ -40,22 +44,33 @@ const GeoLocationView = ({
                     </div>
                 </h5>
                 <button
-                    className="location__but location__but--white"
+                    className="location__but location__but--inheritbody"
                     onClick={geoLocation}
                 >
                     <IconLocationAim /> Use current location
                 </button>
                 <div className="location__fields">
-                    <div className="location__field">
+                    <div className="login__email location__field">
                         <div className="location__field-icon">
                             <IconLocationPoint />
                         </div>
                         <input
                             type="text"
                             id="autocomplete--google"
-                            className="login__email"
-                            placeholder="вулиця Академіка Янгеля, 6а, Akademika Yanhelya Street, Вінниця, Вінницька область, Україна"
+                            className=" location__field-input"
+                            placeholder=""
+                            onChange={(e) => setCityInput(e.target.value)}
                         />
+                        {isShowPlaceholder && (
+                            <span className="profile__birth-input-placeholder">
+                                {
+                                    <>
+                                        Search <b> city</b>, <b> street</b>,{" "}
+                                        <b>index</b>
+                                    </>
+                                }
+                            </span>
+                        )}
                     </div>
                 </div>
                 {pathname !== "/location" && (

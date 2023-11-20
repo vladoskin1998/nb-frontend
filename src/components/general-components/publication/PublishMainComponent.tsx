@@ -66,7 +66,7 @@ export const PublicationMainComponent = ({
                 {files.map((item, index) => (
                     <div className="publish__main-list-item">
                         <button
-                            className="services__add-remove publish__main-list-item-remove"
+                            className=" publish__main-list-item-remove"
                             onClick={() => handlerDeleteFile(index)}
                         >
                             <IconAdminClose />

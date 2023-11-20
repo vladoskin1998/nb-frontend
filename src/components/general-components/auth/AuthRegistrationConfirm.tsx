@@ -25,7 +25,7 @@ export const AuthRegistrationConfirm = () => {
             </div>
             <div className="forget__buttons">
                 <button
-                    className="forget__email-but1 forget__email-but1--white"
+                    className="forget__email-but1 forget__email-but1--inheritbody"
                     onClick={handlerBackLogin}
                 >
                     Back to Login In

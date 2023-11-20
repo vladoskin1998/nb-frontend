@@ -209,7 +209,7 @@ export const ServicesAdd = () => {
                 />
                 <button
                     onClick={addSubCategory}
-                    className="services__add-button services__add-button--white services__add-button-1"
+                    className="services__add-button services__add-button--inheritbody services__add-button-1"
                 >
                     Add SubCategory
                 </button>

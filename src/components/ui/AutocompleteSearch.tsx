@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField"
 import Autocomplete from "@mui/material/Autocomplete"
 import { IconInputSearch } from "../svg/IconInputSearch"
 import { IconProfileCircle } from "../svg/IconProfile"
-import { ReactElement } from "react"
+import { ReactElement, useEffect, useState } from "react"
 import { OptionsItemType, OptionsType } from "../../types/types"
 import { ThemeProvider, createTheme } from "@mui/material/styles"
 export const AutocompleteSearch = ({
@@ -20,7 +20,7 @@ export const AutocompleteSearch = ({
     options: OptionsType
     value: OptionsType
     setValue: (s: OptionsType) => void
-    placeholder?: string
+    placeholder?: string | ReactElement
     itemPaperIcon?: string | ReactElement
     isLimit?: number
     inputValue?: string
@@ -33,13 +33,23 @@ export const AutocompleteSearch = ({
             MuiAutocomplete: {
                 styleOverrides: {
                     paper: {
-                        zIndex: 9999, 
-                        background: 'white'
+                        zIndex: 9999,
+                        background: "white",
                     },
                 },
             },
         },
     })
+
+    const [isShowPlaceholder, setIsShowPlaceholder] = useState(true)
+
+    useEffect(() => {
+        if (inputValue || value.length) {
+            setIsShowPlaceholder(false)
+        } else {
+            setIsShowPlaceholder(true)
+        }
+    }, [inputValue, value])
 
     return (
         <ThemeProvider theme={theme}>
@@ -78,14 +88,21 @@ export const AutocompleteSearch = ({
                 style={styleComponent.style}
                 renderInput={(params) => (
                     <>
-                        <div style={styleComponent.renderInput} >
+                        <div style={styleComponent.renderInput}>
                             <IconInputSearch />
                         </div>
                         <TextField
                             {...params}
-                            placeholder={placeholder || "Search"}
-                            style={{zIndex:998, position:'relative'}}
+                            placeholder={""}
+                            style={{ zIndex: 998, position: "relative" }}
                         />
+                        {isShowPlaceholder && (
+                            <span className="profile__birth-input-placeholder" style={styleComponent.placeholder}>
+                                {
+                                    placeholder
+                                }
+                            </span>
+                        )}
                     </>
                 )}
                 renderOption={(props, option, state) => (
@@ -116,6 +133,9 @@ export const AutocompleteSearch = ({
 }
 
 const styleComponent = {
+    placeholder:{
+        left: '55px',
+    },
     paper: {
         marginTop: "14px",
         marginBottom: "8px",
@@ -127,12 +147,15 @@ const styleComponent = {
         boxShadow: "none",
         background: "white",
         zIndex: 9999,
+        fontWeight: 600,
     },
     renderOption: {
         display: "flex",
         alignItems: "center",
-        borderBottom: "1px solid #ccc",
-        padding: "8px 0",
+        borderBottom: "1px solid #C3CAD9",
+        padding: "8px 0 8px 0",
+        fontSize: "14px",
+        gap: "12px",
         width: "100%",
         zIndex: 998,
     },

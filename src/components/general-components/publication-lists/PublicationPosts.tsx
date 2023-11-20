@@ -19,6 +19,7 @@ import { IconComment } from "../../svg/IconFavor"
 import { IconProfileInfoBookmark } from "../../svg/IconProfileInfo"
 import { FeedBackHttp } from "../../../http/feedback-http"
 import { ROLES } from "../../../types/enum"
+import { GetStarted } from "../../user-components/newsfeed/GetStarted"
 
 export const PublicationPosts = () => {
     const { _id, role } = useAppSelector((s) => s.userReducer)
@@ -92,6 +93,7 @@ export const PublicationPosts = () => {
                 location.pathname === "/admin/posts" && "user__newsfeed--admin"
             }`}
         >
+            <GetStarted />
             <div
                 className={`${
                     !(location.pathname === "/admin/posts") &&

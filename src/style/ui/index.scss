@@ -114,6 +114,8 @@
         pointer-events: none;
         opacity: 0.5;
         transition: all 0.2s ease-in-out;
+        color: $color__grey1;
+        font-weight: 400;
         span {
             font-weight: 700;
         }

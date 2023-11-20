@@ -29,7 +29,7 @@ const Recovery = () => {
             </div>
             <div className="forget__buttons">
                 <button
-                    className="forget__email-but1 forget__email-but1--white"
+                    className="forget__email-but1 forget__email-but1--inheritbody"
                     onClick={toCheckCode}
                 >
                     Change Password

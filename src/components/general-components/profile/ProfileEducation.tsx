@@ -33,6 +33,7 @@ export const ProfileEducation = () => {
         try {
             dispatch(setLoader(true))
             const res = await profileTextInfo({
+                lastStepChangeProfile:"/profile/family-status",
                 education,
                 studySchool,
                 _id,

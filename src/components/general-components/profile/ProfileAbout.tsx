@@ -29,6 +29,7 @@ export const ProfileAbout = () => {
         try {
             dispatch(setLoader(true))
             const res = await profileTextInfo({
+                lastStepChangeProfile:"/profile/profession",
                 aboutMe,
                 _id,
             })
