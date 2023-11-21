@@ -60,7 +60,7 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
                         return navigate(`/location`)
                     }
                     console.log("auth","roleUrl(role)",roleUrl(role))
-                    if(location.pathname === "/auth"){
+                    if(location.pathname === "/auth/login"){
                         return navigate(roleUrl(role))
                     }
                    

@@ -11,9 +11,8 @@ export const WelcomeLogo = () => {
 export const WelcomeYourCompas = () => {
     return (
         <>
-  
-                <img src="/Images/welcome1.png" alt="" className="welcome-img-2" />
-            
+            <img src="/Images/welcome1.png" alt="" className="welcome-img-2" />
+
             <div>
                 <h4 className="welcome-btitle">Your compass of real life</h4>
                 <h5 className="welcome-subtitle">

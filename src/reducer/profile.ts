@@ -52,8 +52,9 @@ export interface ProfileInitialStateInterface {
     studySchool:string,
     education: EDUCATION | null,
 
-    isSeenServices:boolean,
-    isSeenActvities:boolean,
+    isAddedServices:boolean,
+    isAddedPost:boolean,
+    isExploreDone:boolean,
 
     lastStepChangeProfile: string
 
@@ -101,8 +102,9 @@ const initialState: ProfileInitialStateWithIdInterface = {
     studySchool:"",
     education: null,
 
-    isSeenServices: false,
-    isSeenActvities: false,
+    isAddedServices:false,
+    isAddedPost:false,
+    isExploreDone:false,
 
     lastStepChangeProfile: '/profile'
 }

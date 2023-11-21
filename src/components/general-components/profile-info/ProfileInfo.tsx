@@ -28,7 +28,7 @@ export const ProfileInfo = () => {
     return (
         <div className="profileinfo">
             <ProfileInfoModalProfile />
-            <ProfileInfoHeader fullNameUser={props?.fullName}/>
+            <ProfileInfoHeader fullNameUser={props?.fullName} _id={props?._id}/>
             <div className="profileinfo__edit">
                 <Routes>
                     <Route path="logout" element={<ProfileSettings />} />

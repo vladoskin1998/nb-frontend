@@ -57,7 +57,6 @@ export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
                                 }
                             `}
                             >
-                                <IconProfileCircle />
                                 {item.title}
                             </div>
                         ))}
@@ -77,7 +76,6 @@ export const ProfileInfoPerProf = ({ props }: { props?: UserItem }) => {
                             }
                         `}
                             >
-                                <IconProfileCircle />
                                 {item.title}
                             </div>
                         ))}

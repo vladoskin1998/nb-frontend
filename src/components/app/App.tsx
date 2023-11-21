@@ -15,6 +15,7 @@ import { AuthRegistrationConfirm } from "../general-components/auth/AuthRegistra
 import { AuthRegistrationConfirmCode } from "../general-components/auth/AuthRegistrationConfirmCode"
 import { Welcome } from "../general-components/welcome/Welcome"
 import { Notification } from "../general-components/notification/Notification"
+import { AuthWelcome } from "../general-components/auth/AuthWelcome"
 export default function App() {
     const isWelcome = localStorage.getItem("isWelcome")
     return (
@@ -93,7 +94,13 @@ export default function App() {
                                         path="confirm"
                                         element={<AuthRegistrationConfirm />}
                                     />
-                                    <Route path="" element={<Auth />} />
+                                    
+                                    <Route
+                                        path="login"
+                                        element={<Auth />}
+                                    />
+
+                                    <Route path="" element={<AuthWelcome />} />
                                 </Route>
 
                                 <Route

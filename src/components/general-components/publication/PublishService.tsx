@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"
 import { PublicationMainComponent } from "./PublishMainComponent"
 import { PublishAddLocation } from "./PublishAddLocation"
-import { useAppSelector } from "../../../utils/hooks"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { success } from "../../ui/LoadSuccess"
 import { CoordinatsInterface, OptionsType } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
 import { ServiceHttp } from "../../../http/service-http"
 import { PublishServiceCategorie } from "./PublishServiceCategorie"
 import { useNavigate } from "react-router-dom"
+import { profileTextInfo } from "../../../services/profile"
+import { setValueProfileReducer } from "../../../reducer/profile"
 
 export const PublishService = ({
     currentPrivacy,
@@ -16,7 +18,8 @@ export const PublishService = ({
 }) => {
     const { _id } = useAppSelector((s) => s.userReducer)
     const profile = useAppSelector((s) => s.profileReducer)
-
+    const dispatch = useAppDispatch()
+    
     const [files, setFiles] = useState<File[]>([])
     const [text, setText] = useState("")
     const [title, setTitle] = useState("")
@@ -64,9 +67,17 @@ export const PublishService = ({
                 formCatData.append("files", files[index])
             }
 
-           await ServiceHttp.addPublishService(
+            await ServiceHttp.addPublishService(
                 formCatData
             )
+
+            if (!profile.isAddedServices) {
+                const res = await profileTextInfo({
+                    isAddedServices: true,
+                    _id,
+                })
+                dispatch(setValueProfileReducer(res))
+            }
 
             success()
             navigate(-1)

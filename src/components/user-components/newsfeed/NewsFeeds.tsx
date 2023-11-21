@@ -16,7 +16,7 @@ export const NewsFeeds = () => {
     return (
         <div className="user">
             <UserHeaderMain />
-          
+            <FooterNav />
             <Routes>
                 <Route path="all" element={<PublicationPosts />} />
                 <Route path="" element={<PublicationPosts />} />

@@ -5,7 +5,7 @@ import AuthHeader from "./AuthHeader"
 import { authorization } from "../../../services/auth"
 import { METHOD_AUTH } from "../../../types/enum"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { Loader } from "../../ui/Loader"
 import { WelcomeLogo } from "../welcome/WelcomeItems"
 
@@ -17,7 +17,11 @@ interface PayloadInterface {
 }
 
 const Auth = () => {
-    const [isLogin, setIsLogin] = useState(true)
+
+    const location = useLocation();
+    const props: {isLogin:boolean} = location.state;
+
+    const [isLogin, setIsLogin] = useState(props.isLogin)
 
     const [login, setLogin] = useState("")
     const [password, setPassword] = useState("")
@@ -25,8 +29,6 @@ const Auth = () => {
 
     const dispatch = useAppDispatch()
 
-    const { isLoad } = useAppSelector((s) => s.authReducer)
-    const [isMessengerLoad, setIsMessengerLogo] = useState(false)
 
     const handlerAuth = () => {
         const method = isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
@@ -42,28 +44,10 @@ const Auth = () => {
             
     }
 
-    useEffect(() => {
-        const authLoaderMethod = localStorage.getItem('authLoaderMethod')
-        if(authLoaderMethod && authLoaderMethod === 'true'){
-            setIsMessengerLogo(true)
-        }
-
-        setTimeout(() => {
-            setIsMessengerLogo(false)
-            localStorage.removeItem('authLoaderMethod')
-            alert('auth method google or facebook not found')
-        }, 12000)
-        
-        return () => {
-            localStorage.removeItem('authLoaderMethod')
-        }
-    }, [])
+    
 
     return (
-        <>
-            {isLoad || isMessengerLoad ? (
-                <WelcomeLogo />
-            ) : (
+       
                 <div className="auth">
                     <AuthHeader isLogin={isLogin} setIsLogin={setIsLogin} />
                     {isLogin ? (
@@ -86,10 +70,7 @@ const Auth = () => {
                         />
                     )}
                 </div>
-            )}
-                
-            
-        </>
+          
     )
 }
 

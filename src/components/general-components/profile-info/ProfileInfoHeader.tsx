@@ -8,9 +8,9 @@ import { roleUrl } from "../../../utils/config"
 import { UserItemViewProps } from "../../admin-components/users/UserItemView"
 import { UserItem } from "./ProfileInfo"
 
-export const ProfileInfoHeader = ({fullNameUser}:{fullNameUser?: string}) => {
+export const ProfileInfoHeader = (props:{fullNameUser?: string,_id:string}) => {
 
-    const { fullName, role } = useAppSelector((s) => s.userReducer)
+    const { fullName, role, _id } = useAppSelector((s) => s.userReducer)
 
     const location = useLocation()
     const isProfileInfo = location.pathname === "/profileinfo" 
@@ -29,10 +29,10 @@ export const ProfileInfoHeader = ({fullNameUser}:{fullNameUser?: string}) => {
             </button>
             <h6 className="profileinfo__header-text">
                 {isProfileInfo
-                    ? fullNameUser ? fullNameUser : fullName
+                    ? props.fullNameUser 
                     : getProfileInfoHederTitile(location.pathname)}
             </h6>
-            {(isProfileInfo && !fullNameUser )&& (
+            {(isProfileInfo && props._id === _id )&& (
                 <button className="profileinfo__header-points">
                     <Link to={"/profileinfo/settings"}>
                         <IconServicesAllPoint />

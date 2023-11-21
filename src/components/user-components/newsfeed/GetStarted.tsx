@@ -8,60 +8,62 @@ import { Link, useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
 import { setValueProfileReducer } from "../../../reducer/profile"
 export const GetStarted = () => {
-    const { fullName, isCheckedEmail, _id } = useAppSelector(
+    const { fullName, isCheckedEmail, _id,  phone, } = useAppSelector(
         (s) => s.userReducer
     )
+
     const {
         avatarFileName,
-        isGotAllProfileInfo,
-        isSeenServices,
-        isSeenActvities,
-        isLocationVerify,
+        isAddedServices,
+        isAddedPost,
+        isExploreDone,
     } = useAppSelector((s) => s.profileReducer)
+
+  
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const [list, setList] = useState<boolean[]>([])
+
     var settings = {
         infinite: false,
         speed: 500,
         slidesToShow: 2,
         slidesToScroll: 1,
-        // afterChange: (n:number) => changeCurrentSlide(n)
     }
 
     useEffect(() => {
         setList([
-            isGotAllProfileInfo,
-            isSeenServices,
-            isSeenActvities,
-            isLocationVerify,
-            isCheckedEmail,
+            isAddedServices,
+            isAddedPost,
+            isExploreDone,
+            Boolean(avatarFileName),
+            Boolean(phone),
         ])
     }, [
-        isGotAllProfileInfo,
-        isSeenServices,
-        isSeenActvities,
-        isLocationVerify,
-        isCheckedEmail,
+        isAddedServices,
+        isAddedPost,
+        isExploreDone,
+        avatarFileName,
+        phone
     ])
 
     const navigateToServices = async () => {
-        const res = await profileTextInfo({
-            isSeenServices: true,
-            _id,
-        })
-        dispatch(setValueProfileReducer(res))
-        navigate("/user/service")
+        // const res = await profileTextInfo({
+        //     isSeenServices: true,
+        //     _id,
+        // })
+        // dispatch(setValueProfileReducer(res))
+        // navigate("/user/service")
     }
 
     const navigateToActivities = async () => {
-        const res = await profileTextInfo({
-            isSeenActvities: true,
-            _id,
-        })
-        dispatch(setValueProfileReducer(res))
-        navigate("/user/activities")
+        // const res = await profileTextInfo({
+        //     isSeenActvities: true,
+        //     _id,
+        // })
+        // dispatch(setValueProfileReducer(res))
+        // navigate("/user/activities")
     }
 
     return (
@@ -79,7 +81,7 @@ export const GetStarted = () => {
                     </div>
                 </div>
             </Link>
-            {isGotAllProfileInfo && isSeenServices && isSeenActvities ? (
+            {Boolean(phone) && isAddedPost && isAddedServices && isExploreDone && Boolean(avatarFileName) ? (
                 <></>
             ) : (
                 <>
@@ -93,10 +95,10 @@ export const GetStarted = () => {
                         <Slider {...settings}>
                             <div className="user__newsfeed-slick-item">
                                 <div className="user__newsfeed-slick-mark">
-                                    {<Checkmark />}
+                                    {Boolean(phone) && <Checkmark />}
                                     Step 1
-                                </div>
-                                <div className="user__newsfeed-slick-img">
+                                </div> 
+                                <div className="user__newsfeed-slick-img" onClick={() => navigate('/profileinfo/security')}>
                                     <img
                                         src="/Images/get1.png"
                                         alt=""
@@ -108,48 +110,51 @@ export const GetStarted = () => {
                                 </div>
 
                                 <button className="user__newsfeed-slick-button">
-                                    Get Started
+                                    Connect your phone
                                 </button>
                             </div>
 
                             <div className="user__newsfeed-slick-item">
                                 <div className="user__newsfeed-slick-mark">
-                                    {<Checkmark />}
+                                    {isAddedPost && <Checkmark />}
                                     Step 2
                                 </div>
-                                <div className="user__newsfeed-slick-img">
-                                    <img src="/Images/get2.png" alt="" 
-                                    style={{
-                                        width: "139px",
-                                        height: "100px",
-                                    }}
+                                <div className="user__newsfeed-slick-img" onClick={() => navigate('/publish/post')}>
+                                    <img
+                                        src="/Images/get2.png"
+                                        alt=""
+                                        style={{
+                                            width: "139px",
+                                            height: "100px",
+                                        }}
                                     />
                                 </div>
 
                                 <button className="user__newsfeed-slick-button">
-                                    Get Started
+                                    Write your first post
                                 </button>
                             </div>
 
                             <div
                                 className="user__newsfeed-slick-item"
-                                onClick={() => navigate("/profile")}
                             >
                                 <div className="user__newsfeed-slick-mark">
-                                    {isGotAllProfileInfo && <Checkmark />}
+                                    {isAddedServices && <Checkmark />}
                                     Step 3
                                 </div>
-                                <div className="user__newsfeed-slick-img">
-                                    <img src="/Images/get3.png" alt="" 
-                                      style={{
-                                        width: "87px",
-                                        height: "87px",
-                                    }}
+                                <div className="user__newsfeed-slick-img" onClick={() => navigate('/publish/service')}>
+                                    <img
+                                        src="/Images/get3.png"
+                                        alt=""
+                                        style={{
+                                            width: "87px",
+                                            height: "87px",
+                                        }}
                                     />
                                 </div>
 
                                 <button className="user__newsfeed-slick-button">
-                                    Get Started
+                                Provide a service
                                 </button>
                             </div>
 
@@ -158,18 +163,22 @@ export const GetStarted = () => {
                                 onClick={navigateToServices}
                             >
                                 <div className="user__newsfeed-slick-mark">
-                                    {isSeenServices && <Checkmark />}
+                                    {isExploreDone && <Checkmark />}
                                     Step 4
                                 </div>
                                 <div className="user__newsfeed-slick-img">
-                                    <img src="/Images/get4.png" alt=""  style={{
-                                        width: "159px",
-                                        height: "74px",
-                                    }}/>
+                                    <img
+                                        src="/Images/get4.png"
+                                        alt=""
+                                        style={{
+                                            width: "159px",
+                                            height: "74px",
+                                        }}
+                                    />
                                 </div>
 
                                 <button className="user__newsfeed-slick-button">
-                                    Get Started
+                                    Make your first discovery
                                 </button>
                             </div>
 
@@ -178,17 +187,21 @@ export const GetStarted = () => {
                                 onClick={navigateToActivities}
                             >
                                 <div className="user__newsfeed-slick-mark">
-                                    {isSeenActvities && <Checkmark />}
+                                    {Boolean(avatarFileName) && <Checkmark />}
                                     Step 5
                                 </div>
-                                <div className="user__newsfeed-slick- ">
-                                    <img src="/Images/get5.png" alt="" style={{
-                                        width: "101px",
-                                        height: "101px",
-                                    }}/>
+                                <div className="user__newsfeed-slick- "  onClick={() => navigate('/profileinfo/edit')}>
+                                    <img
+                                        src="/Images/get5.png"
+                                        alt=""
+                                        style={{
+                                            width: "101px",
+                                            height: "101px",
+                                        }}
+                                    />
                                 </div>
                                 <button className="user__newsfeed-slick-button">
-                                    Get Started
+                                    Add your profile photo
                                 </button>
                             </div>
                         </Slider>

@@ -1,15 +1,15 @@
 import React, { useState } from "react"
 import { PublicationMainComponent } from "./PublishMainComponent"
 import { PublishAddLocation } from "./PublishAddLocation"
-import {
-    PublishPostHttp,
-} from "../../../http/publish-post-http"
-import { useAppSelector } from "../../../utils/hooks"
+import { PublishPostHttp } from "../../../http/publish-post-http"
+import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { success } from "../../ui/LoadSuccess"
 import { CoordinatsInterface, PublishPostInterface } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
 import { useNavigate } from "react-router-dom"
 import { roleUrl } from "../../../utils/config"
+import { profileTextInfo } from "../../../services/profile"
+import { setValueProfileReducer } from "../../../reducer/profile"
 
 export const PublishPost = ({
     currentPrivacy,
@@ -19,6 +19,7 @@ export const PublishPost = ({
     const navigate = useNavigate()
     const { _id, role } = useAppSelector((s) => s.userReducer)
     const profile = useAppSelector((s) => s.profileReducer)
+    const dispatch = useAppDispatch()
 
     const [addressLocation, setAddressLocation] = useState(
         `${profile.country}, ${profile.city}, ${profile.street}, ${profile.houseNumber}`
@@ -50,7 +51,7 @@ export const PublishPost = ({
                 userId: _id,
                 userIdentityId: profile.userIdentityId,
                 privacyPost: currentPrivacy,
-                addressLocation
+                addressLocation,
             }
             formCatData.append("payload", JSON.stringify(payload))
 
@@ -60,6 +61,14 @@ export const PublishPost = ({
 
             const resPubPost: PublishPostInterface =
                 await PublishPostHttp.addPost(formCatData)
+
+            if (!profile.isAddedPost) {
+                const res = await profileTextInfo({
+                    isAddedPost: true,
+                    _id,
+                })
+                dispatch(setValueProfileReducer(res))
+            }
 
             success()
             navigate(`${roleUrl(role)}/posts`)

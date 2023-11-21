@@ -118,7 +118,7 @@
         &-but {
             color: $color__blue1;
             text-align: start;
-            &--active{
+            &--active {
                 color: $color__grey1;
             }
         }
@@ -164,12 +164,12 @@
         flex-direction: column;
         align-items: center;
         flex-grow: 1;
-        &--img{
+        &--img {
             flex-grow: 1;
             @include flex-all-center;
             position: relative;
             z-index: 3;
-            &--girl{
+            &--girl {
                 max-width: 154px;
                 max-height: 264px;
                 width: 100%;
@@ -178,25 +178,25 @@
                 z-index: 2;
             }
         }
-        &--bg{
+        &--bg {
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
             width: 100vw;
             z-index: 1;
-            &--bgimg{
+            &--bgimg {
                 width: 100%;
             }
         }
-        &-logo{
+        &-logo {
             width: 214px;
             height: 59px;
             position: fixed;
             top: 40px;
             left: 50%;
             transform: translateX(-50%);
-            img{
+            img {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
@@ -227,13 +227,13 @@
             margin-top: 8px;
             padding-bottom: 20px;
         }
-        &-buttons{
+        &-buttons {
             position: absolute;
             bottom: 24px;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 80px);
-            &-button{
+            &-button {
                 @include button-main;
                 width: 100%;
             }
@@ -241,14 +241,59 @@
     }
 }
 
-
-.auth__agree{
-    &-list{
+.auth__agree {
+    &-list {
         margin-top: 16px;
     }
-    &-button{
+    &-button {
         margin-top: 24px;
         @include button-main;
         width: 100%;
+    }
+}
+
+.auth__welcome {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    &-logo {
+        @include flex-all-center;
+    }
+    &-subtitle {
+        padding-top: 20px;
+        text-align: center;
+        @include sub-title-main;
+    }
+    &-body {
+        flex-grow: 1;
+        @include flex-all-center;
+        position: relative;
+        &-img{
+            z-index: 2;
+        }
+        &-bg{
+            position: absolute;
+            width: 100vw;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            &--img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+    &-buttons {
+        display: flex;
+        gap: 14px;
+        &-button {
+            @include button-main;
+            width: 100%;
+        }
+    }
+    .auth__messenger {
+        margin-top: 16px;
+        justify-content: center;
     }
 }
