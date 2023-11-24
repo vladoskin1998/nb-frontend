@@ -7,8 +7,9 @@ import $api from "../../../http"
 import { useAppSelector } from "../../../utils/hooks"
 import { AxiosResponse } from "axios"
 import { ChatType } from "../../../types/types"
+import { GetStartedMessenger } from "./GetStartedMessenger"
 
-export const ChatList = ({isSupport=false}:{isSupport?:boolean}) => {
+export const ChatList = ({ isSupport = false }: { isSupport?: boolean }) => {
     const [search, setSearch] = useState("")
     const [chatsList, setChatsList] = useState<ChatType[]>([])
     const { _id } = useAppSelector((s) => s.userReducer)
@@ -35,62 +36,70 @@ export const ChatList = ({isSupport=false}:{isSupport?:boolean}) => {
     }) => {
         navigate(`chat?user=${JSON.stringify(props)}`, {
             state: {
-                participants: [props]
+                participants: [props],
             },
         })
     }
 
     return (
-        <div className="messenger">
-            <InputSearch
-                placeholder={"Search NightborChats"}
-                value={search}
-                changeValue={setSearch}
-            />
-            <div className="messenger__list">
-                {chatsList.map((item) => (
-                    <div
-                        className="messenger__list-item"
-                        onClick={() =>
-                            openChat({
-                                avatarFileName:
-                                    item?.participants[0]?.avatarFileName,
-                                fullName: item?.participants[0]?.fullName,
-                                userId: item?.participants[0]?.userId,
-                            })
-                        }
-                    >
-                        <img
-                            src={
-                                item?.participants[0]?.avatarFileName
-                                    ? `${baseURL}/uploads/avatar/${item?.participants[0]?.avatarFileName}`
-                                    : "/Images/Profile.jpg"
-                            }
-                            alt=""
-                        />
-                        <div>
-                            <h5 className="messenger__list-item-name">
-                                {item?.participants[0]?.fullName}
-                            </h5>
-                            <p className="messenger__list-item-message">
-                                {item.lastMessage?.content}
-                            </p>
-                        </div>
-                        <div>
-                            <div className="messenger__list-item-time">
-                                {moment(item.lastMessage?.timestamp).format(
-                                    "MMM D, h:mm A"
-                                )}
-                            </div>
-                            {/* {item.numberMessages && (
+        <>
+            {chatsList.length ? (
+                <div className="messenger">
+                    <InputSearch
+                        placeholder={"Search NightborChats"}
+                        value={search}
+                        changeValue={setSearch}
+                    />
+                    <div className="messenger__list">
+                        {chatsList.map((item) => (
+                            <div
+                                className="messenger__list-item"
+                                onClick={() =>
+                                    openChat({
+                                        avatarFileName:
+                                            item?.participants[0]
+                                                ?.avatarFileName,
+                                        fullName:
+                                            item?.participants[0]?.fullName,
+                                        userId: item?.participants[0]?.userId,
+                                    })
+                                }
+                            >
+                                <img
+                                    src={
+                                        item?.participants[0]?.avatarFileName
+                                            ? `${baseURL}/uploads/avatar/${item?.participants[0]?.avatarFileName}`
+                                            : "/Images/Profile.jpg"
+                                    }
+                                    alt=""
+                                />
+                                <div>
+                                    <h5 className="messenger__list-item-name">
+                                        {item?.participants[0]?.fullName}
+                                    </h5>
+                                    <p className="messenger__list-item-message">
+                                        {item.lastMessage?.content}
+                                    </p>
+                                </div>
+                                <div>
+                                    <div className="messenger__list-item-time">
+                                        {moment(
+                                            item.lastMessage?.timestamp
+                                        ).format("MMM D, h:mm A")}
+                                    </div>
+                                    {/* {item.numberMessages && (
                                 <div className="messenger__list-item-nummes">
                                     {item.numberMessages}
                                 </div>
                             )} */}
-                        </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-        </div>
+                </div>
+            ) : (
+                <GetStartedMessenger/>
+            )}
+        </>
     )
 }

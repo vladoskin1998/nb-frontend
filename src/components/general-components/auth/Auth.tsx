@@ -17,18 +17,18 @@ interface PayloadInterface {
 }
 
 const Auth = () => {
+    const location = useLocation()
+    const props: { isLogin: boolean } = location.state
 
-    const location = useLocation();
-    const props: {isLogin:boolean} = location.state;
-
-    const [isLogin, setIsLogin] = useState(props.isLogin)
+    console.log("props----->",props.isLogin);
+    
+    const [isLogin, setIsLogin] = useState( true)
 
     const [login, setLogin] = useState("")
     const [password, setPassword] = useState("")
     const [fullName, setFullName] = useState("")
 
     const dispatch = useAppDispatch()
-
 
     const handlerAuth = () => {
         const method = isLogin ? METHOD_AUTH.LOGIN : METHOD_AUTH.REGISTRATION
@@ -41,36 +41,35 @@ const Auth = () => {
             payload.fullName = fullName
         }
         dispatch(authorization(payload))
-            
     }
 
-    
+    useEffect(() => {
+        setIsLogin(props?.isLogin )
+    }, [props])
 
     return (
-       
-                <div className="auth">
-                    <AuthHeader isLogin={isLogin} setIsLogin={setIsLogin} />
-                    {isLogin ? (
-                        <Login
-                            login={login}
-                            setLogin={setLogin}
-                            password={password}
-                            setPassword={setPassword}
-                            handlerAuth={handlerAuth}
-                        />
-                    ) : (
-                        <Registration
-                            login={login}
-                            setLogin={setLogin}
-                            password={password}
-                            setPassword={setPassword}
-                            fullName={fullName}
-                            setFullName={setFullName}
-                            handlerAuth={handlerAuth}
-                        />
-                    )}
-                </div>
-          
+        <div className="auth">
+            <AuthHeader isLogin={isLogin} setIsLogin={setIsLogin} />
+            {isLogin ? (
+                <Login
+                    login={login}
+                    setLogin={setLogin}
+                    password={password}
+                    setPassword={setPassword}
+                    handlerAuth={handlerAuth}
+                />
+            ) : (
+                <Registration
+                    login={login}
+                    setLogin={setLogin}
+                    password={password}
+                    setPassword={setPassword}
+                    fullName={fullName}
+                    setFullName={setFullName}
+                    handlerAuth={handlerAuth}
+                />
+            )}
+        </div>
     )
 }
 

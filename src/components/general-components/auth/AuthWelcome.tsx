@@ -113,7 +113,7 @@ export const AuthWelcome = () => {
                         </div>
                     </div>
                 </div>
-            )}
+             )} 
         </>
     )
 }

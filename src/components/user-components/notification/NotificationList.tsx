@@ -73,15 +73,15 @@ export const UserNotificationList = () => {
                             </div>
                             <div className="notification__list-item-bodyline" >
                                 <div className="notification__list-item-text">
-                                    <b>{item.ownerId.fullName}</b>{" "}
+                                    <b>{item.ownerId?.fullName}</b>{" "}
                                     <span>
                                         {notificationTypeTitle(item.event).text}
                                     </span>{" "}
-                                    <b>{item.name}</b>
+                                    <b>{item?.name}</b>
                                 </div>
                                 <div className="notification__list-item-time">
                  
-                                    {moment(item.dateNotificationCreated).format('h:mm A')}
+                                    {moment(item?.dateNotificationCreated).format('h:mm A')}
                                 </div>
                             </div>
                             <div className="notification__list-item-arrow" onClick={() => navigateTo(item.event)}>

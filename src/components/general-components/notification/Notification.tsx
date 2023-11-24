@@ -83,12 +83,32 @@ export const Notification = ({ children }: { children: ReactNode }) => {
         }
     }, [socket?.current, _id])
 
+
+    
+
     const handlerCloseNotification = () => {
         setNotification(null)
         if (timerRef.current) {
             clearTimeout(timerRef.current)
         }
     }
+
+    useEffect(() => {
+        const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+   
+            socket?.current?.emit(SOCKET_NOTIFICATION_EVENT.LEAVE_ROOM_NOTIFICATION, String(_id));
+        };
+    
+        window.addEventListener('beforeunload', handleBeforeUnload);
+    
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+    
+      
+            socket?.current?.emit(SOCKET_NOTIFICATION_EVENT.LEAVE_ROOM_NOTIFICATION, String(_id));
+        };
+    }, [socket, _id]);
+    
 
     return (
         <>

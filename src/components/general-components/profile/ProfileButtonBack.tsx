@@ -24,7 +24,7 @@ export const ProfileButtonBack = () => {
                 } else if (route === "/profile/welcome-neibs") {
                     return (
                         <img
-                            src="/Images/ImageSuccess.png"
+                            src="/Images/logoshort.png"
                             alt="error image"
                             style={{ marginLeft: "17px" }}
                         />

@@ -6,10 +6,13 @@ import { IconNeibs } from "../../svg/IconPassEye"
 import { IconLocationPoint } from "../../svg/IconsLocation"
 import { UserItem } from "./ProfileInfo"
 import { useNavigate } from "react-router-dom"
+import { UserHttp } from "../../../http/user-http"
+import { useEffect, useState } from "react"
 
 export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
     console.log(props)
 
+    const [isMyFriend, setIsMyFriend] = useState(false)
     const navigate = useNavigate()
     const { role, _id } = useAppSelector((s) => s.userReducer)
 
@@ -26,6 +29,32 @@ export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
             },
         })
     }
+
+    const toFriend = async () => {
+        if (props?._id === _id || !props?._id) {
+            return
+        }
+        const payload = {
+            _id,
+            friendId: props?._id,
+        }
+        if (isMyFriend) {
+            await UserHttp.deleteMyFriend(payload).then(() =>
+                setIsMyFriend(false)
+            )
+        } else {
+            await UserHttp.addMyFriend(payload).then(() => setIsMyFriend(true))
+        }
+    }
+
+    useEffect(() => {
+        if (props?._id && props?._id !== _id) {
+            UserHttp.checkMyFriend({
+                _id,
+                friendId: props?._id,
+            }).then((res) => setIsMyFriend(res))
+        }
+    }, [])
 
     return (
         <div className="profileinfo__avatar">
@@ -46,9 +75,12 @@ export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
             </h6>
             {_id !== props?._id && (
                 <div className="profileinfo__avatar-buttons">
-                    <button className="profileinfo__avatar-buttons-button">
+                    <button
+                        className="profileinfo__avatar-buttons-button"
+                        onClick={toFriend}
+                    >
                         <IconNeibs />
-                        Follow
+                        {isMyFriend ? "Neib" : "Follow"}
                     </button>
                     <button
                         className="profileinfo__avatar-buttons-button profileinfo__avatar-buttons-button--inheritbody"

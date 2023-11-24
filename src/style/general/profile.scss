@@ -426,7 +426,10 @@
     &__staytouch {
         flex-grow: 1;
         @include flex-all-center;
-  
+        background-image: url('../../../public/Images/welcomebg.png');
+        background-size: contain;
+        background-position: center;
+
    
     }
     &__welcome {

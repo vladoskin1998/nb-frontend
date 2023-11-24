@@ -1,14 +1,27 @@
 .welcome {
     padding: 42px 40px 125px 40px;
-    min-height: 100%;
-    @include flex-all-center;
-    flex-direction: column;
-    justify-content: space-between;
+  
     min-height: 100%;
     gap: 12px;
-    background-image: url("../../../public/Images/welcomebg.png");
-    background-repeat: no-repeat;
-    background-position: center;
+    display: flex;
+
+    &--bg{
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 100%;
+        height: auto;
+    }
+    &--body{
+        z-index: 2;
+        @include flex-all-center;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 100%;
+        gap: 12px;
+    }
     &-img {
         @include flex-all-center;
         flex-direction: column;
@@ -46,6 +59,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 14px;
+        z-index: 10;
         &-first {
             grid-template-columns: 1fr;
             & > button:first-child {
@@ -68,16 +82,16 @@
     transform: translate(-50%, -50%);
     border-radius: 16px 0px;
     color: $color__grey3;
-    animation: fadeIn 1.5s ease;
+    animation: fadeIn 2s ease;
     width: 214px;
     height: 59px;
-   
+    z-index: 5;
     @keyframes fadeIn {
         0% {
             opacity: 0;
         }
         50% {
-            opacity: 0.2;
+            opacity: 0;
         }
         100% {
             opacity: 1;

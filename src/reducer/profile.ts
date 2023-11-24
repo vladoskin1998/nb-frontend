@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import {
     authorization,
 } from "../services/auth"
-import { EDUCATION, FAMILYSTATUS, ORIENTATION, ROLES, SEX } from "../types/enum"
+import { EDUCATION, FAMILYSTATUS, ONLINEOFFLINE, ORIENTATION, ROLES, SEX } from "../types/enum"
 import { Nullable } from "../types/types"
 import { getIdentityInforamation, profileChangeLocation } from "../services/profile";
 
@@ -58,6 +58,8 @@ export interface ProfileInitialStateInterface {
 
     lastStepChangeProfile: string
 
+    online: ONLINEOFFLINE
+
 }
 
 const initCoordinates = {
@@ -106,7 +108,9 @@ const initialState: ProfileInitialStateWithIdInterface = {
     isAddedPost:false,
     isExploreDone:false,
 
-    lastStepChangeProfile: '/profile'
+    lastStepChangeProfile: '/profile',
+
+    online: ONLINEOFFLINE.ONLINE
 }
 
 export const profileReducer = createSlice({

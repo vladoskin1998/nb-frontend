@@ -10,22 +10,29 @@ const AuthHeader = ({
     isLogin: boolean
     setIsLogin: (b: boolean) => void
 }) => {
-
     const hendlerAuthMessenger = (
         method: METHOD_AUTH.FACEBOOK | METHOD_AUTH.GOOGLE
     ) => {
         window.location.href = `https://environs.life/api/auth/${method}`
-        localStorage.setItem('authLoaderMethod', 'true')
+        localStorage.setItem("authLoaderMethod", "true")
     }
 
     return (
         <>
-            <h4 className="auth__title">Neighbor Harbor</h4>
-            <h5 className="auth__subtitle">
-                {isLogin
-                    ? "Log in to your Neighbor Harbor account"
-                    : "Set up your Neighbor Harbor account"}
-            </h5>
+            <div className="auth__header">
+                <div>
+                    <img src="/Images/logoshort.png" alt="" />
+                </div>
+                <div>
+                    <h4 className="auth__title">Neighbor Harbor</h4>
+                    <h5 className="auth__subtitle">
+                        {isLogin
+                            ? "Log in to your account"
+                            : "Set up your account"}
+                    </h5>
+                </div>
+            </div>
+
             <div className="auth__tab">
                 <button
                     className={`auth__tab-but ${

@@ -16,7 +16,7 @@ const UserRouter = () => {
     const location = useLocation()
 
     return (
-        <div>
+        <>
             <Routes>
                 <Route
                     path="explore"
@@ -56,7 +56,7 @@ const UserRouter = () => {
                 />
             </Routes>
             {<FooterNav />}
-        </div>
+        </>
     )
 }
 

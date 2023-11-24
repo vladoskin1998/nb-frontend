@@ -4,6 +4,7 @@ import { UserChat } from "../components/general-components/profile-info/ProfileI
 import { LocationPayload } from "../services/profile";
 import { ROLES } from "../types/enum";
 import { UserInitialStateInterface } from "../reducer/users";
+import { FriendTypeResponse } from "../types/types";
 
 interface GetClosestUserInterface {
     role: ROLES;
@@ -35,6 +36,26 @@ export class UserHttp {
         return res.data
     }
 
- 
+    static async getMyFriends(payload: {_id:string} ): Promise<FriendTypeResponse[]> {
+        const res:AxiosResponse<FriendTypeResponse[]> = await $api.post('user/get-friends', payload)
+        return res.data
+    }
+
+    static async checkMyFriend(payload: {_id:string, friendId: string} ): Promise<boolean> {
+        const res:AxiosResponse<boolean> = await $api.post('user/check-my-friend', payload)
+        return res.data
+    }
+
+    static async addMyFriend(payload: {_id:string, friendId: string} ): Promise<FriendTypeResponse> {
+        const res:AxiosResponse<FriendTypeResponse> = await $api.post('user/add-my-friend', payload)
+        return res.data
+    }
+
+    static async deleteMyFriend(payload: {_id:string, friendId: string} ): Promise<FriendTypeResponse> {
+        const res:AxiosResponse<FriendTypeResponse> = await $api.post('user/delete-to-friend', payload)
+        return res.data
+    }
+
+
 
 }

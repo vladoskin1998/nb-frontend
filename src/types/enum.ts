@@ -133,3 +133,8 @@ export enum AUTH_AGREE_TYPES {
     POLICY='policy',
     TERMS='terms'
 }
+
+export enum ONLINEOFFLINE{
+    ONLINE = 'online',
+    OFFLINE = 'offline'
+}

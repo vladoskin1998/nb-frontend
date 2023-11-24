@@ -4,11 +4,11 @@ import { Modal } from "../../ui/Modal"
 import { IconAdminClose } from "../../svg/IconAdminHeader"
 import { useNavigate } from "react-router"
 
-export const ProfileInfoModalProfile = () => {
-    const { isGotAllProfileInfo } = useAppSelector((s) => s.profileReducer)
+export const ProfileInfoModalProfile = ({userId}:{userId:string}) => {
+    const { isGotAllProfileInfo,lastStepChangeProfile } = useAppSelector((s) => s.profileReducer)
     const [isOpen, setIsOpen] = useState(true)
     const navigate = useNavigate()
-    const { lastStepChangeProfile } = useAppSelector((s) => s.profileReducer)
+    const {_id} = useAppSelector((s) => s.userReducer)
 
     useEffect(() => {
         setTimeout(() => {
@@ -18,7 +18,7 @@ export const ProfileInfoModalProfile = () => {
 
     return (
         <>
-            {!isGotAllProfileInfo && isOpen && (
+            {!isGotAllProfileInfo && isOpen && (userId === _id) && (
                 <div className="profileinfo__profilemodal">
                     <Modal setIsOpen={setIsOpen}>
                         <div className="profileinfo__profilemodal-body">

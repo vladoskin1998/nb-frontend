@@ -113,14 +113,14 @@ export const PublicationPosts = () => {
             <h5 className="user__newsfeed-title">Newsfeed</h5>
             <div className="admin__posts-list">
                 {posts.map((item) => (
-                    <div className="admin__posts-list-item" key={item._id}>
+                    <div className="admin__posts-list-item" key={item?._id}>
                         <div className="admin__posts-list-row1">
                             <div className="admin__posts-list-row1-img" onClick={() => toProfileInfo(
                                 {
-                                    _id:item.userId._id,
+                                    _id:item.userId?._id,
                                     email: '',
                                     role: ROLES.USER,
-                                    fullName: item.userId.fullName,
+                                    fullName: item.userId?.fullName,
                                 }
                             )}>
                                 <img
@@ -130,17 +130,17 @@ export const PublicationPosts = () => {
                             </div>
                             <div>
                                 <div className="admin__posts-list-row1-name">
-                                    {item.userId.fullName}
+                                    {item.userId?.fullName}
                                 </div>
                                 <div>
                                     <span className="admin__posts-list-row1-text">
-                                        {moment(item.createdPostDate).format(
+                                        {moment(item?.createdPostDate).format(
                                             "DD MMM YYYY HH:mm"
                                         )}
                                     </span>{" "}
                                     |{" "}
                                     <span className="admin__posts-list-row1-text admin__posts-list-row1-textunder">
-                                        {item.addressLocation}
+                                        {item?.addressLocation}
                                     </span>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@ export const PublicationPosts = () => {
                             </button>
                         </div>
                         <div className="admin__posts-list-row2">
-                            <PostSlick list={item.filesName}>
+                            <PostSlick list={item?.filesName}>
                                 {item.filesName.map((it) => (
                                     <div className="admin__posts-list-row2-img">
                                         <img
@@ -177,11 +177,11 @@ export const PublicationPosts = () => {
                                         <IconPostsLike />
                                     )}
                                 </div>
-                                <span>{item.likes}</span>
+                                <span>{item?.likes}</span>
                             </button>
-                            <button onClick={() => navigateToComments(item._id)}>
+                            <button onClick={() => navigateToComments(item?._id)}>
                                 <IconComment />
-                                <span>{item.countComments}</span>
+                                <span>{item?.countComments}</span>
                             </button>
                             <button>
                                 <IconPostsRepost />

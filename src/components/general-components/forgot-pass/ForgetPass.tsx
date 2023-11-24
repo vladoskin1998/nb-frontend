@@ -58,7 +58,7 @@ export default ForgetPass
 const ForgetPassBody = ({ email, phone }: { email: string; phone: string }) => {
     const navigate = useNavigate()
     const [method, setMethod] = useState<METHOD_FORGET_PASSWORD>(
-        METHOD_FORGET_PASSWORD.PHONE
+        phone ? METHOD_FORGET_PASSWORD.PHONE:  METHOD_FORGET_PASSWORD.EMAIL
     )
 
     const toNav = () => {

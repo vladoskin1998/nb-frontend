@@ -173,3 +173,15 @@ export interface CommentInterface {
         }
     
 }
+
+export type FriendTypeResponse =  {
+    _id: string
+    userId: string
+    friendId: {
+        _id: string
+        fullName: string
+        email: string
+        phone: string
+        role: string
+    }
+}

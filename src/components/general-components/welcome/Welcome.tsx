@@ -13,7 +13,6 @@ export const Welcome = () => {
     const location = useLocation()
     const [isLogo, setIsLogo] = useState(true)
 
-
     useEffect(() => {
         setTimeout(() => {
             setIsLogo(false)
@@ -36,9 +35,9 @@ export const Welcome = () => {
         }
     }
 
-    const singUp = () =>{ 
-        if(  location.pathname === '/welcome/area'){
-            window.location.reload();
+    const singUp = () => {
+        if (location.pathname === "/welcome/area") {
+            window.location.reload()
         }
     }
     return (
@@ -46,9 +45,9 @@ export const Welcome = () => {
             {isLogo ? (
                 <WelcomeLogo />
             ) : (
-                <>
+                <div className="welcome--body">
                     <div className="welcome-item__logo">
-                        <img src="/Images/logo.png" alt="" />   
+                        <img src="/Images/logo.png" alt="" />
                     </div>
                     {
                         <Routes>
@@ -64,28 +63,40 @@ export const Welcome = () => {
                             <Route path="*" element={<WelcomeYourCompas />} />
                         </Routes>
                     }
-
-                    <div className={`welcome-buttons
-                    ${ location.pathname === '/welcome' && "welcome-buttons-first"}
-                    `}>
-                        <button
-                            className="authsuccess__body-buttons-button authsuccess__body-buttons-button--inheritbody"
-                            onClick={() => navigate(-1)}
-                        >
-                            Back
-                        </button>
-                        <Link to={next()}>
-                            <button className="authsuccess__body-buttons-button" onClick={singUp}>
-                                {
-                                    location.pathname === '/welcome/area' ? "Sing Up" : 
-                                    location.pathname === '/welcome' ? "Get Started": "Next"
-                                }
-                                
-                            </button>
-                        </Link>
-                    </div>
-                </>
+                </div>
             )}
+            {!isLogo && (
+                <div
+                    className={`welcome-buttons
+                    ${
+                        location.pathname === "/welcome" &&
+                        "welcome-buttons-first"
+                    }
+                    `}
+                >
+                    <button
+                        className="authsuccess__body-buttons-button authsuccess__body-buttons-button--inheritbody"
+                        onClick={() => navigate(-1)}
+                    >
+                        Back
+                    </button>
+                    <Link to={next()}>
+                        <button
+                            className="authsuccess__body-buttons-button"
+                            onClick={singUp}
+                        >
+                            {location.pathname === "/welcome/area"
+                                ? "Sing Up"
+                                : location.pathname === "/welcome"
+                                ? "Get Started"
+                                : "Next"}
+                        </button>
+                    </Link>
+                </div>
+            )}
+            <div className="welcome--bg">
+                <img src="/Images/welcomebg.png" alt="" />
+            </div>
         </div>
     )
 }

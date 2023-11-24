@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit"
 import $api from "../http"
 import { Nullable } from "../types/types";
 import { ProfileInitialStateInterface, _IdInterface} from "../reducer/profile";
-import { EDUCATION, FAMILYSTATUS, ORIENTATION, QUALITYENUM, SEX } from "../types/enum";
+import { EDUCATION, FAMILYSTATUS, ONLINEOFFLINE, ORIENTATION, QUALITYENUM, SEX } from "../types/enum";
 import { UserHttp } from "../http/user-http";
 
 export interface LocationPayload {
@@ -50,6 +50,8 @@ export interface UserIdentityInterface{
 
     studySchool:string,
     education: EDUCATION | null,
+
+    online: ONLINEOFFLINE
 }
 
 export const getIdentityInforamation = createAsyncThunk<UserIdentityInterface, {_id:string}>(

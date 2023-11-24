@@ -8,6 +8,10 @@
     overflow-x: hidden;
     box-sizing: border-box;
     position: relative;
+    &--body{
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 .user__header {
@@ -19,6 +23,17 @@
     background: $color__black3;
     display: flex;
     z-index: 2;
+    &-chatuser{
+        display: flex;
+        padding-top: 31px;
+        padding-left: 34px;
+        column-gap: 12px;
+        svg{
+            path{
+                stroke: $color__grey3;
+            }
+        }
+    }
     &-title {
         color: $color__grey3;
         font-size: 20px;

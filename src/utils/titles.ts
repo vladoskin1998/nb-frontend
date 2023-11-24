@@ -230,7 +230,9 @@ export const isShowFooterNavUser = (key: string) => {
         key === '/user' ||
         key === '/user/service' ||
         key === '/user/explore' ||
-        key === '/user/activities'
+        key === '/user/activities' ||
+        key === '/user/messeges' ||
+        key === '/user/messeges/user-chat'
     ) {
         return true
     }
