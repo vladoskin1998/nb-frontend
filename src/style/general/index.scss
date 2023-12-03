@@ -5,6 +5,7 @@
 @import "messenger.scss";
 @import "publish.scss";
 @import "welcome.scss";
+@import "posts.scss";
 @import "comments.scss";
 @import "notification.scss";
 
@@ -272,7 +273,6 @@
         @include flex-all-center;
         position: relative;
         &-img{
-            width: 100%;
             z-index: 2;
         }
         &-bg{

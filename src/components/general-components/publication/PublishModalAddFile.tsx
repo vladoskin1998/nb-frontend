@@ -1,7 +1,6 @@
-import React, { useRef, useState } from "react"
+import { useRef, useState } from "react"
 import { Modal } from "../../ui/Modal"
 import { PHOTO_ADD_METHOD } from "../../../types/enum"
-import { FALSE } from "sass"
 
 export const PublishModalAddFile = ({
     isOpen,

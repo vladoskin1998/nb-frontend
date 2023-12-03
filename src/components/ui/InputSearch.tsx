@@ -6,11 +6,16 @@ export const InputSearch = ({
     onClickFilter,
     value,
     changeValue,
+    onFocus = () => {},
+    onBlur = () => {},
 }: {
     placeholder: string | ReactElement
     onClickFilter?: () => void | undefined
     value: string
     changeValue: (s: string) => void
+
+    onFocus?: () => void
+    onBlur?: () => void
 }) => {
     return (
         <div className="ui-input-search">
@@ -20,10 +25,14 @@ export const InputSearch = ({
                     type="text"
                     value={value}
                     onChange={(e) => changeValue(e.target.value)}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
                 />
-                {
-                    !value && <span className="ui-input-search-placeholder">{placeholder}</span>
-                }
+                {!value && (
+                    <span className="ui-input-search-placeholder">
+                        {placeholder}
+                    </span>
+                )}
             </div>
 
             {onClickFilter ? (

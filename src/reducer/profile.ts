@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit"
 import {
     authorization,
 } from "../services/auth"
-import { EDUCATION, FAMILYSTATUS, ONLINEOFFLINE, ORIENTATION, ROLES, SEX } from "../types/enum"
+import { EDUCATION, FAMILYSTATUS, ONLINEOFFLINE, ORIENTATION, PRIVACY, ROLES, SEX } from "../types/enum"
 import { Nullable } from "../types/types"
 import { getIdentityInforamation, profileChangeLocation } from "../services/profile";
 
@@ -16,7 +16,7 @@ export interface userIdentityIdInterface {
 
 
 
-export interface ProfileInitialStateInterface {
+export interface ProfileInitialStateInterface extends _IdInterface {
 
 
     isLoad: boolean
@@ -33,8 +33,10 @@ export interface ProfileInitialStateInterface {
     createdUserDate: Date;
     blockedUserDate: Date;
 
-    avatarFileName: string | null;
     step: number;
+
+    privacy: PRIVACY;
+
     aboutMe: string;
     dateBirth: null | Date;
     cityBirth: null | string;
@@ -70,6 +72,8 @@ const initCoordinates = {
 export type ProfileInitialStateWithIdInterface = ProfileInitialStateInterface & userIdentityIdInterface 
 
 const initialState: ProfileInitialStateWithIdInterface = {
+
+    _id: '',
     isLoad: false,
     userIdentityId: "",
 
@@ -85,8 +89,10 @@ const initialState: ProfileInitialStateWithIdInterface = {
     createdUserDate: new Date(),
     blockedUserDate: new Date(),
 
-    avatarFileName: null,
     step: 5,
+
+    privacy: PRIVACY.EVERYONE,
+
     aboutMe: "",
     dateBirth: null,
     cityBirth: null,

@@ -28,6 +28,7 @@ export const UserItemModal = ({
     changeRole,
     changeLocation,
     confirmLocation,
+    avatarFileName,
 }: {
     role: ROLES
     userIdentity: UserIdentityInterface | null
@@ -40,6 +41,7 @@ export const UserItemModal = ({
     changeRole: (r: ROLES) => void
     changeLocation: (l: LocationEditType) => void
     confirmLocation: () => void
+    avatarFileName: string | null
 }) => {
     const [isOpenRoleList, seIsOpenRoleList] = useState(false)
     const [isOpenMap, setIsOpenMap] = useState(false)
@@ -64,7 +66,7 @@ export const UserItemModal = ({
                     <div className="user__modal">
                         <div className="user__modal-avatar">
                             <img
-                                src={`${baseURL}/uploads/avatar/${userIdentity?.avatarFileName}`}
+                                src={`${baseURL}/uploads/avatar/${avatarFileName}`}
                                 alt=""
                                 className="user__modal-avatar-img"
                             />

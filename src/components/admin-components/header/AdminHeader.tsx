@@ -14,7 +14,7 @@ const AdminHeader = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [title, setTitle] = useState(headerTitle(""))
     const location = useLocation()
-    const { avatarFileName } = useAppSelector((s) => s.profileReducer)
+    const { avatarFileName } = useAppSelector((s) => s.userReducer)
 
     useEffect(() => {
         if (isOpen) {

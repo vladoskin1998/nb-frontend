@@ -19,7 +19,10 @@ interface LocationPayloadResponse {
 }
 
 export interface UserIdentityInterface{
+
+    _id: string;
   
+    userIdentityId: string;
     isLocationVerify: boolean;
     isGotAllProfileInfo: boolean;
 
@@ -32,7 +35,7 @@ export interface UserIdentityInterface{
     createdUserDate: Date;
     blockedUserDate: Date;
 
-    avatarFileName: string | null;
+
     step: number;
     aboutMe: string;
     dateBirth: null | Date;
@@ -72,16 +75,6 @@ export const profileChangeLocation = createAsyncThunk<LocationPayloadResponse, L
 )
 
 
-
-export const profileUploadAvatar = async (formData: FormData): Promise<{ avatarFileName: string }> => {
-    try {
-        const response = await $api.post('identity/upload-avatar', formData)
-        return response.data
-    } catch (error) {
-        alert("upload avatar is faild")
-        throw error
-    }
-}
 
 export const profileUploadCertificates = async (formData: FormData): Promise<{ certificatesFileName: string[] }> => {
     try {

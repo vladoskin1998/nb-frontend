@@ -13,6 +13,7 @@ export interface UserInitialStateInterface {
     fullName: string;
     phone?: string
     isCheckedEmail: boolean
+    avatarFileName: string | null;
 }
 
 const initialState: UserInitialStateInterface = {
@@ -22,7 +23,8 @@ const initialState: UserInitialStateInterface = {
     role: ROLES.ADMIN,
     fullName: "",
     phone: "",
-    isCheckedEmail: false
+    isCheckedEmail: false,
+    avatarFileName:  null
 
 }
 

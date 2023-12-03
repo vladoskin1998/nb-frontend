@@ -1,27 +1,24 @@
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { baseURL } from "../../../utils/config"
 import Slider from "react-slick"
 import { Checkmark } from "./Checkmark"
 import { steperBoleanNormalize } from "../../../utils/actions"
 import { Link, useNavigate } from "react-router-dom"
-import { profileTextInfo } from "../../../services/profile"
-import { setValueProfileReducer } from "../../../reducer/profile"
+
 export const GetStarted = () => {
-    const { fullName, isCheckedEmail, _id,  phone, } = useAppSelector(
+
+    const { fullName, phone,avatarFileName } = useAppSelector(
         (s) => s.userReducer
     )
 
     const {
-        avatarFileName,
         isAddedServices,
         isAddedPost,
         isExploreDone,
     } = useAppSelector((s) => s.profileReducer)
 
   
-
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const [list, setList] = useState<boolean[]>([])
 

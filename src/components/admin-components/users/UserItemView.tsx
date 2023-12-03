@@ -34,7 +34,7 @@ const initCoordinates = {
 
 export const UserItemView = (props: UserItemViewProps) => {
 
-    const { setIsOpen, fullName, email, role, userIdentity, _id } = props
+    const { setIsOpen, fullName, email, role, userIdentity, _id, avatarFileName } = props
   
     const navigate = useNavigate()
 
@@ -45,6 +45,7 @@ export const UserItemView = (props: UserItemViewProps) => {
                 email,
                 role,
                 fullName,
+                avatarFileName
             },
         })
     }
@@ -53,7 +54,7 @@ export const UserItemView = (props: UserItemViewProps) => {
             <div className="user__item-row1">
                 <img
                     onClick={toProfileInfo}
-                    src={`${baseURL}/uploads/avatar/${userIdentity?.avatarFileName}`}
+                    src={`${baseURL}/uploads/avatar/${avatarFileName}`}
                     alt=""
                     className="user__item-row1-img"
                 />

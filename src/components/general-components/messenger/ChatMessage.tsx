@@ -17,8 +17,7 @@ import { baseURL } from "../../../utils/config"
 export const ChatMessage = () => {
 
     const myRef = useRef<null | HTMLDivElement>(null)
-    const { _id, fullName } = useAppSelector((s) => s.userReducer)
-    const { avatarFileName } = useAppSelector((s) => s.profileReducer)
+    const { _id, fullName, avatarFileName } = useAppSelector((s) => s.userReducer)
     const { socket } = useContext(SocketContext)
     const [messageList, setMessageList] = useState<MessageType[]>([])
     const [message, setMessage] = useState("")
@@ -36,8 +35,6 @@ export const ChatMessage = () => {
         isSupport?:boolean,
         participants: {
             userId: string
-            avatarFileName: string
-            fullName: string
         }[]
     } = location.state
 
@@ -55,8 +52,6 @@ export const ChatMessage = () => {
                         ...props.participants,
                         {
                             userId: _id,
-                            avatarFileName,
-                            fullName,
                         },
                     ],
                 }
@@ -68,6 +63,13 @@ export const ChatMessage = () => {
                 await $api.post("messenger/list-message", {
                     chatId: resOpenChat.data.chatId,
                 })
+            
+    
+            resMessageList.data.forEach(item => {
+                if(!item.isRead && item.senderId !== _id){
+                    $api.post('messenger/read-message',{messageId:item?.messageId})
+                }
+            });
 
             setMessageList(resMessageList.data)
 
@@ -84,12 +86,15 @@ export const ChatMessage = () => {
                         content: string,
                         timestamp: Date,
                         isRead: boolean,
-                        file: string | null
+                        file: string | null,
+                        messageId: string
                     ) => {
                         setMessageList((s) => [
                             ...s,
-                            { chatId, senderId, content, timestamp, isRead, file },
+                            { chatId, senderId, content, timestamp, isRead, file, messageId },
                         ])
+                        $api.post('messenger/read-message',{messageId})
+                       
                     }
                 )
             }
@@ -106,6 +111,8 @@ export const ChatMessage = () => {
 
     const sendMessage = async () => {
         let fileName: null | string = null
+
+        console.log("chatId", chatId );
         if (image) {
             const formData = new FormData()
 
@@ -115,6 +122,8 @@ export const ChatMessage = () => {
             fileName = res.data
         }
      
+       
+        
         if (socket) {
             socket.current?.emit(SOCKET_MESSENDER_EVENT.SEND_PRIVATE_MESSAGE, {
                 chatId,
@@ -132,7 +141,8 @@ export const ChatMessage = () => {
                     content: message,
                     timestamp: new Date(),
                     isRead: true,
-                    file: fileName
+                    file: fileName,
+                    messageId: ''
                 },
             ])
             setMessage("")

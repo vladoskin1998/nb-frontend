@@ -3,7 +3,7 @@ import { baseURL } from "../../../utils/config"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { IconProfileInfoPen } from "../../svg/IconProfileInfo"
 import { setLoader, setValueProfileReducer } from "../../../reducer/profile"
-import { profilePutIdentity, profileTextInfo, profileUploadAvatar } from "../../../services/profile"
+import { profilePutIdentity, profileTextInfo } from "../../../services/profile"
 import { TextareaAutosize } from "@mui/material"
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
@@ -15,7 +15,7 @@ import { ProfileSexList } from "../profile/ProfileSexList"
 import { AutocompleteSearch } from "../../ui/AutocompleteSearch"
 import { FAMILYSTATUS, QUALITYENUM } from "../../../types/enum"
 import { OptionsType } from "../../../types/types"
-import { userTextInfo } from "../../../services/user"
+import { profileUploadAvatar, userTextInfo } from "../../../services/user"
 import { setValueUserReducer } from "../../../reducer/users"
 import $api from "../../../http"
 import { toOneKind } from "../../../utils/titles"
@@ -29,7 +29,6 @@ const listFamilyStatus = Object.values(FAMILYSTATUS).map((item, index) => ({
 export const ProfileInfoEdit = () => {
     const fileInputRef = useRef<HTMLInputElement | null>(null)
     const {
-        avatarFileName,
         aboutMe,
         dateBirth,
         cityBirth,
@@ -40,7 +39,7 @@ export const ProfileInfoEdit = () => {
         familyStatus,
         nationality
     } = useAppSelector((s) => s.profileReducer)
-    const { email, fullName, _id } = useAppSelector((s) => s.userReducer)
+    const { email, fullName, _id, avatarFileName } = useAppSelector((s) => s.userReducer)
     const [avatar, setAvatar] = useState<File | null>(null)
     const dispatch = useAppDispatch()
 
@@ -103,7 +102,7 @@ export const ProfileInfoEdit = () => {
 
             if(avatar){
                  const resAvatat = await profileUploadAvatar(formData)
-                dispatch(setValueProfileReducer(resAvatat))
+                dispatch(setValueUserReducer(resAvatat))
             }
            
             const resTextInfo = await profileTextInfo({

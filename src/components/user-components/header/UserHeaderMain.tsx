@@ -28,7 +28,7 @@ export const UserHeaderMain = (props:{
     }
 
     const notification = () => {
-        navigate('/user/notification-list')
+        navigate('/user/notification')
     }
 
   

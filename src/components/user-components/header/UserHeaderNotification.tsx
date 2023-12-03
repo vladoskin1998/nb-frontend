@@ -20,8 +20,8 @@ export const UserHeaderNotification = (props:{
     const messenger = () => {
         navigate('/user/messeges')
     }
-    const  publish = () => {
-
+    const  toMarkList = () => {
+        navigate('/user/notification/notification-mark')
     }
     return (
         <UserHeader>
@@ -33,8 +33,8 @@ export const UserHeaderNotification = (props:{
                     >
                         <IconNeibs />
                     </button>
-                    <button className="user__header-main-button"
-                         onClick={publish}
+                    <button className="user__header-main-button user__header-main-button-1"
+                         onClick={toMarkList}
                     >
                         <IconProfileInfoBookmark />
                     </button>

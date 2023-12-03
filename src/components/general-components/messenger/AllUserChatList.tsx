@@ -6,76 +6,15 @@ import { ROLES } from "../../../types/enum"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { IdentityHttp } from "../../../http/identity-http"
 import { UserIdentityInterface } from "../../../services/profile"
-import { baseURL } from "../../../utils/config"
+import { baseURL, roleUrl } from "../../../utils/config"
+import { Loader } from "../../ui/Loader"
+import { useNavigate } from "react-router-dom"
 
-export const AllUserChatList = () => {
-    const [search, setSearch] = useState("")
-    const [users, setUsers] = useState<UserInitialStateInterface[]>([])
-    const { _id } = useAppSelector((s) => s.userReducer)
-    const dispatch = useAppDispatch()
+export const UserItem = React.memo((props: UserInitialStateInterface) => {
 
-    useEffect(() => {
-        dispatch(setLoader(true))
-        const timeOutId = setTimeout(() => {
-            if(search){
-                 getUsers()
-            }
-           
-        }, 1000)
-        return () => clearTimeout(timeOutId)
-    }, [search])
-
-    const getUsers = async () => {
-        const res: UserInitialStateInterface[] = await UserHttp.getUsers({
-            _id,
-            role: ROLES.ALLUSERS,
-            searchName: search,
-        })
-
-        setUsers(res)
-        dispatch(setLoader(false))
-    }
-
-    return (
-        <div>
-            <div className="user__newsfeed-search">
-                <InputSearch
-                    placeholder={
-                        <>
-                            Search <b>NightborChats</b>
-                        </>
-                    }
-                    value={search}
-                    changeValue={setSearch}
-                />
-            </div>
-            <div className="messenger__alluser">
-                {users.map((item) => (
-                    <UserItem {...item}/>
-                ))}
-            </div>
-        </div>
-    )
-}
-
-
-
-export const UserItem = (props:UserInitialStateInterface) => {
-
-    const [userIdentity, setUserIdentity] =
-    useState<UserIdentityInterface | null>(null)
     const [isMyFriend, setIsMyFriend] = useState(false)
-    const { _id } = useAppSelector(s => s.userReducer)
-
-    useEffect(() => {
-        const effectBody = async () => {
-            const res = await IdentityHttp.getUserIdentity({ _id: props._id, options: ['avatarFileName'] })
-            setUserIdentity(res)
-        }
-
-        effectBody()
-    }, [props])
-
+    const { _id, role } = useAppSelector((s) => s.userReducer)
+    const navigate = useNavigate()
 
     const toFriend = async () => {
         if (props?._id === _id || !props?._id) {
@@ -103,18 +42,108 @@ export const UserItem = (props:UserInitialStateInterface) => {
         }
     }, [])
 
+
+    
+    const toProfileInfo = () => {
+        navigate("/profileinfo", {
+            state: {
+                ...props 
+            },
+        })
+    }
+
+    const openChat = () => {
+        navigate(`${roleUrl(role)}/messeges/chat`, {
+            state: {
+                participants: [
+                    {
+                        userId: props?._id,
+                    },
+                ],
+            },
+        })
+    }
+
     return (
         <div className="messenger__alluser-item messenger__alluser-item-1">
-            <div className="messenger__alluser-item-img">
-                <img  src={`${baseURL}/uploads/avatar/${userIdentity?.avatarFileName}`} alt="" />
+            <div className="messenger__alluser-item-img" onClick={toProfileInfo}>
+                <img
+                    src={`${baseURL}/uploads/avatar/${props?.avatarFileName}`}
+                    alt=""
+                />
             </div>
-            <div className="messenger__alluser-item-text">
-                <h5 className="messenger__alluser-item-title">{props.fullName}</h5>
-                <h5 className="messenger__alluser-item-subtitle">{props?.phone ? props?.phone : props?.email}</h5>
+            <div className="messenger__alluser-item-text" onClick={openChat}>
+                <h5 className="messenger__alluser-item-title">
+                    {props.fullName}
+                </h5>
+                <h5 className="messenger__alluser-item-subtitle">
+                    {props?.phone ? props?.phone : props?.email}
+                </h5>
             </div>
-            <button className={`messenger__alluser-item-button ${!isMyFriend && "messenger__alluser-item-button--active"}`} onClick={toFriend}>
+            <button
+                className={`messenger__alluser-item-button ${
+                    !isMyFriend && "messenger__alluser-item-button--active"
+                }`}
+                onClick={toFriend}
+            >
                 {!isMyFriend ? "Follow" : "Neib"}
             </button>
         </div>
+    )
+})
+
+export const AllUserChatList = () => {
+    const [search, setSearch] = useState("")
+    const [users, setUsers] = useState<UserInitialStateInterface[]>([])
+    const { _id } = useAppSelector((s) => s.userReducer)
+    const dispatch = useAppDispatch()
+    const [load, setLoad] = useState(false)
+
+    useEffect(() => {
+        const timeOutId = setTimeout(() => {
+            if (search) {
+                getUsers()
+            }
+        }, 1000)
+        return () => clearTimeout(timeOutId)
+    }, [search])
+
+    const getUsers = async () => {
+        setLoad(true)
+        const res: UserInitialStateInterface[] = await UserHttp.getUsers({
+            _id,
+            role: ROLES.ALLUSERS,
+            searchName: search,
+        })
+        setLoad(false)
+        setUsers(res)
+        dispatch(setLoader(false))
+    }
+
+    return (
+        <>
+            {load ? (
+                <Loader />
+            ) : (
+                <div>
+                    <div className="user__newsfeed-search">
+                        <InputSearch
+                            placeholder={
+                                <>
+                                    Search <b>NightborChats</b>
+                                </>
+                            }
+                            value={search}
+                            changeValue={setSearch}
+                        />
+                    </div>
+                    <div className="messenger__alluser">
+                        {users.map((item) => (
+                            <UserItem {...item} />
+                        ))}
+                    </div>
+                </div>
+            )}
+        </>
     )
 }

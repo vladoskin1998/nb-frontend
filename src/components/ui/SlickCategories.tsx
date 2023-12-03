@@ -15,6 +15,7 @@ export const SlickCategories = ({
         speed: 500,
         slidesToShow: 4,
         slidesToScroll: 2,
+        arrows: false,
         afterChange: (n:number) => changeCurrentSlide(n)
     }
     return <Slider {...settings}>{children}</Slider>

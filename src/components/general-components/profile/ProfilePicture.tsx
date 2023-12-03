@@ -2,15 +2,17 @@ import React, { useEffect, useRef, useState } from "react"
 import { IconAdminClose } from "../../svg/IconAdminHeader"
 import { useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
-import { profileTextInfo, profileUploadAvatar } from "../../../services/profile"
+import { profileTextInfo,  } from "../../../services/profile"
 import { setValueProfileReducer, setLoader } from "../../../reducer/profile"
 import { baseURL } from "../../../utils/config"
 import { ProfileButtonSetupLater } from "./ProfileButtonSetupLater"
 import { PHOTO_ADD_METHOD } from "../../../types/enum"
+import { profileUploadAvatar } from "../../../services/user"
+import { setValueUserReducer } from "../../../reducer/users"
 
 export const ProfilePicture = () => {
-    const { _id } = useAppSelector((s) => s.userReducer)
-    const { avatarFileName } = useAppSelector((s) => s.profileReducer)
+    const { _id, avatarFileName } = useAppSelector((s) => s.userReducer)
+ 
     const initAvatar = avatarFileName
         ? `${baseURL}/uploads/avatar/${avatarFileName}`
         : ""
@@ -27,37 +29,7 @@ export const ProfilePicture = () => {
         setPhotoUrl(initAvatar)
     }, [avatarFileName])
 
-    const takePhoto = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: true,
-            })
-            const videoElement = document.createElement("video")
-            videoElement.srcObject = stream
-            await videoElement.play()
-
-            const canvas = document.createElement("canvas")
-            canvas.width = videoElement.videoWidth
-            canvas.height = videoElement.videoHeight
-            const ctx = canvas.getContext("2d")
-            ctx?.drawImage(videoElement, 0, 0, canvas.width, canvas.height)
-
-            const photoDataUrl = canvas.toDataURL("image/jpeg")
-            setPhotoUrl(photoDataUrl)
-
-            const blob = await (await fetch(photoDataUrl)).blob()
-
-            const photoFile = new File([blob], "photo.jpg", {
-                type: "image/jpeg",
-            })
-
-            setAvatar(photoFile)
-
-            stream.getTracks().forEach((track) => track.stop())
-        } catch (error: any) {
-            alert("Camera Roll photo" + error)
-        }
-    }
+   
 
     console.log(photoUrl)
 
@@ -103,16 +75,18 @@ export const ProfilePicture = () => {
                 const res = await profileUploadAvatar(formData)
 
                 const reslastStepChangeProfile = await profileTextInfo({
-                    lastStepChangeProfile:"/profile/interest-zone",
+                    lastStepChangeProfile:"/profile/privacy",
                     _id,
                 })
     
 
-                dispatch(setValueProfileReducer({...res,...reslastStepChangeProfile}))
+                dispatch(setValueUserReducer({...res,...reslastStepChangeProfile}))
                 dispatch(setLoader(false))
             }
 
-            navigate("/profile/interest-zone")
+            navigate("/profile/privacy")
+
+            
         } catch (error) {
             dispatch(setLoader(false))
             alert("upload file is faild" + error)

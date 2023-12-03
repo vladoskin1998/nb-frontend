@@ -21,8 +21,6 @@ export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
             state: {
                 participants: [
                     {
-                        avatarFileName: props?.userIdentity.avatarFileName,
-                        fullName: props?.fullName,
                         userId: props?._id,
                     },
                 ],
@@ -60,7 +58,7 @@ export const ProfileInfoAvatar = ({ props }: { props?: UserItem }) => {
         <div className="profileinfo__avatar">
             <div className="profileinfo__avatar-block">
                 <img
-                    src={`${baseURL}/uploads/avatar/${props?.userIdentity.avatarFileName}`}
+                    src={`${baseURL}/uploads/avatar/${props?.avatarFileName}`}
                     alt=""
                 />
                 <div className="profileinfo__avatar-block-mark">

@@ -9,6 +9,7 @@ import { useAppSelector } from "../../../utils/hooks"
 import { Loader } from "../../ui/Loader"
 
 export const ProfileInfoView = () => {
+    
     const location = useLocation()
     const props: UserItem = location.state
     const myIdentity = useAppSelector((s) => s.profileReducer)

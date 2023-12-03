@@ -90,6 +90,57 @@ export const PublicationPostComments = () => {
         )
     }
 
+    const updateRepost = async ({
+        postId,
+        isReposted,
+    }: {
+        postId: string
+        isReposted: boolean
+    }) => {
+        if (!isReposted ) {
+            await PublishPostHttp.addRepost({
+                postId,
+                repostedUserId: _id,
+            })
+           
+        }
+        else{
+            await PublishPostHttp.deleteRepost({
+                postId,
+                repostedUserId: _id,
+            })
+        }
+
+        if(post){
+            setPost((s) => ({
+                ...post,
+                isReposted: !isReposted,
+                countReposts: !isReposted ? post.countReposts + 1 : post.countReposts - 1 ,
+            }))
+        }
+    }
+
+    const updateMark = async (postId: string, isMarked: boolean) => {
+        if (isMarked) {
+            await PublishPostHttp.deleteMark({
+                postId,
+                marckedUserId: _id,
+            })
+        } else {
+            await PublishPostHttp.addMark({
+                postId,
+                marckedUserId: _id,
+            })
+        }
+
+        if (post) {
+            setPost({
+                ...post,
+                isMarked: !post.isMarked,
+            })
+        }
+    }
+
     return post ? (
         <div className="commenst">
             <div className="commenst__slick">
@@ -119,7 +170,7 @@ export const PublicationPostComments = () => {
                 <div className="commenst__user">
                     <div className="commenst__user-img">
                         <img
-                            src={`${baseURL}/uploads/avatar/${post.userIdentityId.avatarFileName}`}
+                            src={`${baseURL}/uploads/avatar/${post.userId?.avatarFileName}`}
                             alt=""
                         />
                     </div>
@@ -128,7 +179,7 @@ export const PublicationPostComments = () => {
                             {post.userId.fullName}
                         </p>
                         <p className="commenst__user-info-time">
-                            {moment(post.createdPostDate).format(
+                            {moment(post.createdRepostDate).format(
                                 "MMM D, h:mm a"
                             )}
                         </p>
@@ -137,9 +188,15 @@ export const PublicationPostComments = () => {
                 <h5 className="commenst-title">{post.title}</h5>
                 <p className="commenst-subtitle">{post.text}</p>
                 <div className="commenst__viewmap">
-                    { comments.length > 2 ? <PublicationPostCommentsView avatar={
-                        comments.slice(0,3).map(item => item.userIdentityId.avatarFileName)
-                    }/> : <></>}
+                    {comments.length > 2 ? (
+                        <PublicationPostCommentsView
+                            avatar={comments
+                                .slice(0, 3)
+                                .map((item) => item.userId.avatarFileName)}
+                        />
+                    ) : (
+                        <></>
+                    )}
 
                     <p className="commenst__view-text">
                         Views <b>{post.viewPost}</b>
@@ -166,24 +223,42 @@ export const PublicationPostComments = () => {
                 </div>
                 <div className="admin__posts-list-row4">
                     <button onClick={() => updateLike(post.likeId, post._id)}>
-                        <div>
-                            {post.isLiked ? (
-                                <IconPostsRedLike />
-                            ) : (
-                                <IconPostsLike />
-                            )}
-                        </div>
+                        {post.isLiked ? (
+                            <IconPostsRedLike />
+                        ) : (
+                            <IconPostsLike />
+                        )}
+
                         <span>{post.likes}</span>
                     </button>
                     <button>
                         <IconComment />
                         <span>{countComments}</span>
                     </button>
-                    <button>
+                    <button
+                        onClick={() =>
+                            updateRepost({
+                                postId: post?._id,
+                                isReposted: post.isReposted,
+                            })
+                        }
+                        className={`${
+                            (post.repostedUserId?._id === _id ||
+                                post.userId._id === _id || post.isReposted) &&
+                            "admin__posts-list-row4-repost--active"
+                        }`}
+                        disabled={!(post.userId._id !== _id)}
+                    >
                         <IconPostsRepost />
-                        <span>0</span>
+                        <span>{post.countReposts}</span>
                     </button>
-                    <div>
+                    <div
+                        onClick={() => updateMark(post._id, post.isMarked)}
+                        className={`${
+                            post.isMarked &&
+                            "admin__posts-list-row4-repost--active"
+                        }`}
+                    >
                         <IconProfileInfoBookmark />
                     </div>
                 </div>

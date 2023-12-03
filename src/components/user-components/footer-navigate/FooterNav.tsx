@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { baseURL } from "../../../utils/config"
 import { useAppSelector } from "../../../utils/hooks"
 import { IconAdminImage } from "../../svg/IconAdminHeader"
@@ -12,11 +12,11 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { isShowFooterNavUser } from "../../../utils/titles"
 
 export const FooterNav = () => {
-    const { avatarFileName } = useAppSelector((s) => s.profileReducer)
+    
     const [active, setActive] = useState(1)
     const navigate = useNavigate()
     const location = useLocation()
-    const { _id, email, role, fullName } = useAppSelector((s) => s.userReducer)
+    const { _id, email, role, fullName,avatarFileName } = useAppSelector((s) => s.userReducer)
 
     const toProfile = () => {
         navigate("/profileinfo", {
@@ -25,9 +25,29 @@ export const FooterNav = () => {
                 email,
                 role,
                 fullName,
+                avatarFileName
             },
         })
     }
+
+    useEffect(() => {
+        const path = location.pathname
+        if(path.includes('service')){
+            setActive(3)
+        }
+        else if(path.includes('explore')){
+            setActive(2)
+        }
+        else if(path.includes('activities')){
+            setActive(4)
+        }
+        else if(path.includes('profileinfo')){
+            setActive(5)
+        }
+        else{
+            setActive(1)
+        }
+    }, [location])
 
     return (
         <div

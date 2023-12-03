@@ -7,10 +7,11 @@ import { Messeges } from "../user-components/messeges/Messeges"
 import { NewsFeeds } from "../user-components/newsfeed/NewsFeeds"
 import { PublicationPostComments } from "../general-components/publication-lists/PublicationPostComments"
 import { Explore } from "../user-components/explore/Explore"
-import { ServicesUser } from "../user-components/services/Services"
+
 import { ActivitiesUser } from "../user-components/activities/Activities"
-import { isShowFooterNavUser } from "../../utils/titles"
-import { UserNotificationList } from "../user-components/notification/NotificationList"
+
+import { UserNotification } from "../user-components/notification/UserNotification"
+import { UserServices } from "../user-components/services/UserServices"
 
 const UserRouter = () => {
     const location = useLocation()
@@ -24,7 +25,7 @@ const UserRouter = () => {
                 />
                 <Route
                     path="service"
-                    element={<ProtectedRoute element={<ServicesUser />} />}
+                    element={<ProtectedRoute element={<UserServices />} />}
                 />
                 <Route
                     path="activities"
@@ -34,10 +35,11 @@ const UserRouter = () => {
                     path="messeges/*"
                     element={<ProtectedRoute element={<Messeges />} />}
                 />
+
                 <Route
-                    path="notification-list"
+                    path="notification/*"
                     element={
-                        <ProtectedRoute element={<UserNotificationList />} />
+                        <ProtectedRoute element={<UserNotification />} />
                     }
                 />
                 <Route

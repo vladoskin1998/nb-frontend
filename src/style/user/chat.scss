@@ -1,0 +1,7 @@
+.user__chat{
+    padding-top: 80px;
+    transition: all 0.3s ease;
+    &--active{
+        padding-top: 25px;
+    }
+}

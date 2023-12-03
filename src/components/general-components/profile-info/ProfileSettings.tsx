@@ -12,8 +12,8 @@ import { logout } from "../../../services/auth"
 import { ROLES } from "../../../types/enum"
 
 export const ProfileSettings = () => {
-    const { avatarFileName } = useAppSelector((s) => s.profileReducer)
-    const { email, fullName, role } = useAppSelector((s) => s.userReducer)
+
+    const { email, fullName, role,avatarFileName } = useAppSelector((s) => s.userReducer)
     const dispatch = useAppDispatch()
 
     const handlerLogout = () => {

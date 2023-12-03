@@ -31,11 +31,16 @@ export interface OptionsItemType {
 }
 export type OptionsType = Array<OptionsItemType>
 
-export type MessageType = { chatId: string, senderId: string, content: string, timestamp: Date, isRead: boolean, file: string | null }
+export type MessageType = { chatId: string, senderId: string, content: string, timestamp: Date, isRead: boolean, file: string | null, messageId:string }
+
+export type HeaderMessageType = { email: string, fullName: string, avatarFileName: string }
+
 export type ParticipantType = {
-    userId: string,
-    avatarFileName: string,
-    fullName: string,
+    userId: {
+        _id: string,
+        fullName: string,
+        avatarFileName: string,
+    }
 }
 
 export type OpenChatData = {
@@ -43,11 +48,17 @@ export type OpenChatData = {
     chatId: string
 }
 
+export type NotReadingMessageType= {
+    _id: string,
+    isRead: boolean,
+
+}
 
 export type ChatType = {
     chatId: string,
     lastMessage: MessageType,
     participants: ParticipantType[],
+    notReadingMessage: [],
     isSupport: boolean
 }
 
@@ -76,10 +87,15 @@ export type PostUserInterface = {
         fullName: string,
         email?: string,
         role?: RoleType,
+        avatarFileName?: string,
     },
-    userIdentityId: {
+    repostedUserId: {
         _id: string,
-        avatarFileName: string,
+        fullName: string,
+        avatarFileName?: string,
+    } | null,
+    userIdentityId: {
+        _id: string,  
     },
     title: string,
     text: string,
@@ -87,12 +103,16 @@ export type PostUserInterface = {
     coordinates: CoordinatsInterface,
     privacyPost: PRIVACY,
     createdPostDate: Date,
+    createdRepostDate: Date,
     addressLocation: string,
     likes: number,
     isLiked: boolean,
     likeId: string,
     countComments: number,
-    viewPost: number
+    countReposts:number,
+    viewPost: number,
+    isReposted: boolean,
+    isMarked: boolean,
 }
 
 export interface GetAllPostInterface {
@@ -162,19 +182,34 @@ export interface CommentInterface {
     likes: number
     postId: string
     text: string
-  
-        userId: {
-            _id: string,
-            fullName: string,
-        },
-        userIdentityId: {
-            _id: string,
-            avatarFileName: string,
-        }
-    
+
+    userId: {
+        _id: string,
+        fullName: string,
+        avatarFileName: string,
+    },
+    userIdentityId: {
+        _id: string,
+     
+    }
 }
 
-export type FriendTypeResponse =  {
+export interface CommentInterface {
+    _id: string
+    createdDateComment: Date
+    isLiked: boolean
+    likeId: string
+    likes: number
+    postId: string
+    text: string
+    userId: {
+        _id: string,
+        fullName: string,
+        avatarFileName: string,
+    },
+}
+
+export type FriendTypeResponse = {
     _id: string
     userId: string
     friendId: {
@@ -182,6 +217,7 @@ export type FriendTypeResponse =  {
         fullName: string
         email: string
         phone: string
-        role: string
+        role: ROLES
+        avatarFileName: string
     }
 }

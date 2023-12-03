@@ -6,7 +6,7 @@ import { GetAllPostInterface, CommentInterface, PostUserInterface, PublishPostIn
 
 export class PublishPostHttp {
 
-    static async getPosts(payload: {pageNumber:number,userId:string}) {
+    static async getPosts(payload: {pageNumber:number,userId:string, isMarkedOption?:boolean}) {
         const res: AxiosResponse<GetAllPostInterface> = await $api.post("posts/get-posts",payload)
         return res.data
     }
@@ -21,6 +21,12 @@ export class PublishPostHttp {
         return res.data
     }
 
+    
+    static async getMyComments(payload: {_id:string}):Promise<CommentInterface[]> {
+        const res: AxiosResponse<CommentInterface[]> = await $api.post("posts/get-my-comments",payload)
+        return res.data
+    }
+
     static async addPost(payload: FormData) {
         const res: AxiosResponse<PublishPostInterface> = await $api.post("posts/add-post",payload)
         return res.data
@@ -31,4 +37,28 @@ export class PublishPostHttp {
         const res: AxiosResponse<GetAllPostInterface> = await $api.post("posts/add-comment",payload)
         return res.data
     }
+
+
+    static async addRepost(payload: {postId:string,repostedUserId:string}): Promise<void> {
+        const res: AxiosResponse<void> = await $api.post("posts/add-repost",payload)
+        return res.data
+    }
+
+    static async deleteRepost(payload: {postId:string,repostedUserId:string}): Promise<void> {
+        const res: AxiosResponse<void> = await $api.post("posts/delete-repost",payload)
+        return res.data
+    }
+
+    
+    static async addMark(payload: {postId:string,marckedUserId:string}): Promise<void> {
+        const res: AxiosResponse<void> = await $api.post("posts/add-mark",payload)
+        return res.data
+    }
+
+    
+    static async deleteMark(payload: {postId:string,marckedUserId:string}): Promise<void> {
+        const res: AxiosResponse<void> = await $api.post("posts/delete-mark",payload)
+        return res.data
+    }
+
 }

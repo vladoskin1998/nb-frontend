@@ -52,9 +52,9 @@
                 img {
                     border-radius: 12px;
                     overflow: hidden;
-                    width: auto;
                     max-height: 50vh;
-                    height: 100%;
+                    height: auto;
+                    width: 100%;
                     object-position: center;
                     object-fit: cover;
                 }
@@ -167,6 +167,10 @@
                 align-items: center;
                 border-radius: 30px;
                 background-color: $color__white;
+            }
+            &--active{
+                color: $color__white;
+                background-color: $color__black1;
             }
         }
         &-curren {

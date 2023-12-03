@@ -46,7 +46,7 @@ export const PublicationPostCommentsList = ({
                     </button>
                     <div className="commenst__user-img">
                         <img
-                            src={`${baseURL}/uploads/avatar/${it.userIdentityId.avatarFileName}`}
+                            src={`${baseURL}/uploads/avatar/${it.userId.avatarFileName}`}
                             alt=""
                         />
                     </div>

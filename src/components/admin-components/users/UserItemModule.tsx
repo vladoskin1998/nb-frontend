@@ -55,8 +55,6 @@ export const UserItemModule = (props: UserItemModuleProps) => {
             state: {
                 participants: [
                     {
-                        avatarFileName: userIdentity?.avatarFileName,
-                        fullName: props?.fullName,
                         userId: props?._id,
                     },
                 ],
@@ -122,6 +120,7 @@ export const UserItemModule = (props: UserItemModuleProps) => {
                 role={itemRole}
                 userIdentity={userIdentity}
                 fullName={props?.fullName}
+                avatarFileName={props?.avatarFileName}
                 openChat={openChat}
                 isOpen={isOpen}
                 setIsOpen={(o: boolean) => setIsOpen(o)}

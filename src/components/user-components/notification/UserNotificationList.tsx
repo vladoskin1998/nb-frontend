@@ -31,8 +31,8 @@ export const UserNotificationList = () => {
         navigate(`/user/${notificationTypeTitle(key).link}`)
     }
     return (
-        <div className="admin">
-            <UserHeaderNotification />
+
+         
             <div className="notification__list">
                 {notificationList.map((item, index) => (
                     <>
@@ -64,7 +64,7 @@ export const UserNotificationList = () => {
                         <div className="notification__list-item">
                             <div className="notification__list-item-img">
                                 <img
-                                    src={`${baseURL}/uploads/avatar/${item.ownerIdentityId.avatarFileName}`}
+                                    src={`${baseURL}/uploads/avatar/${item.ownerId.avatarFileName}`}
                                     alt=""
                                 />
                                 <div className="notification__list-item-img-status">
@@ -91,6 +91,6 @@ export const UserNotificationList = () => {
                     </>
                 ))}
             </div>
-        </div>
+    
     )
 }

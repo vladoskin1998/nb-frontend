@@ -30,4 +30,12 @@ export const userChangePassword = async (payload: ChangePasswordType): Promise<s
     }
 }
 
-
+export const profileUploadAvatar = async (formData: FormData): Promise<{ avatarFileName: string }> => {
+    try {
+        const response = await $api.post('user/upload-avatar', formData)
+        return response.data
+    } catch (error) {
+        alert("upload avatar is faild")
+        throw error
+    }
+}
