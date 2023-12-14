@@ -68,12 +68,12 @@ export const ProfoleIdentityView = ({
                 disabled={!value?.length}
                 className={`profile__method-btlater
                    ${
-                       !(value?.length && value?.length < 11) &&
+                       !(value?.length ) &&
                        "profile__method-btlater--disabled"
                    }`}
                 onClick={handlerContinue}
             >
-                {value?.length < 11 ? "Continue" : "Max 10 items"}
+                Continue
             </button>
         </>
     )

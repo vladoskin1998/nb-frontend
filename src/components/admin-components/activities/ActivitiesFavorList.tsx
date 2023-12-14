@@ -83,7 +83,7 @@ export const ActivitiesFavorList = () => {
                                 <div className="services__favor-item-row1-footer">
                                     <div className="services__favor-item-row1-userimg">
                                         <img
-                                            src={`${baseURL}/uploads/avatar/${item.userIdentityId.avatarFileName}`}
+                                            src={`${baseURL}/uploads/avatar/${item.userId.avatarFileName}`}
                                             alt="publish services"
                                         />
                                     </div>

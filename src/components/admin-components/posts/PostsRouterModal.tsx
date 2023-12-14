@@ -8,7 +8,7 @@ const list = ['all', 'commens', 'reports']
 export const PostsRouterModal = ({ setIsOpen }: { setIsOpen: () => void }) => {
     return (
         <div className="user__routemodal">
-            <Modal setIsOpen={setIsOpen}>
+            <Modal className="" setIsOpen={setIsOpen}>
                 <div className="user__routemodal-body" onClick={() => setIsOpen()}>
                     {list.map(
                         (item) => {

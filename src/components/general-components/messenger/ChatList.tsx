@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { InputSearch } from "../../ui/InputSearch"
 import moment from "moment"
-import { baseURL } from "../../../utils/config"
+import { baseURL, roleUrl } from "../../../utils/config"
 import { Link, useNavigate } from "react-router-dom"
 import $api from "../../../http"
 import { useAppSelector } from "../../../utils/hooks"
 import { AxiosResponse } from "axios"
-import { ChatType } from "../../../types/types"
+import { ChatType, ParticipantType } from "../../../types/types"
 import { GetStartedMessenger } from "./GetStartedMessenger"
 import { Loader } from "../../ui/Loader"
 
@@ -18,7 +18,7 @@ export const ChatList = ({
     search?: string
 }) => {
     const [chatsList, setChatsList] = useState<ChatType[]>([])
-    const { _id } = useAppSelector((s) => s.userReducer)
+    const { _id, role } = useAppSelector((s) => s.userReducer)
     const navigate = useNavigate()
     const [load, setLoad] = useState(true)
 
@@ -39,13 +39,35 @@ export const ChatList = ({
             })
     }, [])
 
-    const openChat = (props: { userId: string }) => {
-        navigate(`chat?userId=${props.userId}`, {
+    const openChat = (participants:ParticipantType[]) => {
+        // navigate(`${roleUrl(role)}/messeges/chat`, {
+        //     state: {
+        //         participants: [
+        //             {
+        //                 userId: _id,
+        //             },
+        //         ],
+        //     },
+        // })
+        navigate(`chat?userId=${JSON.stringify(participants)}`, {
             state: {
-                participants: [props],
+                participants:participants,
             },
         })
     }
+
+    // const openChat = () => {
+    //     navigate(`${roleUrl(role)}/messeges/chat`, {
+    //         state: {
+    //             participants: [
+    //                 {
+    //                     userId: props?._id,
+    //                 },
+    //             ],
+    //         },
+    //     })
+    // }
+
 
     return (
         <>
@@ -65,46 +87,47 @@ export const ChatList = ({
                                               )
                                       )
                                     : chatsList
-                                ).map((item) => (
+                                ).map((item, key) => (
                                     <>
                                         {item?.lastMessage &&
                                             item.lastMessage?.content && (
                                                 <div
                                                     className="messenger__list-item"
-                                                    onClick={() =>
-                                                        openChat({
-                                                            userId: item
-                                                                ?.participants?.[0]
-                                                                ?.userId._id,
-                                                        })
+                                                    onClick={() => {
+                                                        if(item?.participants){
+                                                            openChat(item?.participants)
+                                                            console.log(item.participants)
+                                                        }
+                                                    }
+                                                        // openChat({
+                                                        //     userId: item
+                                                        //         ?.participants?.[0]
+                                                        //         ?.userId._id,
+                                                        // })
                                                     }
                                                 >
                                                     <img
                                                         src={
-                                                            item
-                                                                ?.participants[0]
-                                                                .userId
-                                                                ?.avatarFileName
-                                                                ? `${baseURL}/uploads/avatar/${item?.participants[0].userId?.avatarFileName}`
+                                                            item?.participants[0].userId?.avatarFileName ? `${baseURL}/uploads/avatar/${item?.participants[0].userId?.avatarFileName}`
                                                                 : "/Images/Profile.jpg"
                                                         }
                                                         alt=""
                                                     />
                                                     <div>
                                                         <h5 className="messenger__list-item-name">
-                                                            {
+                                                        { item.groupName ? item.groupName : item?.participants[0]?.userId.fullName}
+                                                            {/* {
                                                                 item
                                                                     ?.participants?.[0]
                                                                     ?.userId
                                                                     ?.fullName
-                                                            }
+                                                            } */}
                                                         </h5>
                                                         <p
                                                             className={`messenger__list-item-message
                                             ${
-                                                !item.lastMessage?.isRead &&
-                                                !item.notReadingMessage
-                                                    .length &&
+                                                // !item.lastMessage?.isRead &&
+                                                // !item.notReadingMessage.length &&
                                                 "messenger__list-item-message--notread"
                                             }`}
                                                         >
@@ -124,15 +147,15 @@ export const ChatList = ({
                                                             )}
                                                         </div>
                                                         {Boolean(
-                                                            item
-                                                                .notReadingMessage
-                                                                .length
+                                                            // item
+                                                            //     .notReadingMessage
+                                                            //     .length
                                                         ) && (
                                                             <div className="messenger__list-item-nummes">
                                                                 {
-                                                                    item
-                                                                        .notReadingMessage
-                                                                        .length
+                                                                    // item
+                                                                    //     .notReadingMessage
+                                                                    //     .length
                                                                 }
                                                             </div>
                                                         )}

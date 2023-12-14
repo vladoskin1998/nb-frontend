@@ -49,7 +49,7 @@ export const PublishModalAddFile = ({
                 isOpen ? "activities__favor-modal--open" : ""
             }`}
         >
-            <Modal setIsOpen={(s: boolean) => setIsOpen(s)}>
+            <Modal className="" setIsOpen={(s: boolean) => setIsOpen(s)}>
                 <div
                     onClick={(e) => {
                         e.stopPropagation()

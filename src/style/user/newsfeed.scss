@@ -1,5 +1,8 @@
 .user__newsfeed {
     margin-top: 54px;
+    .publish__privacy{
+        display: none !important;
+    }
     &--admin {
         margin-top: 0px;
     }

@@ -7,6 +7,7 @@ import {
     visiableCategories,
     visiableSubCategories,
 } from "../services/categories"
+import { Nullable } from "../types/types"
 
 export interface CategoriesItemInterface {
     _id: string

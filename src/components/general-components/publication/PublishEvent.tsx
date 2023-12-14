@@ -19,7 +19,7 @@ export const PublishEvent = ({
     const { _id } = useAppSelector((s) => s.userReducer)
     const profile = useAppSelector((s) => s.profileReducer)
 
-    const [files, setFiles] = useState<File[]>([])
+    const [files, setFiles] = useState<(File | string)[]>([])
     const [text, setText] = useState("")
     const [title, setTitle] = useState("")
 

@@ -2,12 +2,10 @@ import { Modal } from "../../ui/Modal"
 import { IconPicker } from "../../svg/IconFavor"
 import { IosTougle } from "../../ui/IosTougle"
 import { ReactNode, useEffect } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
 
 export const ServicesListItemViewModal = ({
     name,
     isTougle,
-
     setIsOpen,
     onChangeTougle,
     handlerAddServices,
@@ -19,7 +17,6 @@ export const ServicesListItemViewModal = ({
 }: {
     name: string
     isTougle: boolean
-
     setIsOpen: (o: boolean) => void
     onChangeTougle: () => void
     handlerAddServices: () => void
@@ -35,7 +32,7 @@ export const ServicesListItemViewModal = ({
 
     return (
         <div className="services__modal">
-            <Modal setIsOpen={setIsOpen}>
+            <Modal className="" setIsOpen={setIsOpen}>
                 <div className="services__modal-body">
                     <div className="services__modal-title">
                         {name || "Category Name"}

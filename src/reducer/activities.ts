@@ -6,6 +6,7 @@ interface Activities {
     name: string
     numberView: number
     isVisiable: boolean
+    fileName: string
 }
 
 interface ActivitiesInterface {

@@ -37,7 +37,7 @@ export const Profile = () => {
                 <Route path="nationality" element={<ProfoleIdentityModule quality={QUALITYENUM.NATIONALITY} isLimit={-1} nextRoute={`/profile/${toOneKind("sex")}` }/> }/>
                 <Route path="birth" element={<ProfileBirth/>}/>
                 <Route path="certificates" element={<ProfileCertificates/>}/>
-                <Route path="interests" element={<ProfoleIdentityModule quality={QUALITYENUM.INTERESTS}  isLimit={-5} nextRoute={`/profile/${toOneKind("certificates")}` }/>}/>
+                <Route path="interests" element={<ProfoleIdentityModule quality={QUALITYENUM.INTERESTS}  isLimit={-100} nextRoute={`/profile/${toOneKind("certificates")}` }/>}/>
                 <Route path="skills" element={<ProfoleIdentityModule quality={QUALITYENUM.SKILLS}  isLimit={-5} nextRoute={ `/profile/${toOneKind("Interests")}`}/>}/>
                 <Route path="profession" element={<ProfoleIdentityModule quality={QUALITYENUM.PROFESSION} nextRoute={`/profile/${toOneKind("Skills")}`} />}/>
                 <Route path="about" element={<ProfileAbout/>}/>

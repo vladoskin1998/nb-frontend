@@ -4,9 +4,6 @@ import { UserHeaderChat, UserHeaderUserChatMessage } from "../header/UserHeaderC
 
 export const MessegesChatMessage = () => {
 
-    
-
-
     return (
         <>
             <UserHeaderUserChatMessage />

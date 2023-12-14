@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useRef } from 'react'
 
-export const Modal = ({children, setIsOpen }: {children:ReactNode, setIsOpen: (o: boolean) => void }) => {
+export const Modal = ({className,children, setIsOpen }: {className:string,children:ReactNode, setIsOpen: (o: boolean) => void }) => {
 
     const modal = useRef<HTMLDivElement | null>(null);
 
@@ -18,7 +18,7 @@ export const Modal = ({children, setIsOpen }: {children:ReactNode, setIsOpen: (o
     }, [setIsOpen]);
 
     return (
-        <div className='ui-modal' ref={modal}>
+        <div className={`ui-modal ${className}`} ref={modal}>
             {children}
         </div>
     )

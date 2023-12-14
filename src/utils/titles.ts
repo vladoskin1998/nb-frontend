@@ -225,18 +225,18 @@ export const postsSubTitle = (locationRoute: string) => {
 }
 
 
-export const isShowFooterNavUser = (key: string) => {
+export const isNotShowFooterNavUser = (key: string) => {
     if (
-        key === '/user' ||
-        key === '/user/service' ||
-        key === '/user/explore' ||
-        key === '/user/activities' ||
-        key === '/user/messeges' ||
-        key === '/user/messeges/user-chat'
+        key === '/user/comments' 
+        // key === '/user/service' ||
+        // key === '/user/explore' ||
+        // key === '/user/activities' ||
+        // key === '/user/messeges' ||
+        // key === '/user/messeges/user-chat'
     ) {
-        return true
+        return false
     }
-    return false
+    return true
 }
 
 

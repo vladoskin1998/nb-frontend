@@ -20,7 +20,7 @@ export const ProfileInfoModalProfile = ({userId}:{userId:string}) => {
         <>
             {!isGotAllProfileInfo && isOpen && (userId === _id) && (
                 <div className="profileinfo__profilemodal">
-                    <Modal setIsOpen={setIsOpen}>
+                    <Modal className="" setIsOpen={setIsOpen}>
                         <div className="profileinfo__profilemodal-body">
                             <div
                                 onClick={() => navigate(lastStepChangeProfile)}

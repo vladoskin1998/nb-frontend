@@ -31,8 +31,11 @@ export interface OptionsItemType {
 }
 export type OptionsType = Array<OptionsItemType>
 
-export type MessageType = { chatId: string, senderId: string, content: string, timestamp: Date, isRead: boolean, file: string | null, messageId:string }
-
+export type MessageType = {
+    messageId: string;
+    audio: boolean;
+    chatId: string, senderId: string, content: string, timestamp: Date, isRead: boolean, file: string | null, forward: boolean , senderIdold: string, like:string
+}
 export type HeaderMessageType = { email: string, fullName: string, avatarFileName: string }
 
 export type ParticipantType = {
@@ -59,7 +62,15 @@ export type ChatType = {
     lastMessage: MessageType,
     participants: ParticipantType[],
     notReadingMessage: [],
-    isSupport: boolean
+    isSupport: boolean,
+    groupName:string
+}
+
+export type LocationType = {
+    adminId:string,
+    coords:[number,number],
+    title:string,
+    file:string,
 }
 
 
@@ -82,6 +93,7 @@ export interface PublishPostInterface {
 
 export type PostUserInterface = {
     _id: string,
+    repostId: string,
     userId: {
         _id: string,
         fullName: string,
@@ -102,6 +114,7 @@ export type PostUserInterface = {
     filesName: string[]
     coordinates: CoordinatsInterface,
     privacyPost: PRIVACY,
+    privacyComment: PRIVACY,
     createdPostDate: Date,
     createdRepostDate: Date,
     addressLocation: string,
@@ -113,6 +126,10 @@ export type PostUserInterface = {
     viewPost: number,
     isReposted: boolean,
     isMarked: boolean,
+    isNotificatedComment: boolean,
+    isNotificatedPost: boolean,
+    isPined: boolean,
+    isPinedPostFlag: boolean
 }
 
 export interface GetAllPostInterface {
@@ -125,17 +142,27 @@ export type PublishServiceItemInterface = {
     userId: {
         _id: string,
         fullName: string,
+        avatarFileName: string,
+        email: string,
+        role: ROLES
     },
     userIdentityId: {
         _id: string,
-        avatarFileName: string,
+        profession?: OptionsItemType[],
+        dateBirth?: Date | null
     },
     title: string,
     text: string,
     filesName: string[]
     coordinates: CoordinatsInterface,
-    servicesId: string,
-    subServicesId: string,
+    servicesId: {
+        _id: string,
+        name: string
+    },
+    subServicesId: {
+        _id: string,
+        name: string
+    },
     privacyPublishService: PRIVACY,
     createdPublishServiceDate: Date,
     addressLocation: string
@@ -152,20 +179,29 @@ export type PublishEventItemInterface = {
     userId: {
         _id: string,
         fullName: string,
+        avatarFileName: string,
+        email: string
+        role: string
     },
     userIdentityId: {
         _id: string,
-        avatarFileName: string,
+        profession?: OptionsItemType[],
+        dateBirth?: Date | null
+
     },
     title: string,
     text: string,
     filesName: string[]
     coordinates: CoordinatsInterface,
-    activitiesId: string,
+    activitiesId: {
+        _id: string,
+        name: string
+    },
     privacyEvent: PRIVACY,
     createEventDate: Date,
     startDate: Date,
     addressLocation: string
+    
 }
 
 
@@ -220,4 +256,35 @@ export type FriendTypeResponse = {
         role: ROLES
         avatarFileName: string
     }
+}
+
+export type PinedPostType = {
+    userId: string;
+    repostId: string;
+    createdPinDate: Date;
+}
+
+export type HidePostType= {
+    ownerId: string;
+    hideUserId?: string;
+    hideRepostId?: string;
+}
+
+export interface PublishServiceOneItemInterface extends PublishServiceItemInterface{
+    servicesId: {
+        _id: string,
+        name: string,
+        fileName: string,
+    },
+    
+}
+
+
+export interface PublishActivitiesOneItemInterface extends PublishEventItemInterface{
+    activitiesId: {
+        _id: string,
+        name: string,
+        fileName: string,
+    },
+    
 }

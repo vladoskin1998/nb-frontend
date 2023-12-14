@@ -52,7 +52,7 @@ export const UserItemModal = ({
                 isOpen ? "activities__favor-modal--open" : ""
             }`}
         >
-            <Modal setIsOpen={setIsOpen}>
+            <Modal className="" setIsOpen={setIsOpen}>
                 <div className="activities__favor-modal-body">
                     <div
                         onClick={(e) => {

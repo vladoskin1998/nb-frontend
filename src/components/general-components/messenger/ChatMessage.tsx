@@ -1,5 +1,5 @@
 import TextareaAutosize from "@mui/material/TextareaAutosize"
-import { useState, useContext, useEffect, useRef } from "react"
+import { useState, useContext, useEffect, useRef, useCallback } from "react"
 import { useLocation } from "react-router-dom"
 import { IconArrachFile } from "../../svg/IconArrachFile"
 import { useAppSelector } from "../../../utils/hooks"
@@ -8,16 +8,19 @@ import { SocketContext } from "../../../context/SocketContext"
 import { SOCKET_MESSENDER_EVENT } from "../../../types/enum"
 import $api from "../../../http"
 import { AxiosResponse } from "axios"
-import { MessageType, OpenChatData } from "../../../types/types"
+import { MessageType, OpenChatData, ParticipantType } from "../../../types/types"
 import { IconSmile } from "../../svg/IconSmile"
 import { ModalSmile } from "./ModalSmile"
 import { IconAdminClose } from "../../svg/IconAdminHeader"
 import { baseURL } from "../../../utils/config"
+import { Message } from "./Message"
+import { UserItem } from "../profile-info/ProfileInfo"
+import { VoiceButton, VoiceMessage } from "./VoiceMessage"
 
 export const ChatMessage = () => {
 
     const myRef = useRef<null | HTMLDivElement>(null)
-    const { _id, fullName, avatarFileName } = useAppSelector((s) => s.userReducer)
+    const { _id, fullName } = useAppSelector((s) => s.userReducer)
     const { socket } = useContext(SocketContext)
     const [messageList, setMessageList] = useState<MessageType[]>([])
     const [message, setMessage] = useState("")
@@ -27,15 +30,17 @@ export const ChatMessage = () => {
     const [image, setImage] = useState<File | null>(null)
     const [imageUrl, setImageUrl] = useState<string>("")
     const fileInputRef = useRef<HTMLInputElement | null>(null)
+    const [IsOpenVoice, setIsOpenVoice] = useState<boolean>(false);
+    // const [NewMessage, setNewMessage] = useState<MessageType>();
+
+    const [Like, setLike] = useState<string>("");
 
     const location = useLocation()
 
     const props: 
     {
         isSupport?:boolean,
-        participants: {
-            userId: string
-        }[]
+        participants: ParticipantType[]
     } = location.state
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -60,18 +65,18 @@ export const ChatMessage = () => {
             setChatId(resOpenChat.data.chatId)
 
             const resMessageList: AxiosResponse<MessageType[]> =
-                await $api.post("messenger/list-message", {
-                    chatId: resOpenChat.data.chatId,
-                })
-            
-    
+            await $api.post("messenger/list-message", {
+                chatId: resOpenChat.data.chatId,
+            })
+        
+
             resMessageList.data.forEach(item => {
                 if(!item.isRead && item.senderId !== _id){
                     $api.post('messenger/read-message',{messageId:item?.messageId})
                 }
-            });
+                });
 
-            setMessageList(resMessageList.data)
+        setMessageList(resMessageList.data)
 
             if (socket) {
                 socket.current?.emit(
@@ -87,14 +92,16 @@ export const ChatMessage = () => {
                         timestamp: Date,
                         isRead: boolean,
                         file: string | null,
-                        messageId: string
+                        forward: boolean,
+                        senderIdold: string,
+                        audio: boolean,
+                        like: string,
+                        messageId:string
                     ) => {
                         setMessageList((s) => [
                             ...s,
-                            { chatId, senderId, content, timestamp, isRead, file, messageId },
+                            { chatId, senderId, content, timestamp, isRead, file, forward, senderIdold, audio, like, messageId },
                         ])
-                        $api.post('messenger/read-message',{messageId})
-                       
                     }
                 )
             }
@@ -109,10 +116,10 @@ export const ChatMessage = () => {
         }
     }, [messageList, messageList.length])
 
+
+
     const sendMessage = async () => {
         let fileName: null | string = null
-
-        console.log("chatId", chatId );
         if (image) {
             const formData = new FormData()
 
@@ -122,8 +129,6 @@ export const ChatMessage = () => {
             fileName = res.data
         }
      
-       
-        
         if (socket) {
             socket.current?.emit(SOCKET_MESSENDER_EVENT.SEND_PRIVATE_MESSAGE, {
                 chatId,
@@ -142,13 +147,33 @@ export const ChatMessage = () => {
                     timestamp: new Date(),
                     isRead: true,
                     file: fileName,
-                    messageId: ''
+                    forward:false,
+                    senderIdold:"",
+                    audio:false,
+                    like:"",
+                    messageId:''
                 },
             ])
             setMessage("")
             removeFile()
         }
     }
+
+    const updateList = (NewMessage:MessageType) => {
+        if(NewMessage) {
+            setMessageList( (s) => [
+                ...s,
+                NewMessage,
+            ]);
+        }
+    }
+
+    const updateFieldChanged = (index:number, val:string) => {
+        let newArr = [...messageList]; 
+        newArr[index].like = val;
+      
+        setMessageList(newArr);
+      }
 
     const removeFile = () => {
         if (fileInputRef.current) {
@@ -173,22 +198,59 @@ export const ChatMessage = () => {
         <>
             <div
                 className="messenger__chat-messages"
+
             >
-                {messageList.map((item) => (
+                {messageList.map((item, index) => (
                     <div
                         className={`messenger__chat-messages-message messenger__chat-messages-message-${
                             item?.senderId === _id ? "r" : "l"
                         }`}
                     >
-                        {
-                            item.file && <img src={`${baseURL}/uploads/messenger/${item.file}`} alt="" />
-                        }
                         
+                        {item.forward && <span className="forward">{`From: ${item.senderIdold}`}</span>}
+                        {
+                            item.file && !item.audio && <img src={`${baseURL}/uploads/messenger/${item.file}`} alt="" />
+                        }
+                        {
+                            item.file && item.audio && <VoiceMessage Side={item?.senderId === _id ? "r": "l"} Audio={`${baseURL}/uploads/messenger/${item.file}`}/>
+                        }
                         <div>{item?.content}</div>
-                        <div className="messenger__chat-messages-message-time">
-                            {moment(item?.timestamp).format("h:mm A")}
+                        {item?.like && <div className={`messanger__chat__like`} onClick={()=>{
+                                     if (socket) {
+                                        socket.current?.emit(SOCKET_MESSENDER_EVENT.DELETE_PRIVATE_MESSAGE_LIKE, {
+                                            chatId,
+                                            senderId: item.senderId,
+                                            // likeSenderId
+                                            timestamp:item.timestamp,
+                                            like: Like,
+                                            isRead: true,
+                                        })
+                                        updateFieldChanged(index, "");
+                                    }
+                            }}>{item.like}</div>}
+                            {/* {item?.like ? <div className={`messanger__chat__like.active`}>{item.like}</div> : ""} */}
+                            <Message senderId={item.senderId} index={index} updateList={updateFieldChanged} chatId={chatId} Like={Like} setLike={setLike} audio={item.audio} time={moment(item?.timestamp).format("h:mm A")} timeStamp={item.timestamp} delete={()=>{
+                                        let fileName: null | string = null
+                                        if (socket) {
+                                            socket.current?.emit(SOCKET_MESSENDER_EVENT.DELETE_PRIVATE_MESSAGE, {
+                                                chatId,
+                                                senderId: _id,
+                                                content: message,
+                                                timestamp: item.timestamp,
+                                                isRead: true,
+                                                file: fileName
+                                            })
+                                        }
+                                        let array = [...messageList]; 
+                                        let index = array.indexOf(item)
+                                        if (index !== -1) {
+                                          array.splice(index, 1);
+                                          setMessageList(array);
+                                        }
+                                        console.log(messageList);
+                            }}
+                            message={item.content} senderIdold={item.senderId} fileName={item.file} type={item.senderId===_id?"r":"l"}/>
                         </div>
-                    </div>
                 ))}
                 <div ref={myRef}/>
             </div>
@@ -223,6 +285,7 @@ export const ChatMessage = () => {
                     >
                         <IconSmile />
                     </button>
+                    <VoiceButton updateList={updateList} chatId={chatId} _id={_id} setIsOpenVoice={setIsOpenVoice} IsOpenVoice={IsOpenVoice}/>
                     <TextareaAutosize
                         value={message}
                         onChange={handleChange}

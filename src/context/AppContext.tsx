@@ -41,6 +41,8 @@ const AppContextProvider = ({ children }: { children: ReactNode }) => {
         // }
     }, [])
 
+    console.log(location.pathname);
+    
     useEffect(() => {
         if (isAuth && _id && !isCheckedEmail) {
             navigate(`/auth/confirm`)

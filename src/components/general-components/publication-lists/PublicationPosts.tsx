@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useInView } from "react-intersection-observer"
 import { InputSearch } from "../../ui/InputSearch"
 import { IconServicesAllPoint } from "../../svg/IconServicesAll"
-import { PostUserInterface } from "../../../types/types"
+import { HidePostType, PostUserInterface } from "../../../types/types"
 import { PublishPostHttp } from "../../../http/publish-post-http"
 import { baseURL, roleUrl } from "../../../utils/config"
 import moment from "moment"
@@ -11,11 +11,12 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { PublicationPostsPanel } from "./PublicationPostsPanel"
 import { useAppSelector } from "../../../utils/hooks"
 import { FeedBackHttp } from "../../../http/feedback-http"
-import { ROLES } from "../../../types/enum"
+import { NOTIFICATION_POST, ROLES } from "../../../types/enum"
 import { GetStarted } from "../../user-components/newsfeed/GetStarted"
 import { Loader } from "../../ui/Loader"
 import { PublicationPostMyModal } from "./PublicationPostMyModal"
 import { PublicationPostNeibModal } from "./PublicationPostNeibModal"
+import { IconPostModalPin } from "../../svg/IconPostModal"
 
 export const PublicationPosts = ({
     isMarkedOptions,
@@ -24,12 +25,6 @@ export const PublicationPosts = ({
 }) => {
     const [myModalOpen, setMyModalOpen] = useState(false)
     const [neibModalOpen, setNeibModalOpen] = useState(false)
-    const [options, setOptions] = useState({
-        postId: "",
-        avatarFileName: "",
-        fullName: "",
-        userId: "",
-    })
 
     const { _id, role } = useAppSelector((s) => s.userReducer)
     const [searsh, setSearch] = useState("")
@@ -42,6 +37,47 @@ export const PublicationPosts = ({
     })
     const location = useLocation()
     const navigate = useNavigate()
+
+    const [currnetItem, setCurrentItem] = useState<PostUserInterface | null>(
+        null
+    )
+
+    const getAllPostReload = async () => {
+        setIsLoad(true)
+        setPosts([])
+
+        for (let i = 1; i <= pageNumber; i++) {
+            const res = await PublishPostHttp.getPosts({
+                pageNumber: i,
+                userId: _id,
+                isMarkedOption: isMarkedOptions || false,
+            })
+
+            setPosts((s) => [...s, ...res.posts])
+        }
+        setIsLoad(false)
+    }
+
+    const getPinPost = async () => {
+        const pinedList = await PublishPostHttp.getPostPin({ userId: _id })
+
+        if (pinedList.length) {
+            const pinedPostList = await PublishPostHttp.getPosts({
+                pageNumber: 0,
+                userId: _id,
+                listPinedPost: pinedList.map((item) => item.repostId),
+            })
+
+            setPosts((s) => [...pinedPostList.posts, ...s])
+            return
+        }
+
+        setPosts((s) => s.filter((item) => !item.isPinedPostFlag))
+    }
+
+    useEffect(() => {
+        getPinPost()
+    }, [])
 
     useEffect(() => {
         const effectBody = async () => {
@@ -103,31 +139,12 @@ export const PublicationPosts = ({
         postId: string
         isReposted: boolean
     }) => {
-        if (!isReposted) {
-            await PublishPostHttp.addRepost({
-                postId,
-                repostedUserId: _id,
-            })
-        } else {
-            await PublishPostHttp.deleteRepost({
-                postId,
-                repostedUserId: _id,
-            })
-        }
+        await PublishPostHttp.updateRepost({
+            postId,
+            repostedUserId: _id,
+        })
 
-        setIsLoad(true)
-        setPosts([])
-
-        for (let i = 1; i <= pageNumber; i++) {
-            const res = await PublishPostHttp.getPosts({
-                pageNumber: i,
-                userId: _id,
-                isMarkedOption: isMarkedOptions || false,
-            })
-
-            setPosts((s) => [...s, ...res.posts])
-        }
-        setIsLoad(false)
+        getAllPostReload()
     }
 
     const updateMark = async (postId: string, isMarked: boolean) => {
@@ -146,10 +163,12 @@ export const PublicationPosts = ({
         setPosts((s) =>
             s.map((p) => {
                 if (p._id === postId) {
-                    return {
+                    const newItem = {
                         ...p,
                         isMarked: !p.isMarked,
                     }
+                    setCurrentItem(newItem)
+                    return newItem
                 } else {
                     return p
                 }
@@ -157,14 +176,83 @@ export const PublicationPosts = ({
         )
     }
 
-    const openModal = (props: {
-        postId: string
-        userId: string
-        avatarFileName: string
-        fullName: string
+    const updateNotification = async (
+        postId: string,
+        typeNotification: NOTIFICATION_POST
+    ) => {
+        await PublishPostHttp.updateNotification({
+            postId: postId,
+            userId: _id,
+            typeNotification,
+        })
+
+        setPosts((s) =>
+            s.map((p) => {
+                if (p._id === postId) {
+                    const newItem = {
+                        ...p,
+                        [NOTIFICATION_POST.COMMENT === typeNotification
+                            ? "isNotificatedComment"
+                            : "isNotificatedPost"]:
+                            NOTIFICATION_POST.COMMENT === typeNotification
+                                ? !p.isNotificatedComment
+                                : !p.isNotificatedPost,
+                    }
+                    setCurrentItem(newItem)
+                    return newItem
+                } else {
+                    return p
+                }
+            })
+        )
+    }
+
+    const updatePin = async (repostId: string) => {
+        await PublishPostHttp.updatePin({
+            repostId: repostId,
+            userId: _id,
+        })
+
+        setPosts((s) =>
+            s.map((p) => {
+                if (p.repostId === repostId) {
+                    const newItem = {
+                        ...p,
+                        isPined: !p.isPined,
+                    }
+                    setCurrentItem(newItem)
+                    return newItem
+                } else {
+                    return p
+                }
+            })
+        )
+        getPinPost()
+    }
+
+    const hidePost = async (body: {
+        hideUserId?: string
+        hideRepostId?: string
     }) => {
-        setOptions(props)
-        if (props.userId === _id) {
+        await PublishPostHttp.hidePost({
+            ownerId: _id,
+            ...body,
+        })
+
+        setPosts((s) =>
+            s.filter(
+                (item) =>
+                    !(item?.repostId === body?.hideRepostId ||
+                    item?.userId._id === body?.hideUserId)
+            )
+        )
+
+        setNeibModalOpen(false)
+    }
+
+    const openModal = (item: PostUserInterface) => {
+        setCurrentItem(item)
+        if (item.userId._id === _id) {
             setMyModalOpen(true)
         } else {
             setNeibModalOpen(true)
@@ -212,7 +300,7 @@ export const PublicationPosts = ({
                                                 item.repostedUserId?.fullName ||
                                                 "",
                                             avatarFileName:
-                                                item?.userId?.avatarFileName ||
+                                                item?.repostedUserId?.avatarFileName ||
                                                 "",
                                         })
                                     }
@@ -222,7 +310,9 @@ export const PublicationPosts = ({
                                         alt=""
                                     />
                                 </div>
-                                <div>
+                                <div
+                                    onClick={() => navigateToComments(item._id)}
+                                >
                                     <div className="admin__posts-list-row1-name">
                                         {item.repostedUserId?.fullName}
                                     </div>
@@ -255,9 +345,14 @@ export const PublicationPosts = ({
                                     alt=""
                                 />
                             </div>
-                            <div>
+                            <div onClick={() => navigateToComments(item._id)}>
                                 <div className="admin__posts-list-row1-name">
                                     {item.userId?.fullName}
+                                    {item.isPinedPostFlag && (
+                                        <span className="admin__posts-list-row1-pin">
+                                            <IconPostModalPin />
+                                        </span>
+                                    )}
                                 </div>
                                 <div>
                                     <span className="admin__posts-list-row1-text">
@@ -270,24 +365,14 @@ export const PublicationPosts = ({
                                     </span>
                                 </div>
                             </div>
-                            <button
-                                onClick={() =>
-                                    openModal({
-                                        postId: item._id,
-                                        userId: item.userId._id,
-                                        avatarFileName:
-                                            item?.userId?.avatarFileName || "",
-                                        fullName: item.userId?.fullName || "",
-                                    })
-                                }
-                            >
+                            <button onClick={() => openModal(item)}>
                                 <IconServicesAllPoint />
                             </button>
                         </div>
                         <div className="admin__posts-list-row2">
                             <PostSlick list={item?.filesName}>
                                 {item?.filesName?.map((it) => (
-                                    <div className="admin__posts-list-row2-img">
+                                    <div className="admin__posts-list-row2-img" onClick={()=>navigateToComments(item._id)}>
                                         <img
                                             src={`${baseURL}/uploads/publish_post/${it}`}
                                             alt=""
@@ -313,14 +398,22 @@ export const PublicationPosts = ({
             <div ref={ref} />
             {isLoad && <Loader />}
             <PublicationPostMyModal
-                options={options}
+                item={currnetItem}
                 isOpen={myModalOpen}
                 setIsOpen={setMyModalOpen}
+                updateMark={updateMark}
+                getAllPostReload={getAllPostReload}
+                updateNotification={updateNotification}
+                updatePin={updatePin}
             />
             <PublicationPostNeibModal
-                options={options}
+                item={currnetItem}
                 isOpen={neibModalOpen}
                 setIsOpen={setNeibModalOpen}
+                updateMark={updateMark}
+                updateNotification={updateNotification}
+                toProfileInfo={toProfileInfo}
+                hidePost={hidePost}
             />
         </div>
     )

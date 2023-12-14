@@ -1,5 +1,5 @@
 .welcome {
-    padding: 42px 40px 125px 40px;
+    padding: 42px 40px 23% 40px;
   
     min-height: 100%;
     gap: 12px;
@@ -72,6 +72,9 @@
             width: 214px;
             height: 59px;
         }
+    }
+    &__footer-text{
+        height: 120px;
     }
 }
 

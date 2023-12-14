@@ -1,0 +1,77 @@
+@import '../variables.scss';
+
+.messenger__chat__after__content__section{
+    position: relative;
+}
+.messanger__chat__dot__menu{
+    display: flex;
+}
+.messanger__chat__dot__menu__btn{
+    padding: 0 10px;
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+.messanger__chat__dot__menu__child{
+    background-color: $color__blue5;
+    border-radius: 10px 10px 0px 10px;
+    position: absolute;
+    right: 120%;
+    bottom: -50%;
+    font-size: 15px;
+    display: none;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
+}.messanger__chat__dot__menu__child.active{
+    display: block;
+    background-color: $color__blue5;
+    border-radius: 10px 10px 0px 10px;
+    flex-direction: row;
+}
+.messanger__chat__dot__menu__child__btn{
+    padding: 5px;
+    cursor: pointer;
+}.messanger__chat__dot__menu__child__btn:hover{
+    background-color: $color__blue8;
+}
+.messanger__chat__dot__menu__child__btn:nth-child(1){
+    border-bottom: 1px solid $color__blue7;
+    border-radius: 10px 10px 0px 0px;
+}.messanger__chat__dot__menu__child__btn:nth-child(2){
+    border-radius: 0px 0px 0px 10px;
+}
+.del{
+    color:$color__red;
+}
+.rowLine{
+    margin: 5px 0;
+}
+.messenger__chat-modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    .ui-modal{
+        width: fit-content;
+        padding: 30px;
+    }
+}
+.messenger__list{
+    color: $color__black3;
+
+}
+.messenger__list-item{
+    box-shadow: $box-shadow2;
+    padding: 5px;
+    cursor:pointer;
+    user-select: none;
+}
+.img__modal__list{
+    position: relative;
+    top: 0%;
+    max-height: 40%;
+    background:none;
+}
+.messenger__list span{
+    font-size: 20px;
+    color: $color__grey7;
+}

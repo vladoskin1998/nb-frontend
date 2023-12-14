@@ -267,7 +267,7 @@
         border-radius: 8px;
         box-shadow: $box-shadow1;
         padding: 7px;
-        display: grid;
+        display: flex;
         grid-template-columns: auto auto 1fr 60px;
         column-gap: 10px;
         &-file {
@@ -304,6 +304,7 @@
 
         &-autoresize {
             padding-top: 10px;
+            width: 100%;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
@@ -311,7 +312,7 @@
             border: 0;
             font-family: "Roboto", sans-serif !important;
             ::placeholder {
-                font-family: "Roboto", sans-serif !important;
+                font-family: "Roboto", sans-serif !important; 
             }
         }
         &-send {
@@ -329,4 +330,48 @@
     .ui-modal {
         width: fit-content;
     }
+}
+.messenger__chat-modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    .ui-modal{
+        width: fit-content;
+    }
+}
+.forward{
+    font-style: italic;
+    padding: 5px 0;
+    
+}
+.messanger__chat__like{
+    // padding:5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: $color__blue7;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+    cursor: pointer;
+    margin: 5px 0;
+}.messanger__chat__like.active{
+    // padding:5px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: none;
+    display: flex;
+    justify-content: center;
+    user-select: none;
+    cursor: pointer;
+    display: none;
+}
+.el{
+    display: flex;
+    flex-direction: row;
+
+}.el img{
+    max-width: 50px;
 }

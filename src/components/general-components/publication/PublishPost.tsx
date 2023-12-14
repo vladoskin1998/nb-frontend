@@ -6,8 +6,8 @@ import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { success } from "../../ui/LoadSuccess"
 import { CoordinatsInterface, PublishPostInterface } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
-import { useNavigate } from "react-router-dom"
-import { roleUrl } from "../../../utils/config"
+import { useLocation, useNavigate } from "react-router-dom"
+import { baseURL, roleUrl } from "../../../utils/config"
 import { profileTextInfo } from "../../../services/profile"
 import { setValueProfileReducer } from "../../../reducer/profile"
 
@@ -16,6 +16,17 @@ export const PublishPost = ({
 }: {
     currentPrivacy: PRIVACY
 }) => {
+
+    const location = useLocation();
+
+    const props: {
+        postId: string,
+        files: string[],
+        text: string,
+        title:string,
+        coordinates: CoordinatsInterface,
+    } = location.state;
+
     const navigate = useNavigate()
     const { _id, role } = useAppSelector((s) => s.userReducer)
     const profile = useAppSelector((s) => s.profileReducer)
@@ -24,18 +35,22 @@ export const PublishPost = ({
     const [addressLocation, setAddressLocation] = useState(
         `${profile.country}, ${profile.city}, ${profile.street}, ${profile.houseNumber}`
     )
-    const [files, setFiles] = useState<File[]>([])
-    const [text, setText] = useState("")
-    const [title, setTitle] = useState("")
+    const [files, setFiles] = useState<(File | string)[]>(props?.files?.map(item => `${baseURL}/uploads/publish_post/${item}`) || [])
+    const [text, setText] = useState(props?.text || '')
+    const [title, setTitle] = useState(props?.title || '')
     const [coordinates, setCoordinates] = useState<CoordinatsInterface>(
-        profile.coordinates
+        props?.coordinates || profile.coordinates
     )
-
+    console.log(files);
     const validate = !Boolean(text && title && files.length && addressLocation)
 
     const handlerPublish = async () => {
         try {
             const formCatData = new FormData()
+
+            const remainedFiles = (files.filter(item => typeof item === 'string') as string[]).map(item => item.replace(`${baseURL}/uploads/publish_post/`, ''))
+            const deletedFiles = props?.files.filter(item => remainedFiles.includes(item)) || []
+
             let payload: {
                 text: string
                 title: string
@@ -44,6 +59,8 @@ export const PublishPost = ({
                 coordinates: CoordinatsInterface
                 privacyPost: PRIVACY
                 addressLocation: string
+                deletedFiles?: string[]
+                postId?: string
             } = {
                 text,
                 title,
@@ -52,7 +69,13 @@ export const PublishPost = ({
                 userIdentityId: profile.userIdentityId,
                 privacyPost: currentPrivacy,
                 addressLocation,
+                deletedFiles,
+                postId: props?.postId || ''
             }
+
+         
+            
+
             formCatData.append("payload", JSON.stringify(payload))
 
             for (let index = 0; index < files.length; index++) {

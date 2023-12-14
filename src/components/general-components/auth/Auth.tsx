@@ -20,7 +20,7 @@ const Auth = () => {
     const location = useLocation()
     const props: { isLogin: boolean } = location.state
 
-    console.log("props----->",props.isLogin);
+    // console.log("props----->",props?.isLogin);
     
     const [isLogin, setIsLogin] = useState( true)
 

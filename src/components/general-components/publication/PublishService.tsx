@@ -3,13 +3,14 @@ import { PublicationMainComponent } from "./PublishMainComponent"
 import { PublishAddLocation } from "./PublishAddLocation"
 import { useAppDispatch, useAppSelector } from "../../../utils/hooks"
 import { success } from "../../ui/LoadSuccess"
-import { CoordinatsInterface, OptionsType } from "../../../types/types"
+import { CoordinatsInterface, LocationType, OptionsType } from "../../../types/types"
 import { PRIVACY } from "../../../types/enum"
 import { ServiceHttp } from "../../../http/service-http"
 import { PublishServiceCategorie } from "./PublishServiceCategorie"
 import { useNavigate } from "react-router-dom"
 import { profileTextInfo } from "../../../services/profile"
 import { setValueProfileReducer } from "../../../reducer/profile"
+import { PublishFindZone } from "./PublishFindZone"
 
 export const PublishService = ({
     currentPrivacy,
@@ -20,12 +21,13 @@ export const PublishService = ({
     const profile = useAppSelector((s) => s.profileReducer)
     const dispatch = useAppDispatch()
     
-    const [files, setFiles] = useState<File[]>([])
+    const [files, setFiles] = useState<(File | string)[]>([])
     const [text, setText] = useState("")
     const [title, setTitle] = useState("")
     const [coordinates, setCoordinates] = useState<CoordinatsInterface>(
         profile.coordinates
     )
+    const [search, setSearch] = useState<LocationType[]>([])
     const [servicesValue, setServicesValue] = useState<OptionsType>([])
     const [subServicesValue, setSubServicesValue] = useState<OptionsType>([])
     const [addressLocation, setAddressLocation] = useState(
@@ -104,6 +106,9 @@ export const PublishService = ({
                     subServicesValue={subServicesValue}
                     setSubServicesValue={setSubServicesValue}
                 />
+            </div>
+            <div className="publish__zone">
+                <PublishFindZone search={search} setSearch={setSearch} />
             </div>
             <PublishAddLocation
                 coordinates={coordinates}

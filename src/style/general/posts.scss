@@ -20,6 +20,13 @@
             grid-template-columns: auto 1fr auto;
             gap: 12px;
             align-items: center;
+            &-pin{
+                margin-left: 10px;
+                svg{
+                    width: 15px;
+                    height: 14px;
+                }
+            }
             &-img {
                 width: 48px;
                 height: 48px;
@@ -94,8 +101,8 @@
             &-repost--active{
                 svg{
                     path{
-                        fill: $color__blue1;
-                        stroke: $color__blue1;
+                        fill: $color__blue1 !important;
+                        stroke: $color__blue1 !important;
                     }
                 }
             }
@@ -114,6 +121,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+ 
     &_itembg{
         display: flex;
         flex-direction: column;

@@ -82,7 +82,7 @@ export const AdminPanelStatisticBar1 = () => {
                     <YAxis dataKey="name" type="category" hide />
                     <Bar
                         dataKey="value"
-                        shape={(props) => {
+                        shape={(props:any) => {
                             const { x, y, width, name, fill } = props
                             return (
                                 <g>

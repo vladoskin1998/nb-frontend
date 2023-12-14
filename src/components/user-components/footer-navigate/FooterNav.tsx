@@ -9,7 +9,7 @@ import {
     IconFooterNavServices,
 } from "../../svg/IconFooterNav"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { isShowFooterNavUser } from "../../../utils/titles"
+import { isNotShowFooterNavUser } from "../../../utils/titles"
 
 export const FooterNav = () => {
     
@@ -54,7 +54,7 @@ export const FooterNav = () => {
             className="user__footer"
             style={{
                 display: `${
-                    isShowFooterNavUser(location.pathname) ? "grid" : "none"
+                    isNotShowFooterNavUser(location.pathname) ? "grid" : "none"
                 }`,
             }}
         >
@@ -75,7 +75,13 @@ export const FooterNav = () => {
                 className={active === 2 ? "user__footer--active" : ""}
                 onClick={() => {
                     setActive(2)
-                    navigate("/user/explore")
+                    if(navigator.geolocation){
+                        navigator.geolocation.getCurrentPosition((pos)=>{
+                            navigate("/user/explore", {
+                                state: [pos.coords.latitude, pos.coords.longitude]
+                            })
+                        }, ()=>alert("Cannot get user location"))
+                    }
                 }}
             >
                 <IconFooterNavExplore />

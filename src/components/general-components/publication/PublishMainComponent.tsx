@@ -18,8 +18,10 @@ export const PublicationMainComponent = ({
     placeholderTitle,
     placeholderText,
 }: {
-    files: File[]
-    setFiles: (f: File[]) => void
+    files: (File | string)[]
+    setFiles: (f: (File | string)[]) => void
+    initUrlFiles?: string[],
+    setInitUrlFiles?: (f: string[]) => void
     text: string
     setText: (s: string) => void
     title: string
@@ -62,6 +64,7 @@ export const PublicationMainComponent = ({
                     placeholder={`${fullName}, ${placeholderText}`}
                 />
             </div>
+
             <div className="publish__main-list">
                 {files.map((item, index) => (
                     <div className="publish__main-list-item">
@@ -72,7 +75,7 @@ export const PublicationMainComponent = ({
                             <IconAdminClose />
                         </button>
                         <img
-                            src={URL.createObjectURL(item)}
+                            src={ typeof item === 'string' ? item : URL.createObjectURL(item)}
                             alt="Вибране зображення"
                         />
                     </div>

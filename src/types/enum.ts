@@ -83,6 +83,11 @@ export enum SOCKET_MESSENDER_EVENT {
 
     SEND_PRIVATE_MESSAGE = "send_private_message",
     GET_PRIVATE_MESSAGE = "get_private_message",
+    DELETE_PRIVATE_MESSAGE = "delete_private_message",
+    FORWARD_PRIVATE_MESSAGE = "forward_private_message",
+    SEND_PRIVATE_VOICE_MESSAGE = "send_private_voice_message",
+    SEND_PRIVATE_MESSAGE_LIKE = "send_private_message_like",
+    DELETE_PRIVATE_MESSAGE_LIKE = "delete_private_message_like",
 
     NOTIFICATION = 'notification',
 
@@ -137,4 +142,14 @@ export enum AUTH_AGREE_TYPES {
 export enum ONLINEOFFLINE{
     ONLINE = 'online',
     OFFLINE = 'offline'
+}
+
+export enum NOTIFICATION_POST{
+    POST = 'post',
+    COMMENT = 'comment'
+}
+
+export enum USER_LIST_APP{
+    ALL = 'all',
+    LAST = 'last'
 }

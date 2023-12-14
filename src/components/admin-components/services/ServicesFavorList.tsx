@@ -79,12 +79,12 @@ const ServicesFavorList = ({ changeAdd }: { changeAdd: () => void }) => {
                                     <div className="services__favor-item-row1-footer">
                                         <div className="services__favor-item-row1-userimg">
                                             <img
-                                                src={`${baseURL}/uploads/avatar/${item.userIdentityId.avatarFileName}`}
+                                                src={`${baseURL}/uploads/avatar/${item?.userId?.avatarFileName}`}
                                                 alt="publish services"
                                             />
                                         </div>
 
-                                        <h5> {item.userId.fullName}</h5>
+                                        <h5> {item?.userId?.fullName}</h5>
                                         <IconStars />
                                         <span>{4.5}</span>
                                         <span>{"(" + 808 + ")"}</span>

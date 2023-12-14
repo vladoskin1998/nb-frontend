@@ -41,7 +41,7 @@ export const ServicesAddCategories = ({
                     >
                         <IconAdminClose />
                     </button>
-                    <img
+                    <img 
                         src={`${baseURL}/uploads/categories/${categorie.fileName}`}
                         alt=""
                         className="services__add-linkimage"

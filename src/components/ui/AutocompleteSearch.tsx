@@ -64,7 +64,7 @@ export const AutocompleteSearch = ({
                     option.title === value.title
                 }
                 id="fixed-tags-demo"
-                limitTags={10}
+                limitTags={100}
                 disableClearable={false}
                 value={value}
                 onChange={(event, newValue) => {

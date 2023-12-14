@@ -22,8 +22,14 @@ import { success } from "../../ui/LoadSuccess"
 import { PublicationPostCommentsList } from "./PublicationPostCommentsList"
 import { FeedBackHttp } from "../../../http/feedback-http"
 import { PublicationPostCommentsView } from "./PublicationPostCommentsView"
+import { PublicationPostMyModal } from "./PublicationPostMyModal"
+import { PublicationPostNeibModal } from "./PublicationPostNeibModal"
+import { NOTIFICATION_POST } from "../../../types/enum"
 
 export const PublicationPostComments = () => {
+    const [myModalOpen, setMyModalOpen] = useState(false)
+    const [neibModalOpen, setNeibModalOpen] = useState(false)
+
     const [searchParams] = useSearchParams()
     const [post, setPost] = useState<PostUserInterface>()
     const [comments, setComments] = useState<CommentInterface[]>([])
@@ -97,25 +103,18 @@ export const PublicationPostComments = () => {
         postId: string
         isReposted: boolean
     }) => {
-        if (!isReposted ) {
-            await PublishPostHttp.addRepost({
-                postId,
-                repostedUserId: _id,
-            })
-           
-        }
-        else{
-            await PublishPostHttp.deleteRepost({
-                postId,
-                repostedUserId: _id,
-            })
-        }
+        await PublishPostHttp.updateRepost({
+            postId,
+            repostedUserId: _id,
+        })
 
-        if(post){
+        if (post) {
             setPost((s) => ({
                 ...post,
                 isReposted: !isReposted,
-                countReposts: !isReposted ? post.countReposts + 1 : post.countReposts - 1 ,
+                countReposts: !isReposted
+                    ? post.countReposts + 1
+                    : post.countReposts - 1,
             }))
         }
     }
@@ -141,12 +140,87 @@ export const PublicationPostComments = () => {
         }
     }
 
+    const updateNotification = async (
+        postId: string,
+        typeNotification: NOTIFICATION_POST
+    ) => {
+        if (post) {
+            await PublishPostHttp.updateNotification({
+                postId: postId,
+                userId: _id,
+                typeNotification,
+            })
+
+            setPost({
+                ...post,
+                [NOTIFICATION_POST.COMMENT === typeNotification
+                    ? "isNotificatedComment"
+                    : "isNotificatedPost"]:
+                    NOTIFICATION_POST.COMMENT === typeNotification
+                        ? !post.isNotificatedComment
+                        : !post.isNotificatedPost,
+            })
+        }
+    }
+
+    const updatePin = async (repostId: string) => {
+        if (post) {
+            await PublishPostHttp.updatePin({
+                repostId: repostId,
+                userId: _id,
+            })
+
+            setPost({
+                ...post,
+                isPined: !post.isPined,
+            })
+        }
+    }
+
+    const hidePost = async (body: {
+        hideUserId?: string
+        hideRepostId?: string
+    }) => {
+        if (post) {
+            await PublishPostHttp.hidePost({
+                ownerId: _id,
+                ...body,
+            })
+            navigate(-1)
+        }
+    }
+
+    const toProfileInfo = (prop: {
+        _id: string
+        email: string
+        role: string
+        fullName: string
+        avatarFileName: string
+    }) => {
+        navigate("/profileinfo", {
+            state: prop,
+        })
+    }
+
+    const openModal = () => {
+        if (post) {
+            if (post.userId._id === _id) {
+                setMyModalOpen(true)
+            } else {
+                setNeibModalOpen(true)
+            }
+        }
+    }
+
     return post ? (
         <div className="commenst">
             <div className="commenst__slick">
                 <div className="commenst__back">
                     <ButtonBackRoute click={() => navigate(-1)} />
-                    <button className="ui-button-back-route">
+                    <button
+                        className="ui-button-back-route"
+                        onClick={openModal}
+                    >
                         <IconServicesAllPoint />
                     </button>
                 </div>
@@ -161,7 +235,13 @@ export const PublicationPostComments = () => {
                     ))}
                 </PostSlick>
                 <div className="commenst__slick-bookmark">
-                    <button className="ui-button-back-route">
+                    <button
+                        onClick={() => updateMark(post._id, post.isMarked)}
+                        className={`ui-button-back-route ${
+                            post.isMarked &&
+                            "admin__posts-list-row4-repost--active"
+                        }`}
+                    >
                         <IconProfileInfoBookmark />
                     </button>
                 </div>
@@ -197,7 +277,6 @@ export const PublicationPostComments = () => {
                     ) : (
                         <></>
                     )}
-
                     <p className="commenst__view-text">
                         Views <b>{post.viewPost}</b>
                     </p>
@@ -244,7 +323,8 @@ export const PublicationPostComments = () => {
                         }
                         className={`${
                             (post.repostedUserId?._id === _id ||
-                                post.userId._id === _id || post.isReposted) &&
+                                post.userId._id === _id ||
+                                post.isReposted) &&
                             "admin__posts-list-row4-repost--active"
                         }`}
                         disabled={!(post.userId._id !== _id)}
@@ -281,6 +361,23 @@ export const PublicationPostComments = () => {
                     </button>
                 </div>
             </div>
+            <PublicationPostMyModal
+                item={post}
+                isOpen={myModalOpen}
+                setIsOpen={setMyModalOpen}
+                updateMark={updateMark}
+                updateNotification={updateNotification}
+                updatePin={updatePin}
+            />
+            <PublicationPostNeibModal
+                item={post}
+                isOpen={neibModalOpen}
+                setIsOpen={setNeibModalOpen}
+                updateMark={updateMark}
+                updateNotification={updateNotification}
+                toProfileInfo={toProfileInfo}
+                hidePost={hidePost}
+            />
         </div>
     ) : (
         <Loader />

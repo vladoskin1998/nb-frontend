@@ -82,7 +82,7 @@
         max-height: 108px;
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
     }
     &-counter{
         padding-top: 12px;
@@ -307,4 +307,12 @@
         transition: all 0.3s ease;
     }
 }
-
+.group__pannel{
+    padding: 20px;
+    max-width: 300px;
+    min-height: 350px;
+    position: absolute;
+    left: 40%;
+    top: 100%;
+    box-shadow: $box-shadow2;
+}

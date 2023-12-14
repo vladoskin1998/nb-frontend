@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { ReactNode, useState } from "react"
 import { PRIVACY } from "../../../types/enum"
 import { Modal } from "../../ui/Modal"
 import { IconClosedEye, IconNeibs, IconOpenEye } from "../../svg/IconPassEye"
@@ -38,11 +38,17 @@ export const PublishPrivacyModal = ({
     setIsOpen,
     currentPrivacy,
     setCurrentPrivacy,
+    applyMethod = () => {},
+    title = "Select Privacy",
+    subtitle = "Control who can see your post",
 }: {
     isOpen: boolean
     setIsOpen: (s: boolean) => void
     currentPrivacy: PRIVACY
     setCurrentPrivacy: (p: PRIVACY) => void
+    applyMethod?: () => void
+    title?: string | ReactNode
+    subtitle?: string | ReactNode
 }) => {
     return (
         <>
@@ -60,7 +66,7 @@ export const PublishPrivacyModal = ({
                     isOpen ? "activities__favor-modal--open" : ""
                 }`}
             >
-                <Modal setIsOpen={(s: boolean) => setIsOpen(s)}>
+                <Modal className="" setIsOpen={(s: boolean) => setIsOpen(s)}>
                     <div
                         onClick={(e) => {
                             e.stopPropagation()
@@ -71,11 +77,9 @@ export const PublishPrivacyModal = ({
                         <button className="activities__favor-modal-line" />
                     </div>
                     <div className="publish__modaladd">
-                        <h5 className="publish__modaladd-title">
-                            Select Privacy
-                        </h5>
+                        <h5 className="publish__modaladd-title">{title}</h5>
                         <h6 className="publish__modaladd-subtitle">
-                            Control who can see your post
+                            {subtitle}
                         </h6>
                         <div className="publish__modaladd-body publish__privacy-body">
                             {list.map((item) => (
@@ -109,7 +113,13 @@ export const PublishPrivacyModal = ({
                                     </button>
                                 </div>
                             ))}
-                            <button className="publish__privacy-apply" onClick={() => setIsOpen(false)}>
+                            <button
+                                className="publish__privacy-apply"
+                                onClick={() => {
+                                    applyMethod()
+                                    setIsOpen(false)
+                                }}
+                            >
                                 Apply
                             </button>
                         </div>

@@ -77,20 +77,20 @@ export const AuthWelcome = () => {
                         </div>
                         <div className="auth__welcome-buttons">
                             <button
-                                className="auth__welcome-buttons-button"
+                                className="auth__welcome-buttons-button auth__welcome-buttons-button--inheritbody"
                                 onClick={() => toLogin(true)}
                             >
                                 Log In
                             </button>
                             <button
-                                className="auth__welcome-buttons-button auth__welcome-buttons-button--inheritbody"
+                                className="auth__welcome-buttons-button "
                                 onClick={() => toLogin(false)}
                             >
                                 Sign Up
                             </button>
                         </div>
 
-                        <div className="auth__devider">
+                        <div className="auth__devider auth__welcome-line">
                             <div className="auth__devider-line" />
                             <h5 className="auth__devider-text">Enter via</h5>
                             <div className="auth__devider-line" />

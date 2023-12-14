@@ -1,4 +1,20 @@
 .location{
+
+   
+
+    .profile__method-btlater{
+        position: absolute;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 48px);
+    }
+    .profile__method-body{
+        margin: 0;
+    }
+    .profile__privacy-title{
+        @include title-main;
+    }
     &__body{
         flex-grow: 1;
     }

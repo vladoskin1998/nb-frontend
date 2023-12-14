@@ -8,7 +8,7 @@ export const PublishModalRoute = ({
 }) => {
     return (
         <div className="publish__routemodal">
-            <Modal setIsOpen={setIsOpen}>
+            <Modal className="" setIsOpen={setIsOpen}>
                 <div className="publish__routemodal-body">
                     <h5 className="publish__routemodal-title">
                         Where to publish?

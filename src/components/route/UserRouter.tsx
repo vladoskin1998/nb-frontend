@@ -8,7 +8,7 @@ import { NewsFeeds } from "../user-components/newsfeed/NewsFeeds"
 import { PublicationPostComments } from "../general-components/publication-lists/PublicationPostComments"
 import { Explore } from "../user-components/explore/Explore"
 
-import { ActivitiesUser } from "../user-components/activities/Activities"
+import { UserActivities } from "../user-components/activities/UserActivities"
 
 import { UserNotification } from "../user-components/notification/UserNotification"
 import { UserServices } from "../user-components/services/UserServices"
@@ -20,16 +20,16 @@ const UserRouter = () => {
         <>
             <Routes>
                 <Route
-                    path="explore"
+                    path="explore/*"
                     element={<ProtectedRoute element={<Explore />} />}
                 />
                 <Route
-                    path="service"
+                    path="service/*"
                     element={<ProtectedRoute element={<UserServices />} />}
                 />
                 <Route
-                    path="activities"
-                    element={<ProtectedRoute element={<ActivitiesUser />} />}
+                    path="activities/*"
+                    element={<ProtectedRoute element={<UserActivities />} />}
                 />
                 <Route
                     path="messeges/*"
